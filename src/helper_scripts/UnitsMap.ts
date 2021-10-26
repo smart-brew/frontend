@@ -4,13 +4,13 @@ export default class UnitsMap {
 
     constructor() {
 
-        this.units.set("Heat up", "°C");
-        this.units.set("Motor", "RPM");
+        this.units.set("heat up", "°C");
+        this.units.set("motor", "RPM");
 
     }
 
     getUnit(instruction: string) {
-        if (this.units.has(instruction)) {
+        if (this.units.has(instruction.toLowerCase())) {
             return this.units.get(instruction);
         }
     }
