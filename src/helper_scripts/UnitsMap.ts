@@ -10,8 +10,9 @@ export default class UnitsMap {
     }
 
     getUnit(instruction: string) {
-        if (this.units.has(instruction.toLowerCase())) {
-            return this.units.get(instruction);
+        let tempInstr = instruction.toLowerCase();
+        if (this.units.has(tempInstr)) {
+            return this.units.get(tempInstr);
         }
     }
 
