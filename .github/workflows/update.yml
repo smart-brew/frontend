@@ -37,8 +37,7 @@ jobs:
       - name: Rsync to TEAM VM
         uses: burnett01/rsync-deployments@5.1
         with:
-          switches: -Pav -O --no-perms --delete
-          path: /build/
+          switches: -Pav -O --no-perms --delete --include="build" --include=".dockerignore" --include="Dockerfile" --include="docker-compose.yml"
           remote_path: ~/frontend/
           remote_host: ${{ secrets.HOST }}
           remote_user: ${{ secrets.USERNAME }}
@@ -49,4 +48,10 @@ jobs:
           ssh ${{ secrets.USERNAME }}@${{ secrets.HOST }} /bin/bash <<- 'SSH_VM'
             cd ~/
             rsync -Pav -O --no-perms --delete -e "ssh -p 2222" frontend/ pi@localhost:/home/pi/frontend/
+            
+            ssh -p 2222 pi@localhost /bin/bash <<- 'SSH_RPI'
+              cd /home/pi/frontend
+              docker-compose build
+              docker-compose up --detach
+          SSH_RPI
           SSH_VM

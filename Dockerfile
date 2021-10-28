@@ -1,15 +1,3 @@
-FROM node:latest
-WORKDIR /usr/src/app
-
-COPY package.json ./
-COPY yarn.lock ./
-
-RUN yarn
-
-COPY ./ ./
-
-RUN yarn build
-
-EXPOSE 80
-
-CMD ["yarn", "start"]
+FROM httpd:2.4
+COPY ./build/ /usr/local/apache2/htdocs/
+EXPOSE 80:80
