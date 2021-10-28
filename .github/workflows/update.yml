@@ -38,8 +38,8 @@ jobs:
         uses: burnett01/rsync-deployments@5.1
         with:
           switches: -Pav -O --no-perms --delete
-          path: /build
-          remote_path: ~/frontend
+          path: /build/
+          remote_path: ~/frontend/
           remote_host: ${{ secrets.HOST }}
           remote_user: ${{ secrets.USERNAME }}
           remote_key: ${{ secrets.KEY }}
@@ -48,6 +48,5 @@ jobs:
         run: |
           ssh ${{ secrets.USERNAME }}@${{ secrets.HOST }} /bin/bash <<- 'SSH_VM'
             cd ~/
-            ls -la
-            rsync -Pav -O --no-perms --delete -e "ssh -p 2222" frontend pi@localhost:/home/pi/frontend
+            rsync -Pav -O --no-perms --delete -e "ssh -p 2222" frontend/ pi@localhost:/home/pi/frontend/
           SSH_VM
