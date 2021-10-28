@@ -12,6 +12,8 @@ jobs:
   build:
     name: Update
     runs-on: ubuntu-latest
+    env:
+      CI: false
 
     steps:
       - name: Checkout latest code
@@ -26,10 +28,11 @@ jobs:
       - name: Add known_hosts
         run: ssh-keyscan -H ${{ secrets.HOST }} >> ~/.ssh/known_hosts
 
+      - name: Install dependencies
+        run: yarn
+
       - name: Build app
-        run: |
-          yarn
-          yarn build
+        run: yarn build
 
       - name: Rsync to TEAM VM
         uses: burnett01/rsync-deployments@5.1
