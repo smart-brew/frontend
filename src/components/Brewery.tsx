@@ -1,11 +1,11 @@
 import React from 'react';
-import img_placeholder from '../brewery_placeholder.svg';
+import imgPlaceholder from '../brewery_placeholder.svg';
 import InstrType from '../types/InstrType';
 import BlockType from '../types/BlockType';
-import Block from '../components/recipe/Block';
+import Block from './recipe/Block';
 import { DataContext } from '../contexts/dataContext';
 
-var brewBlock: BlockType = {
+const brewBlock: BlockType = {
   // the recipe select will send an array of blocks, each with id and name
   id: 0,
   name: 'Varenie jačmeňa',
@@ -46,7 +46,7 @@ var brewBlock: BlockType = {
   ],
 };
 
-var tempInstruction: InstrType = {
+const tempInstruction: InstrType = {
   id: 0,
   name: 'Heat up',
   parentBlockId: 0,
@@ -58,15 +58,15 @@ var tempInstruction: InstrType = {
   chamberId: 0,
 };
 
-const Brewery = () => {
+const Brewery: React.FC = () => {
   const data = React.useContext(DataContext);
 
   return (
     <div className="App">
       <header className="App-header">
-        <img src={img_placeholder} className="w-72" alt="placeholder" />
+        <img src={imgPlaceholder} className="w-72" alt="placeholder" />
       </header>
-      {/*<Instruction id={tempInstruction.id} name={tempInstruction.name} parentBlockId={tempInstruction.parentBlockId} currParam={tempInstruction.currParam} targetParam={tempInstruction.targetParam} start={tempInstruction.start} end={tempInstruction.end} orderNum={tempInstruction.orderNum} chamberId={tempInstruction.chamberId}/>*/}
+      {/* <Instruction id={tempInstruction.id} name={tempInstruction.name} parentBlockId={tempInstruction.parentBlockId} currParam={tempInstruction.currParam} targetParam={tempInstruction.targetParam} start={tempInstruction.start} end={tempInstruction.end} orderNum={tempInstruction.orderNum} chamberId={tempInstruction.chamberId}/> */}
       <Block
         id={brewBlock.id}
         name={brewBlock.name}

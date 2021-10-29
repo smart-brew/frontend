@@ -1,9 +1,9 @@
-import InstrType from "./InstrType";
+import InstrType from './InstrType';
 
 type BlockType = {
-    id: number,
-    name: string,
-    instructions : Array<InstrType>
-}
+  id: number;
+  name: string;
+  instructions: Array<InstrType>;
+};
 
 export default BlockType;

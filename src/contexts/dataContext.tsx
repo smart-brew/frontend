@@ -2,10 +2,10 @@ import React from 'react';
 import { getBrewStatus } from '../api/dataEndpoint';
 import { DataType } from '../types/Data';
 
-export const DataContext = React.createContext({});
+export const DataContext = React.createContext<DataType | null>(null);
 
-const DataContextProvider: React.FC<{}> = ({ children }) => {
-  const [data, setData] = React.useState<DataType | {}>({});
+const DataContextProvider: React.FC = ({ children }) => {
+  const [data, setData] = React.useState<DataType | null>(null);
 
   const brewId = 123456789; // TODO: toto ziskavat z niekade inakadial, parameter alebo inak - moze byt aj cez druhy contextProvider
 
