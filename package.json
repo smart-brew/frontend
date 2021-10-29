@@ -20,15 +20,19 @@
     "web-vitals": "^1.0.1"
   },
   "scripts": {
-    "build": "react-scripts build",
-    "eject": "react-scripts eject",
-    "format": "npm run format:eslint && npm run format:prettier",
-    "format:eslint": "eslint \"**/*.{js,ts,tsx}\" --fix",
-    "format:prettier": "prettier \"**/*.{cjs,html,js,json,md,ts,tsx}\" --write",
-    "prepare": "husky install",
     "start": "react-scripts start",
+    "build": "react-scripts build",
     "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "prepare": "husky install",
     "watch:css": "tailwindcss build -i src/assets/tailwind.css -o src/assets/main.css"
+
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
   },
   "browserslist": {
     "production": [
@@ -43,19 +47,8 @@
     ]
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^5.2.0",
-    "@typescript-eslint/parser": "^5.2.0",
     "commit-message-validator": "^1.0.2",
-    "eslint": "^7.32.0",
-    "eslint-config-airbnb": "^18.2.1",
-    "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-import": "^2.25.2",
-    "eslint-plugin-jsx-a11y": "^6.4.1",
-    "eslint-plugin-prettier": "^4.0.0",
-    "eslint-plugin-react": "^7.26.1",
-    "eslint-plugin-react-hooks": "^4.2.0",
-    "husky": "^7.0.2",
-    "prettier": "2.4.1"
+    "husky": "^7.0.2"
   },
   "config": {
     "commit-message-validator": {
