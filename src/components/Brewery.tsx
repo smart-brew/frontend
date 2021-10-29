@@ -5,47 +5,6 @@ import BlockType from '../types/BlockType';
 import Block from './recipe/Block';
 import { DataContext } from '../contexts/dataContext';
 
-const brewBlock: BlockType = {
-  // the recipe select will send an array of blocks, each with id and name
-  id: 0,
-  name: 'Varenie jačmeňa',
-  instructions: [
-    {
-      id: 0,
-      name: 'Motor',
-      parentBlockId: 0,
-      currParam: 40,
-      targetParam: 100,
-      start: 54453453,
-      end: 534535435,
-      orderNum: 0,
-      chamberId: 0,
-    },
-    {
-      id: 1,
-      name: 'Heat up',
-      parentBlockId: 0,
-      currParam: 50,
-      targetParam: 70,
-      start: 1351315513,
-      end: null,
-      orderNum: 1,
-      chamberId: 0,
-    },
-    {
-      id: 0,
-      name: 'Motor',
-      parentBlockId: 0,
-      currParam: 40,
-      targetParam: 0,
-      start: null,
-      end: null,
-      orderNum: 2,
-      chamberId: 0,
-    },
-  ],
-};
-
 const tempInstruction: InstrType = {
   id: 0,
   name: 'Heat up',
@@ -59,25 +18,12 @@ const tempInstruction: InstrType = {
 };
 
 const Brewery: React.FC = () => {
-  const data = React.useContext(DataContext);
-
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={imgPlaceholder} className="w-72" alt="placeholder" />
-      </header>
-      {/* <Instruction id={tempInstruction.id} name={tempInstruction.name} parentBlockId={tempInstruction.parentBlockId} currParam={tempInstruction.currParam} targetParam={tempInstruction.targetParam} start={tempInstruction.start} end={tempInstruction.end} orderNum={tempInstruction.orderNum} chamberId={tempInstruction.chamberId}/> */}
-      <Block
-        id={brewBlock.id}
-        name={brewBlock.name}
-        instructions={brewBlock.instructions}
-      />
+    <div className="w-2/3">
+      <img src={imgPlaceholder} className="w-full" alt="placeholder" />
       <a href="https://www.freepik.com/vectors/vintage" className="App-credits">
         Vintage vector created by dgim-studio - www.freepik.com
       </a>
-      <div>
-        Newest data from backend /api/brew/brewId : {JSON.stringify(data)}
-      </div>
     </div>
   );
 };

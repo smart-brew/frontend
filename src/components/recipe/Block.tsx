@@ -22,7 +22,7 @@ const Block: React.FC<BlockType> = ({ instructions, name }: BlockType) => {
   });
 
   return (
-    <div className="w-1/2 content-center justify-center space-y-5 bg-yellow-100 border-2 border-gray-300 rounded-3xl p-5">
+    <div className="content-center justify-center items-center text-center space-y-5 bg-yellow-100 border-2 border-gray-300 rounded-3xl p-5">
       <h2 className="text-2xl font-bold">{name}</h2>
       <div>{instructionsShow}</div>
     </div>
