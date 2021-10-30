@@ -9,10 +9,11 @@ import { DataContext } from '../../contexts/dataContext';
 import RecipePage from './RecipePage';
 
 const HomePage: React.FC = () => {
+  const data = React.useContext(DataContext);
   // eslint-disable-next-line
   return (
     <Router>
-      <div>
+      <div className="items-center content-center text-center">
         <Route
           path="/"
           exact
@@ -21,6 +22,10 @@ const HomePage: React.FC = () => {
               <div className="flex flex-row p-10 align-middle justify-center">
                 <Brewery />
                 <RecipeOverview />
+              </div>
+              <div>
+                Newest data from backend /api/brew/brewId :{' '}
+                {JSON.stringify(data)}
               </div>
               <Link
                 to="/recipe"
