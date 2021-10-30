@@ -1,7 +1,7 @@
 import React from 'react';
-import InstrType from '../../types/InstrType';
-import InstructionStateMap from '../../helper_scripts/InstructionStateMap';
-import TimeHelper from '../../helper_scripts/TimeHelper';
+import InstrType from '../../../types/InstrType';
+import InstructionStateMap from '../../../helper_scripts/InstructionStateMap';
+import TimeHelper from '../../../helper_scripts/TimeHelper';
 import FullInstruction from './FullInstruction';
 import HiddenInstruction from './HiddenInstruction';
 

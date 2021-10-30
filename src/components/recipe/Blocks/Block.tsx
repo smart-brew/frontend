@@ -1,6 +1,6 @@
 import React from 'react';
-import BlockType from '../../types/BlockType';
-import Instruction from './Instruction';
+import BlockType from '../../../types/BlockType';
+import Instruction from '../Instructions/Instruction';
 
 const Block: React.FC<BlockType> = ({ instructions, name }: BlockType) => {
   const instructionsShow = instructions.map((instr, i) => {

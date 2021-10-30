@@ -1,5 +1,5 @@
 import React from 'react';
-import Block from '../recipe/Block';
+import Block from '../recipe/Blocks/Block';
 import BlockType from '../../types/BlockType';
 
 const brewBlock: BlockType = {

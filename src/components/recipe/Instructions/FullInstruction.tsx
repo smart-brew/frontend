@@ -1,7 +1,7 @@
 import React from 'react';
-import InstrType from '../../types/InstrType';
-import UnitsMap from '../../helper_scripts/UnitsMap';
-import InstructionState from '../../types/InstructionState';
+import InstrType from '../../../types/InstrType';
+import UnitsMap from '../../../helper_scripts/UnitsMap';
+import InstructionState from '../../../types/InstructionState';
 
 interface Props {
   instruction: InstrType;

@@ -1,6 +1,6 @@
 import React from 'react';
 import Brewery from '../Brewery';
-import Block from '../recipe/Block';
+import Block from '../recipe/Blocks/Block';
 import BlockType from '../../types/BlockType';
 import RecipeOverview from '../RecipeOverview/RecipeOverview';
 import { DataContext } from '../../contexts/dataContext';
