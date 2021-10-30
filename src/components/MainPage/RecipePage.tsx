@@ -120,7 +120,7 @@ const RecipePage: React.FC = () => {
   // eslint-disable-next-line
   return (
     <div>
-      <div className="h-screen flex  w-1/2 ">
+      <div className="h-screen flex  w-1/2">
         <ul className="flex-1 overflow-y-scroll content-center justify-center ">
           {recipeList.recipes.map((recipe: RecipeListItemType) => (
             <RecipeList

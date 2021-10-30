@@ -12,7 +12,6 @@ const HomePage: React.FC = () => {
   const data = React.useContext(DataContext);
   // eslint-disable-next-line
   return (
-
     <Router>
       <div className="items-center content-center text-center">
         <Route
@@ -20,7 +19,7 @@ const HomePage: React.FC = () => {
           exact
           render={(props) => (
             <>
-              <div className="flex flex-row p-10 align-middle justify-center">
+              <div className="flex flex-row justify-center">
                 <Brewery />
                 <RecipeOverview />
               </div>
@@ -40,7 +39,6 @@ const HomePage: React.FC = () => {
         <Route path="/recipe" component={RecipePage} />
       </div>
     </Router>
-
   );
 };
 
