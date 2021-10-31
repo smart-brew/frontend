@@ -1,12 +1,8 @@
 import React from 'react';
-import InstrType from '../../types/InstrType';
-import UnitsMap from '../../helper_scripts/UnitsMap';
-import InstructionState from '../../types/InstructionState';
-
-interface Props {
-  instruction: InstrType;
-  state: InstructionState | null;
-}
+import InstrType from '../../../types/InstrType';
+import UnitsMap from '../../../helper_scripts/UnitsMap';
+import InstructionState from '../../../types/InstructionState';
+import Props from '../../../types/InstructionProps';
 
 const HiddenInstruction: React.FC<Props> = ({ instruction, state }: Props) => {
   const valueUnit = new UnitsMap().getUnit(instruction.name);

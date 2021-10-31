@@ -2,7 +2,7 @@ import React from 'react';
 import imgPlaceholder from '../brewery_placeholder.svg';
 import InstrType from '../types/InstrType';
 import BlockType from '../types/BlockType';
-import Block from './recipe/Block';
+import Block from './recipe/Blocks/Block';
 import { DataContext } from '../contexts/dataContext';
 
 const tempInstruction: InstrType = {
