@@ -1,37 +1,35 @@
-import ChamberInfo from "../types/ChamberInfo";
-import UnitsMap from "../helper_scripts/UnitsMap";
+import React from 'react';
+import ChamberInfo from '../types/ChamberInfo';
+import UnitsMap from '../helper_scripts/UnitsMap';
 
-function Chamber(chamber: ChamberInfo) {
-    const heating = (new UnitsMap()).getUnit(chamber.heating.toString()); // needs to be the string to use the function
-    return (
-        console.log(heating),
-        <div className='chamber w-1/4 content-center  border-2 border-gray-300 rounded-3xl '>
-             <div>
-                <label>
-                    Temperature 
-                </label>
-                <p>
-                   {chamber.temp} °C
-                </p>
-            </div>
-            <div>
-                <label>
-                    Motor speed
-                </label>
-                <p>
-                   {chamber.rpm} RMD
-                </p>
-            </div>
-            <div>
-                <label>
-                    Heating
-                </label>
-                <p>
-                   {heating}
-                </p>
-            </div>
+// bolo by treba namapovat ale pravdepodobne sa bude prerabat tak zatial len takto
+const Chamber: React.FC<ChamberInfo> = ({
+  device,
+  temp,
+  rpm,
+  heating,
+}: ChamberInfo) => {
+  const heatingN = new UnitsMap().getUnit(heating);
+  // eslint-disable-next-line
+  return (
+    console.log(heatingN),
+    (
+      <div className="chamber w-1/2 content-center  border-2 border-gray-300 rounded-3xl ">
+        <div>
+          <p>Temperature</p>
+          <p className="font-bold">{temp} °C</p>
         </div>
+        <div>
+          <p>Motor speed</p>
+          <p className="font-bold">{rpm} RMD</p>
+        </div>
+        <div>
+          <p>Heating</p>
+          <p className="font-bold">{heatingN}</p>
+        </div>
+      </div>
     )
-}
+  );
+};
 
-export default Chamber
+export default Chamber;
