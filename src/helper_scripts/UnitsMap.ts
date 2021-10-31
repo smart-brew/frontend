@@ -7,6 +7,7 @@ export default class UnitsMap {
     this.units.set('in_progress', 'ON');
     this.units.set('waiting', 'OFF');
     this.units.set('done', 'OFF');
+    this.units.set('wait', 'minutes');
   }
 
   getUnit(instruction: string): string | undefined {

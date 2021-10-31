@@ -3,7 +3,7 @@ import InstrType from '../types/InstrType';
 import { DataType } from '../types/Data';
 import Chambers from './Chambers';
 import BlockType from '../types/BlockType';
-import Block from './recipe/Block';
+import Block from './recipe/Blocks/Block';
 import { DataContext } from '../contexts/dataContext';
 // import { data } from 'autoprefixer';
 import imgPlaceholder from '../brewery_placeholder.svg';
