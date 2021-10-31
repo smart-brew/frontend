@@ -1,17 +1,24 @@
+import React from 'react';
 import RecepeState from '../types/RecepeState';
 import ChamberInfo from '../types/ChamberInfo';
-
 import Chamber from './Chamber';
-const Chambers = (chambers: RecepeState) => {
+import { DataType, Motor, Temperature } from '../types/Data';
+
+const Chambers: React.FC<DataType> = ({
+  TEMPERATURE,
+  MOTOR,
+  PUMP,
+  UNLOADER,
+}: DataType) => {
   return (
-    <div className="container">
-      {chambers.module_states.map((chamber: ChamberInfo) => (
+    <div className="container flex flex-row">
+      {}
+      {TEMPERATURE.map((tempO: Temperature) => (
         <Chamber
-          chamberId={chamber.chamberId}
-          temp={chamber.temp}
-          rpm={chamber.rpm}
-          heating={chamber.heating}
-          active={chamber.active}
+          device={tempO.DEVICE}
+          temp={tempO.TEMP}
+          rpm={10000000000}
+          heating={tempO.STATE}
         />
       ))}
     </div>

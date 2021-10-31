@@ -4,8 +4,9 @@ export default class UnitsMap {
   constructor() {
     this.units.set('heat up', '°C');
     this.units.set('motor', 'RPM');
-    this.units.set('1', 'ON');
-    this.units.set('0', 'OFF');
+    this.units.set('in_progress', 'ON');
+    this.units.set('waiting', 'OFF');
+    this.units.set('done', 'OFF');
     this.units.set('wait', 'minutes');
   }
 
