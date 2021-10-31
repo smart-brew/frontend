@@ -1,5 +1,5 @@
 import React from 'react';
-import RecepeState from '../types/RecepeState';
+import RecipeState from '../types/RecipeState';
 import ChamberInfo from '../types/ChamberInfo';
 import Chamber from './Chamber';
 import { DataType, Motor, Temperature } from '../types/Data';

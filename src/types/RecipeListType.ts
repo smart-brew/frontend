@@ -1,7 +1,7 @@
-import RecipeListPart from './RecipeListItemType'
+import RecipeListPart from './RecipeListItemType';
 
 type RecipeListType = {
-    recipes: Array<RecipeListPart>
+  recipes: Array<RecipeListPart>;
 };
 
-export default  RecipeListType;
+export default RecipeListType;

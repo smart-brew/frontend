@@ -1,9 +1,8 @@
-
 type RecipeListItemType = {
-    id:number,
-    name: string,
-    createdAt : number,
-    flag:number
+  id: number;
+  name: string;
+  createdAt: number;
+  flag: number;
 };
 
-export default  RecipeListItemType;
+export default RecipeListItemType;
