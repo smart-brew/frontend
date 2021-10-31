@@ -1,6 +1,7 @@
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export const getBrewStatus = async (brewId: number) => {
-  return fetch(`${process.env.REACT_APP_API_URL}/api/brew/${brewId}`)
+import { ModuleData } from '../types/Data';
+
+export const getBrewStatus = (): Promise<ModuleData> => {
+  return fetch(`${process.env.REACT_APP_API_URL}/api/data`)
     .then((response) => response.json())
     .catch((error) => console.log(error));
 };

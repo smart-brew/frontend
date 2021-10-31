@@ -1,6 +1,6 @@
 import React from 'react';
 import InstrType from '../types/InstrType';
-import { DataType } from '../types/Data';
+import { ModuleData } from '../types/Data';
 import Chambers from './Chambers';
 import BlockType from '../types/BlockType';
 import Block from './recipe/Blocks/Block';
@@ -20,7 +20,7 @@ const tempInstruction: InstrType = {
   chamberId: 0,
 };
 
-const moduleData: DataType = {
+const moduleData: ModuleData = {
   TEMPERATURE: [
     {
       TEMP: 50,
@@ -74,14 +74,16 @@ const moduleData: DataType = {
 };
 
 const Brewery: React.FC = () => {
+  const data = React.useContext(DataContext) || moduleData;
+
   return (
     <div className="w-2/3">
       <img src={imgPlaceholder} className="w-full" alt="placeholder" />
       <Chambers
-        TEMPERATURE={moduleData.TEMPERATURE}
-        MOTOR={moduleData.MOTOR}
-        UNLOADER={moduleData.UNLOADER}
-        PUMP={moduleData.UNLOADER}
+        TEMPERATURE={data.TEMPERATURE}
+        MOTOR={data.MOTOR}
+        UNLOADER={data.UNLOADER}
+        PUMP={data.UNLOADER}
       />
       <a href="https://www.freepik.com/vectors/vintage" className="App-credits">
         Vintage vector created by dgim-studio - www.freepik.com
