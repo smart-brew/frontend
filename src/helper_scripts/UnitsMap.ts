@@ -6,6 +6,7 @@ export default class UnitsMap {
     this.units.set('motor', 'RPM');
     this.units.set('1', 'ON');
     this.units.set('0', 'OFF');
+    this.units.set('wait', 'minutes');
   }
 
   getUnit(instruction: string): string | undefined {

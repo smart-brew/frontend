@@ -25,3 +25,11 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #c0c0c0;
 }
+
+.active-block {
+  @apply bg-yellow-100 opacity-100;
+}
+
+.inactive-block {
+  @apply bg-gray-300 opacity-60;
+}

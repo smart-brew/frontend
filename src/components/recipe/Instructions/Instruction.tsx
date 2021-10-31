@@ -1,20 +1,13 @@
 import React from 'react';
-import InstrType from '../../../types/InstrType';
-import InstructionStateMap from '../../../helper_scripts/InstructionStateMap';
-import TimeHelper from '../../../helper_scripts/TimeHelper';
 import FullInstruction from './FullInstruction';
 import HiddenInstruction from './HiddenInstruction';
+import Props from '../../../types/InstructionProps';
 
-const Instruction: React.FC<InstrType> = (instr: InstrType) => {
-  const { start, end } = instr;
-  const instrStyle = new InstructionStateMap().getStyle(
-    TimeHelper.getState(start, end)
-  );
-
-  if (instrStyle?.inProgress) {
-    return <FullInstruction instruction={instr} state={instrStyle} />;
+const Instruction: React.FC<Props> = ({ instruction, state }: Props) => {
+  if (state?.inProgress) {
+    return <FullInstruction instruction={instruction} state={state} />;
   }
-  return <HiddenInstruction instruction={instr} state={instrStyle} />;
+  return <HiddenInstruction instruction={instruction} state={state} />;
 };
 
 export default Instruction;
