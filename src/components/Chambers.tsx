@@ -2,14 +2,14 @@ import React from 'react';
 import RecepeState from '../types/RecepeState';
 import ChamberInfo from '../types/ChamberInfo';
 import Chamber from './Chamber';
-import { DataType, Motor, Temperature } from '../types/Data';
+import { ModuleData, Motor, Temperature } from '../types/Data';
 
-const Chambers: React.FC<DataType> = ({
+const Chambers: React.FC<ModuleData> = ({
   TEMPERATURE,
   MOTOR,
   PUMP,
   UNLOADER,
-}: DataType) => {
+}: ModuleData) => {
   return (
     <div className="container flex flex-row">
       {}
