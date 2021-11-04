@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import RecipeListType from '../../types/RecipeData/RecipeListType';
 import RecipeType from '../../types/RecipeData/RecipeType';
-import RecipeListItemType from '../../types/RecipeListItemType';
 import RecipeList from '../RecipeList';
 
 export const recipeList: RecipeListType = {
@@ -96,8 +95,14 @@ const RecipePage: React.FC = () => {
   // eslint-disable-next-line
   return (
     <div>
-      <div className="h-screen flex  w-1/2">
-        <ul className="flex-1 overflow-y-scroll content-center justify-center ">
+      <Link
+        to="/"
+        className=" underline text-blue-600 hover:text-blue-800 visited:text-purple-600"
+      >
+        Go back
+      </Link>
+      <div className="h-screen flex flex-row w-1/2">
+        <ul className="flex-1  overflow-y-scroll content-center justify-center ">
           {recipeList.recipes.map((recipe: RecipeType) => (
             <RecipeList
               id={recipe.id}
@@ -112,12 +117,6 @@ const RecipePage: React.FC = () => {
           ))}
         </ul>
       </div>
-      <Link
-        to="/"
-        className=" underline text-blue-600 hover:text-blue-800 visited:text-purple-600"
-      >
-        Go back
-      </Link>
     </div>
   );
 };
