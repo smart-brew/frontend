@@ -1,18 +1,14 @@
 import React, { Component } from 'react';
-import RecipeListItemType from '../types/RecipeListItemType';
+import RecipeType from '../types/RecipeData/RecipeType';
 
-const RecipeList: React.FC<RecipeListItemType> = ({
-  name,
-  flag,
-  id,
-}: RecipeListItemType) => {
+const RecipeList: React.FC<RecipeType> = ({ name, locked, id }: RecipeType) => {
   return (
     <div
       key={id}
       className="chamber mx-7 my-1 content-center  border-2 border-gray-300 rounded-3xl "
     >
       <div>{name}</div>
-      <div>{flag}</div>
+      <div>{locked}</div>
     </div>
   );
 };
