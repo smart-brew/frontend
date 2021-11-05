@@ -33,3 +33,7 @@
 .inactive-block {
   @apply bg-gray-300 opacity-60;
 }
+
+.cancel-button {
+  @apply text-gray-600 bg-white border-gray-600 border-4 text-xl py-3 px-5 rounded-3xl font-bold;
+}

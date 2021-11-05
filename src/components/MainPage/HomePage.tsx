@@ -7,6 +7,7 @@ import BlockType from '../../types/BlockType';
 import RecipeOverview from '../RecipeOverview/RecipeOverview';
 import { DataContext } from '../../contexts/dataContext';
 import RecipePage from './RecipePage';
+import RecipeInstructionsPage from './RecipeInstructionsPage';
 
 const HomePage: React.FC = () => {
   const data = React.useContext(DataContext);
@@ -19,10 +20,11 @@ const HomePage: React.FC = () => {
           exact
           render={(props) => (
             <>
-              <div className="flex flex-row justify-center">
-                <Brewery />
-                <RecipeOverview />
-              </div>
+              <RecipeInstructionsPage />
+              {/* <div className="flex flex-row justify-center"> */}
+              {/*  <Brewery /> */}
+              {/*  <RecipeOverview /> */}
+              {/* </div> */}
               <div>
                 Newest data from backend /api/brew/brewId :{' '}
                 {JSON.stringify(data)}

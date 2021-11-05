@@ -1,7 +1,7 @@
-import FunctionType from "./FunctionType";
+import FunctionType from './FunctionType';
 
 type FunctionListType = {
-    recipes: Array<FunctionType>
+  functionsArray: Array<FunctionType>;
 };
 
-export default  FunctionListType;
+export default FunctionListType;
