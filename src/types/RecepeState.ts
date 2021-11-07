@@ -1,7 +1,8 @@
-import ChambersInfo from './ChamberInfo'
+import ChambersInfo from './ChamberInfo';
+
 type RecepeState = {
-    module_states: Array<ChambersInfo>
-    // and others
+  module_states: Array<ChambersInfo>;
+  // and others
 };
 
-export default  RecepeState;
+export default RecepeState;

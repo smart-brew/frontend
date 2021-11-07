@@ -1,7 +1,7 @@
 import RecipeType from './RecipeType';
 
 type RecipeListType = {
-    recipes: Array<RecipeType>
+  recipes: Array<RecipeType>;
 };
 
-export default  RecipeListType;
+export default RecipeListType;

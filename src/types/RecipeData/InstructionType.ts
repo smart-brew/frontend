@@ -3,7 +3,7 @@ export type Parameters = {
   speed?: string;
   unloaded?: boolean;
   enabled?: boolean;
-  duration?: string; //time to wait
+  duration?: string; // time to wait
   manual?: string;
 };
 
