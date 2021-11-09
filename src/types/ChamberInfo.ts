@@ -1,4 +1,4 @@
-import { Status } from './Data';
+import { Status } from './SystemData';
 
 type ChamberInfo = {
   device: string;

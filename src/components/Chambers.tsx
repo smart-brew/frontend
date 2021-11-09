@@ -2,7 +2,7 @@ import React from 'react';
 import RecepeState from '../types/RecepeState';
 import ChamberInfo from '../types/ChamberInfo';
 import Chamber from './Chamber';
-import { ModuleData, Motor, Temperature } from '../types/Data';
+import { ModuleData, Motor, Temperature } from '../types/SystemData';
 
 const Chambers: React.FC<ModuleData> = ({
   TEMPERATURE,
