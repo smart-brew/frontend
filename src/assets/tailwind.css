@@ -37,3 +37,34 @@
 .cancel-button {
   @apply text-gray-600 bg-white border-gray-600 border-4 text-xl py-3 px-5 rounded-3xl font-bold;
 }
+
+.select-button {
+  @apply text-white bg-green-700 border-green-300 border-4 text-xl py-3 px-5 rounded-3xl font-bold;
+}
+
+.modal-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition: visibility 0s, opacity 0.5s;
+}
+
+.modal-bg-active {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: all;
+  -o-transition: visibility 0s, opacity 0.5s;
+}
+
+.modal {
+  @apply bg-white rounded-3xl h-auto;
+}

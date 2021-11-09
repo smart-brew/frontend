@@ -1,7 +1,7 @@
 import React from 'react';
 import FullInstruction from './FullInstruction';
 import HiddenInstruction from './HiddenInstruction';
-import Props from '../../../types/InstructionProps';
+import Props from '../../../types/Props/InstructionProps';
 
 const Instruction: React.FC<Props> = ({ instruction, state }: Props) => {
   if (state?.inProgress) {

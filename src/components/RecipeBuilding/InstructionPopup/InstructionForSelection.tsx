@@ -1,15 +1,22 @@
 import React from 'react';
 import FunctionType from '../../../types/FunctionData/FunctionType';
+import InstrSelectionProps from '../../../types/Props/InstrSelectionProps';
 
-const InstructionForSelection: React.FC<FunctionType> = (
-  instruction: FunctionType
-) => {
+const InstructionForSelection: React.FC<InstrSelectionProps> = (props) => {
+  const { instruction, onClick } = props;
   const { name, description } = instruction;
+
   return (
-    <div className="w-4/5 h-28 border-2 shadow rounded-2xl p-3 justify-center content-center items-center mb-5">
+    <button
+      type="button"
+      className="w-4/5 h-28 border-2 shadow rounded-2xl p-3 justify-center content-center items-center mb-5"
+      onClick={() => {
+        onClick(instruction);
+      }}
+    >
       <h3 className="font-bold text-lg mb-2">{name}</h3>
       <span className="italic">{description}</span>
-    </div>
+    </button>
   );
 };
 

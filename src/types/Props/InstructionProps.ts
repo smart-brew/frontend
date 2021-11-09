@@ -1,5 +1,5 @@
-import InstrType from './InstrType';
-import InstructionState from './InstructionState';
+import InstrType from '../InstrType';
+import InstructionState from '../InstructionState';
 
 interface Props {
   instruction: InstrType;

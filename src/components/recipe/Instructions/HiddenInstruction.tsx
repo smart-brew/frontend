@@ -2,7 +2,7 @@ import React from 'react';
 import InstrType from '../../../types/InstrType';
 import UnitsMap from '../../../helper_scripts/UnitsMap';
 import InstructionState from '../../../types/InstructionState';
-import Props from '../../../types/InstructionProps';
+import Props from '../../../types/Props/InstructionProps';
 
 const HiddenInstruction: React.FC<Props> = ({ instruction, state }: Props) => {
   const valueUnit = new UnitsMap().getUnit(instruction.name);
