@@ -1,6 +1,6 @@
 import OptionType from "./OptionType";
 
-type IngredientType = {
+type FunctionType = {
     id: number;
     code_name: string;
     name: string;
@@ -12,4 +12,4 @@ type IngredientType = {
     
   };
   
-  export default IngredientType;
+  export default FunctionType;
