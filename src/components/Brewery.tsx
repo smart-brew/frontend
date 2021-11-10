@@ -1,6 +1,6 @@
 import React from 'react';
 import InstrType from '../types/InstrType';
-import { ModuleData } from '../types/Data';
+import { ModuleData } from '../types/SystemData';
 import Chambers from './Chambers';
 import BlockType from '../types/BlockType';
 import Block from './recipe/Blocks/Block';
@@ -74,7 +74,7 @@ const moduleData: ModuleData = {
 };
 
 const Brewery: React.FC = () => {
-  const data = React.useContext(DataContext) || moduleData;
+  const data = React.useContext(DataContext)?.data || moduleData;
 
   return (
     <div className="w-2/3">

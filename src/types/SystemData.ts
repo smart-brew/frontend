@@ -1,5 +1,13 @@
 export type Status = 'WAITING' | 'IN_PROGRESS' | 'DONE' | 'ERROR';
 
+export type BrewingStatus =
+  | 'IDLE'
+  | 'IN_PROGRESS'
+  | 'ERROR'
+  | 'PAUSED'
+  | 'ABORTED'
+  | 'FINISHED';
+
 export interface BasicData {
   STATE: Status;
   DEVICE: string;
@@ -25,4 +33,15 @@ export interface ModuleData {
   MOTOR: Array<Motor>;
   UNLOADER: Array<Unloader>;
   PUMP: Array<Pump>;
+}
+
+export interface InstructionStatus {
+  currentInstructionId: number;
+  status: Status;
+}
+
+export interface SystemData {
+  data: ModuleData;
+  instruction: InstructionStatus;
+  brewStatus: BrewingStatus;
 }

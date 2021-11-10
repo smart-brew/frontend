@@ -57,6 +57,7 @@
     "eslint-plugin-react": "^7.26.1",
     "eslint-plugin-react-hooks": "^4.2.0",
     "husky": "^7.0.2",
+    "lint-staged": "^11.2.6",
     "prettier": "2.4.1"
   },
   "config": {
@@ -64,5 +65,11 @@
       "pattern": "((feature)|(fix)|(chore)|(update))\\(SB-[1-9]\\d*\\): .*",
       "errorMessage": "+--------------------------------------------------------------------+\n| Check correct commit message formatting in SmartBrew documentation |\n+--------------------------------------------------------------------+"
     }
+  },
+  "lint-staged": {
+    "**/*.{js,ts,tsx}": [
+      "prettier --write",
+      "eslint --fix"
+    ]
   }
 }
