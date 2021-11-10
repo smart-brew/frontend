@@ -1,8 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import RecipeListType from '../../types/RecipeData/RecipeListType';
-import RecipeType from '../../types/RecipeData/RecipeType';
-import RecipeList from '../RecipeList';
+import IngredietsForm from '../RecipeMaking/IngredientsForm';
 
 export const recipeList: RecipeListType = {
   recipes: [
@@ -101,8 +100,12 @@ const RecipePage: React.FC = () => {
       >
         Go back
       </Link>
+
       <div className="h-screen flex flex-row w-1/2">
-        <ul className="flex-1  overflow-y-scroll content-center justify-center ">
+        <div className="grid justify-items-center mx-40">
+          <IngredietsForm />
+        </div>
+        {/* <ul className="flex-1  overflow-y-scroll content-center justify-center ">
           {recipeList.recipes.map((recipe: RecipeType) => (
             <RecipeList
               id={recipe.id}
@@ -115,7 +118,7 @@ const RecipePage: React.FC = () => {
               Instructions={recipe.Instructions}
             />
           ))}
-        </ul>
+        </ul> */}
       </div>
     </div>
   );

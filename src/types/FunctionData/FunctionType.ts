@@ -1,6 +1,6 @@
 import OptionType from './OptionType';
 
-type IngredientType = {
+type FunctionType = {
   id: number;
   code_name: string;
   name: string;
@@ -11,4 +11,4 @@ type IngredientType = {
   Function_options?: Array<OptionType>;
 };
 
-export default IngredientType;
+export default FunctionType;
