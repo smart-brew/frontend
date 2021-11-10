@@ -7,6 +7,7 @@ import BlockType from '../../types/BlockType';
 import RecipeOverview from '../RecipeOverview/RecipeOverview';
 import { DataContext } from '../../contexts/dataContext';
 import RecipePage from './RecipePage';
+import IngredientsForm from '../RecipeMaking/IngredientsForm';
 
 const HomePage: React.FC = () => {
   const data = React.useContext(DataContext);
