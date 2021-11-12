@@ -29,6 +29,38 @@ export const recipeList: RecipeListType = {
           type: 'Yeast',
           units: 'Pcs',
         },
+        {
+          id: 5,
+          recipe_id: 3,
+          name: 'Some ingredient',
+          amount: 5.6,
+          type: 'Other',
+          units: 'Kg',
+        },
+        {
+          id: 48,
+          recipe_id: 3,
+          name: 'Some different ingredient',
+          amount: 1,
+          type: 'Fermented',
+          units: 'Pcs',
+        },
+        {
+          id: 55,
+          recipe_id: 3,
+          name: 'Some different ingredient',
+          amount: 1,
+          type: 'Fermented',
+          units: 'Pcs',
+        },
+        {
+          id: 505,
+          recipe_id: 3,
+          name: 'Some different ingredient',
+          amount: 1,
+          type: 'Hops',
+          units: 'Pcs',
+        },
       ],
       Instructions: [
         {
