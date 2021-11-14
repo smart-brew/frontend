@@ -1,30 +1,12 @@
 import React from 'react';
-import IngredientSectionProps from '../../../types/PropsD/IngredientSectionProps';
-import IngredientType from '../../../types/RecipeData/IngredientType';
-import { recipeList } from '../../MainPage/RecipePage';
-import { IngredientsListItem } from './IngredientsListItem';
-import { IngredientSection } from './IngredientSection';
 
 // eslint-disable-next-line
 export const StartBrewingPopup = (props: any) => {
+  const { infoGroup, show, selectedRecipeId } = props;
   // eslint-disable-next-line
-  if (!props.show) {
+  if (!show) {
     return null;
   }
-
-  const arr = recipeList.recipes[0].Ingredients;
-
-  const result = arr.reduce(function (r, a) {
-    // eslint-disable-next-line
-    r[a.type] = r[a.type] || [];
-    // eslint-disable-next-line
-    r[a.type].push(a);
-    return r;
-  }, Object.create(null));
-
-  const infoGroup = Object.keys(result).map((typ: any, i: number) => {
-    return <IngredientSection sectionName={typ} ingredients={result[typ]} />;
-  });
 
   return (
     <div
@@ -58,6 +40,7 @@ export const StartBrewingPopup = (props: any) => {
             <button
               type="button"
               className="mt-3 w-full inline-flex bg-green-200 justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-green-300  sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+              onClick={() => alert(selectedRecipeId)}
             >
               Confirm
             </button>

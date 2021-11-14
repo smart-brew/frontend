@@ -10,7 +10,9 @@ const options = [
 ];
 
 // eslint-disable-next-line
-const IngredietsForm = () => {
+const IngredietsForm = (props: any) => {
+  const { show } = props;
+
   const [inputFields, setInputFields] = useState([
     {
       amount: 0,
@@ -66,6 +68,10 @@ const IngredietsForm = () => {
     console.log(values);
   };
 
+  if (!show) {
+    return null;
+  }
+
   return (
     <div className="">
       <form onSubmit={handleSubmit}>
@@ -78,7 +84,7 @@ const IngredietsForm = () => {
             <div className="flex flex-row ">
               <label htmlFor="amount">
                 <input
-                  className="w-24 px-8 border-2 border-gray-300 "
+                  className="w-24 px-4 border-2 border-gray-300 "
                   name="amount"
                   type="number"
                   value={inputFields[index].amount}
@@ -140,7 +146,11 @@ const IngredietsForm = () => {
             </div>
           ))}
 
-          <button type="submit" className="submit" value="Submit">
+          <button
+            type="submit"
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+            value="Submit"
+          >
             Submit
           </button>
         </div>
