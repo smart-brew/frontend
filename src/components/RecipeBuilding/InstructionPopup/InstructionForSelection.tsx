@@ -1,9 +1,10 @@
 import React from 'react';
-import FunctionType from '../../../types/FunctionData/FunctionType';
 import InstrSelectionProps from '../../../types/Props/InstrSelectionProps';
 
-const InstructionForSelection: React.FC<InstrSelectionProps> = (props) => {
-  const { instruction, onClick } = props;
+const InstructionForSelection: React.FC<InstrSelectionProps> = ({
+  instruction,
+  onClick,
+}: InstrSelectionProps) => {
   const { name, description } = instruction;
 
   return (

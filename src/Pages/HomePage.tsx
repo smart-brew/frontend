@@ -10,7 +10,6 @@ const HomePage: React.FC = () => {
 
   return (
     <>
-      {/* TODO (Peto) - Miska tuto to musis asi zmenit a bude vsetko ok */}
       <div className="flex flex-row justify-center">
         <Brewery />
         <RecipeOverview />

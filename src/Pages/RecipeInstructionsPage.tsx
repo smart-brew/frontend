@@ -1,9 +1,9 @@
 /* eslint-disable camelcase */
 
 import React, { useState } from 'react';
-import InstructionPopup from '../RecipeBuilding/InstructionPopup/InstructionPopup';
-import FunctionListType from '../../types/FunctionData/FunctionListType';
-import FunctionType from '../../types/FunctionData/FunctionType';
+import InstructionPopup from '../components/RecipeBuilding/InstructionPopup/InstructionPopup';
+import FunctionListType from '../types/FunctionData/FunctionListType';
+import FunctionType from '../types/FunctionData/FunctionType';
 
 const functions: FunctionListType = {
   functionsArray: [

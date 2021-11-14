@@ -1,10 +1,8 @@
 import React from 'react';
-import FunctionListType from '../../../types/FunctionData/FunctionListType';
+
 import FunctionType from '../../../types/FunctionData/FunctionType';
-import SupportedFunctionHelper from '../../../helper_scripts/SupportedFunctionHelper';
 import InstructionForSelection from './InstructionForSelection';
 import InstrPopupProps from '../../../types/Props/InstrPopupProps';
-import InstructionProps from '../../../types/Props/InstructionProps';
 
 const InstructionPopup: React.FC<InstrPopupProps> = (props) => {
   const { functions, callback } = props;
@@ -12,12 +10,10 @@ const InstructionPopup: React.FC<InstrPopupProps> = (props) => {
 
   const instructionPopupRef = React.useRef<HTMLDivElement>(null);
 
-  const myCallback = (arg: FunctionType): undefined => {
+  const myCallback = (arg: FunctionType): void => {
     callback(arg);
     const instructionPopupNode = instructionPopupRef?.current;
     instructionPopupNode?.classList.remove('modal-bg-active');
-
-    return undefined;
   };
 
   const instructions = functionsArray.map((func) => {
