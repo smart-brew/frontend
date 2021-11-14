@@ -1,9 +1,17 @@
-import React, { Component } from 'react';
-import RecipeTypeProps from '../../../types/PropsD/RecipeTypeProps';
+import React from 'react';
 import RecipeType from '../../../types/RecipeData/RecipeType';
 
-const RecipeListItem: React.FC<RecipeTypeProps> = (props) => {
-  const { recipeData, onClick, current } = props;
+interface RecipeTypeProps {
+  recipeData: RecipeType;
+  onClick: (arg: number) => void;
+  current: number;
+}
+
+const RecipeListItem: React.FC<RecipeTypeProps> = ({
+  recipeData,
+  onClick,
+  current,
+}: RecipeTypeProps) => {
   const { name, id, locked } = recipeData;
 
   if (current === id) {

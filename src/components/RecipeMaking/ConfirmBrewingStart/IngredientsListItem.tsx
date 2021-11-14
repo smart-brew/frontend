@@ -1,10 +1,13 @@
 import React from 'react';
-import IngredientItemsProps from '../../../types/PropsD/IngredientItemsProps';
 import IngredientType from '../../../types/RecipeData/IngredientType';
 
-export const IngredientsListItem: React.FC<IngredientItemsProps> = (props) => {
-  const { ingredient } = props;
+interface IngredientItemsProps {
+  ingredient: IngredientType;
+}
 
+export const IngredientsListItem: React.FC<IngredientItemsProps> = ({
+  ingredient,
+}: IngredientItemsProps) => {
   return (
     <div className="flex flex-row">
       <div className="w-24 px-8 ">{ingredient.amount}</div>

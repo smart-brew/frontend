@@ -1,13 +1,12 @@
 import React from 'react';
 import './App.css';
-import DataContextProvider, { DataContext } from './contexts/dataContext';
-import Brewery from './components/Brewery';
-import HomePage from './components/MainPage/HomePage';
+import DataContextProvider from './contexts/dataContext';
+import Routes from './Pages/Routes';
 
 const App: React.FC = () => {
   return (
-    <DataContextProvider>
-      <HomePage />
+    <DataContextProvider enabled={false}>
+      <Routes />
     </DataContextProvider>
   );
 };

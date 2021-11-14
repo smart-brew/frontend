@@ -4,13 +4,12 @@ import UnitsMap from '../helper_scripts/UnitsMap';
 
 // bolo by treba namapovat ale pravdepodobne sa bude prerabat tak zatial len takto
 const Chamber: React.FC<ChamberInfo> = ({
-  device,
   temp,
   rpm,
   heating,
 }: ChamberInfo) => {
   const heatingN = new UnitsMap().getUnit(heating);
-  // eslint-disable-next-line
+
   return (
     console.log(heatingN),
     (

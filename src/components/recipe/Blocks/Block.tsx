@@ -6,7 +6,7 @@ import TimeHelper from '../../../helper_scripts/TimeHelper';
 
 const Block: React.FC<BlockType> = ({ instructions, name }: BlockType) => {
   let hasCurrentInstr = false;
-  const instructionsShow = instructions.map((instr, i) => {
+  const instructionsShow = instructions.map((instr) => {
     const { start, end } = instr;
     const instrStyle = new InstructionStateMap().getStyle(
       TimeHelper.getState(start, end)
@@ -16,7 +16,7 @@ const Block: React.FC<BlockType> = ({ instructions, name }: BlockType) => {
     }
     return (
       <Instruction
-        // eslint-disable-next-line react/no-array-index-key
+        key={instr.orderNum}
         instruction={instr}
         state={instrStyle}
       />

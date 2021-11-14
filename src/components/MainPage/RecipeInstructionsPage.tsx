@@ -1,3 +1,5 @@
+/* eslint-disable camelcase */
+
 import React, { useState } from 'react';
 import InstructionPopup from '../RecipeBuilding/InstructionPopup/InstructionPopup';
 import FunctionListType from '../../types/FunctionData/FunctionListType';

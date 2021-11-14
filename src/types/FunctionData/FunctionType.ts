@@ -1,3 +1,5 @@
+/* eslint-disable camelcase */
+
 import OptionType from './OptionType';
 
 type FunctionType = {
