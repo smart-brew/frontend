@@ -5,7 +5,7 @@ import Routes from './Pages/Routes';
 
 const App: React.FC = () => {
   return (
-    <DataContextProvider>
+    <DataContextProvider enabled={false}>
       <Routes />
     </DataContextProvider>
   );

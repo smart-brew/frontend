@@ -1,7 +1,12 @@
 import React from 'react';
 import RecipeType from '../../../types/RecipeData/RecipeType';
 import RecipeListItem from './RecipeListItem';
-import RecipeListTypeProps from '../../../types/PropsD/RecipeListTypeProps';
+
+interface RecipeListTypeProps {
+  recipes: Array<RecipeType>;
+  callback: (arg: number) => undefined;
+  current: number;
+}
 
 const RecipeList: React.FC<RecipeListTypeProps> = (props) => {
   const { recipes, callback, current } = props;

@@ -1,3 +1,5 @@
+/* eslint-disable camelcase */
+
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import RecipeListType from '../types/RecipeData/RecipeListType';
@@ -386,7 +388,7 @@ const RecipePage: React.FC = () => {
   const recipeIngredients = findItem(recipeList.recipes, selectedRecipeId)[0]
     .Ingredients;
 
-  const result = recipeIngredients.reduce(function (r, a) {
+  const result = recipeIngredients.reduce((r, a) => {
     // eslint-disable-next-line
     r[a.type] = r[a.type] || [];
     // eslint-disable-next-line
@@ -394,11 +396,10 @@ const RecipePage: React.FC = () => {
     return r;
   }, Object.create(null));
 
-  const infoGroup = Object.keys(result).map((typ: any, i: number) => {
+  const infoGroup = Object.keys(result).map((typ) => {
     return <IngredientSection sectionName={typ} ingredients={result[typ]} />;
   });
 
-  // eslint-disable-next-line
   return (
     <div>
       <Link
@@ -436,7 +437,7 @@ const RecipePage: React.FC = () => {
         </div>
       ) : null}
 
-      {showForm ? (
+      {showForm && (
         <div>
           <IngredietsForm show={showForm} />
           <button
@@ -447,13 +448,14 @@ const RecipePage: React.FC = () => {
             Cancel
           </button>
         </div>
-      ) : null}
-      <StartBrewingPopup
-        show={showPopup}
-        onClose={() => setShowPopup(false)}
-        infoGroup={infoGroup}
-        selectedRecipeId={selectedRecipeId}
-      />
+      )}
+      {showPopup && (
+        <StartBrewingPopup
+          onClose={() => setShowPopup(false)}
+          infoGroup={infoGroup}
+          selectedRecipeId={selectedRecipeId}
+        />
+      )}
     </div>
   );
 };

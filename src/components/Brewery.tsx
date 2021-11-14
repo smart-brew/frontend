@@ -1,24 +1,21 @@
 import React from 'react';
-import InstrType from '../types/InstrType';
+// import InstrType from '../types/InstrType';
 import { ModuleData } from '../types/SystemData';
 import Chambers from './Chambers';
-import BlockType from '../types/BlockType';
-import Block from './recipe/Blocks/Block';
 import { DataContext } from '../contexts/dataContext';
-// import { data } from 'autoprefixer';
 import imgPlaceholder from '../brewery_placeholder.svg';
 
-const tempInstruction: InstrType = {
-  id: 0,
-  name: 'Heat up',
-  parentBlockId: 0,
-  currParam: 40,
-  targetParam: 100,
-  start: 12145,
-  end: 212545,
-  orderNum: 1,
-  chamberId: 0,
-};
+// const tempInstruction: InstrType = {
+//   id: 0,
+//   name: 'Heat up',
+//   parentBlockId: 0,
+//   currParam: 40,
+//   targetParam: 100,
+//   start: 12145,
+//   end: 212545,
+//   orderNum: 1,
+//   chamberId: 0,
+// };
 
 const moduleData: ModuleData = {
   TEMPERATURE: [

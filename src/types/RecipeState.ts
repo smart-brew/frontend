@@ -1,8 +1,10 @@
+/* eslint-disable camelcase */
+
 import ChambersInfo from './ChamberInfo';
 
-type RecepeState = {
+type RecipeState = {
   module_states: Array<ChambersInfo>;
   // and others
 };
 
-export default RecepeState;
+export default RecipeState;

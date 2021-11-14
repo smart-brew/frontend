@@ -1,13 +1,16 @@
 import React from 'react';
 
-// eslint-disable-next-line
-export const StartBrewingPopup = (props: any) => {
-  const { infoGroup, show, selectedRecipeId } = props;
-  // eslint-disable-next-line
-  if (!show) {
-    return null;
-  }
+interface Props {
+  infoGroup: JSX.Element[];
+  selectedRecipeId: number;
+  onClose: () => void;
+}
 
+export const StartBrewingPopup: React.FC<Props> = ({
+  infoGroup,
+  selectedRecipeId,
+  onClose,
+}: Props) => {
   return (
     <div
       className="fixed z-10 inset-0 "
@@ -47,7 +50,7 @@ export const StartBrewingPopup = (props: any) => {
             <button
               type="button"
               // eslint-disable-next-line
-              onClick={props.onClose}
+              onClick={onClose}
               className="mt-3 w-full bg-red-200 inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-red-300  sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
             >
               Decline

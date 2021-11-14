@@ -1,3 +1,5 @@
+/* eslint-disable camelcase */
+
 export type Parameters = {
   temp?: string;
   speed?: string;

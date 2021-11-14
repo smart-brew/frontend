@@ -1,3 +1,5 @@
+/* eslint-disable camelcase */
+
 import React, { useState } from 'react';
 import IngredientType from '../../types/RecipeData/IngredientType';
 
@@ -40,7 +42,7 @@ const IngredietsForm = (props: any) => {
     values[index][event.target.name as keyof IngredientType] =
       event.target.value;
     setInputFields(values);
-    const values2 = [...inputFields] as any;
+    // unused?? - const values2 = [...inputFields] as any;
   };
 
   const handleRemoveField = (index: number): void => {
@@ -99,8 +101,12 @@ const IngredietsForm = (props: any) => {
                   value={inputFields[index].units}
                   onChange={(event) => handleChangeInput(index, event)}
                 >
-                  {options.map((e, key) => {
-                    return <option value={e.value}>{e.label}</option>;
+                  {options.map((e) => {
+                    return (
+                      <option key={e.value} value={e.value}>
+                        {e.label}
+                      </option>
+                    );
                   })}
                 </select>
               </label>
@@ -112,8 +118,12 @@ const IngredietsForm = (props: any) => {
                   value={inputFields[index].type}
                   onChange={(event) => handleChangeInput(index, event)}
                 >
-                  {unloadChoices.map((e, key) => {
-                    return <option value={e}>{e}</option>;
+                  {unloadChoices.map((e) => {
+                    return (
+                      <option key={e} value={e}>
+                        {e}
+                      </option>
+                    );
                   })}
                 </select>
               </label>

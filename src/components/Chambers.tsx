@@ -1,20 +1,13 @@
 import React from 'react';
-import RecepeState from '../types/RecepeState';
-import ChamberInfo from '../types/ChamberInfo';
 import Chamber from './Chamber';
-import { ModuleData, Motor, Temperature } from '../types/SystemData';
+import { ModuleData } from '../types/SystemData';
 
-const Chambers: React.FC<ModuleData> = ({
-  TEMPERATURE,
-  MOTOR,
-  PUMP,
-  UNLOADER,
-}: ModuleData) => {
+const Chambers: React.FC<ModuleData> = ({ TEMPERATURE }: ModuleData) => {
   return (
     <div className="container flex flex-row">
-      {}
-      {TEMPERATURE.map((tempO: Temperature) => (
+      {TEMPERATURE.map((tempO) => (
         <Chamber
+          key={tempO.DEVICE}
           device={tempO.DEVICE}
           temp={tempO.TEMP}
           rpm={10000000000}
