@@ -379,19 +379,21 @@ const RecipePage: React.FC = () => {
     return undefined;
   };
 
-  // eslint-disable-next-line
-  function findItem(arrRecipes: RecipeType[], idToSearch: number) {
-    return arrRecipes.filter((item) => {
+  function findItem(
+    arrRecipes: RecipeType[],
+    idToSearch: number
+  ): RecipeType | undefined {
+    return arrRecipes.find((item) => {
       return item.id === idToSearch;
     });
   }
-  const recipeIngredients = findItem(recipeList.recipes, selectedRecipeId)[0]
-    .Ingredients;
+  const recipeIngredients = findItem(
+    recipeList.recipes,
+    selectedRecipeId
+  )?.Ingredients;
 
-  const result = recipeIngredients.reduce((r, a) => {
-    // eslint-disable-next-line
+  const result = recipeIngredients?.reduce((r, a) => {
     r[a.type] = r[a.type] || [];
-    // eslint-disable-next-line
     r[a.type].push(a);
     return r;
   }, Object.create(null));

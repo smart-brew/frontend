@@ -3,6 +3,10 @@
 import React, { useState } from 'react';
 import IngredientType from '../../types/RecipeData/IngredientType';
 
+interface Props {
+  show: boolean;
+}
+
 const unloadChoices = ['Fermentables', 'Yeast', 'Hops', 'Other'];
 
 const options = [
@@ -11,10 +15,7 @@ const options = [
   { value: 'oz', label: 'oz' },
 ];
 
-// eslint-disable-next-line
-const IngredietsForm = (props: any) => {
-  const { show } = props;
-
+const IngredietsForm: React.FC<Props> = ({ show }: Props) => {
   const [inputFields, setInputFields] = useState([
     {
       amount: 0,
@@ -31,7 +32,6 @@ const IngredietsForm = (props: any) => {
     return max + 1;
   };
 
-  // eslint-disable-next-line
   const handleChangeInput = (
     index: number,
     event:
@@ -63,8 +63,7 @@ const IngredietsForm = (props: any) => {
     setInputFields(values);
   };
 
-  // eslint-disable-next-line
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     const values = [...inputFields] as IngredientType[];
     console.log(values);
