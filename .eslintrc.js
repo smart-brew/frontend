@@ -53,12 +53,7 @@ module.exports = {
         allowExpressions: true,
       },
     ],
-    'max-len': [
-      'warn',
-      {
-        code: 80,
-      },
-    ],
+    'max-len': 'off',
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'warn',
     'import/prefer-default-export': 'off',

@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import RecipeListType from '../../types/RecipeData/RecipeListType';
-import RecipeType from '../../types/RecipeData/RecipeType';
-import RecipeList from './RecipeList/RecipeList';
-import IngredietsForm from '../RecipeMaking/IngredientsForm';
-import { IngredientSection } from '../RecipeMaking/ConfirmBrewingStart/IngredientSection';
-import { StartBrewingPopup } from '../RecipeMaking/ConfirmBrewingStart/StartBrewingPopup';
+import RecipeListType from '../types/RecipeData/RecipeListType';
+import RecipeType from '../types/RecipeData/RecipeType';
+import RecipeList from '../components/MainPage/RecipeList/RecipeList';
+import IngredietsForm from '../components/RecipeMaking/IngredientsForm';
+import { IngredientSection } from '../components/RecipeMaking/ConfirmBrewingStart/IngredientSection';
+import { StartBrewingPopup } from '../components/RecipeMaking/ConfirmBrewingStart/StartBrewingPopup';
 
 export const recipeList: RecipeListType = {
   recipes: [
