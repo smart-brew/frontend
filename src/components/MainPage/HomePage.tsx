@@ -12,7 +12,7 @@ import { StartBrewingPopup } from '../RecipeMaking/ConfirmBrewingStart/StartBrew
 
 const HomePage: React.FC = () => {
   const data = React.useContext(DataContext);
-  const [show, setShow] = useState(false);
+  // const [show, setShow] = useState(false);
   // eslint-disable-next-line
   return (
     <Router>
@@ -30,19 +30,19 @@ const HomePage: React.FC = () => {
                 Newest data from backend /api/brew/brewId :{' '}
                 {JSON.stringify(data)}
               </div>
-              <button
+              {/* <button
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
                 type="button"
                 onClick={() => setShow(true)}
               >
                 Start brewing
               </button>
-              <StartBrewingPopup show={show} onClose={() => setShow(false)} />
+              <StartBrewingPopup show={show} onClose={() => setShow(false)} /> */}
               <Link
                 to="/recipe"
-                className=" underline text-blue-600 hover:text-blue-800 visited:text-purple-600"
+                className=" bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
               >
-                Recipe click me
+                Pick a recipe
               </Link>
             </>
           )}
