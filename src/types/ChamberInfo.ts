@@ -1,10 +1,10 @@
-import { Status } from "./Data";
+import { Status } from './SystemData';
 
 type ChamberInfo = {
-    device: String,
-    temp: number,
-    rpm : number,
-    heating: Status,
+  device: string;
+  temp: number;
+  rpm: number;
+  heating: Status;
 };
 
-export default  ChamberInfo;
+export default ChamberInfo;

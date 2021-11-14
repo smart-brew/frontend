@@ -1,11 +1,11 @@
 import React from 'react';
 import { getBrewStatus } from '../api/dataEndpoint';
-import { ModuleData } from '../types/Data';
+import { SystemData } from '../types/SystemData';
 
-export const DataContext = React.createContext<ModuleData | null>(null);
+export const DataContext = React.createContext<SystemData | null>(null);
 
 const DataContextProvider: React.FC = ({ children }) => {
-  const [data, setData] = React.useState<ModuleData | null>(null);
+  const [data, setData] = React.useState<SystemData | null>(null);
 
   React.useEffect(() => {
     // periodic fetch to update current state of system

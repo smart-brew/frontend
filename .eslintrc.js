@@ -27,6 +27,7 @@ module.exports = {
         ignore: ['.svg'],
       },
     ],
+    camelcase: 'warn',
     'no-use-before-define': 'off',
     '@typescript-eslint/no-use-before-define': ['error'],
     'react/jsx-filename-extension': [
@@ -44,6 +45,7 @@ module.exports = {
       },
     ],
     'no-shadow': 'off',
+    'no-param-reassign': 'off',
     '@typescript-eslint/no-shadow': ['error'],
     '@typescript-eslint/explicit-function-return-type': [
       'error',

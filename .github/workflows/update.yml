@@ -51,7 +51,6 @@ jobs:
             
             ssh -p 2222 pi@localhost /bin/bash <<- 'SSH_RPI'
               cd /home/pi/frontend
-              docker-compose build
-              docker-compose up --detach
+              docker-compose -f docker-compose.prod.yml up --build --detach
           SSH_RPI
           SSH_VM
