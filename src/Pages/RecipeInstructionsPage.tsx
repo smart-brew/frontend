@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import InstructionPopup from '../components/RecipeBuilding/InstructionPopup/InstructionPopup';
 import FunctionListType from '../types/FunctionData/FunctionListType';
 import FunctionType from '../types/FunctionData/FunctionType';
+import EditableInstruction from '../components/RecipeBuilding/InstructionComponents/EditableInstruction';
 
 const functions: FunctionListType = {
   functionsArray: [
@@ -145,6 +146,12 @@ const RecipeInstructionsPage: React.FC = () => {
   return (
     <div className="flex flex-col space-y-5 justify-center">
       <span>{selectedInstr.name}</span>
+      <EditableInstruction
+        instruction={selectedInstr}
+        onDelete={() => {
+          return true;
+        }}
+      />
       <button
         className="select-button w-1/5"
         type="button"
