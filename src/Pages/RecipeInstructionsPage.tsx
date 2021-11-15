@@ -123,12 +123,12 @@ const functions: FunctionListType = {
 const RecipeInstructionsPage: React.FC = () => {
   const emptyInstr: FunctionType = {
     id: -1,
-    code_name: 'EMPTY',
-    name: 'Empty instruction',
-    category: 'SYSTEM',
+    code_name: 'SET_TEMPERATURE',
+    name: 'Set temperature',
+    category: 'TEMPERATURE',
     units: null,
     input_type: 'string',
-    description: 'This is a placeholder.',
+    description: 'Sets temperature.',
     Function_options: [],
   };
 
