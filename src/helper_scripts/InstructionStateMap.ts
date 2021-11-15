@@ -15,16 +15,14 @@ export default class InstructionStateMap {
         style: null,
         inProgress: false,
       };
-      // eslint-disable-next-line no-restricted-syntax
-      for (const possibleState of this.states) {
+      this.states.forEach((possibleState) => {
         if (possibleState.name === instrState.name.toLowerCase()) {
           instrState.style = possibleState.style;
           if (possibleState.inProgress) {
             instrState.inProgress = true;
           }
-          break;
         }
-      }
+      });
       return instrState;
     }
 

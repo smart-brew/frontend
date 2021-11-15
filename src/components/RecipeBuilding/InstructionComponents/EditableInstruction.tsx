@@ -1,5 +1,5 @@
 import React from 'react';
-import InstructionConstants from '../../../helper_scripts/InstructionConstants';
+import { InstructionConstants } from '../../../helper_scripts/InstructionConstants';
 import FunctionType from '../../../types/FunctionData/FunctionType';
 
 interface EditableInstructionProps {
