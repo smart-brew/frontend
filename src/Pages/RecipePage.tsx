@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { recipeList } from '../data/recipe';
 import RecipeType from '../types/RecipeData/RecipeType';
 import RecipeList from '../components/MainPage/RecipeList/RecipeList';
-import IngredietsForm from '../components/RecipeMaking/IngredientsForm';
+import IngredietsForm from '../components/RecipeMaking/FormComponents/IngredientsForm';
 import { IngredientSection } from '../components/RecipeMaking/ConfirmBrewingStart/IngredientSection';
 import { StartBrewingPopup } from '../components/RecipeMaking/ConfirmBrewingStart/StartBrewingPopup';
 
@@ -39,6 +39,7 @@ const RecipePage: React.FC = () => {
     r[a.type].push(a);
     return r;
   }, Object.create(null));
+  console.log(result);
 
   const infoGroup = Object.keys(result).map((typ) => {
     return <IngredientSection sectionName={typ} ingredients={result[typ]} />;
