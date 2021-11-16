@@ -68,3 +68,7 @@
 .modal {
   @apply bg-white rounded-3xl h-auto;
 }
+
+textarea {
+  resize: none;
+}

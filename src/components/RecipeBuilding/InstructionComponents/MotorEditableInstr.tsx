@@ -6,7 +6,7 @@ interface Props {
   instruction: FunctionType;
 }
 
-const TemperatureEditableInstr: React.FC<Props> = ({ instruction }: Props) => {
+const MotorEditableInstr: React.FC<Props> = ({ instruction }: Props) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const selectRef = useRef<HTMLSelectElement>(null);
 
@@ -16,14 +16,14 @@ const TemperatureEditableInstr: React.FC<Props> = ({ instruction }: Props) => {
     const paramObj = { device: 'NONE', value: 0 };
     if (inputNode != null && selectNode != null) {
       paramObj.value = parseInt(inputNode?.value, 10);
-      paramObj.device = `TEMP_${selectNode.value.toString()}`;
+      paramObj.device = `MOTOR_${selectNode.value.toString()}`;
       return paramObj;
     }
     return null;
   };
 
   return (
-    <div className="flex flex-row justify-evenly space-x-8">
+    <div className="flex flex-row justify-evenly">
       <select className="border border-gray-300 px-2" ref={selectRef}>
         <option value={1}>Chamber 1</option>
         <option value={2}>Chamber 2</option>
@@ -35,10 +35,10 @@ const TemperatureEditableInstr: React.FC<Props> = ({ instruction }: Props) => {
           type="number"
           ref={inputRef}
         />
-        <span>°C</span>
+        <span>RPM</span>
       </div>
     </div>
   );
 };
 
-export default TemperatureEditableInstr;
+export default MotorEditableInstr;
