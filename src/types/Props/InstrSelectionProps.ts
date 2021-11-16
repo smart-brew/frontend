@@ -1,8 +1,8 @@
-import FunctionType from '../FunctionData/FunctionType';
+import InstructionTemplateType from '../FunctionData/InstructionTemplateType';
 
 interface InstrSelectionProps {
-  instruction: FunctionType;
-  onClick: (arg: FunctionType) => undefined;
+  instruction: InstructionTemplateType;
+  onClick: (arg: InstructionTemplateType) => undefined;
 }
 
 export default InstrSelectionProps;

@@ -1,12 +1,18 @@
 import React, { useState } from 'react';
 import FunctionType from '../../../types/FunctionData/FunctionType';
 import ParamType from '../../../types/ParamType';
+import InstructionTemplateType from '../../../types/FunctionData/InstructionTemplateType';
+import EditableInstrRefType from '../../../types/RecipeData/EditableInstrRefType';
 
 interface Props {
-  instruction: FunctionType;
+  instruction: InstructionTemplateType;
+  ref: React.Ref<EditableInstrRefType>;
 }
 
-const TransferEditableInstr: React.FC<Props> = ({ instruction }: Props) => {
+const TransferEditableInstr: React.FC<Props> = ({
+  instruction,
+  ref,
+}: Props) => {
   const [firstSelected, setFirstSelected] = useState(1);
   const select1Ref = React.useRef<HTMLSelectElement>(null);
   const select2Ref = React.useRef<HTMLSelectElement>(null);

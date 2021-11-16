@@ -1,12 +1,15 @@
 import React, { useRef } from 'react';
 import FunctionType from '../../../types/FunctionData/FunctionType';
 import ParamType from '../../../types/ParamType';
+import InstructionTemplateType from '../../../types/FunctionData/InstructionTemplateType';
+import EditableInstrRefType from '../../../types/RecipeData/EditableInstrRefType';
 
 interface Props {
-  instruction: FunctionType;
+  instruction: InstructionTemplateType;
+  ref: React.Ref<EditableInstrRefType>;
 }
 
-const ManualEditableInstr: React.FC<Props> = ({ instruction }: Props) => {
+const ManualEditableInstr: React.FC<Props> = ({ instruction, ref }: Props) => {
   const textRef = useRef<HTMLTextAreaElement>(null);
 
   const readParams = (): ParamType | null => {

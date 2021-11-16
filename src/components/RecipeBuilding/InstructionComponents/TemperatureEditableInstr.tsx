@@ -1,12 +1,18 @@
 import React, { useRef } from 'react';
 import FunctionType from '../../../types/FunctionData/FunctionType';
 import ParamType from '../../../types/ParamType';
+import InstructionTemplateType from '../../../types/FunctionData/InstructionTemplateType';
+import EditableInstrRefType from '../../../types/RecipeData/EditableInstrRefType';
 
 interface Props {
-  instruction: FunctionType;
+  instruction: InstructionTemplateType;
+  ref: React.Ref<EditableInstrRefType>;
 }
 
-const TemperatureEditableInstr: React.FC<Props> = ({ instruction }: Props) => {
+const TemperatureEditableInstr: React.FC<Props> = ({
+  instruction,
+  ref,
+}: Props) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const selectRef = useRef<HTMLSelectElement>(null);
 

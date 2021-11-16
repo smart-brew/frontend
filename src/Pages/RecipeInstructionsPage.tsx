@@ -5,137 +5,139 @@ import InstructionPopup from '../components/RecipeBuilding/InstructionPopup/Inst
 import FunctionListType from '../types/FunctionData/FunctionListType';
 import FunctionType from '../types/FunctionData/FunctionType';
 import EditableInstruction from '../components/RecipeBuilding/InstructionComponents/EditableInstruction';
+import InstructionTemplateType from '../types/FunctionData/InstructionTemplateType';
+import InstructionTemplateListType from '../types/FunctionData/InstructionTemplateListType';
 
-const functions: FunctionListType = {
-  functionsArray: [
+const templates: InstructionTemplateListType = {
+  templates: [
     {
       id: 1,
-      code_name: 'SET_TEMPERATURE',
+      codeName: 'SET_TEMPERATURE',
       name: 'Temperature',
       category: 'TEMPERATURE',
       units: '°C',
-      input_type: 'float',
+      inputType: 'float',
       description: 'Sets temerature for selected chamber',
-      Function_options: [
+      devices: [
         {
           id: 1,
           name: 'Chamber 1',
-          code_name: 'TEMP_1',
+          device: 'TEMP_1',
         },
         {
           id: 2,
           name: 'Chamber 2',
-          code_name: 'TEMP_2',
+          device: 'TEMP_2',
         },
       ],
     },
     {
       id: 2,
-      code_name: 'SET_MOTOR_SPEED',
+      codeName: 'SET_MOTOR_SPEED',
       name: 'Motor',
       category: 'MOTOR',
       units: 'RMP',
-      input_type: 'float',
+      inputType: 'float',
       description: 'Sets rpms for selected motor',
-      Function_options: [
+      devices: [
         {
           id: 3,
           name: 'Motor 1',
-          code_name: 'MOTOR_1',
+          device: 'MOTOR_1',
         },
         {
           id: 4,
           name: 'Motor 2',
-          code_name: 'MOTOR_2',
+          device: 'MOTOR_2',
         },
       ],
     },
     {
       id: 3,
-      code_name: 'TRANSFER_LIQUIDS',
+      codeName: 'TRANSFER_LIQUIDS',
       name: 'Transfer liquids',
       category: 'PUMP',
       units: null,
-      input_type: null,
+      inputType: null,
       description: 'Transfers liquids from first chamber to second',
-      Function_options: [
+      devices: [
         {
           id: 5,
           name: 'Pump 1',
-          code_name: 'PUMP_1',
+          device: 'PUMP_1',
         },
       ],
     },
     {
       id: 4,
-      code_name: 'UNLOAD',
+      codeName: 'UNLOAD',
       name: 'Unload',
       category: 'UNLOADER',
       units: null,
-      input_type: null,
+      inputType: null,
       description: 'Unloads selected ingredient into chamber',
-      Function_options: [
+      devices: [
         {
           id: 6,
           name: 'Fermentables',
-          code_name: 'FERMENTABLE',
+          device: 'FERMENTABLE',
         },
         {
           id: 7,
           name: 'Yeast',
-          code_name: 'YEAST',
+          device: 'YEAST',
         },
         {
           id: 8,
           name: 'Hops',
-          code_name: 'HOPS',
+          device: 'HOPS',
         },
         {
           id: 9,
           name: 'Other',
-          code_name: 'OTHER',
+          device: 'OTHER',
         },
       ],
     },
     {
       id: 5,
-      code_name: 'WAIT',
+      codeName: 'WAIT',
       name: 'Wait',
       category: 'SYSTEM',
       units: 'Minutes',
-      input_type: 'float',
+      inputType: 'float',
       description: 'System will wait for given amount of minutes',
-      Function_options: [],
+      devices: [],
     },
     {
       id: 6,
-      code_name: 'MANUAL',
+      codeName: 'MANUAL',
       name: 'Manual step',
       category: 'SYSTEM',
       units: null,
-      input_type: 'string',
+      inputType: 'string',
       description: 'System will wait for manual inervention',
-      Function_options: [],
+      devices: [],
     },
   ],
 };
 
 const RecipeInstructionsPage: React.FC = () => {
-  const emptyInstr: FunctionType = {
+  const emptyInstr: InstructionTemplateType = {
     id: -1,
-    code_name: 'SET_TEMPERATURE',
+    codeName: 'SET_TEMPERATURE',
     name: 'Set temperature',
     category: 'TEMPERATURE',
     units: null,
-    input_type: 'string',
+    inputType: 'string',
     description: 'Sets temperature.',
-    Function_options: [],
+    devices: null,
   };
 
   const [selectedInstr, setSelectedInstr] = useState(emptyInstr);
   const popupRef = React.useRef<HTMLDivElement>(null);
 
-  const handleInstrSelection = (arg: FunctionType): undefined => {
+  const handleInstrSelection = (arg: InstructionTemplateType): undefined => {
     console.log('CALLBACK HANDLER CALLED.');
     setSelectedInstr(arg);
     const instructionPopupNode = popupRef?.current;
@@ -148,6 +150,7 @@ const RecipeInstructionsPage: React.FC = () => {
       <span>{selectedInstr.name}</span>
       <EditableInstruction
         instruction={selectedInstr}
+        blockId={-1}
         onDelete={() => {
           return true;
         }}
@@ -164,7 +167,7 @@ const RecipeInstructionsPage: React.FC = () => {
       </button>
       <div className="modal-bg" ref={popupRef}>
         <InstructionPopup
-          functions={functions}
+          functions={templates}
           callback={handleInstrSelection}
         />
       </div>

@@ -1,9 +1,11 @@
 import FunctionListType from '../FunctionData/FunctionListType';
 import FunctionType from '../FunctionData/FunctionType';
+import InstructionTemplateListType from '../FunctionData/InstructionTemplateListType';
+import InstructionTemplateType from '../FunctionData/InstructionTemplateType';
 
 interface InstrPopupProps {
-  functions: FunctionListType;
-  callback: (arg: FunctionType) => undefined;
+  functions: InstructionTemplateListType;
+  callback: (arg: InstructionTemplateType) => undefined;
 }
 
 export default InstrPopupProps;
