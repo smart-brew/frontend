@@ -1,7 +1,7 @@
 import FunctionListType from '../types/FunctionData/FunctionListType';
 import FunctionType from '../types/FunctionData/FunctionType';
 
-class SupportedFunctionHelper {
+class SupportedInstructionTemplateHelper {
   functionMap = new Map<number, FunctionType>();
   functionArray = new Array<FunctionType>();
 
@@ -21,4 +21,4 @@ class SupportedFunctionHelper {
   }
 }
 
-export default SupportedFunctionHelper;
+export default SupportedInstructionTemplateHelper;
