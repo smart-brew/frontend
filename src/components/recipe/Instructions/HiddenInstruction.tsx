@@ -6,9 +6,9 @@ const HiddenInstruction: React.FC<Props> = ({ instruction, state }: Props) => {
   const valueUnit = new UnitsMap().getUnit(instruction.name);
 
   return (
-    <div className="opacity-75 text-lg border-2 shadow rounded-xl content-center justify-center py-4 mt-3 bg-white flex flex-col space-x-5">
+    <div className="opacity-75 text-lg shadow rounded-xl content-center justify-center py-4 mt-3 bg-white flex flex-col space-x-5">
       <div className="flex flex-row content-center justify-center">
-        <h3 className="text-xl text-gray-700 border-r-4 pr-3">
+        <h3 className="text-xl text-gray-700 pr-3">
           <span className="font-bold">{instruction.name}</span>
           <span className="font-semibold"> in </span>
           <span className="font-bold">

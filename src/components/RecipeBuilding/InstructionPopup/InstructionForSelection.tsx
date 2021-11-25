@@ -10,7 +10,7 @@ const InstructionForSelection: React.FC<InstrSelectionProps> = ({
   return (
     <button
       type="button"
-      className="w-4/5 h-28 border-2 shadow rounded-2xl p-3 justify-center content-center items-center mb-5"
+      className="w-4/5 h-28 shadow rounded-2xl p-3 justify-center content-center items-center mb-5"
       onClick={() => {
         onClick(instruction);
       }}
