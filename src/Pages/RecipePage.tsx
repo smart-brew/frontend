@@ -15,19 +15,17 @@ const RecipePage: React.FC = () => {
   const [showPopup, setShowPopup] = useState(false); // pupup to start a new brewing process
   const [showForm, setShowForm] = useState(false); // show form to make a new recipe
   const [selectedRecipeId, setRecipeId] = useState(1);
-  const [listOfIngredients, setListOfIngredients] = useState([
+  const [recipeNameForm, setRecipeNameForm] = useState('');
+  const [inputFields, setInputFields] = useState([
     {
       amount: 0,
       units: 'KG',
-      name: 'filterOut',
+      name: '',
       id: 0,
       type: 'Fermentables',
       recipe_id: 0,
     },
   ]);
-
-  // console.log('toto je list of ingredients on the recipepage');
-  // console.log(listOfIngredients);
 
   const handleSelection = (arg: number): undefined => {
     setRecipeId(arg);
@@ -65,6 +63,12 @@ const RecipePage: React.FC = () => {
       />
     );
   });
+  // const returnIngredients = (ingredients: IngredientType[]): void => {
+  //   console.log(ingredients);
+  //   setListOfIngredients(ingredients);
+  //   console.log('toto je list of ingredients on the recipepage');
+  //   console.log(listOfIngredients);
+  // };
 
   const infoGroupPopup = Object.keys(result).map((typ) => {
     return (
@@ -75,13 +79,6 @@ const RecipePage: React.FC = () => {
       />
     );
   });
-
-  const returnIngredients = (ingredients: IngredientType[]): void => {
-    console.log(ingredients);
-    setListOfIngredients(ingredients);
-    console.log('toto je list of ingredients on the recipepage');
-    console.log(listOfIngredients);
-  };
 
   return (
     <div>
@@ -150,9 +147,12 @@ const RecipePage: React.FC = () => {
             <div className=" w-2/3 ">
               <IngredietsForm
                 show={showForm}
-                setListOfIngredients={(ingredients: IngredientType[]) =>
-                  returnIngredients(ingredients)
+                inputFields={inputFields}
+                setInputFields={(ingredients: IngredientType[]) =>
+                  setInputFields(ingredients)
                 }
+                recipeNameForm={recipeNameForm}
+                setRecipeNameForm={(name: string) => setRecipeNameForm(name)}
               />
             </div>
             <div className=" w-1/3 relative text-center content-center">

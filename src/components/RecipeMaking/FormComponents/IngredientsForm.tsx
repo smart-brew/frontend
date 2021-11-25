@@ -5,7 +5,10 @@ import FormSection from './FormSection';
 
 interface Props {
   show: boolean;
-  setListOfIngredients: (ingredients: IngredientType[]) => void;
+  inputFields: Array<IngredientType>;
+  setInputFields: (ingredients: IngredientType[]) => void;
+  recipeNameForm: string;
+  setRecipeNameForm: (name: string) => void;
 }
 
 function getIndex(
@@ -19,26 +22,18 @@ const unloadChoices = ['Fermentables', 'Yeast', 'Hops', 'Other']; // i can get t
 
 const IngredietsForm: React.FC<Props> = ({
   show,
-  setListOfIngredients,
+  inputFields,
+  setInputFields,
+  recipeNameForm,
+  setRecipeNameForm,
 }: Props) => {
-  const [inputFields, setInputFields] = useState([
-    {
-      amount: 0,
-      units: 'KG',
-      name: '',
-      id: 0,
-      type: 'Fermentables',
-      recipe_id: 0,
-    },
-  ]);
-
   const generateid = (): number => {
     const values = [...inputFields];
     const max = Math.max(...values.map((o) => o.id), 0);
     return max + 1;
   };
 
-  const [recipeName, setRecipeName] = useState('');
+  // const [recipeName, setRecipeName] = useState('');
 
   const handleChangeInput = (
     ids: number,
@@ -76,7 +71,6 @@ const IngredietsForm: React.FC<Props> = ({
     e.preventDefault();
     const values = [...inputFields] as IngredientType[];
     console.log(values);
-    setListOfIngredients(values);
   };
 
   if (!show) {
@@ -110,9 +104,9 @@ const IngredietsForm: React.FC<Props> = ({
           className="w-80 px-8  border-2 border-gray-300 text-2xl font-bold m-10"
           name="name"
           placeholder="recipe name"
-          value={recipeName}
+          value={recipeNameForm}
           required
-          onChange={(event) => setRecipeName(event.target.value)}
+          onChange={(event) => setRecipeNameForm(event.target.value)}
         />
       </label>
       <form onSubmit={handleSubmit} className="mx-20">
