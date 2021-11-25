@@ -4,7 +4,7 @@ import IngredientType from '../../../types/RecipeData/IngredientType';
 import FormSection from './FormSection';
 
 interface Props {
-  show: boolean;
+  showPage: string;
   inputFields: Array<IngredientType>;
   setInputFields: (ingredients: IngredientType[]) => void;
   recipeNameForm: string;
@@ -21,7 +21,7 @@ function getIndex(
 const unloadChoices = ['Fermentables', 'Yeast', 'Hops', 'Other']; // i can get these from the list of the supported functions
 
 const IngredietsForm: React.FC<Props> = ({
-  show,
+  showPage,
   inputFields,
   setInputFields,
   recipeNameForm,
@@ -67,13 +67,13 @@ const IngredietsForm: React.FC<Props> = ({
     setInputFields(values);
   };
 
-  // const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
-  //   e.preventDefault();
-  //   const values = [...inputFields] as IngredientType[];
-  //   console.log(values);
-  // };
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
+    e.preventDefault();
+    const values = [...inputFields] as IngredientType[];
+    console.log(values);
+  };
 
-  if (!show) {
+  if (showPage !== 'FormPage') {
     return null;
   }
 
@@ -109,7 +109,7 @@ const IngredietsForm: React.FC<Props> = ({
           onChange={(event) => setRecipeNameForm(event.target.value)}
         />
       </label>
-      <form className="mx-20">
+      <form className="mx-20" onSubmit={handleSubmit}>
         <div className="container  border-2 border-gray-300 rounded-3xl  px-20 ">
           <header className="center py-8 font-bold">
             <h3>Ingredients</h3>

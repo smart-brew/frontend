@@ -4,7 +4,7 @@ import RecipeListItem from './RecipeListItem';
 
 interface RecipeListTypeProps {
   recipes: Array<RecipeType>;
-  callback: (arg: number) => undefined;
+  callback: (arg: number) => void;
   current: number;
 }
 

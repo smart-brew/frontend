@@ -10,11 +10,13 @@ import IngredietsForm from '../components/RecipeMaking/FormComponents/Ingredient
 import { IngredientSection } from '../components/RecipeMaking/ConfirmBrewingStart/IngredientSection';
 import { StartBrewingPopup } from '../components/RecipeMaking/ConfirmBrewingStart/StartBrewingPopup';
 import IngredientType from '../types/RecipeData/IngredientType';
+import SideBar from './SideBarRecipePage';
 
 const RecipePage: React.FC = () => {
-  const [showPopup, setShowPopup] = useState(false); // pupup to start a new brewing process
-  const [showForm, setShowForm] = useState(false); // show form to make a new recipe
-  const [selectedRecipeId, setRecipeId] = useState(1);
+  // const [showPopup, setShowPopup] = useState(false); // pupup to start a new brewing process
+  // const [showForm, setShowForm] = useState(false); // show form to make a new recipe
+  const [showPage, setShowPage] = useState('PickingPage');
+  const [recipeId, setRecipeId] = useState(1);
   const [recipeNameForm, setRecipeNameForm] = useState('');
   const [inputFields, setInputFields] = useState([
     {
@@ -27,10 +29,10 @@ const RecipePage: React.FC = () => {
     },
   ]);
 
-  const handleSelection = (arg: number): undefined => {
-    setRecipeId(arg);
-    return undefined;
-  };
+  // const handleRecipeSelection = (recipeId: number): undefined => {
+  //   setRecipeId(recipeId);
+  //   return undefined;
+  // };
 
   function findItem(
     arrRecipes: RecipeType[],
@@ -40,12 +42,9 @@ const RecipePage: React.FC = () => {
       return item.id === idToSearch;
     });
   }
-  const recipeIngredients = findItem(
-    recipeList.recipes,
-    selectedRecipeId
-  )?.Ingredients;
+  const recipeIngredients = findItem(recipeList.recipes, recipeId)?.Ingredients;
 
-  const recipeName = findItem(recipeList.recipes, selectedRecipeId)?.name;
+  const recipeName = findItem(recipeList.recipes, recipeId)?.name;
 
   const result = recipeIngredients?.reduce((r, a) => {
     r[a.type] = r[a.type] || [];
@@ -64,6 +63,20 @@ const RecipePage: React.FC = () => {
     );
   });
 
+  function saveForm(): void {
+    const states = inputFields.map(function (data, idx) {
+      if (data.name === '') {
+        return false;
+      }
+      return true;
+    });
+    if (states.includes(false)) {
+      console.log('not all filed are full'); // bud nieco vyskakokvacie alebo riesit uplne inak
+    } else {
+      setShowPage('InstructionsPage'); // tu sa nastavi cesta ku stranke s vyberom instrukcii
+    }
+  }
+
   const infoGroupPopup = Object.keys(result).map((typ) => {
     return (
       <IngredientSection
@@ -74,10 +87,11 @@ const RecipePage: React.FC = () => {
     );
   });
 
-  return (
-    <div>
-      <div className="flex flex-row ">
-        {!showForm ? (
+  // eslint-disable-next-line
+  function renderSwitch(page: string) {
+    switch (page) {
+      default:
+        return (
           <div className="recipe-choosing h-screen w-2/3">
             <Link
               to="/"
@@ -97,12 +111,12 @@ const RecipePage: React.FC = () => {
               </div>
             </div>
           </div>
-        ) : null}
-
-        {showForm && (
+        );
+      case 'FormPage':
+        return (
           <div className="ingredients-form  w-2/3">
             <IngredietsForm
-              show={showForm}
+              showPage={showPage}
               inputFields={inputFields}
               setInputFields={(ingredients: IngredientType[]) =>
                 setInputFields(ingredients)
@@ -111,71 +125,30 @@ const RecipePage: React.FC = () => {
               setRecipeNameForm={(name: string) => setRecipeNameForm(name)}
             />
           </div>
-        )}
+        );
+    }
+  }
+
+  return (
+    <div>
+      <div className="flex flex-row ">
+        {renderSwitch(showPage)}
         <div className="sidebar h-screen w-1/3  border-l-2 border-gray-300">
-          <div className=" mt-10 mr-10 h-full  ">
-            {showForm && (
-              <div className="h-full">
-                <div className="context h-4/6" />
-                <div className="buttons">
-                  <button
-                    className="bg-green-400 hover:bg-green-600 text-white font-bold py-2 px-4 w-52 rounded-full "
-                    type="button"
-                    onClick={() => setShowForm(false)}
-                  >
-                    Cancel
-                  </button>
-                </div>
-              </div>
-            )}
-            {!showForm ? (
-              <div className="h-full">
-                <div className="context h-4/6 ">
-                  <div className=" text-center text-2xl font-bold pb-8">
-                    Recipes
-                  </div>
-                  <div className="min-h-full">
-                    <RecipeList
-                      recipes={recipeList.recipes}
-                      callback={handleSelection}
-                      current={selectedRecipeId}
-                    />
-                  </div>
-                </div>
-                {/* Buttons Edit, Start Brewing, Make a new recipe */}
-                <div className="buttons  text-center flex flex-col">
-                  <button
-                    className="bg-green-400 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full m-auto w-52 mb-2"
-                    type="button"
-                  >
-                    Edit
-                  </button>
-                  <button
-                    className="bg-green-400 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full m-auto  w-52 mb-2"
-                    type="button"
-                    onClick={() => setShowPopup(true)}
-                  >
-                    Start brewing
-                  </button>
-                  <button
-                    className="bg-green-400 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full m-auto w-52 mb-2"
-                    type="button"
-                    onClick={() => setShowForm(true)}
-                  >
-                    Make a new recipe
-                  </button>
-                </div>
-              </div>
-            ) : null}
-          </div>
+          <SideBar
+            showPage={showPage}
+            setShowPage={(pageName: string) => setShowPage(pageName)}
+            setRecipeId={(rId: number) => setRecipeId(rId)}
+            recipeId={recipeId}
+            saveForm={() => saveForm()}
+          />
         </div>
-        {showPopup && (
+        {/* {showPopup && (
           <StartBrewingPopup
             onClose={() => setShowPopup(false)}
             infoGroup={infoGroupPopup}
             selectedRecipeId={selectedRecipeId}
           />
-        )}
+        )} */}
       </div>
     </div>
   );
