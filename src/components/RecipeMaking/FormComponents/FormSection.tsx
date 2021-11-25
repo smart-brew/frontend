@@ -32,18 +32,13 @@ const FormSection: React.FC<FormSectionProps> = (props) => {
     { value: 'oz', label: 'oz' },
   ];
 
-  console.log(inputFields);
-  console.log(sectionName);
-
   if (!inputFields) {
-    console.log('nie je');
-    console.log(sectionName);
     return (
-      <div>
-        <div className="text-left">{sectionName}</div>
+      <div className="my-5">
+        <div className="text-left font-bold flow-root ">{sectionName}</div>
         <button
           type="button"
-          className="px-4 text-base font-medium text-gray-500 text-left underline"
+          className="px-4 text-base font-medium text-gray-500 text-left underline float-right"
           onClick={() => handleAdd(sectionName)}
         >
           &#43; Add ingredient
@@ -53,10 +48,10 @@ const FormSection: React.FC<FormSectionProps> = (props) => {
   }
 
   return (
-    <div>
-      <div className="text-left">{sectionName}</div>
+    <div className="my-5">
+      <div className="text-left font-bold">{sectionName}</div>
       {inputFields.map((inputField, index: number) => (
-        <div className="flex flex-row ">
+        <div className="flex flex-row flow-root ">
           <label htmlFor="amount">
             <input
               className="w-24 px-4 border-2 border-gray-300 "
@@ -98,7 +93,7 @@ const FormSection: React.FC<FormSectionProps> = (props) => {
 
           <button
             type="button"
-            className="px-4 text-base font-medium text-gray-500  underline"
+            className="px-4 text-base font-medium text-gray-500  underline float-right "
             onClick={() => handleAdd(sectionName)}
           >
             &#43; Add ingredient
@@ -106,6 +101,7 @@ const FormSection: React.FC<FormSectionProps> = (props) => {
 
           <button
             type="button"
+            className="float-right"
             onClick={() => handleRemove(inputFields[index].id)}
           >
             &#8722;
