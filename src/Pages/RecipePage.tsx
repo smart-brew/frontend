@@ -63,12 +63,6 @@ const RecipePage: React.FC = () => {
       />
     );
   });
-  // const returnIngredients = (ingredients: IngredientType[]): void => {
-  //   console.log(ingredients);
-  //   setListOfIngredients(ingredients);
-  //   console.log('toto je list of ingredients on the recipepage');
-  //   console.log(listOfIngredients);
-  // };
 
   const infoGroupPopup = Object.keys(result).map((typ) => {
     return (
@@ -82,98 +76,107 @@ const RecipePage: React.FC = () => {
 
   return (
     <div>
-      {!showForm ? (
-        <div className="recipe-choosing">
-          <Link
-            to="/"
-            className=" underline text-blue-600 hover:text-blue-800 visited:text-purple-600"
-          >
-            <div className=" flex flex-row text-2xl text-black text-left ml-10">
-              &#8592; back
-            </div>
-          </Link>
-          <div className="flex flex-row ">
-            <div className=" w-2/3 flex flex-col">
+      <div className="flex flex-row ">
+        {!showForm ? (
+          <div className="recipe-choosing h-screen w-2/3">
+            <Link
+              to="/"
+              className=" underline text-blue-600 hover:text-blue-800 visited:text-purple-600"
+            >
+              <div className=" flex flex-row text-2xl text-black text-left ml-10">
+                &#8592; back
+              </div>
+            </Link>
+
+            <div className=" flex flex-col h-4/6">
               <div className=" text-center text-2xl font-bold">
                 {recipeName}
               </div>
-              <div className="flex flex-col   border-2 border-gray-300 rounded-3xl px-8 m-8 min-h-full">
+              <div className="flex flex-col overflow-auto border-2 border-gray-300 rounded-3xl px-8 m-8 mt-10 h-full">
                 {infoGroup}
               </div>
             </div>
-            <div className=" w-1/3 ">
-              <div className=" text-center text-2xl font-bold pb-8">
-                Recipes
-              </div>
-              <div className="min-h-full">
-                <RecipeList
-                  recipes={recipeList.recipes}
-                  callback={handleSelection}
-                  current={selectedRecipeId}
-                />
-              </div>
-              {/* Buttons Edit, Start Brewing, Make a new recipe */}
-              <div className="  text-center flex flex-col">
-                <button
-                  className="bg-green-400 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full m-auto w-52 mb-2"
-                  type="button"
-                  // onClick={() => setShowPopup(true)}
-                >
-                  Edit
-                </button>
-                <button
-                  className="bg-green-400 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full m-auto  w-52 mb-2"
-                  type="button"
-                  onClick={() => setShowPopup(true)}
-                >
-                  Start brewing
-                </button>
-                <button
-                  className="bg-green-400 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full m-auto w-52 mb-2"
-                  type="button"
-                  onClick={() => setShowForm(true)}
-                >
-                  Make a new recipe
-                </button>
-              </div>
-            </div>
           </div>
-        </div>
-      ) : null}
+        ) : null}
 
-      {showForm && (
-        <div className="ingredients-form">
-          <div className="flex flex-row ">
-            <div className=" w-2/3 ">
-              <IngredietsForm
-                show={showForm}
-                inputFields={inputFields}
-                setInputFields={(ingredients: IngredientType[]) =>
-                  setInputFields(ingredients)
-                }
-                recipeNameForm={recipeNameForm}
-                setRecipeNameForm={(name: string) => setRecipeNameForm(name)}
-              />
-            </div>
-            <div className=" w-1/3 relative text-center content-center">
-              <button
-                className="bg-green-400 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full absolute bottom-0 w-52"
-                type="button"
-                onClick={() => setShowForm(false)}
-              >
-                Cancel
-              </button>
-            </div>
+        {showForm && (
+          <div className="ingredients-form  w-2/3">
+            <IngredietsForm
+              show={showForm}
+              inputFields={inputFields}
+              setInputFields={(ingredients: IngredientType[]) =>
+                setInputFields(ingredients)
+              }
+              recipeNameForm={recipeNameForm}
+              setRecipeNameForm={(name: string) => setRecipeNameForm(name)}
+            />
+          </div>
+        )}
+        <div className="sidebar h-screen w-1/3  border-l-2 border-gray-300">
+          <div className=" mt-10 mr-10 h-full  ">
+            {showForm && (
+              <div className="h-full">
+                <div className="context h-4/6" />
+                <div className="buttons">
+                  <button
+                    className="bg-green-400 hover:bg-green-600 text-white font-bold py-2 px-4 w-52 rounded-full "
+                    type="button"
+                    onClick={() => setShowForm(false)}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            )}
+            {!showForm ? (
+              <div className="h-full">
+                <div className="context h-4/6 ">
+                  <div className=" text-center text-2xl font-bold pb-8">
+                    Recipes
+                  </div>
+                  <div className="min-h-full">
+                    <RecipeList
+                      recipes={recipeList.recipes}
+                      callback={handleSelection}
+                      current={selectedRecipeId}
+                    />
+                  </div>
+                </div>
+                {/* Buttons Edit, Start Brewing, Make a new recipe */}
+                <div className="buttons  text-center flex flex-col">
+                  <button
+                    className="bg-green-400 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full m-auto w-52 mb-2"
+                    type="button"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    className="bg-green-400 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full m-auto  w-52 mb-2"
+                    type="button"
+                    onClick={() => setShowPopup(true)}
+                  >
+                    Start brewing
+                  </button>
+                  <button
+                    className="bg-green-400 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full m-auto w-52 mb-2"
+                    type="button"
+                    onClick={() => setShowForm(true)}
+                  >
+                    Make a new recipe
+                  </button>
+                </div>
+              </div>
+            ) : null}
           </div>
         </div>
-      )}
-      {showPopup && (
-        <StartBrewingPopup
-          onClose={() => setShowPopup(false)}
-          infoGroup={infoGroupPopup}
-          selectedRecipeId={selectedRecipeId}
-        />
-      )}
+        {showPopup && (
+          <StartBrewingPopup
+            onClose={() => setShowPopup(false)}
+            infoGroup={infoGroupPopup}
+            selectedRecipeId={selectedRecipeId}
+          />
+        )}
+      </div>
     </div>
   );
 };

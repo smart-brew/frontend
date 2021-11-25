@@ -67,11 +67,11 @@ const IngredietsForm: React.FC<Props> = ({
     setInputFields(values);
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
-    e.preventDefault();
-    const values = [...inputFields] as IngredientType[];
-    console.log(values);
-  };
+  // const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
+  //   e.preventDefault();
+  //   const values = [...inputFields] as IngredientType[];
+  //   console.log(values);
+  // };
 
   if (!show) {
     return null;
@@ -109,20 +109,13 @@ const IngredietsForm: React.FC<Props> = ({
           onChange={(event) => setRecipeNameForm(event.target.value)}
         />
       </label>
-      <form onSubmit={handleSubmit} className="mx-20">
+      <form className="mx-20">
         <div className="container  border-2 border-gray-300 rounded-3xl  px-20 ">
           <header className="center py-8 font-bold">
             <h3>Ingredients</h3>
           </header>
 
-          <div>{infoGroup}</div>
-          <button
-            type="submit"
-            className="bg-green-400 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full mt-16 w-52"
-            value="Submit"
-          >
-            Submit
-          </button>
+          <div className="mb-10">{infoGroup}</div>
         </div>
       </form>
     </div>
