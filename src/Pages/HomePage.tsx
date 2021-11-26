@@ -1,12 +1,23 @@
 import React from 'react';
 
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import Brewery from '../components/Brewery';
 import RecipeOverview from '../components/RecipeOverview/RecipeOverview';
 import { DataContext } from '../contexts/dataContext';
 
 const HomePage: React.FC = () => {
   const data = React.useContext(DataContext);
+
+  interface CustomState {
+    rId: number;
+  }
+
+  const location = useLocation();
+  const state = location.state as CustomState;
+
+  if (location.state) {
+    console.log(state.rId);
+  }
 
   return (
     <>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import RecipeList from '../components/MainPage/RecipeList/RecipeList';
 import { recipeList } from '../data/recipe';
 
@@ -17,6 +18,13 @@ const SideBar: React.FC<Props> = ({
   recipeId,
   saveForm,
 }: Props) => {
+  const history = useHistory();
+
+  // eslint-disable-next-line
+  const goToMainPage = () => {
+    history.push('/', { rId: recipeId });
+  };
+
   // eslint-disable-next-line
   function renderSwitch(page: string) {
     switch (page) {
@@ -56,6 +64,13 @@ const SideBar: React.FC<Props> = ({
                 onClick={() => setShowPage('FormPage')}
               >
                 Make a new recipe
+              </button>
+              <button
+                className="bg-green-400 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full m-auto w-52 mb-2"
+                type="button"
+                onClick={() => goToMainPage()}
+              >
+                Start brewing
               </button>
             </div>
           </div>
