@@ -92,7 +92,7 @@ const RecipePage: React.FC = () => {
     switch (page) {
       default:
         return (
-          <div className="recipe-choosing h-screen w-2/3">
+          <div className="recipe-choosing h-full w-2/3">
             <Link
               to="/"
               className=" underline text-blue-600 hover:text-blue-800 visited:text-purple-600"
@@ -106,7 +106,7 @@ const RecipePage: React.FC = () => {
               <div className=" text-center text-2xl font-bold">
                 {recipeName}
               </div>
-              <div className="flex flex-col overflow-auto border-2 border-gray-300 rounded-3xl px-8 m-8 mt-10 h-full">
+              <div className="flex flex-col overflow-auto border-2 border-gray-300 rounded-3xl px-8 m-8 pt-10 h-full">
                 {infoGroup}
               </div>
             </div>
@@ -130,10 +130,10 @@ const RecipePage: React.FC = () => {
   }
 
   return (
-    <div>
-      <div className="flex flex-row ">
+    <>
+      <div className="flex flex-row h-full">
         {renderSwitch(showPage)}
-        <div className="sidebar h-screen w-1/3  border-l-2 border-gray-300">
+        <div className="sidebar h-full   w-1/3  border-l-2 border-gray-300">
           <SideBar
             showPage={showPage}
             setShowPage={(pageName: string) => setShowPage(pageName)}
@@ -150,7 +150,7 @@ const RecipePage: React.FC = () => {
           />
         )} */}
       </div>
-    </div>
+    </>
   );
 };
 export default RecipePage;
