@@ -11,7 +11,7 @@ interface Props {
   saveForm: () => void;
 }
 
-const SideBar: React.FC<Props> = ({
+const SideBarRecipePage: React.FC<Props> = ({
   showPage,
   setShowPage,
   setRecipeId,
@@ -22,7 +22,10 @@ const SideBar: React.FC<Props> = ({
 
   // eslint-disable-next-line
   const goToMainPage = () => {
-    history.push('/', { rId: recipeId });
+    history.push('/', {
+      rId: recipeId,
+      setShowPage: 'BeforeBrewingPage',
+    });
   };
 
   // eslint-disable-next-line
@@ -51,13 +54,6 @@ const SideBar: React.FC<Props> = ({
               >
                 Edit
               </button>
-              {/* <button
-                  className="bg-green-400 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full m-auto  w-52 mb-2"
-                  type="button"
-                  onClick={() => setShowPopup(true)}
-                >
-                  Start brewing
-                </button> */}
               <button
                 className="bg-green-400 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full m-auto w-52 mb-2"
                 type="button"
@@ -104,4 +100,4 @@ const SideBar: React.FC<Props> = ({
   return <div className=" mt-10 mr-10 h-full  ">{renderSwitch(showPage)}</div>;
 };
 
-export default SideBar;
+export default SideBarRecipePage;

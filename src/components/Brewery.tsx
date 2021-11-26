@@ -9,7 +9,7 @@ const Brewery: React.FC = () => {
   const data = React.useContext(DataContext)?.data || moduleData;
 
   return (
-    <div className="w-2/3">
+    <div className="">
       <img src={imgPlaceholder} className="w-full" alt="placeholder" />
       <Chambers
         TEMPERATURE={data.TEMPERATURE}

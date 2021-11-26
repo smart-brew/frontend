@@ -15,7 +15,7 @@ const Pages: React.FC = () => {
     >
       <Route path="/" exact component={OverviewPage} />
       <Route path="/recipe" component={RecipePage} />
-      <Route path="/recipe/instructions" component={RecipeInstructionsPage} />
+      {/* <Route path="/recipe/instructions" component={RecipeInstructionsPage} /> */}
       <Route path="/history" component={HistoryPage} />
     </div>
   );
