@@ -86,7 +86,7 @@ const brewBlock2: BlockType = {
 
 const RecipeOverview: React.FC = () => {
   return (
-    <div className="w-2/5 h-full max-h-full mb-10 py-4 px-6 bg-gray-50 border-l-2 border-gray-300 overflow-hidden">
+    <div>
       <h2 className="font-bold text-3xl pb-10">Názov receptu</h2>
       <div className="h-5/6 overflow-y-auto overflow-x-hidden overscroll-contain space-y-5 pr-3 rounded-2xl  pl-20">
         <Block

@@ -24,7 +24,7 @@ const RecipeListItem: React.FC<RecipeTypeProps> = ({
         key={id}
         className="bg-yellow-200 chamber mx-7 my-1 content-center  shadow rounded-3xl "
       >
-        <div>{name}</div>
+        <div className="text-center">{name}</div>
         <div>{locked}</div>
       </button>
     );

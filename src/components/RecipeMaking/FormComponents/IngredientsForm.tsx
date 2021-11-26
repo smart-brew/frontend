@@ -4,7 +4,11 @@ import IngredientType from '../../../types/RecipeData/IngredientType';
 import FormSection from './FormSection';
 
 interface Props {
-  show: boolean;
+  showPage: string;
+  inputFields: Array<IngredientType>;
+  setInputFields: (ingredients: IngredientType[]) => void;
+  recipeNameForm: string;
+  setRecipeNameForm: (name: string) => void;
 }
 
 function getIndex(
@@ -16,23 +20,20 @@ function getIndex(
 
 const unloadChoices = ['Fermentables', 'Yeast', 'Hops', 'Other']; // i can get these from the list of the supported functions
 
-const IngredietsForm: React.FC<Props> = ({ show }: Props) => {
-  const [inputFields, setInputFields] = useState([
-    {
-      amount: 0,
-      units: 'KG',
-      name: '',
-      id: 0,
-      type: 'Fermentables',
-      recipe_id: 0,
-    },
-  ]);
-
+const IngredietsForm: React.FC<Props> = ({
+  showPage,
+  inputFields,
+  setInputFields,
+  recipeNameForm,
+  setRecipeNameForm,
+}: Props) => {
   const generateid = (): number => {
     const values = [...inputFields];
     const max = Math.max(...values.map((o) => o.id), 0);
     return max + 1;
   };
+
+  // const [recipeName, setRecipeName] = useState('');
 
   const handleChangeInput = (
     ids: number,
@@ -72,7 +73,7 @@ const IngredietsForm: React.FC<Props> = ({ show }: Props) => {
     console.log(values);
   };
 
-  if (!show) {
+  if (showPage !== 'FormPage') {
     return null;
   }
 
@@ -97,20 +98,24 @@ const IngredietsForm: React.FC<Props> = ({ show }: Props) => {
 
   return (
     <div className="">
-      <form onSubmit={handleSubmit}>
-        <div className="container  shadow rounded-3xl  px-20">
-          <header className="center py-8 text-xl">
+      <label htmlFor="name">
+        <input
+          type="text"
+          className="w-80 px-8  border-2 border-gray-300 text-2xl font-bold m-10"
+          name="name"
+          placeholder="recipe name"
+          value={recipeNameForm}
+          required
+          onChange={(event) => setRecipeNameForm(event.target.value)}
+        />
+      </label>
+      <form className="mx-20" onSubmit={handleSubmit}>
+        <div className="container  border-2 border-gray-300 rounded-3xl  px-20 ">
+          <header className="center py-8 font-bold">
             <h3>Ingredients</h3>
           </header>
 
-          <div>{infoGroup}</div>
-          <button
-            type="submit"
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
-            value="Submit"
-          >
-            Submit
-          </button>
+          <div className="mb-10">{infoGroup}</div>
         </div>
       </form>
     </div>
