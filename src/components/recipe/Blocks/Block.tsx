@@ -25,7 +25,7 @@ const Block: React.FC<BlockType> = ({ instructions, name }: BlockType) => {
 
   return (
     <div
-      className={`justify-center items-center text-center space-y-5 border-2 border-gray-300 rounded-3xl p-3 ${
+      className={`justify-center items-center text-center space-y-5 shadow rounded-3xl p-3 ${
         hasCurrentInstr ? 'active-block' : 'inactive-block'
       }`}
     >

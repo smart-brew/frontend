@@ -98,7 +98,7 @@ const IngredietsForm: React.FC<Props> = ({ show }: Props) => {
   return (
     <div className="">
       <form onSubmit={handleSubmit}>
-        <div className="container  border-2 border-gray-300 rounded-3xl  px-20">
+        <div className="container  shadow rounded-3xl  px-20">
           <header className="center py-8 text-xl">
             <h3>Ingredients</h3>
           </header>

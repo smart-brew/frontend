@@ -42,7 +42,7 @@ export const StartBrewingPopup: React.FC<Props> = ({
           <div className="grid justify-items-stretch mt-8">
             <button
               type="button"
-              className="mt-3 w-full inline-flex bg-green-200 justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-green-300  sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+              className="mt-3 w-full inline-flex bg-green-200 justify-center rounded-md shadow shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-green-300  sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
               onClick={() => alert(selectedRecipeId)}
             >
               Confirm
@@ -50,7 +50,7 @@ export const StartBrewingPopup: React.FC<Props> = ({
             <button
               type="button"
               onClick={onClose}
-              className="mt-3 w-full bg-red-200 inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-red-300  sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+              className="mt-3 w-full bg-red-200 inline-flex justify-center rounded-md shadow shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-red-300  sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
             >
               Decline
             </button>

@@ -13,7 +13,7 @@ const FullInstruction: React.FC<Props> = ({ instruction, state }: Props) => {
   const valueUnit = new UnitsMap().getUnit(instruction.name);
 
   return (
-    <div className="h-1/6 text-lg border-2 shadow rounded-xl justify-center py-4 mt-3 bg-white">
+    <div className="h-1/6 text-lg shadow rounded-xl justify-center py-4 mt-3 bg-white">
       <div className="relative">
         <img
           src={arrow}

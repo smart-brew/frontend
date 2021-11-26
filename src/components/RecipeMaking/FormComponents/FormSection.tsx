@@ -59,7 +59,7 @@ const FormSection: React.FC<FormSectionProps> = (props) => {
         <div className="flex flex-row ">
           <label htmlFor="amount">
             <input
-              className="w-24 px-4 border-2 border-gray-300 "
+              className="w-24 px-4 shadow "
               name="amount"
               type="number"
               value={inputFields[index].amount}
@@ -69,7 +69,7 @@ const FormSection: React.FC<FormSectionProps> = (props) => {
           <label htmlFor="units" className="px-1">
             <select
               name="units"
-              className="w-20 px-4  border-2 border-gray-300 "
+              className="w-20 px-4  shadow "
               placeholder=" units"
               value={inputFields[index].units}
               onChange={(event) => handleChange(inputFields[index].id, event)}
@@ -87,7 +87,7 @@ const FormSection: React.FC<FormSectionProps> = (props) => {
           <label htmlFor="name">
             <input
               type="text"
-              className="w-80 px-8  border-2 border-gray-300 "
+              className="w-80 px-8  shadow "
               name="name"
               placeholder="ingredient"
               value={inputFields[index].name}
