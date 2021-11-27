@@ -4,19 +4,20 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { recipeList } from '../data/recipe';
-import RecipeType from '../types/RecipeData/RecipeType';
+import RecipeType, { RecipeSimple } from '../types/RecipeData/RecipeType';
 import RecipeList from '../components/MainPage/RecipeList/RecipeList';
 import IngredietsForm from '../components/RecipeMaking/FormComponents/IngredientsForm';
 import { IngredientSection } from '../components/RecipeMaking/ConfirmBrewingStart/IngredientSection';
 import { StartBrewingPopup } from '../components/RecipeMaking/ConfirmBrewingStart/StartBrewingPopup';
 import IngredientType from '../types/RecipeData/IngredientType';
 import SideBar from './SideBarRecipePage';
+import { getRecipe, getRecipes } from '../api/dataEndpoint';
 
 const RecipePage: React.FC = () => {
   // const [showPopup, setShowPopup] = useState(false); // pupup to start a new brewing process
   // const [showForm, setShowForm] = useState(false); // show form to make a new recipe
   const [showPage, setShowPage] = useState('PickingPage');
-  const [recipeId, setRecipeId] = useState(1);
+  const [recipeId, setRecipeId] = useState<number>(1);
   const [recipeNameForm, setRecipeNameForm] = useState('');
   const [inputFields, setInputFields] = useState([
     {
@@ -28,6 +29,35 @@ const RecipePage: React.FC = () => {
       recipe_id: 0,
     },
   ]);
+
+  // all recipes known to system
+  const [recipes, setRecipes] = React.useState<RecipeSimple[]>([]);
+
+  // currently selected recipe
+  const [selectedRecipe, setSelectedRecipe] = React.useState<RecipeType | null>(
+    null
+  );
+
+  // on load, fetch all recipes
+  React.useEffect(() => {
+    const f = async (): Promise<void> => {
+      setRecipes(await getRecipes());
+    };
+    f();
+  }, []);
+
+  // if new recipes -> select the first one (usually executed on page load)
+  React.useEffect(() => {
+    setRecipeId(recipes[0]?.id || 0);
+  }, [recipes]);
+
+  // if new selected recipe (by ID) -> fetch the entire recipe with details
+  React.useEffect(() => {
+    const f = async (): Promise<void> => {
+      if (recipeId) setSelectedRecipe(await getRecipe(recipeId));
+    };
+    f();
+  }, [recipeId]);
 
   // const handleRecipeSelection = (recipeId: number): undefined => {
   //   setRecipeId(recipeId);
@@ -42,26 +72,31 @@ const RecipePage: React.FC = () => {
       return item.id === idToSearch;
     });
   }
-  const recipeIngredients = findItem(recipeList.recipes, recipeId)?.Ingredients;
+  const recipeIngredients =
+    selectedRecipe?.Ingredients ||
+    findItem(recipeList.recipes, recipeId)?.Ingredients;
 
-  const recipeName = findItem(recipeList.recipes, recipeId)?.name;
+  const recipeName =
+    selectedRecipe?.name || findItem(recipeList.recipes, recipeId)?.name;
 
   const result = recipeIngredients?.reduce((r, a) => {
     r[a.type] = r[a.type] || [];
     r[a.type].push(a);
     return r;
   }, Object.create(null));
-  console.log(result);
+  console.log({ result });
 
-  const infoGroup = Object.keys(result).map((typ) => {
-    return (
-      <IngredientSection
-        sectionName={typ}
-        ingredients={result[typ]}
-        showUnloader={false}
-      />
-    );
-  });
+  const infoGroup = result
+    ? Object.keys(result)?.map((typ) => {
+        return (
+          <IngredientSection
+            sectionName={typ}
+            ingredients={result[typ]}
+            showUnloader={false}
+          />
+        );
+      })
+    : null;
 
   function saveForm(): void {
     const states = inputFields.map(function (data, idx) {
@@ -77,15 +112,15 @@ const RecipePage: React.FC = () => {
     }
   }
 
-  const infoGroupPopup = Object.keys(result).map((typ) => {
-    return (
-      <IngredientSection
-        sectionName={typ}
-        ingredients={result[typ]}
-        showUnloader
-      />
-    );
-  });
+  // const infoGroupPopup = Object.keys(result).map((typ) => {
+  //   return (
+  //     <IngredientSection
+  //       sectionName={typ}
+  //       ingredients={result[typ]}
+  //       showUnloader
+  //     />
+  //   );
+  // });
 
   // eslint-disable-next-line
   function renderSwitch(page: string) {
