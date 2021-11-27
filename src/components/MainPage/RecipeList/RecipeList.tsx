@@ -8,10 +8,13 @@ interface RecipeListTypeProps {
   current: number;
 }
 
-const RecipeList: React.FC<RecipeListTypeProps> = (props) => {
-  const { recipes, callback, current } = props;
+const RecipeList: React.FC<RecipeListTypeProps> = ({
+  recipes,
+  callback,
+  current,
+}) => {
   return (
-    <div className="overflow-auto">
+    <div className="min-h-full overflow-auto">
       <ul className="flex flex-col">
         {recipes.map((recipe: RecipeType) => (
           <RecipeListItem

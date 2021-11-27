@@ -1,6 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import RecipeList from '../components/MainPage/RecipeList/RecipeList';
+import Button from '../components/shared/Button';
 import { recipeList } from '../data/recipe';
 
 interface Props {
@@ -20,7 +21,7 @@ const SideBarRecipePage: React.FC<Props> = ({
 }: Props) => {
   const history = useHistory();
 
-  const goToMainPage = (): void => {
+  const startBrewing = (): void => {
     history.push('/', {
       rId: recipeId,
       setShowPage: 'BeforeBrewingPage',
@@ -34,36 +35,21 @@ const SideBarRecipePage: React.FC<Props> = ({
           <div className="h-full">
             <div className="context h-4/6">
               <div className="text-center text-2xl font-bold pb-8">Recipes</div>
-              <div className="min-h-full">
-                <RecipeList
-                  recipes={recipeList.recipes}
-                  callback={setRecipeId}
-                  current={recipeId}
-                />
-              </div>
+
+              <RecipeList
+                recipes={recipeList.recipes}
+                callback={setRecipeId}
+                current={recipeId}
+              />
             </div>
             {/* Buttons Edit, Start Brewing, Make a new recipe */}
             <div className="buttons text-center flex flex-col">
-              <button
-                className="bg-green-400 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full m-auto w-52 mb-2"
-                type="button"
-              >
-                Edit
-              </button>
-              <button
-                className="bg-green-400 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full m-auto w-52 mb-2"
-                type="button"
+              <Button title="Edit" />
+              <Button
+                title="Make a new recipe"
                 onClick={() => setShowPage('FormPage')}
-              >
-                Make a new recipe
-              </button>
-              <button
-                className="bg-green-400 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full m-auto w-52 mb-2"
-                type="button"
-                onClick={() => goToMainPage()}
-              >
-                Start brewing
-              </button>
+              />
+              <Button title="Start brewing" onClick={() => startBrewing()} />
             </div>
           </div>
         );
@@ -72,21 +58,12 @@ const SideBarRecipePage: React.FC<Props> = ({
         return (
           <div className="h-full">
             <div className="context h-4/6" />
-            <div className="buttons">
-              <button
-                className="bg-green-400 hover:bg-green-600 text-white font-bold py-2 px-4 w-52 rounded-full"
-                type="button"
+            <div className="buttons text-center flex flex-col">
+              <Button
+                title="Cancel"
                 onClick={() => setShowPage('PickingPage')}
-              >
-                Cancel
-              </button>
-              <button
-                className="bg-green-400 hover:bg-green-600 text-white font-bold py-2 px-4 w-52 rounded-full"
-                type="button"
-                onClick={() => saveForm()}
-              >
-                Next step
-              </button>
+              />
+              <Button title="Next step" onClick={() => saveForm()} />
             </div>
           </div>
         );
