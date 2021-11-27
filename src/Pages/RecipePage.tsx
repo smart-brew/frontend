@@ -97,6 +97,7 @@ const RecipePage: React.FC = () => {
         {renderSwitch(showPage)}
         <div className="sidebar h-full w-1/3 border-l border-gray-300">
           <SideBar
+            recipes={recipes}
             showPage={showPage}
             setShowPage={(pageName: string) => setShowPage(pageName)}
             setRecipeId={(rId: number) => setRecipeId(rId)}

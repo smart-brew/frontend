@@ -1,9 +1,9 @@
 import React from 'react';
-import RecipeType from '../../../types/RecipeData/RecipeType';
+import { RecipeSimple } from '../../../types/RecipeData/RecipeType';
 import RecipeListItem from './RecipeListItem';
 
 interface RecipeListTypeProps {
-  recipes: Array<RecipeType>;
+  recipes: RecipeSimple[];
   callback: (arg: number) => void;
   current: number;
 }
@@ -16,10 +16,10 @@ const RecipeList: React.FC<RecipeListTypeProps> = ({
   return (
     <div className="min-h-full overflow-auto">
       <ul className="flex flex-col">
-        {recipes.map((recipe: RecipeType) => (
+        {recipes.map((recipe: RecipeSimple) => (
           <RecipeListItem
             key={recipe.id}
-            recipeData={recipe}
+            recipe={recipe}
             onClick={callback}
             current={current}
           />
