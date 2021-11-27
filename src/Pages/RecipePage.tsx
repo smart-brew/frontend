@@ -134,7 +134,7 @@ const RecipePage: React.FC = () => {
         return <PickingPage recipeName={recipeName} infoGroup={infoGroup} />;
       case 'FormPage':
         return (
-          <div className="ingredients-form  w-2/3">
+          <div className="ingredients-form w-2/3">
             <IngredietsForm
               showPage={showPage}
               inputFields={inputFields}
@@ -153,7 +153,7 @@ const RecipePage: React.FC = () => {
     <>
       <div className="flex flex-row h-full">
         {renderSwitch(showPage)}
-        <div className="sidebar h-full   w-1/3  border-l-2 border-gray-300">
+        <div className="sidebar h-full w-1/3 border-l border-gray-300">
           <SideBar
             showPage={showPage}
             setShowPage={(pageName: string) => setShowPage(pageName)}

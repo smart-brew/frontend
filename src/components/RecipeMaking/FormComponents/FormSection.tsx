@@ -35,7 +35,7 @@ const FormSection: React.FC<FormSectionProps> = (props) => {
   if (!inputFields) {
     return (
       <div className="my-5">
-        <div className="text-left font-bold flow-root ">{sectionName}</div>
+        <div className="text-left font-bold flow-root">{sectionName}</div>
         <button
           type="button"
           className="px-4 text-base font-medium text-gray-500 text-left underline float-right"
@@ -51,10 +51,10 @@ const FormSection: React.FC<FormSectionProps> = (props) => {
     <div className="my-5">
       <div className="text-left font-bold">{sectionName}</div>
       {inputFields.map((inputField, index: number) => (
-        <div className="flex flex-row flow-root ">
+        <div className="flex flex-row flow-root">
           <label htmlFor="amount">
             <input
-              className="w-24 px-4 shadow "
+              className="w-24 px-4 shadow"
               name="amount"
               type="number"
               value={inputFields[index].amount}
@@ -64,7 +64,7 @@ const FormSection: React.FC<FormSectionProps> = (props) => {
           <label htmlFor="units" className="px-1">
             <select
               name="units"
-              className="w-20 px-4  shadow "
+              className="w-20 px-4 shadow"
               placeholder=" units"
               value={inputFields[index].units}
               onChange={(event) => handleChange(inputFields[index].id, event)}
@@ -82,7 +82,7 @@ const FormSection: React.FC<FormSectionProps> = (props) => {
           <label htmlFor="name">
             <input
               type="text"
-              className="w-80 px-8  shadow "
+              className="w-80 px-8 shadow"
               name="name"
               placeholder="ingredient"
               value={inputFields[index].name}
@@ -93,7 +93,7 @@ const FormSection: React.FC<FormSectionProps> = (props) => {
 
           <button
             type="button"
-            className="px-4 text-base font-medium text-gray-500  underline float-right "
+            className="px-4 text-base font-medium text-gray-500 underline float-right"
             onClick={() => handleAdd(sectionName)}
           >
             &#43; Add ingredient

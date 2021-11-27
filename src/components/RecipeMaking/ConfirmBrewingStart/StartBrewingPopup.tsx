@@ -15,7 +15,7 @@ export const StartBrewingPopup: React.FC<Props> = ({
 }: Props) => {
   return (
     <div
-      className="fixed z-10 inset-0 "
+      className="fixed z-10 inset-0"
       aria-labelledby="modal-title"
       role="dialog"
       aria-modal="true"
@@ -38,13 +38,13 @@ export const StartBrewingPopup: React.FC<Props> = ({
             Je potrebne pripravit tieto ingredencie
           </div>
         </div>
-        <div className="bg-gray-50 px-4 py-3 ">
+        <div className="bg-gray-50 px-4 py-3">
           <div className="">{infoGroup}</div>
 
           <div className="grid justify-items-stretch mt-8">
             <button
               type="button"
-              className="mt-3 w-full inline-flex bg-green-400 hover:bg-green-600 justify-center rounded-md shadow shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700  sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+              className="mt-3 w-full inline-flex bg-green-400 hover:bg-green-600 justify-center rounded-md shadow shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
               onClick={onSelect}
             >
               Confirm
@@ -52,7 +52,7 @@ export const StartBrewingPopup: React.FC<Props> = ({
             <button
               type="button"
               onClick={onClose}
-              className="mt-3 w-full bg-red-200 inline-flex justify-center rounded-md shadow shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-red-300  sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+              className="mt-3 w-full bg-red-200 inline-flex justify-center rounded-md shadow shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-red-300 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
             >
               Decline
             </button>

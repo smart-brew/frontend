@@ -35,7 +35,7 @@ const OverviewPage: React.FC = () => {
         <Brewery />
       </div>
       <div className="sidebar h-screen w-1/3 h-full border-l-2 border-gray-300">
-        <div className=" h-full ">{returnSidePanel()}</div>;
+        <div className="h-full">{returnSidePanel()}</div>;
       </div>
     </div>
   );

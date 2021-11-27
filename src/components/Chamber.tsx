@@ -13,7 +13,7 @@ const Chamber: React.FC<ChamberInfo> = ({
   return (
     console.log(heatingN),
     (
-      <div className="chamber w-1/2 content-center shadow rounded-3xl ">
+      <div className="chamber w-1/2 content-center shadow rounded-3xl">
         <div>
           <p>Temperature</p>
           <p className="font-bold">{temp} °C</p>

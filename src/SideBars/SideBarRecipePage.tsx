@@ -34,10 +34,8 @@ const SideBarRecipePage: React.FC<Props> = ({
       default:
         return (
           <div className="h-full">
-            <div className="context h-4/6 ">
-              <div className=" text-center text-2xl font-bold pb-8">
-                Recipes
-              </div>
+            <div className="context h-4/6">
+              <div className="text-center text-2xl font-bold pb-8">Recipes</div>
               <div className="min-h-full">
                 <RecipeList
                   recipes={recipeList.recipes}
@@ -47,7 +45,7 @@ const SideBarRecipePage: React.FC<Props> = ({
               </div>
             </div>
             {/* Buttons Edit, Start Brewing, Make a new recipe */}
-            <div className="buttons  text-center flex flex-col">
+            <div className="buttons text-center flex flex-col">
               <button
                 className="bg-green-400 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full m-auto w-52 mb-2"
                 type="button"
@@ -78,14 +76,14 @@ const SideBarRecipePage: React.FC<Props> = ({
             <div className="context h-4/6" />
             <div className="buttons">
               <button
-                className="bg-green-400 hover:bg-green-600 text-white font-bold py-2 px-4 w-52 rounded-full "
+                className="bg-green-400 hover:bg-green-600 text-white font-bold py-2 px-4 w-52 rounded-full"
                 type="button"
                 onClick={() => setShowPage('PickingPage')}
               >
                 Cancel
               </button>
               <button
-                className="bg-green-400 hover:bg-green-600 text-white font-bold py-2 px-4 w-52 rounded-full "
+                className="bg-green-400 hover:bg-green-600 text-white font-bold py-2 px-4 w-52 rounded-full"
                 type="button"
                 onClick={() => saveForm()}
               >

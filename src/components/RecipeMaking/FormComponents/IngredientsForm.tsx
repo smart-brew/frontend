@@ -101,7 +101,7 @@ const IngredietsForm: React.FC<Props> = ({
       <label htmlFor="name">
         <input
           type="text"
-          className="w-80 px-8  border-2 border-gray-300 text-2xl font-bold m-10"
+          className="w-80 px-8 border-2 border-gray-300 text-2xl font-bold m-10"
           name="name"
           placeholder="recipe name"
           value={recipeNameForm}
@@ -110,7 +110,7 @@ const IngredietsForm: React.FC<Props> = ({
         />
       </label>
       <form className="mx-20" onSubmit={handleSubmit}>
-        <div className="container  border-2 border-gray-300 rounded-3xl  px-20 ">
+        <div className="container border-2 border-gray-300 rounded-3xl px-20">
           <header className="center py-8 font-bold">
             <h3>Ingredients</h3>
           </header>
