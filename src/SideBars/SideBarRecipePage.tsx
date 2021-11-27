@@ -97,7 +97,7 @@ const SideBarRecipePage: React.FC<Props> = ({
     }
   }
 
-  return <div className=" mt-10 mr-10 h-full  ">{renderSwitch(showPage)}</div>;
+  return <div className="pt-10 pr-10 h-full">{renderSwitch(showPage)}</div>;
 };
 
 export default SideBarRecipePage;

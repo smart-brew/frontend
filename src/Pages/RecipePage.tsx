@@ -2,16 +2,17 @@
 
 import React, { useState } from 'react';
 import { recipeList } from '../data/recipe';
-import RecipeType from '../types/RecipeData/RecipeType';
+import RecipeType, { RecipeSimple } from '../types/RecipeData/RecipeType';
 import IngredietsForm from '../components/RecipeMaking/FormComponents/IngredientsForm';
 import { IngredientSection } from '../components/RecipeMaking/ConfirmBrewingStart/IngredientSection';
 import IngredientType from '../types/RecipeData/IngredientType';
 import SideBar from '../SideBars/SideBarRecipePage';
 import PickingPage from './PickingPage';
+import { getRecipe, getRecipes } from '../api/dataEndpoint';
 
 const RecipePage: React.FC = () => {
   const [showPage, setShowPage] = useState('PickingPage');
-  const [recipeId, setRecipeId] = useState(1); // pred tymto treba vypytat vsetky opisy receptov, plus jeden z nich treba nastavit ako vybraty
+  const [recipeId, setRecipeId] = useState<number>(1);
   const [recipeNameForm, setRecipeNameForm] = useState('');
   const [inputFields, setInputFields] = useState([
     {
@@ -24,7 +25,39 @@ const RecipePage: React.FC = () => {
     },
   ]);
 
-  //  celu tuto cast treba dat prec *********************************
+  // all recipes known to system
+  const [recipes, setRecipes] = React.useState<RecipeSimple[]>([]);
+
+  // currently selected recipe
+  const [selectedRecipe, setSelectedRecipe] = React.useState<RecipeType | null>(
+    null
+  );
+
+  // on load, fetch all recipes
+  React.useEffect(() => {
+    const f = async (): Promise<void> => {
+      setRecipes(await getRecipes());
+    };
+    f();
+  }, []);
+
+  // if new recipes -> select the first one (usually executed on page load)
+  React.useEffect(() => {
+    setRecipeId(recipes[0]?.id || 0);
+  }, [recipes]);
+
+  // if new selected recipe (by ID) -> fetch the entire recipe with details
+  React.useEffect(() => {
+    const f = async (): Promise<void> => {
+      if (recipeId) setSelectedRecipe(await getRecipe(recipeId));
+    };
+    f();
+  }, [recipeId]);
+
+  // const handleRecipeSelection = (recipeId: number): undefined => {
+  //   setRecipeId(recipeId);
+  //   return undefined;
+  // };
 
   function findItem(
     arrRecipes: RecipeType[],
@@ -34,9 +67,12 @@ const RecipePage: React.FC = () => {
       return item.id === idToSearch;
     });
   }
-  const recipeIngredients = findItem(recipeList.recipes, recipeId)?.Ingredients;
+  const recipeIngredients =
+    selectedRecipe?.Ingredients ||
+    findItem(recipeList.recipes, recipeId)?.Ingredients;
 
-  const recipeName = findItem(recipeList.recipes, recipeId)?.name;
+  const recipeName =
+    selectedRecipe?.name || findItem(recipeList.recipes, recipeId)?.name;
 
   // *********************************************************************
 
@@ -52,21 +88,23 @@ const RecipePage: React.FC = () => {
     r[a.type].push(a);
     return r;
   }, Object.create(null));
-  console.log(result);
+  console.log({ result });
 
-  const infoGroup = Object.keys(result).map((typ) => {
-    return (
-      <IngredientSection
-        sectionName={typ}
-        ingredients={result[typ]}
-        showUnloader={false}
-      />
-    );
-  });
+  const infoGroup = result
+    ? Object.keys(result)?.map((typ) => {
+        return (
+          <IngredientSection
+            sectionName={typ}
+            ingredients={result[typ]}
+            showUnloader={false}
+          />
+        );
+      })
+    : [];
 
   // len skusobne, treba pozmenit ked budu aj instrukcie
   function saveForm(): void {
-    const states = inputFields.map(function (data, idx) {
+    const states = inputFields.map((data) => {
       if (data.name === '') {
         return false;
       }
@@ -79,15 +117,15 @@ const RecipePage: React.FC = () => {
     }
   }
 
-  const infoGroupPopup = Object.keys(result).map((typ) => {
-    return (
-      <IngredientSection
-        sectionName={typ}
-        ingredients={result[typ]}
-        showUnloader
-      />
-    );
-  });
+  // const infoGroupPopup = Object.keys(result).map((typ) => {
+  //   return (
+  //     <IngredientSection
+  //       sectionName={typ}
+  //       ingredients={result[typ]}
+  //       showUnloader
+  //     />
+  //   );
+  // });
 
   // eslint-disable-next-line
   function renderSwitch(page: string) {
@@ -112,10 +150,10 @@ const RecipePage: React.FC = () => {
   }
 
   return (
-    <div>
-      <div className="flex flex-row ">
+    <>
+      <div className="flex flex-row h-full">
         {renderSwitch(showPage)}
-        <div className="sidebar h-screen w-1/3  border-l-2 border-gray-300">
+        <div className="sidebar h-full   w-1/3  border-l-2 border-gray-300">
           <SideBar
             showPage={showPage}
             setShowPage={(pageName: string) => setShowPage(pageName)}
@@ -125,7 +163,7 @@ const RecipePage: React.FC = () => {
           />
         </div>
       </div>
-    </div>
+    </>
   );
 };
 export default RecipePage;

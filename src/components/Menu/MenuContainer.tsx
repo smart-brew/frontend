@@ -1,4 +1,5 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom';
 import Logo from './Logo';
 
 import MenuItem from './MenuItem';
@@ -13,23 +14,21 @@ const menus = [
 ];
 
 const Menu: React.FC = () => {
-  const [selected, setSelected] = React.useState(0);
+  const location = useLocation();
 
   return (
     <div
       className="container flex flex-row w-screen max-w-full border-b border-gray-300"
       style={{ height: MENU_HEIGHT }}
     >
-      <Logo onClick={() => setSelected(0)} />
+      <Logo />
 
-      {menus.map((menu, index) => (
+      {menus.map((menu) => (
         <MenuItem
           key={menu.title}
           link={menu.link}
           title={menu.title}
-          id={index}
-          selected={selected}
-          setSelected={setSelected}
+          selected={location.pathname}
         />
       ))}
 
