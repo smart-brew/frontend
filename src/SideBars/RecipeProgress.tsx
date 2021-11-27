@@ -2,68 +2,69 @@ import React, { useState } from 'react';
 import { IngredientSection } from '../components/RecipeMaking/ingredients/IngredientSection';
 import { StartBrewingPopup } from '../components/RecipeMaking/ConfirmBrewingStart/StartBrewingPopup';
 import RecipeOverview from '../components/overview/RecipeOverview';
-import { recipeList } from '../data/recipe';
 import RecipeType from '../types/RecipeData/RecipeType';
+import RecipePreview from '../components/RecipeMaking/RecipePreview';
+import { getRecipe } from '../api/dataEndpoint';
+import Button from '../components/shared/Button';
+import { IngredientsT } from '../types/RecipeData/IngredientType';
 
 interface Props {
   showPage: string;
-  Id: number;
+  recipeId: number;
 }
 
-const RecipeProgress: React.FC<Props> = ({ showPage, Id }: Props) => {
-  const [showPopup, setShowPopup] = useState(false); // pupup to start a new brewing process
+const RecipeProgress: React.FC<Props> = ({ showPage, recipeId }: Props) => {
+  const [showStartConfirmation, setShowStartConfirmation] = useState(false); // pupup to start a new brewing process
   const [page, setPage] = useState(showPage);
 
-  // Ak sa da infoGroup a infoGroupPopup nejako posielat tak toto je duplicitny kod************************************************************
+  const [selectedRecipe, setSelectedRecipe] = React.useState<RecipeType | null>(
+    null
+  );
 
-  function findItem(
-    arrRecipes: RecipeType[],
-    idToSearch: number
-  ): RecipeType | undefined {
-    return arrRecipes.find((item) => {
-      return item.id === idToSearch;
-    });
-  }
-
-  const recipeIngredients = findItem(recipeList.recipes, Id)?.Ingredients;
-
-  // const recipeName = findItem(recipeList.recipes, Id)?.name;
-
-  const result = recipeIngredients?.reduce((r, a) => {
-    r[a.type] = r[a.type] || [];
-    r[a.type].push(a);
-    return r;
-  }, Object.create(null));
-  console.log(result);
-
-  const infoGroup = Object.keys(result).map((typ) => {
-    return (
-      <IngredientSection
-        sectionName={typ}
-        ingredients={result[typ]}
-        showUnloader={false}
-      />
-    );
-  });
-
-  const infoGroupPopup = Object.keys(result).map((typ) => {
-    return (
-      <IngredientSection
-        sectionName={typ}
-        ingredients={result[typ]}
-        showUnloader
-      />
-    );
-  });
-
-  // ******************************************************************************************************************************************
+  // if new selected recipe (by ID) -> fetch the entire recipe with details
+  React.useEffect(() => {
+    const f = async (): Promise<void> => {
+      if (recipeId) setSelectedRecipe(await getRecipe(recipeId));
+    };
+    f();
+  }, [recipeId]);
 
   function startBrewing(): void {
     console.log(
-      `spustenim funkcie startBrewing sa potvrdilo zacanie varenia ktore je v sidebaroverviewpage ulozene pod Id ${Id}`
+      `spustenim funkcie startBrewing sa potvrdilo zacanie varenia ktore je v sidebaroverviewpage ulozene pod Id ${recipeId}`
     );
-    setShowPopup(false);
+    setShowStartConfirmation(false);
     setPage('WhileBrewingPage');
+  }
+
+  function showConfrirmPopup(): React.ReactNode {
+    const ingredients: IngredientsT = selectedRecipe?.Ingredients?.reduce(
+      (r, a) => {
+        r[a.type] = r[a.type] || [];
+        r[a.type].push(a);
+        return r;
+      },
+      Object.create(null)
+    );
+
+    const infoGroupPopup = Object.keys(ingredients).map((category) => {
+      return (
+        <IngredientSection
+          key={category}
+          sectionName={category}
+          ingredients={ingredients[category]}
+          showUnloader
+        />
+      );
+    });
+
+    return (
+      <StartBrewingPopup
+        onClose={() => setShowStartConfirmation(false)}
+        infoGroup={infoGroupPopup}
+        onConfirm={() => startBrewing()}
+      />
+    );
   }
 
   function setPageFunction(newPage: string): void {
@@ -79,39 +80,19 @@ const RecipeProgress: React.FC<Props> = ({ showPage, Id }: Props) => {
 
       case 'BeforeBrewingPage':
         return (
-          <div className="h-full">
-            <div className="context h-4/6">
-              <div className="flex flex-col h-3/6 overflow-auto border-2 border-gray-300 rounded-3xl px-4 mt-4">
-                <header className="center py-8 font-bold">
-                  <h3>Ingredients</h3>
-                </header>
-
-                {infoGroup}
-              </div>
-              <div className="flex flex-col overflow-auto h-2/6 border-2 border-gray-300 rounded-3xl px-4 mt-4">
-                <div>
-                  tu bude ten list instrukcii nezacateho procesu,pridava sa do
-                  komponentu SideBarOverviewPage
-                </div>
-              </div>
-            </div>
+          <>
             <div className="buttons text-center flex flex-col">
-              <button
-                className="bg-green-400 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full m-auto w-52 mb-2"
-                type="button"
-                onClick={() => setShowPopup(true)}
-              >
-                Start brewing
-              </button>
-              <button
-                className="bg-green-400 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full m-auto w-52 mb-2"
-                type="button"
+              <Button
+                title="Start brewing"
+                onClick={() => setShowStartConfirmation(true)}
+              />
+              <Button
+                title="Stop process"
                 onClick={() => setPageFunction('MainPage')}
-              >
-                Stop process
-              </button>
+              />
             </div>
-          </div>
+            <RecipePreview recipe={selectedRecipe} size="w-full" />
+          </>
         );
       case 'WhileBrewingPage':
         return <RecipeOverview />;
@@ -119,16 +100,10 @@ const RecipeProgress: React.FC<Props> = ({ showPage, Id }: Props) => {
   }
 
   return (
-    <div className="h-full">
-      <div className="mt-10 h-full">{renderSwitch(page)}</div>
-      {showPopup && (
-        <StartBrewingPopup
-          onClose={() => setShowPopup(false)}
-          infoGroup={infoGroupPopup}
-          onConfirm={() => startBrewing()}
-        />
-      )}
-    </div>
+    <>
+      <div className="pt-10 h-full">{renderSwitch(page)}</div>
+      {showStartConfirmation && showConfrirmPopup()}
+    </>
   );
 };
 

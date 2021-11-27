@@ -1,10 +1,8 @@
 import React from 'react';
-import IngredientType from '../../../types/RecipeData/IngredientType';
+import IngredientType, {
+  IngredientsT,
+} from '../../../types/RecipeData/IngredientType';
 import { IngredientSection } from './IngredientSection';
-
-interface IngredientsT {
-  [key: string]: IngredientType[];
-}
 
 interface Props {
   ingredients: IngredientType[] | null;

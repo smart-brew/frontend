@@ -5,7 +5,7 @@ import Ingredients from './ingredients/Ingredients';
 
 interface Props {
   recipe: RecipeType | null;
-  size: 'w-2/3' | 'w-1/3';
+  size: 'w-2/3' | 'w-1/3' | 'w-full';
 }
 
 // TODO: tento recipe preview sa moze pouzit aj na OverviewPage, kde je vidno cely recept, a tento isty tam moze byt, len size bude ten mensi

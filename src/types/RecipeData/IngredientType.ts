@@ -9,4 +9,8 @@ type IngredientType = {
   units: string;
 };
 
+export interface IngredientsT {
+  [key: string]: IngredientType[];
+}
+
 export default IngredientType;
