@@ -3,7 +3,7 @@ import React from 'react';
 import { Route } from 'react-router-dom';
 import RecipePage from './RecipePage';
 import OverviewPage from './OverviewPage';
-import RecipeInstructionsPage from './RecipeInstructionsPage';
+// import RecipeInstructionsPage from './RecipeInstructionsPage';
 import { MENU_HEIGHT } from '../components/Menu/MenuContainer';
 import HistoryPage from './HistoryPage';
 

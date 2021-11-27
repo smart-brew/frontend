@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { IngredientSection } from '../components/RecipeMaking/ConfirmBrewingStart/IngredientSection';
+import { IngredientSection } from '../components/RecipeMaking/ingredients/IngredientSection';
 import { StartBrewingPopup } from '../components/RecipeMaking/ConfirmBrewingStart/StartBrewingPopup';
-import RecipeOverview from '../components/RecipeOverview/RecipeOverview';
+import RecipeOverview from '../components/overview/RecipeOverview';
 import { recipeList } from '../data/recipe';
 import RecipeType from '../types/RecipeData/RecipeType';
 
@@ -10,8 +10,7 @@ interface Props {
   Id: number;
 }
 
-const SideBarOverviewPage: React.FC<Props> = ({ showPage, Id }: Props) => {
-  // eslint-disable-next-line
+const RecipeProgress: React.FC<Props> = ({ showPage, Id }: Props) => {
   const [showPopup, setShowPopup] = useState(false); // pupup to start a new brewing process
   const [page, setPage] = useState(showPage);
 
@@ -28,7 +27,7 @@ const SideBarOverviewPage: React.FC<Props> = ({ showPage, Id }: Props) => {
 
   const recipeIngredients = findItem(recipeList.recipes, Id)?.Ingredients;
 
-  const recipeName = findItem(recipeList.recipes, Id)?.name;
+  // const recipeName = findItem(recipeList.recipes, Id)?.name;
 
   const result = recipeIngredients?.reduce((r, a) => {
     r[a.type] = r[a.type] || [];
@@ -61,7 +60,7 @@ const SideBarOverviewPage: React.FC<Props> = ({ showPage, Id }: Props) => {
 
   function startBrewing(): void {
     console.log(
-      'spustenim funkcie startBrewing sa potvrdilo zacanie varenia ktore je v sidebaroverviewpage ulozene pod Id '
+      `spustenim funkcie startBrewing sa potvrdilo zacanie varenia ktore je v sidebaroverviewpage ulozene pod Id ${Id}`
     );
     setShowPopup(false);
     setPage('WhileBrewingPage');
@@ -71,9 +70,9 @@ const SideBarOverviewPage: React.FC<Props> = ({ showPage, Id }: Props) => {
     setPage(newPage);
     console.log(showPage);
   }
-  // eslint-disable-next-line
-  function renderSwitch(page: string) {
-    switch (page) {
+
+  function renderSwitch(pageName: string): JSX.Element {
+    switch (pageName) {
       default:
       case 'MainPage':
         return <div>This is the welcome page</div>;
@@ -126,12 +125,11 @@ const SideBarOverviewPage: React.FC<Props> = ({ showPage, Id }: Props) => {
         <StartBrewingPopup
           onClose={() => setShowPopup(false)}
           infoGroup={infoGroupPopup}
-          selectedRecipeId={Id}
-          onSelect={() => startBrewing()}
+          onConfirm={() => startBrewing()}
         />
       )}
     </div>
   );
 };
 
-export default SideBarOverviewPage;
+export default RecipeProgress;

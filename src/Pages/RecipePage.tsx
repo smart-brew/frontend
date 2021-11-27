@@ -1,13 +1,11 @@
 /* eslint-disable camelcase */
 
 import React, { useState } from 'react';
-import { recipeList } from '../data/recipe';
 import RecipeType, { RecipeSimple } from '../types/RecipeData/RecipeType';
-import IngredietsForm from '../components/RecipeMaking/FormComponents/IngredientsForm';
-import { IngredientSection } from '../components/RecipeMaking/ConfirmBrewingStart/IngredientSection';
+import IngredietsForm from '../components/RecipeMaking/form/IngredientsForm';
 import IngredientType from '../types/RecipeData/IngredientType';
 import SideBar from '../SideBars/SideBarRecipePage';
-import PickingPage from './PickingPage';
+import RecipePreview from '../components/RecipeMaking/RecipePreview';
 import { getRecipe, getRecipes } from '../api/dataEndpoint';
 
 const RecipePage: React.FC = () => {
@@ -54,26 +52,6 @@ const RecipePage: React.FC = () => {
     f();
   }, [recipeId]);
 
-  // const handleRecipeSelection = (recipeId: number): undefined => {
-  //   setRecipeId(recipeId);
-  //   return undefined;
-  // };
-
-  function findItem(
-    arrRecipes: RecipeType[],
-    idToSearch: number
-  ): RecipeType | undefined {
-    return arrRecipes.find((item) => {
-      return item.id === idToSearch;
-    });
-  }
-  const recipeIngredients =
-    selectedRecipe?.Ingredients ||
-    findItem(recipeList.recipes, recipeId)?.Ingredients;
-
-  const recipeName =
-    selectedRecipe?.name || findItem(recipeList.recipes, recipeId)?.name;
-
   // *********************************************************************
 
   // toto vyuzivat -------------------------
@@ -83,63 +61,27 @@ const RecipePage: React.FC = () => {
 
   // -------------------------------------------------
 
-  const result = recipeIngredients?.reduce((r, a) => {
-    r[a.type] = r[a.type] || [];
-    r[a.type].push(a);
-    return r;
-  }, Object.create(null));
-  console.log({ result });
-
-  const infoGroup = result
-    ? Object.keys(result)?.map((typ) => {
-        return (
-          <IngredientSection
-            sectionName={typ}
-            ingredients={result[typ]}
-            showUnloader={false}
-          />
-        );
-      })
-    : [];
-
   // len skusobne, treba pozmenit ked budu aj instrukcie
   function saveForm(): void {
-    const states = inputFields.map((data) => {
-      if (data.name === '') {
-        return false;
-      }
-      return true;
-    });
-    if (states.includes(false)) {
+    if (!inputFields.find((field) => field.name === '')) {
       console.log('not all files are full'); // bud nieco vyskakokvacie alebo riesit uplne inak
     } else {
       setShowPage('InstructionsPage'); // tu sa nastavi cesta ku stranke s vyberom instrukcii
     }
   }
 
-  // const infoGroupPopup = Object.keys(result).map((typ) => {
-  //   return (
-  //     <IngredientSection
-  //       sectionName={typ}
-  //       ingredients={result[typ]}
-  //       showUnloader
-  //     />
-  //   );
-  // });
-
-  // eslint-disable-next-line
-  function renderSwitch(page: string) {
+  function renderSwitch(page: string): JSX.Element {
     switch (page) {
       default:
-        return <PickingPage recipeName={recipeName} infoGroup={infoGroup} />;
+        return <RecipePreview recipe={selectedRecipe} size="w-2/3" />;
       case 'FormPage':
         return (
           <div className="ingredients-form w-2/3">
             <IngredietsForm
               showPage={showPage}
               inputFields={inputFields}
-              setInputFields={(ingredients: IngredientType[]) =>
-                setInputFields(ingredients)
+              setInputFields={(newIngredients: IngredientType[]) =>
+                setInputFields(newIngredients)
               }
               recipeNameForm={recipeNameForm}
               setRecipeNameForm={(name: string) => setRecipeNameForm(name)}

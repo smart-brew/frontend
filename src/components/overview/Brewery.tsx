@@ -1,9 +1,9 @@
 import React from 'react';
 
 import Chambers from './Chambers';
-import { DataContext } from '../contexts/dataContext';
-import imgPlaceholder from '../brewery_placeholder.svg';
-import { moduleData } from '../data/moduleData';
+import { DataContext } from '../../contexts/dataContext';
+import imgPlaceholder from '../../brewery_placeholder.svg';
+import { moduleData } from '../../data/moduleData';
 
 const Brewery: React.FC = () => {
   const data = React.useContext(DataContext)?.data || moduleData;

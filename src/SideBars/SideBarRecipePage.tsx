@@ -20,16 +20,14 @@ const SideBarRecipePage: React.FC<Props> = ({
 }: Props) => {
   const history = useHistory();
 
-  // eslint-disable-next-line
-  const goToMainPage = () => {
+  const goToMainPage = (): void => {
     history.push('/', {
       rId: recipeId,
       setShowPage: 'BeforeBrewingPage',
     });
   };
 
-  // eslint-disable-next-line
-  function renderSwitch(page: string) {
+  function renderSwitch(page: string): JSX.Element {
     switch (page) {
       default:
         return (

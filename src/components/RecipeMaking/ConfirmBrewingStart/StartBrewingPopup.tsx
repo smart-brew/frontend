@@ -2,17 +2,15 @@ import React from 'react';
 
 interface Props {
   infoGroup: JSX.Element[];
-  selectedRecipeId: number;
   onClose: () => void;
-  onSelect: () => void;
+  onConfirm: () => void;
 }
 
 export const StartBrewingPopup: React.FC<Props> = ({
   infoGroup,
-  selectedRecipeId,
   onClose,
-  onSelect,
-}: Props) => {
+  onConfirm,
+}) => {
   return (
     <div
       className="fixed z-10 inset-0"
@@ -45,7 +43,7 @@ export const StartBrewingPopup: React.FC<Props> = ({
             <button
               type="button"
               className="mt-3 w-full inline-flex bg-green-400 hover:bg-green-600 justify-center rounded-md shadow shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
-              onClick={onSelect}
+              onClick={() => onConfirm()}
             >
               Confirm
             </button>

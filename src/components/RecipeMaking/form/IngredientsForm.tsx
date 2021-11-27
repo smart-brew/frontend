@@ -1,5 +1,5 @@
-import { info } from 'console';
-import React, { useState } from 'react';
+/* eslint-disable camelcase */
+import React from 'react';
 import IngredientType from '../../../types/RecipeData/IngredientType';
 import FormSection from './FormSection';
 
@@ -42,6 +42,7 @@ const IngredietsForm: React.FC<Props> = ({
       | React.ChangeEvent<HTMLSelectElement>
   ): void => {
     const index = getIndex(inputFields, ids);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const values = [...inputFields] as any;
     values[index][event.target.name as keyof IngredientType] =
       event.target.value;
@@ -86,7 +87,6 @@ const IngredietsForm: React.FC<Props> = ({
   const infoGroup = unloadChoices.map((item: string) => {
     return (
       <FormSection
-        unloadChoices={unloadChoices}
         inputFields={result[item]}
         sectionName={item}
         handleAdd={handleAddFields}

@@ -15,6 +15,7 @@ const RecipeList: React.FC<RecipeListTypeProps> = (props) => {
       <ul className="flex flex-col">
         {recipes.map((recipe: RecipeType) => (
           <RecipeListItem
+            key={recipe.id}
             recipeData={recipe}
             onClick={callback}
             current={current}
