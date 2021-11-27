@@ -1,6 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import RecipeList from '../components/MainPage/RecipeList/RecipeList';
+import RecipeList from '../components/RecipeMaking/RecipeList';
 
 import Button from '../components/shared/Button';
 import { RecipeSimple } from '../types/RecipeData/RecipeType';
@@ -20,7 +20,7 @@ const AllRecipesSidebar: React.FC<Props> = ({
 }) => {
   const history = useHistory();
 
-  const startBrewing = (): void => {
+  const loadRecipe = (): void => {
     history.push('/', {
       rId: recipeId,
       setShowPage: 'BeforeBrewingPage',
@@ -45,7 +45,7 @@ const AllRecipesSidebar: React.FC<Props> = ({
           title="Make a new recipe"
           onClick={() => setShowPage('FormPage')}
         />
-        <Button title="Start brewing" onClick={() => startBrewing()} />
+        <Button title="Load recipe" onClick={() => loadRecipe()} />
       </div>
     </div>
   );

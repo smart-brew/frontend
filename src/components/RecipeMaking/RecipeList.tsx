@@ -1,5 +1,5 @@
 import React from 'react';
-import { RecipeSimple } from '../../../types/RecipeData/RecipeType';
+import { RecipeSimple } from '../../types/RecipeData/RecipeType';
 import RecipeListItem from './RecipeListItem';
 
 interface RecipeListTypeProps {
