@@ -3,15 +3,16 @@ import FunctionType from '../../../types/FunctionData/FunctionType';
 import ParamType from '../../../types/ParamType';
 import InstructionTemplateType from '../../../types/FunctionData/InstructionTemplateType';
 import EditableInstrRefType from '../../../types/RecipeData/EditableInstrRefType';
+import EditableInstructionTemplateType from './EditableInstructionTemplateType';
 
 interface Props {
-  instruction: InstructionTemplateType;
-  ref: React.Ref<EditableInstrRefType>;
+  instruction: EditableInstructionTemplateType;
+  onChange: (params: ParamType) => void;
 }
 
 const TransferEditableInstr: React.FC<Props> = ({
   instruction,
-  ref,
+  onChange,
 }: Props) => {
   const [firstSelected, setFirstSelected] = useState(1);
   const select1Ref = React.useRef<HTMLSelectElement>(null);
@@ -28,8 +29,16 @@ const TransferEditableInstr: React.FC<Props> = ({
     return null;
   };
 
+  const sendParams = (): void => {
+    const params = readParams();
+    if (params !== null) {
+      onChange(params);
+    }
+  };
+
   const handleFirstSelection = (value: number): void => {
     setFirstSelected(value);
+    sendParams();
   };
 
   const options = [1, 2];
@@ -49,7 +58,11 @@ const TransferEditableInstr: React.FC<Props> = ({
         <option value={2}>Chamber 2</option>
       </select>
       <span>to</span>
-      <select className="border border-gray-300 px-2" ref={select2Ref}>
+      <select
+        className="border border-gray-300 px-2"
+        ref={select2Ref}
+        onChange={sendParams}
+      >
         {options.map((value) => {
           if (value !== firstSelected) {
             return <option value={value}>Chamber {value}</option>;

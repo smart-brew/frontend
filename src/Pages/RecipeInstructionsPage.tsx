@@ -140,7 +140,9 @@ const RecipeInstructionsPage: React.FC = () => {
     units: null,
     inputType: 'string',
     description: 'This instruction is a placeholder.',
-    devices: null,
+    param: null,
+    device: null,
+    ordering: -1,
   };
 
   const [addedInstructions, setAddedInstructions] = useState(
@@ -152,34 +154,103 @@ const RecipeInstructionsPage: React.FC = () => {
   const [selectedInstr, setSelectedInstr] = useState(emptyInstr);
   const popupRef = React.useRef<HTMLDivElement>(null);
 
+  const updateAddedInstructions = (): void => {
+    let instrCounter = 0;
+    const newAddedInstructions: Array<EditableInstructionTemplateType> = [];
+    // iterate over blocks and assign ordering to the instructions
+    addedBlocks.forEach((block, index) => {
+      block.instructions.forEach((instruction) => {
+        instruction.ordering = instrCounter;
+        newAddedInstructions.push(instruction);
+        instrCounter += 1;
+      });
+    });
+
+    console.log(newAddedInstructions);
+    setAddedInstructions(newAddedInstructions);
+  };
+
+  const handleAddInstructionToBlock = (
+    instr: EditableInstructionTemplateType,
+    index: number,
+    blockId: number
+  ): void => {
+    const newBlocks: Array<RecipeBlockType> = [...addedBlocks];
+    newBlocks
+      .find((block) => block.blockId === blockId)
+      ?.instructions.splice(index, 0, instr);
+
+    setAddedBlocks(newBlocks);
+    updateAddedInstructions();
+
+    // let editableInstr: EditableInstructionTemplateType = {
+    //   ...emptyInstr,
+    // };
+    // editableInstr = Object.assign(editableInstr, instr);
+    // editableInstr.blockId = index;
+    // setAddedInstructions(addedInstructions.splice(index, 0, editableInstr));
+  };
+
   const handleInstrSelection = (instr: InstructionTemplateType): undefined => {
     const popupNode = popupRef?.current;
     const dataOriginal = popupNode?.getAttribute('data-original');
     if (dataOriginal) {
       const [index, blockId] = dataOriginal.split('_');
-      const newInstruction: EditableInstructionTemplateType = { ...instr };
-      newInstruction.blockId = parseInt(blockId, 10);
+      console.log(instr.devices);
+      const newInstruction: EditableInstructionTemplateType = {
+        ...instr,
+        param: null,
+        device:
+          instr.devices !== null && instr.devices.length !== 0
+            ? instr.devices[0].device
+            : null,
+        ordering: -1,
+        blockId: parseInt(blockId, 10),
+      };
 
-      const newAddedInstructions = [...addedInstructions];
-      newAddedInstructions.splice(parseInt(index, 10), 0, newInstruction);
-      setAddedInstructions(newAddedInstructions);
+      handleAddInstructionToBlock(
+        newInstruction,
+        parseInt(index, 10),
+        parseInt(blockId, 10)
+      );
+
+      // const newAddedInstructions = [...addedInstructions];
+      // newAddedInstructions.splice(parseInt(index, 10), 0, newInstruction);
+      // setAddedInstructions(newAddedInstructions);
     }
 
     popupNode?.classList.remove('modal-bg-active');
     return undefined;
   };
 
-  const handleAddInstructionToBlock = (
-    instr: InstructionTemplateType,
-    index: number
-  ): Array<EditableInstructionTemplateType> => {
-    let editableInstr: EditableInstructionTemplateType = {
-      ...emptyInstr,
-    };
-    editableInstr = Object.assign(editableInstr, instr);
-    editableInstr.blockId = index;
-    setAddedInstructions(addedInstructions.splice(index, 0, editableInstr));
-    return addedInstructions;
+  const handleEditInstruction = (
+    instr: EditableInstructionTemplateType,
+    index: number,
+    blockId: number
+  ): void => {
+    const newBlocks: Array<RecipeBlockType> = [...addedBlocks];
+    newBlocks
+      .find((block) => block.blockId === blockId)
+      ?.instructions.splice(index, 1, instr);
+
+    setAddedBlocks(newBlocks);
+    updateAddedInstructions();
+  };
+
+  const returnInstructionsForBackend = (): Array<InstructionForBackendType> => {
+    const mappedInstructions = new Array<InstructionForBackendType>();
+    addedInstructions.forEach((instruction) => {
+      const newInstruction: InstructionForBackendType = {
+        templateId: instruction.id,
+        blockId: instruction.blockId,
+        param: instruction.param,
+        device: instruction.device,
+        ordering: instruction.ordering,
+      };
+      mappedInstructions.push(newInstruction);
+    });
+
+    return mappedInstructions;
   };
 
   const handleAddBlock = (index: number): void => {
@@ -189,7 +260,7 @@ const RecipeInstructionsPage: React.FC = () => {
     newAddedBlocks.splice(index, 0, {
       blockId: index,
       blockName: '',
-      instructions: new Array<InstructionTemplateType>(),
+      instructions: new Array<EditableInstructionTemplateType>(),
     });
     console.log(newAddedBlocks);
     setAddedBlocks(newAddedBlocks);
@@ -226,11 +297,10 @@ const RecipeInstructionsPage: React.FC = () => {
               key={block.blockName}
               blockName={block.blockName}
               blockId={index}
-              instructions={addedInstructions.filter(
-                (instr) => instr.blockId === index
-              )}
+              instructions={block.instructions}
               handleAddButtonClick={handleAddInstructionButtonClicked}
               onNameChange={handleChangeBlockName}
+              onInstructionEdit={handleEditInstruction}
             />
           </div>
         );

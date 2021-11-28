@@ -3,15 +3,16 @@ import FunctionType from '../../../types/FunctionData/FunctionType';
 import ParamType from '../../../types/ParamType';
 import InstructionTemplateType from '../../../types/FunctionData/InstructionTemplateType';
 import EditableInstrRefType from '../../../types/RecipeData/EditableInstrRefType';
+import EditableInstructionTemplateType from './EditableInstructionTemplateType';
 
 interface Props {
-  instruction: InstructionTemplateType;
-  ref: React.Ref<EditableInstrRefType>;
+  instruction: EditableInstructionTemplateType;
+  onChange: (params: ParamType) => void;
 }
 
 const TemperatureEditableInstr: React.FC<Props> = ({
   instruction,
-  ref,
+  onChange,
 }: Props) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const selectRef = useRef<HTMLSelectElement>(null);
@@ -28,9 +29,20 @@ const TemperatureEditableInstr: React.FC<Props> = ({
     return null;
   };
 
+  const sendParams = (): void => {
+    const params = readParams();
+    if (params !== null) {
+      onChange(params);
+    }
+  };
+
   return (
     <div className="flex flex-row justify-evenly space-x-8">
-      <select className="border border-gray-300 px-2" ref={selectRef}>
+      <select
+        className="border border-gray-300 px-2"
+        ref={selectRef}
+        onChange={sendParams}
+      >
         <option value={1}>Chamber 1</option>
         <option value={2}>Chamber 2</option>
       </select>
@@ -40,6 +52,7 @@ const TemperatureEditableInstr: React.FC<Props> = ({
           className="w-1/4 border border-gray-300 px-2"
           type="number"
           ref={inputRef}
+          onBlur={sendParams}
         />
         <span>°C</span>
       </div>

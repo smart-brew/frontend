@@ -5,11 +5,13 @@ type EditableInstructionTemplateType = {
   codeName: string;
   name: string;
   category: string;
+  param: string | number | null;
   units: string | null;
   inputType: string | null;
   description: string;
-  devices: Array<DeviceType> | null;
-  blockId?: number;
+  device: string | null;
+  blockId: number;
+  ordering: number;
 };
 
 export default EditableInstructionTemplateType;

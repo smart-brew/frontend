@@ -10,39 +10,70 @@ import InstructionTemplateType from '../../../types/FunctionData/InstructionTemp
 import InstructionForBackendType from '../../../types/RecipeData/InstructionForBackendType';
 import EditableInstrRefType from '../../../types/RecipeData/EditableInstrRefType';
 import ParamType from '../../../types/ParamType';
+import EditableInstructionTemplateType from './EditableInstructionTemplateType';
 
 interface EditableInstructionProps {
-  instruction: InstructionTemplateType;
+  instruction: EditableInstructionTemplateType;
+  index: number;
   blockId: number;
   onDelete: () => boolean;
+  onInstructionEdit: (
+    instr: EditableInstructionTemplateType,
+    index: number
+  ) => void;
 }
 
 const EditableInstruction: React.FC<EditableInstructionProps> = ({
   instruction,
+  index,
   blockId,
   onDelete,
+  onInstructionEdit,
 }: EditableInstructionProps) => {
   const currBodyRef = React.createRef<EditableInstrRefType>();
+
+  const registerChange = (params: ParamType): void => {
+    const newInstruction = instruction;
+    newInstruction.param = params.value;
+    newInstruction.device = params.device;
+    onInstructionEdit(newInstruction, index);
+  };
+
   const getCorrectInstructionBody = (
-    instr: InstructionTemplateType
+    instr: EditableInstructionTemplateType
   ): JSX.Element | null => {
     if (instr.codeName === InstructionConstants.TEMPERATURE) {
-      return <TemperatureEditableInstr instruction={instr} ref={currBodyRef} />;
+      return (
+        <TemperatureEditableInstr
+          instruction={instr}
+          onChange={registerChange}
+        />
+      );
     }
     if (instr.codeName === InstructionConstants.MOTOR) {
-      return <MotorEditableInstr instruction={instr} ref={currBodyRef} />;
+      return (
+        <MotorEditableInstr instruction={instr} onChange={registerChange} />
+      );
     }
     if (instr.codeName === InstructionConstants.PUMP) {
-      return <TransferEditableInstr instruction={instr} ref={currBodyRef} />;
+      return (
+        <TransferEditableInstr instruction={instr} onChange={registerChange} />
+      );
     }
     if (instr.codeName === InstructionConstants.UNLOADER) {
-      return <UnloadEditableInstr instruction={instr} ref={currBodyRef} />;
+      return (
+        <UnloadEditableInstr instruction={instr} onChange={registerChange} />
+      );
     }
     if (instr.codeName === InstructionConstants.WAIT) {
-      return <WaitEditableInstr instruction={instr} ref={currBodyRef} />;
+      return (
+        <WaitEditableInstr instruction={instr} onChange={registerChange} />
+      );
     }
     if (instr.codeName === InstructionConstants.MANUAL) {
-      return <ManualEditableInstr instruction={instr} ref={currBodyRef} />;
+      return (
+        <ManualEditableInstr instruction={instr} onChange={registerChange} />
+      );
     }
     return null;
   };
@@ -56,8 +87,8 @@ const EditableInstruction: React.FC<EditableInstructionProps> = ({
       return {
         templateId: instruction.id,
         blockId,
-        param: params?.value,
-        device: params?.device,
+        param: params ? params.value : null,
+        device: params ? params.device : null,
         ordering: -1,
       };
     }
@@ -66,7 +97,7 @@ const EditableInstruction: React.FC<EditableInstructionProps> = ({
 
   return (
     <div className="flex flex-row align-middle items-center">
-      <div className="flex flex-col border-2 border-gray-500 shadow w-4/5 rounded-2xl p-3 px-10 space-y-5 text-left">
+      <div className="flex flex-col border-2 border-gray-500 shadow w-4/5 rounded-2xl p-3 px-10 space-y-5 text-left bg-white bg-opacity-75">
         <h2 className="font-bold text-xl">{instruction.name}</h2>
         <div>{instructionCustomization}</div>
       </div>
