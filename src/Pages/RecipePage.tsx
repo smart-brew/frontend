@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 
 import RecipeType, { RecipeSimple } from '../types/RecipeData/RecipeType';
 import RecipePreview from '../components/RecipeMaking/RecipePreview';
-import { getRecipe, getRecipes } from '../api/dataEndpoint';
+import { getRecipe, getRecipes } from '../api/recipe';
 import AllRecipesSidebar from '../SideBars/AllRecipesSidebar';
 
 const RecipePage: React.FC = () => {

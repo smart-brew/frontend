@@ -4,7 +4,7 @@ import { StartBrewingPopup } from '../components/RecipeMaking/ConfirmBrewingStar
 import RecipeOverview from '../components/overview/RecipeOverview';
 import RecipeType from '../types/RecipeData/RecipeType';
 import RecipePreview from '../components/RecipeMaking/RecipePreview';
-import { getRecipe } from '../api/dataEndpoint';
+import { getRecipe } from '../api/recipe';
 import Button from '../components/shared/Button';
 import { IngredientsT } from '../types/RecipeData/IngredientType';
 

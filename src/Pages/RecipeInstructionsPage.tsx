@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 
-import { useLocation } from 'react-router-dom';
+import { useLocation, useHistory } from 'react-router-dom';
 
 import InstructionPopup from '../components/RecipeBuilding/InstructionPopup/InstructionPopup';
 import InstructionTemplateType from '../types/FunctionData/InstructionTemplateType';
@@ -13,8 +13,10 @@ import EditableInstructionTemplateType from '../components/RecipeBuilding/Instru
 import AddBlockButton from '../components/RecipeBuilding/AddBlockButton';
 import { IngredientsFormProps } from './RecipeIngredientsPage';
 import { templates } from '../components/RecipeBuilding/instructionTemplates';
+import { createRecipe } from '../api/recipe';
 
 const RecipeInstructionsPage: React.FC = () => {
+  const history = useHistory();
   const location = useLocation();
   const { ingredients, recipeName } = location.state as IngredientsFormProps;
 
@@ -204,9 +206,20 @@ const RecipeInstructionsPage: React.FC = () => {
     instructionPopupNode?.classList.add('modal-bg-active');
   };
 
-  const saveRecipe = (): void => {
+  const saveRecipe = async (): Promise<void> => {
     const instructions = returnInstructionsForBackend();
     console.log({ instructions, ingredients, recipeName });
+
+    await createRecipe({
+      name: recipeName,
+      description: '',
+      locked: false,
+      Ingredients: ingredients,
+      Instructions: instructions,
+    }).then((res) => {
+      console.log({ res });
+      // history.push('/recipe');
+    });
   };
 
   return (
