@@ -11,6 +11,7 @@ type EditableInstructionTemplateType = {
   description: string;
   device: string | null;
   blockId: number;
+  blockName: string;
   ordering: number;
 };
 

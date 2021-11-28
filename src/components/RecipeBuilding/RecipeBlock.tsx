@@ -10,13 +10,19 @@ interface Props {
   instructions: Array<EditableInstructionTemplateType>;
   blockId: number;
   blockName: string;
-  handleAddButtonClick: (index: number, blockId: number) => void;
+  handleAddButtonClick: (
+    index: number,
+    blockId: number,
+    blockName: string
+  ) => void;
   onNameChange: (index: number, name: string) => void;
   onInstructionEdit: (
     instr: EditableInstructionTemplateType,
     index: number,
     blockId: number
   ) => void;
+  onBlockDelete: (blockId: number) => void;
+  onInstructionDelete: (index: number, blockId: number) => void;
 }
 
 const RecipeBlock: React.FC<Props> = ({
@@ -26,6 +32,8 @@ const RecipeBlock: React.FC<Props> = ({
   handleAddButtonClick,
   onNameChange,
   onInstructionEdit,
+  onBlockDelete,
+  onInstructionDelete,
 }) => {
   // const parseInstructions = (): Array<InstructionForBackendType> => {
   //   const formattedInstructions: Array<InstructionForBackendType> =
@@ -55,11 +63,19 @@ const RecipeBlock: React.FC<Props> = ({
           onNameChange(blockId, e.target.value);
         }}
       />
+      <button
+        type="button"
+        className="text-4xl font-extrabold text-red-900 text-right w-5/12"
+        onClick={() => onBlockDelete(blockId)}
+      >
+        X
+      </button>
       <div className="flex flex-col">
         {instructions.length === 0 ? (
           <AddInstructionButton
             index={0}
             blockId={blockId}
+            blockName={blockName}
             handleAddButtonClick={handleAddButtonClick}
           />
         ) : (
@@ -70,14 +86,13 @@ const RecipeBlock: React.FC<Props> = ({
                   instruction={instr}
                   blockId={blockId}
                   index={index}
-                  onDelete={() => {
-                    return true;
-                  }}
+                  onDelete={onInstructionDelete}
                   onInstructionEdit={instructionEditCallback}
                 />
                 <AddInstructionButton
                   index={index + 1}
                   blockId={blockId}
+                  blockName={blockName}
                   handleAddButtonClick={handleAddButtonClick}
                 />
               </div>

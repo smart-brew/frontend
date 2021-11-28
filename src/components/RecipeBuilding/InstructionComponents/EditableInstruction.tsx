@@ -16,7 +16,7 @@ interface EditableInstructionProps {
   instruction: EditableInstructionTemplateType;
   index: number;
   blockId: number;
-  onDelete: () => boolean;
+  onDelete: (index: number, blockId: number) => void;
   onInstructionEdit: (
     instr: EditableInstructionTemplateType,
     index: number
@@ -80,25 +80,36 @@ const EditableInstruction: React.FC<EditableInstructionProps> = ({
 
   const instructionCustomization = getCorrectInstructionBody(instruction);
 
-  const parseInstruction = (): InstructionForBackendType | null => {
-    const params: ParamType | null | undefined =
-      currBodyRef.current?.readParams();
-    if (params) {
-      return {
-        templateId: instruction.id,
-        blockId,
-        param: params ? params.value : null,
-        device: params ? params.device : null,
-        ordering: -1,
-      };
-    }
-    return null;
-  };
+  // const parseInstruction = (): InstructionForBackendType | null => {
+  //   const params: ParamType | null | undefined =
+  //     currBodyRef.current?.readParams();
+  //   if (params) {
+  //     return {
+  //       templateId: instruction.id,
+  //       blockId,
+  //       param: params ? params.value : null,
+  //       device: params ? params.device : null,
+  //       ordering: -1,
+  //     };
+  //   }
+  //   return null;
+  // };
 
   return (
     <div className="flex flex-row align-middle items-center">
       <div className="flex flex-col border-2 border-gray-500 shadow w-4/5 rounded-2xl p-3 px-10 space-y-5 text-left bg-white bg-opacity-75">
-        <h2 className="font-bold text-xl">{instruction.name}</h2>
+        <div className="flex flex-row justify-between">
+          <h2 className="font-bold text-xl">{instruction.name}</h2>
+          <button
+            type="button"
+            className="text-2xl font-extrabold text-red-900 text-right"
+            onClick={() => {
+              onDelete(index, blockId);
+            }}
+          >
+            X
+          </button>
+        </div>
         <div>{instructionCustomization}</div>
       </div>
       <span className="pl-3 italic text-md w-1/5 flex-wrap">

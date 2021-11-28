@@ -134,6 +134,7 @@ const RecipeInstructionsPage: React.FC = () => {
   const emptyInstr: EditableInstructionTemplateType = {
     id: -1,
     blockId: -1,
+    blockName: '',
     codeName: 'EMPTY',
     name: 'Empty instruction',
     category: 'EMPTY',
@@ -195,7 +196,7 @@ const RecipeInstructionsPage: React.FC = () => {
     const popupNode = popupRef?.current;
     const dataOriginal = popupNode?.getAttribute('data-original');
     if (dataOriginal) {
-      const [index, blockId] = dataOriginal.split('_');
+      const [index, blockId, blockName] = dataOriginal.split('_');
       console.log(instr.devices);
       const newInstruction: EditableInstructionTemplateType = {
         ...instr,
@@ -206,6 +207,7 @@ const RecipeInstructionsPage: React.FC = () => {
             : null,
         ordering: -1,
         blockId: parseInt(blockId, 10),
+        blockName,
       };
 
       handleAddInstructionToBlock(
@@ -243,6 +245,7 @@ const RecipeInstructionsPage: React.FC = () => {
       const newInstruction: InstructionForBackendType = {
         templateId: instruction.id,
         blockId: instruction.blockId,
+        blockName: instruction.blockName,
         param: instruction.param,
         device: instruction.device,
         ordering: instruction.ordering,
@@ -267,21 +270,50 @@ const RecipeInstructionsPage: React.FC = () => {
   };
 
   const handleChangeBlockName = (index: number, name: string): void => {
-    console.log(name);
     const newAddedBlocks = [...addedBlocks];
     newAddedBlocks[index].blockName = name;
+    newAddedBlocks[index].instructions.forEach((instruction) => {
+      instruction.blockName = name;
+    });
 
     setAddedBlocks(newAddedBlocks);
   };
 
+  const handleBlockDelete = (blockId: number): void => {
+    const newAddedBlocks = addedBlocks.filter(
+      (block) => block.blockId !== blockId
+    );
+    let blockCounter = 0;
+    newAddedBlocks.forEach((block) => {
+      block.blockId = blockCounter;
+      block.instructions.forEach((instruction) => {
+        instruction.blockId = blockCounter;
+      });
+      blockCounter += 1;
+    });
+
+    setAddedBlocks(newAddedBlocks);
+  };
+
+  const handleInstructionDelete = (index: number, blockId: number): void => {
+    const newAddedBlocks = [...addedBlocks];
+    newAddedBlocks
+      .find((block) => block.blockId === blockId)
+      ?.instructions.splice(index, 1);
+
+    setAddedBlocks(newAddedBlocks);
+    updateAddedInstructions();
+  };
+
   const handleAddInstructionButtonClicked = (
     index: number,
-    blockId: number
+    blockId: number,
+    blockName: string
   ): void => {
     const instructionPopupNode = popupRef?.current;
     instructionPopupNode?.setAttribute(
       'data-original',
-      `${index.toString()}_${blockId.toString()}`
+      `${index.toString()}_${blockId.toString()}_${blockName}`
     );
     instructionPopupNode?.classList.add('modal-bg-active');
   };
@@ -301,6 +333,8 @@ const RecipeInstructionsPage: React.FC = () => {
               handleAddButtonClick={handleAddInstructionButtonClicked}
               onNameChange={handleChangeBlockName}
               onInstructionEdit={handleEditInstruction}
+              onBlockDelete={handleBlockDelete}
+              onInstructionDelete={handleInstructionDelete}
             />
           </div>
         );
@@ -341,6 +375,16 @@ const RecipeInstructionsPage: React.FC = () => {
       >
         Select instruction
       </button> */}
+      <button
+        type="button"
+        className="select-button"
+        onClick={() => {
+          const instructions = returnInstructionsForBackend();
+          console.log(instructions);
+        }}
+      >
+        Parse instructions
+      </button>
       <div className="modal-bg" ref={popupRef}>
         <InstructionPopup
           functions={templates}

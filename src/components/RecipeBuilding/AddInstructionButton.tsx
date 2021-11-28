@@ -4,12 +4,18 @@ import InstructionTemplateType from '../../types/FunctionData/InstructionTemplat
 interface Props {
   index: number;
   blockId: number;
-  handleAddButtonClick: (index: number, blockId: number) => void;
+  blockName: string;
+  handleAddButtonClick: (
+    index: number,
+    blockId: number,
+    blockName: string
+  ) => void;
 }
 
 const AddInstructionButton: React.FC<Props> = ({
   index,
   blockId,
+  blockName,
   handleAddButtonClick,
 }: Props) => {
   return (
@@ -19,7 +25,7 @@ const AddInstructionButton: React.FC<Props> = ({
         type="button"
         className="select-button text-5xl"
         onClick={() => {
-          handleAddButtonClick(index, blockId);
+          handleAddButtonClick(index, blockId, blockName);
         }}
       >
         +
