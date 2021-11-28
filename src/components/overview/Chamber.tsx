@@ -1,6 +1,6 @@
 import React from 'react';
-import ChamberInfo from '../types/ChamberInfo';
-import UnitsMap from '../helper_scripts/UnitsMap';
+import ChamberInfo from '../../types/ChamberInfo';
+import UnitsMap from '../../helper_scripts/UnitsMap';
 
 // bolo by treba namapovat ale pravdepodobne sa bude prerabat tak zatial len takto
 const Chamber: React.FC<ChamberInfo> = ({
@@ -13,7 +13,7 @@ const Chamber: React.FC<ChamberInfo> = ({
   return (
     console.log(heatingN),
     (
-      <div className="chamber w-1/2 content-center shadow rounded-3xl ">
+      <div className="chamber w-1/2 content-center shadow rounded-3xl">
         <div>
           <p>Temperature</p>
           <p className="font-bold">{temp} °C</p>

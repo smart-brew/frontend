@@ -1,5 +1,5 @@
-import { info } from 'console';
-import React, { useState } from 'react';
+/* eslint-disable camelcase */
+import React from 'react';
 import IngredientType from '../../../types/RecipeData/IngredientType';
 import FormSection from './FormSection';
 
@@ -42,6 +42,7 @@ const IngredietsForm: React.FC<Props> = ({
       | React.ChangeEvent<HTMLSelectElement>
   ): void => {
     const index = getIndex(inputFields, ids);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const values = [...inputFields] as any;
     values[index][event.target.name as keyof IngredientType] =
       event.target.value;
@@ -86,7 +87,6 @@ const IngredietsForm: React.FC<Props> = ({
   const infoGroup = unloadChoices.map((item: string) => {
     return (
       <FormSection
-        unloadChoices={unloadChoices}
         inputFields={result[item]}
         sectionName={item}
         handleAdd={handleAddFields}
@@ -101,7 +101,7 @@ const IngredietsForm: React.FC<Props> = ({
       <label htmlFor="name">
         <input
           type="text"
-          className="w-80 px-8  border-2 border-gray-300 text-2xl font-bold m-10"
+          className="w-80 px-8 border-2 border-gray-300 text-2xl font-bold m-10"
           name="name"
           placeholder="recipe name"
           value={recipeNameForm}
@@ -110,7 +110,7 @@ const IngredietsForm: React.FC<Props> = ({
         />
       </label>
       <form className="mx-20" onSubmit={handleSubmit}>
-        <div className="container  border-2 border-gray-300 rounded-3xl  px-20 ">
+        <div className="container border-2 border-gray-300 rounded-3xl px-20">
           <header className="center py-8 font-bold">
             <h3>Ingredients</h3>
           </header>

@@ -1,6 +1,6 @@
 import React from 'react';
 import Chamber from './Chamber';
-import { ModuleData } from '../types/SystemData';
+import { ModuleData } from '../../types/SystemData';
 
 const Chambers: React.FC<ModuleData> = ({ TEMPERATURE }: ModuleData) => {
   return (

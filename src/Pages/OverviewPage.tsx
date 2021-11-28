@@ -1,23 +1,31 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import Brewery from '../components/Brewery';
-import RecipeOverview from '../components/RecipeOverview/RecipeOverview';
+import { useLocation } from 'react-router-dom';
+import Brewery from '../components/overview/Brewery';
+import RecipeProgress from '../SideBars/RecipeProgress';
+
+interface CustomState {
+  rId: number;
+  setShowPage: string;
+}
 
 const OverviewPage: React.FC = () => {
-  interface CustomState {
-    rId: number;
-  }
-
   const location = useLocation();
   const state = location.state as CustomState;
 
-  if (location.state) {
-    console.log(state.rId);
-  }
   return (
-    <div className="flex flex-row justify-center h-full">
-      <Brewery />
-      <RecipeOverview />
+    <div className="flex flex-row justify-center h-full min-h-full max-h-full">
+      <div className="picture h-full w-2/3">
+        <Brewery />
+      </div>
+      <div className="sidebar w-1/3 h-full border-l-2 border-gray-300">
+        <div className="h-full">
+          {state ? (
+            <RecipeProgress showPage={state.setShowPage} recipeId={state.rId} />
+          ) : (
+            <div>This is the welcome page</div>
+          )}
+        </div>
+      </div>
     </div>
   );
 };
