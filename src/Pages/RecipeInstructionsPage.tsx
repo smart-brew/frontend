@@ -218,7 +218,8 @@ const RecipeInstructionsPage: React.FC = () => {
       Instructions: instructions,
     }).then((res) => {
       console.log({ res });
-      // history.push('/recipe');
+      // TODO pridat kontorolu ci OK
+      history.push('/recipe');
     });
   };
 

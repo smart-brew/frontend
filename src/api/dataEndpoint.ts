@@ -1,5 +1,6 @@
 import { SystemData } from '../types/SystemData';
-import { dataEndpoint, url } from './endpoints';
+import { dataEndpoint } from './endpoints';
+import { url } from './helpers';
 
 export const getBrewStatus = (): Promise<SystemData> => {
   return fetch(url(dataEndpoint))

@@ -7,6 +7,7 @@ import RecipePreview from '../components/RecipeMaking/RecipePreview';
 import { getRecipe } from '../api/recipe';
 import Button from '../components/shared/Button';
 import { IngredientsT } from '../types/RecipeData/IngredientType';
+import { startBrewing as startBrewingAPI } from '../api/brew';
 
 interface Props {
   recipeId: number;
@@ -28,12 +29,16 @@ const RecipeProgress: React.FC<Props> = ({ recipeId }: Props) => {
     f();
   }, [recipeId]);
 
-  function startBrewing(): void {
+  async function startBrewing(): Promise<void> {
     console.log(
       `spustenim funkcie startBrewing sa potvrdilo zacanie varenia ktore je v sidebaroverviewpage ulozene pod Id ${recipeId}`
     );
     setShowStartConfirmation(false);
     setPage('WhileBrewingPage');
+
+    const res = await startBrewingAPI(recipeId);
+    // TODO handlovanie odpovede
+    console.log(res);
   }
 
   function showConfrirmPopup(): React.ReactNode {

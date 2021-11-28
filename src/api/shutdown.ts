@@ -1,7 +1,6 @@
-import { shutdown, url } from './endpoints';
+import { post } from './client';
+import { shutdown } from './endpoints';
 
 export const postShutDown = async (): Promise<void> => {
-  await fetch(url(shutdown), { method: 'POST' }).catch((error) =>
-    console.log(error)
-  );
+  await post(shutdown);
 };

@@ -1,17 +1,13 @@
 import { RecipeApiUpload } from '../types/RecipeData/Recipe';
 import RecipeType, { RecipeSimple } from '../types/RecipeData/RecipeType';
-import { put } from './client';
+import { post, put } from './client';
 import {
   allRecipes,
   createRecipeUrl,
+  loadRecipeUrl,
   singleRecipe,
-  url,
-  urlWithParams,
 } from './endpoints';
-
-export interface IdReturn {
-  id: number;
-}
+import { IdReturn, url, urlWithParams } from './helpers';
 
 export const getRecipes = (): Promise<RecipeSimple[]> => {
   return fetch(url(allRecipes))
@@ -32,4 +28,8 @@ export const createRecipe = async (
   recipe: RecipeApiUpload
 ): Promise<IdReturn> => {
   return put(createRecipeUrl, recipe);
+};
+
+export const loadRecipe = async (recipeId: number): Promise<IdReturn> => {
+  return post(loadRecipeUrl, { id: recipeId });
 };

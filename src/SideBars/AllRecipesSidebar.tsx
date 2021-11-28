@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
+import { loadRecipe as loadRecipeAPI } from '../api/recipe';
 import RecipeList from '../components/RecipeMaking/RecipeList';
 
 import Button from '../components/shared/Button';
@@ -18,7 +19,9 @@ const AllRecipesSidebar: React.FC<Props> = ({
 }) => {
   const history = useHistory();
 
-  const loadRecipe = (): void => {
+  const loadRecipe = async (): Promise<void> => {
+    loadRecipeAPI(recipeId);
+    // TODO pridat kontrolu ci OK
     history.push('/', {
       rId: recipeId,
     });
