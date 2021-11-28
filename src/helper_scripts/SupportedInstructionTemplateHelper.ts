@@ -3,12 +3,13 @@ import FunctionType from '../types/FunctionData/FunctionType';
 
 class SupportedInstructionTemplateHelper {
   functionMap = new Map<number, FunctionType>();
+
   functionArray = new Array<FunctionType>();
 
   constructor(functions: FunctionListType) {
-    for (let func of functions.functionsArray) {
+    functions.functionsArray.forEach((func) => {
       this.functionMap.set(func.id, func);
-    }
+    });
     this.functionArray = functions.functionsArray;
   }
 

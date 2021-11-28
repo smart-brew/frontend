@@ -22,9 +22,9 @@ const RecipeListItem: React.FC<RecipeTypeProps> = ({
           onClick(id);
         }}
         key={id}
-        className="bg-yellow-200 chamber mx-7 my-1 content-center  border-2 border-gray-300 rounded-3xl "
+        className="bg-yellow-200 chamber mx-7 my-1 content-center  shadow rounded-3xl "
       >
-        <div>{name}</div>
+        <div className="text-center">{name}</div>
         <div>{locked}</div>
       </button>
     );
@@ -36,7 +36,7 @@ const RecipeListItem: React.FC<RecipeTypeProps> = ({
         onClick(id);
       }}
       key={id}
-      className="chamber mx-7 my-1 content-center  border-2 border-gray-300 rounded-3xl "
+      className="chamber mx-7 my-1 content-center  shadow rounded-3xl "
     >
       <div>{name}</div>
       <div>{locked}</div>

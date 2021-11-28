@@ -1,12 +1,12 @@
 import React from 'react';
 import './App.css';
 import DataContextProvider from './contexts/dataContext';
-import Routes from './Pages/Routes';
+import SmartBrew from './Pages/SmartBrew';
 
 const App: React.FC = () => {
   return (
     <DataContextProvider enabled={false}>
-      <Routes />
+      <SmartBrew />
     </DataContextProvider>
   );
 };

@@ -2,382 +2,67 @@
 
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import RecipeListType from '../types/RecipeData/RecipeListType';
-import RecipeType from '../types/RecipeData/RecipeType';
+
+import { recipeList } from '../data/recipe';
+import RecipeType, { RecipeSimple } from '../types/RecipeData/RecipeType';
 import RecipeList from '../components/MainPage/RecipeList/RecipeList';
-import IngredietsForm from '../components/RecipeMaking/IngredientsForm';
+import IngredietsForm from '../components/RecipeMaking/FormComponents/IngredientsForm';
 import { IngredientSection } from '../components/RecipeMaking/ConfirmBrewingStart/IngredientSection';
 import { StartBrewingPopup } from '../components/RecipeMaking/ConfirmBrewingStart/StartBrewingPopup';
+import IngredientType from '../types/RecipeData/IngredientType';
+import SideBar from './SideBarRecipePage';
+import { getRecipe, getRecipes } from '../api/dataEndpoint';
 
-export const recipeList: RecipeListType = {
-  recipes: [
-    {
-      id: 3,
-      name: 'TEST_RECIPE_1',
-      description: 'Seed recipe 1',
-      locked: false,
-      created_at: new Date('2021-11-02T20:18:23.509Z'),
-      updated_at: new Date('2021-11-02T20:18:23.511Z'),
-      Ingredients: [
-        {
-          id: 5,
-          recipe_id: 3,
-          name: 'Some ingredient',
-          amount: 5.6,
-          type: 'Hops',
-          units: 'Kg',
-        },
-        {
-          id: 6,
-          recipe_id: 3,
-          name: 'Some different ingredient',
-          amount: 1,
-          type: 'Yeast',
-          units: 'Pcs',
-        },
-        {
-          id: 5,
-          recipe_id: 3,
-          name: 'Some ingredient',
-          amount: 5.6,
-          type: 'Other',
-          units: 'Kg',
-        },
-        {
-          id: 48,
-          recipe_id: 3,
-          name: 'Some different ingredient',
-          amount: 1,
-          type: 'Fermented',
-          units: 'Pcs',
-        },
-        {
-          id: 55,
-          recipe_id: 3,
-          name: 'Some different ingredient',
-          amount: 1,
-          type: 'Fermented',
-          units: 'Pcs',
-        },
-        {
-          id: 505,
-          recipe_id: 3,
-          name: 'Some different ingredient',
-          amount: 1,
-          type: 'Hops',
-          units: 'Pcs',
-        },
-      ],
-      Instructions: [
-        {
-          id: 11,
-          recipe_id: 3,
-          block_id: 1,
-          function_template_id: 4,
-          function_option_id: 6,
-          ordering: 4,
-          param: null,
-          Blocks: {
-            name: 'SECOND_BLOCK',
-          },
-        },
-        {
-          id: 12,
-          recipe_id: 3,
-          block_id: 1,
-          function_template_id: 1,
-          function_option_id: 1,
-          ordering: 3,
-          param: {
-            temp: '60',
-          },
-          Blocks: {
-            name: 'SECOND_BLOCK',
-          },
-        },
-        {
-          id: 13,
-          recipe_id: 3,
-          block_id: 2,
-          function_template_id: 5,
-          function_option_id: null,
-          ordering: 2,
-          param: {
-            duration: '5',
-          },
-
-          Blocks: {
-            name: 'FIRST_BLOCK',
-          },
-        },
-        {
-          id: 14,
-          recipe_id: 3,
-          block_id: 2,
-          function_template_id: 2,
-          function_option_id: 3,
-          ordering: 1,
-          param: {
-            speed: '100',
-          },
-          Blocks: {
-            name: 'FIRST_BLOCK',
-          },
-        },
-      ],
-    },
-    {
-      id: 2,
-      name: 'TEST_RECIPE_2',
-      description: 'Seed recipe 1',
-      locked: false,
-      created_at: new Date('2021-11-02T20:18:23.509Z'),
-      updated_at: new Date('2021-11-02T20:18:23.511Z'),
-      Ingredients: [
-        {
-          id: 55,
-          recipe_id: 2,
-          name: 'Some different ingredient',
-          amount: 1,
-          type: 'Fermented',
-          units: 'Pcs',
-        },
-        {
-          id: 505,
-          recipe_id: 2,
-          name: 'Some different ingredient',
-          amount: 1,
-          type: 'Hops',
-          units: 'Pcs',
-        },
-        {
-          id: 5,
-          recipe_id: 2,
-          name: 'Some ingredient',
-          amount: 5.6,
-          type: 'Hops',
-          units: 'Kg',
-        },
-      ],
-      Instructions: [
-        {
-          id: 11,
-          recipe_id: 3,
-          block_id: 1,
-          function_template_id: 4,
-          function_option_id: 6,
-          ordering: 4,
-          param: null,
-          Blocks: {
-            name: 'SECOND_BLOCK',
-          },
-        },
-      ],
-    },
-    {
-      id: 1,
-      name: 'TEST_RECIPE_1',
-      description: 'Seed recipe 1',
-      locked: false,
-      created_at: new Date('2021-11-02T20:18:23.509Z'),
-      updated_at: new Date('2021-11-02T20:18:23.511Z'),
-      Ingredients: [
-        {
-          id: 5,
-          recipe_id: 1,
-          name: 'Some ingredient',
-          amount: 5.6,
-          type: 'Hops',
-          units: 'Kg',
-        },
-        {
-          id: 55,
-          recipe_id: 1,
-          name: 'Some different ingredient',
-          amount: 1,
-          type: 'Fermented',
-          units: 'Pcs',
-        },
-        {
-          id: 505,
-          recipe_id: 1,
-          name: 'Some different ingredient',
-          amount: 1,
-          type: 'Fermented',
-          units: 'Pcs',
-        },
-      ],
-      Instructions: [
-        {
-          id: 11,
-          recipe_id: 3,
-          block_id: 1,
-          function_template_id: 4,
-          function_option_id: 6,
-          ordering: 4,
-          param: null,
-          Blocks: {
-            name: 'SECOND_BLOCK',
-          },
-        },
-      ],
-    },
-    {
-      id: 4,
-      name: 'TEST_RECIPE_4',
-      description: 'Seed recipe 1',
-      locked: false,
-      created_at: new Date('2021-11-02T20:18:23.509Z'),
-      updated_at: new Date('2021-11-02T20:18:23.511Z'),
-      Ingredients: [
-        {
-          id: 5,
-          recipe_id: 4,
-          name: 'Some ingredient',
-          amount: 5.6,
-          type: 'Hops',
-          units: 'Kg',
-        },
-        {
-          id: 5,
-          recipe_id: 4,
-          name: 'Some different ingredient ffqwf',
-          amount: 999,
-          type: 'Yeast',
-          units: 'Pcs',
-        },
-        {
-          id: 505,
-          recipe_id: 4,
-          name: 'Some different ingredient',
-          amount: 1,
-          type: 'Hops',
-          units: 'Pcs',
-        },
-      ],
-      Instructions: [
-        {
-          id: 11,
-          recipe_id: 3,
-          block_id: 1,
-          function_template_id: 4,
-          function_option_id: 6,
-          ordering: 4,
-          param: null,
-          Blocks: {
-            name: 'SECOND_BLOCK',
-          },
-        },
-      ],
-    },
-    {
-      id: 5,
-      name: 'TEST_RECIPE_5',
-      description: 'Seed recipe 1',
-      locked: false,
-      created_at: new Date('2021-11-02T20:18:23.509Z'),
-      updated_at: new Date('2021-11-02T20:18:23.511Z'),
-      Ingredients: [
-        {
-          id: 5,
-          recipe_id: 5,
-          name: 'Some ingredient',
-          amount: 5.6,
-          type: 'Hops',
-          units: 'Kg',
-        },
-      ],
-      Instructions: [
-        {
-          id: 11,
-          recipe_id: 3,
-          block_id: 1,
-          function_template_id: 4,
-          function_option_id: 6,
-          ordering: 4,
-          param: null,
-          Blocks: {
-            name: 'SECOND_BLOCK',
-          },
-        },
-      ],
-    },
-    {
-      id: 6,
-      name: 'TEST_RECIPE_6',
-      description: 'Seed recipe 1',
-      locked: false,
-      created_at: new Date('2021-11-02T20:18:23.509Z'),
-      updated_at: new Date('2021-11-02T20:18:23.511Z'),
-      Ingredients: [
-        {
-          id: 5,
-          recipe_id: 6,
-          name: 'Some ingredient',
-          amount: 5.6,
-          type: 'Hops',
-          units: 'Kg',
-        },
-        {
-          id: 55,
-          recipe_id: 6,
-          name: 'Some different ingredient',
-          amount: 1,
-          type: 'Fermented',
-          units: 'Pcs',
-        },
-        {
-          id: 505,
-          recipe_id: 6,
-          name: 'Some different ingredient',
-          amount: 1,
-          type: 'Hops',
-          units: 'Pcs',
-        },
-        {
-          id: 5588,
-          recipe_id: 6,
-          name: 'Some different ingredient',
-          amount: 1,
-          type: 'Fermented',
-          units: 'Pcs',
-        },
-        {
-          id: 505888,
-          recipe_id: 6,
-          name: 'Some different ingredient',
-          amount: 1,
-          type: 'Hops',
-          units: 'Pcs',
-        },
-      ],
-      Instructions: [
-        {
-          id: 11,
-          recipe_id: 3,
-          block_id: 1,
-          function_template_id: 4,
-          function_option_id: 6,
-          ordering: 4,
-          param: null,
-          Blocks: {
-            name: 'SECOND_BLOCK',
-          },
-        },
-      ],
-    },
-  ],
-};
 const RecipePage: React.FC = () => {
-  const [showPopup, setShowPopup] = useState(false); // pupup to start a new brewing process
-  const [showForm, setShowForm] = useState(false); // show form to make a new recipe
-  const [selectedRecipeId, setRecipeId] = useState(1);
+  // const [showPopup, setShowPopup] = useState(false); // pupup to start a new brewing process
+  // const [showForm, setShowForm] = useState(false); // show form to make a new recipe
+  const [showPage, setShowPage] = useState('PickingPage');
+  const [recipeId, setRecipeId] = useState<number>(1);
+  const [recipeNameForm, setRecipeNameForm] = useState('');
+  const [inputFields, setInputFields] = useState([
+    {
+      amount: 0,
+      units: 'KG',
+      name: '',
+      id: 0,
+      type: 'Fermentables',
+      recipe_id: 0,
+    },
+  ]);
 
-  const handleSelection = (arg: number): undefined => {
-    setRecipeId(arg);
-    console.log(selectedRecipeId);
-    return undefined;
-  };
+  // all recipes known to system
+  const [recipes, setRecipes] = React.useState<RecipeSimple[]>([]);
+
+  // currently selected recipe
+  const [selectedRecipe, setSelectedRecipe] = React.useState<RecipeType | null>(
+    null
+  );
+
+  // on load, fetch all recipes
+  React.useEffect(() => {
+    const f = async (): Promise<void> => {
+      setRecipes(await getRecipes());
+    };
+    f();
+  }, []);
+
+  // if new recipes -> select the first one (usually executed on page load)
+  React.useEffect(() => {
+    setRecipeId(recipes[0]?.id || 0);
+  }, [recipes]);
+
+  // if new selected recipe (by ID) -> fetch the entire recipe with details
+  React.useEffect(() => {
+    const f = async (): Promise<void> => {
+      if (recipeId) setSelectedRecipe(await getRecipe(recipeId));
+    };
+    f();
+  }, [recipeId]);
+
+  // const handleRecipeSelection = (recipeId: number): undefined => {
+  //   setRecipeId(recipeId);
+  //   return undefined;
+  // };
 
   function findItem(
     arrRecipes: RecipeType[],
@@ -387,78 +72,120 @@ const RecipePage: React.FC = () => {
       return item.id === idToSearch;
     });
   }
-  const recipeIngredients = findItem(
-    recipeList.recipes,
-    selectedRecipeId
-  )?.Ingredients;
+  const recipeIngredients =
+    selectedRecipe?.Ingredients ||
+    findItem(recipeList.recipes, recipeId)?.Ingredients;
+
+  const recipeName =
+    selectedRecipe?.name || findItem(recipeList.recipes, recipeId)?.name;
 
   const result = recipeIngredients?.reduce((r, a) => {
     r[a.type] = r[a.type] || [];
     r[a.type].push(a);
     return r;
   }, Object.create(null));
+  console.log({ result });
 
-  const infoGroup = Object.keys(result).map((typ) => {
-    return <IngredientSection sectionName={typ} ingredients={result[typ]} />;
-  });
+  const infoGroup = result
+    ? Object.keys(result)?.map((typ) => {
+        return (
+          <IngredientSection
+            sectionName={typ}
+            ingredients={result[typ]}
+            showUnloader={false}
+          />
+        );
+      })
+    : null;
 
-  return (
-    <div>
-      <Link
-        to="/"
-        className=" underline text-blue-600 hover:text-blue-800 visited:text-purple-600"
-      >
-        Go back
-      </Link>
-      {!showForm ? (
-        <div className="recipe-choosing">
-          <div className="flex flex-row">
-            <div className=" w-2/3 flex flex-col">{infoGroup}</div>
-            <div className=" w-1/3">
-              <RecipeList
-                recipes={recipeList.recipes}
-                callback={handleSelection}
-                current={selectedRecipeId}
-              />
+  function saveForm(): void {
+    const states = inputFields.map(function (data, idx) {
+      if (data.name === '') {
+        return false;
+      }
+      return true;
+    });
+    if (states.includes(false)) {
+      console.log('not all filed are full'); // bud nieco vyskakokvacie alebo riesit uplne inak
+    } else {
+      setShowPage('InstructionsPage'); // tu sa nastavi cesta ku stranke s vyberom instrukcii
+    }
+  }
+
+  // const infoGroupPopup = Object.keys(result).map((typ) => {
+  //   return (
+  //     <IngredientSection
+  //       sectionName={typ}
+  //       ingredients={result[typ]}
+  //       showUnloader
+  //     />
+  //   );
+  // });
+
+  // eslint-disable-next-line
+  function renderSwitch(page: string) {
+    switch (page) {
+      default:
+        return (
+          <div className="recipe-choosing h-full w-2/3">
+            <Link
+              to="/"
+              className=" underline text-blue-600 hover:text-blue-800 visited:text-purple-600"
+            >
+              <div className=" flex flex-row text-2xl text-black text-left ml-10">
+                &#8592; back
+              </div>
+            </Link>
+
+            <div className=" flex flex-col h-4/6">
+              <div className=" text-center text-2xl font-bold">
+                {recipeName}
+              </div>
+              <div className="flex flex-col overflow-auto border-2 border-gray-300 rounded-3xl px-8 m-8 pt-10 h-full">
+                {infoGroup}
+              </div>
             </div>
           </div>
-          <button
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
-            type="button"
-            onClick={() => setShowPopup(true)}
-          >
-            Start brewing
-          </button>
-          <button
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
-            type="button"
-            onClick={() => setShowForm(true)}
-          >
-            Make a new recipe
-          </button>
-        </div>
-      ) : null}
+        );
+      case 'FormPage':
+        return (
+          <div className="ingredients-form  w-2/3">
+            <IngredietsForm
+              showPage={showPage}
+              inputFields={inputFields}
+              setInputFields={(ingredients: IngredientType[]) =>
+                setInputFields(ingredients)
+              }
+              recipeNameForm={recipeNameForm}
+              setRecipeNameForm={(name: string) => setRecipeNameForm(name)}
+            />
+          </div>
+        );
+    }
+  }
 
-      {showForm && (
-        <div>
-          <IngredietsForm show={showForm} />
-          <button
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
-            type="button"
-            onClick={() => setShowForm(false)}
-          >
-            Cancel
-          </button>
+  return (
+    <>
+      <div className="flex flex-row h-full">
+        {renderSwitch(showPage)}
+        <div className="sidebar h-full   w-1/3  border-l-2 border-gray-300">
+          <SideBar
+            showPage={showPage}
+            setShowPage={(pageName: string) => setShowPage(pageName)}
+            setRecipeId={(rId: number) => setRecipeId(rId)}
+            recipeId={recipeId}
+            saveForm={() => saveForm()}
+          />
         </div>
-      )}
-      {showPopup && (
-        <StartBrewingPopup
-          onClose={() => setShowPopup(false)}
-          infoGroup={infoGroup}
-          selectedRecipeId={selectedRecipeId}
-        />
-      )}
-    </div>
+        {/* {showPopup && (
+          <StartBrewingPopup
+            onClose={() => setShowPopup(false)}
+            infoGroup={infoGroupPopup}
+            selectedRecipeId={selectedRecipeId}
+          />
+        )} */}
+      </div>
+    </>
   );
 };
 export default RecipePage;
