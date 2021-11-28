@@ -2,8 +2,13 @@ import React from 'react';
 
 import FunctionType from '../../../types/FunctionData/FunctionType';
 import InstructionForSelection from './InstructionForSelection';
-import InstrPopupProps from '../../../types/Props/InstrPopupProps';
 import InstructionTemplateType from '../../../types/FunctionData/InstructionTemplateType';
+import InstructionTemplateListType from '../../../types/FunctionData/InstructionTemplateListType';
+
+interface InstrPopupProps {
+  functions: InstructionTemplateListType;
+  callback: (instr: InstructionTemplateType) => undefined;
+}
 
 const InstructionPopup: React.FC<InstrPopupProps> = ({
   functions,
@@ -13,8 +18,12 @@ const InstructionPopup: React.FC<InstrPopupProps> = ({
 
   const instructionPopupRef = React.useRef<HTMLDivElement>(null);
 
-  const myCallback = (arg: InstructionTemplateType): void => {
-    callback(arg);
+  // const myCallback = (instr: InstructionTemplateType): void => {
+  //   callback(instr);
+  // };
+
+  const hidePopup = (): void => {
+    console.log('Click registered');
     const instructionPopupNode = instructionPopupRef?.current;
     instructionPopupNode?.classList.remove('modal-bg-active');
   };
@@ -31,7 +40,13 @@ const InstructionPopup: React.FC<InstrPopupProps> = ({
       <div className="grid grid-cols-2 justify-items-center">
         {instructions}
       </div>
-      <button type="button" className="cancel-button">
+      <button
+        type="button"
+        className="cancel-button"
+        onClick={() => {
+          hidePopup();
+        }}
+      >
         Cancel
       </button>
     </div>

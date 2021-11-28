@@ -1,12 +1,20 @@
 /* eslint-disable camelcase */
 
 import React, { useState } from 'react';
+import { type } from 'os';
 import InstructionPopup from '../components/RecipeBuilding/InstructionPopup/InstructionPopup';
 import FunctionListType from '../types/FunctionData/FunctionListType';
 import FunctionType from '../types/FunctionData/FunctionType';
 import EditableInstruction from '../components/RecipeBuilding/InstructionComponents/EditableInstruction';
 import InstructionTemplateType from '../types/FunctionData/InstructionTemplateType';
 import InstructionTemplateListType from '../types/FunctionData/InstructionTemplateListType';
+import InstructionForBackendType from '../types/RecipeData/InstructionForBackendType';
+import AddInstructionButton from '../components/RecipeBuilding/AddInstructionButton';
+import RecipeBlock from '../components/RecipeBuilding/RecipeBlock';
+import RecipeBlockType from '../types/RecipeData/RecipeBlockType';
+import Block from '../components/recipe/Blocks/Block';
+import EditableInstructionTemplateType from '../components/RecipeBuilding/InstructionComponents/EditableInstructionTemplateType';
+import AddBlockButton from '../components/RecipeBuilding/AddBlockButton';
 
 const templates: InstructionTemplateListType = {
   templates: [
@@ -123,48 +131,146 @@ const templates: InstructionTemplateListType = {
 };
 
 const RecipeInstructionsPage: React.FC = () => {
-  const emptyInstr: InstructionTemplateType = {
+  const emptyInstr: EditableInstructionTemplateType = {
     id: -1,
-    codeName: 'SET_TEMPERATURE',
-    name: 'Set temperature',
-    category: 'TEMPERATURE',
+    blockId: -1,
+    codeName: 'EMPTY',
+    name: 'Empty instruction',
+    category: 'EMPTY',
     units: null,
     inputType: 'string',
-    description: 'Sets temperature.',
+    description: 'This instruction is a placeholder.',
     devices: null,
   };
+
+  const [addedInstructions, setAddedInstructions] = useState(
+    Array<EditableInstructionTemplateType>(emptyInstr)
+  );
+
+  const [addedBlocks, setAddedBlocks] = useState(Array<RecipeBlockType>());
 
   const [selectedInstr, setSelectedInstr] = useState(emptyInstr);
   const popupRef = React.useRef<HTMLDivElement>(null);
 
-  const handleInstrSelection = (arg: InstructionTemplateType): undefined => {
-    console.log('CALLBACK HANDLER CALLED.');
-    setSelectedInstr(arg);
-    const instructionPopupNode = popupRef?.current;
-    instructionPopupNode?.classList.remove('modal-bg-active');
+  const handleInstrSelection = (instr: InstructionTemplateType): undefined => {
+    const popupNode = popupRef?.current;
+    const dataOriginal = popupNode?.getAttribute('data-original');
+    if (dataOriginal) {
+      const [index, blockId] = dataOriginal.split('_');
+      const newInstruction: EditableInstructionTemplateType = { ...instr };
+      newInstruction.blockId = parseInt(blockId, 10);
+
+      const newAddedInstructions = [...addedInstructions];
+      newAddedInstructions.splice(parseInt(index, 10), 0, newInstruction);
+      setAddedInstructions(newAddedInstructions);
+    }
+
+    popupNode?.classList.remove('modal-bg-active');
     return undefined;
   };
 
+  const handleAddInstructionToBlock = (
+    instr: InstructionTemplateType,
+    index: number
+  ): Array<EditableInstructionTemplateType> => {
+    let editableInstr: EditableInstructionTemplateType = {
+      ...emptyInstr,
+    };
+    editableInstr = Object.assign(editableInstr, instr);
+    editableInstr.blockId = index;
+    setAddedInstructions(addedInstructions.splice(index, 0, editableInstr));
+    return addedInstructions;
+  };
+
+  const handleAddBlock = (index: number): void => {
+    console.log(addedBlocks);
+    console.log(index);
+    const newAddedBlocks = [...addedBlocks];
+    newAddedBlocks.splice(index, 0, {
+      blockId: index,
+      blockName: '',
+      instructions: new Array<InstructionTemplateType>(),
+    });
+    console.log(newAddedBlocks);
+    setAddedBlocks(newAddedBlocks);
+  };
+
+  const handleChangeBlockName = (index: number, name: string): void => {
+    console.log(name);
+    const newAddedBlocks = [...addedBlocks];
+    newAddedBlocks[index].blockName = name;
+
+    setAddedBlocks(newAddedBlocks);
+  };
+
+  const handleAddInstructionButtonClicked = (
+    index: number,
+    blockId: number
+  ): void => {
+    const instructionPopupNode = popupRef?.current;
+    instructionPopupNode?.setAttribute(
+      'data-original',
+      `${index.toString()}_${blockId.toString()}`
+    );
+    instructionPopupNode?.classList.add('modal-bg-active');
+  };
+
+  // const handleBlockAdded
+
   return (
     <div className="flex flex-col space-y-5 justify-center">
-      <span>{selectedInstr.name}</span>
+      {addedBlocks.map((block, index) => {
+        return (
+          <div>
+            <RecipeBlock
+              key={block.blockName}
+              blockName={block.blockName}
+              blockId={index}
+              instructions={addedInstructions.filter(
+                (instr) => instr.blockId === index
+              )}
+              handleAddButtonClick={handleAddInstructionButtonClicked}
+              onNameChange={handleChangeBlockName}
+            />
+          </div>
+        );
+      })}
+      <AddBlockButton
+        buttonIndex={addedBlocks.length}
+        onBlockAdd={handleAddBlock}
+      />
+      {/* <span>{selectedInstr.name}</span>
       <EditableInstruction
         instruction={selectedInstr}
         blockId={-1}
         onDelete={() => {
           return true;
         }}
-      />
-      <button
+      /> */}
+      {/*      {addedInstructions.map((instr, index) => {
+        return (
+          <div>
+            <EditableInstruction
+              instruction={instr}
+              blockId={0}
+              onDelete={() => {
+                return true;
+              }}
+            />
+            <AddInstructionButton index={index} />
+          </div>
+        );
+      })} */}
+      {/* <button
         className="select-button w-1/5"
         type="button"
-        onClick={() => {
+        onClick={(e) => {
           const instructionPopupNode = popupRef?.current;
           instructionPopupNode?.classList.add('modal-bg-active');
         }}
       >
         Select instruction
-      </button>
+      </button> */}
       <div className="modal-bg" ref={popupRef}>
         <InstructionPopup
           functions={templates}

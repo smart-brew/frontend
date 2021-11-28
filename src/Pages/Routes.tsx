@@ -10,7 +10,7 @@ const Routes: React.FC = () => {
     <Router>
       <div className="items-center content-center text-center">
         <Route path="/" exact component={HomePage} />
-        <Route path="/recipe" component={RecipePage} />
+        {/* <Route path="/recipe" component={RecipePage} /> */}
         <Route path="/recipe/instructions" component={RecipeInstructionsPage} />
       </div>
     </Router>

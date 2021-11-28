@@ -65,9 +65,14 @@ const EditableInstruction: React.FC<EditableInstructionProps> = ({
   };
 
   return (
-    <div className="flex flex-col border-2 border-gray-500 shadow w-1/2 rounded-2xl p-3 px-10 space-y-5 text-left">
-      <h2 className="font-bold text-xl">{instruction.name}</h2>
-      <div>{instructionCustomization}</div>
+    <div className="flex flex-row align-middle items-center">
+      <div className="flex flex-col border-2 border-gray-500 shadow w-4/5 rounded-2xl p-3 px-10 space-y-5 text-left">
+        <h2 className="font-bold text-xl">{instruction.name}</h2>
+        <div>{instructionCustomization}</div>
+      </div>
+      <span className="pl-3 italic text-md w-1/5 flex-wrap">
+        {instruction.description}
+      </span>
     </div>
   );
 };
