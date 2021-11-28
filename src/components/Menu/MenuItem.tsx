@@ -10,6 +10,16 @@ interface Props {
 }
 
 const MenuItem: React.FC<Props> = ({ link, title, selected }) => {
+  const [isSelected, setIsSeleted] = React.useState(false);
+
+  React.useEffect(() => {
+    if (link === '/') {
+      setIsSeleted(link === selected);
+    } else {
+      setIsSeleted(selected.startsWith(link));
+    }
+  }, [selected, link]);
+
   return (
     <Link
       to={link}
@@ -17,7 +27,7 @@ const MenuItem: React.FC<Props> = ({ link, title, selected }) => {
     >
       <span
         className="text-xl font-bold"
-        style={{ color: link === selected ? DARK_YELLOW : '' }}
+        style={{ color: isSelected ? DARK_YELLOW : '' }}
       >
         {title}
       </span>
