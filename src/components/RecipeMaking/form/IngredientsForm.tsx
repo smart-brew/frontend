@@ -4,7 +4,6 @@ import IngredientType from '../../../types/RecipeData/IngredientType';
 import FormSection from './FormSection';
 
 interface Props {
-  showPage: string;
   inputFields: Array<IngredientType>;
   setInputFields: (ingredients: IngredientType[]) => void;
   recipeNameForm: string;
@@ -21,7 +20,6 @@ function getIndex(
 const unloadChoices = ['Fermentables', 'Yeast', 'Hops', 'Other']; // i can get these from the list of the supported functions
 
 const IngredietsForm: React.FC<Props> = ({
-  showPage,
   inputFields,
   setInputFields,
   recipeNameForm,
@@ -73,10 +71,6 @@ const IngredietsForm: React.FC<Props> = ({
     const values = [...inputFields] as IngredientType[];
     console.log(values);
   };
-
-  if (showPage !== 'FormPage') {
-    return null;
-  }
 
   const result = inputFields?.reduce((r, a) => {
     r[a.type] = r[a.type] || [];

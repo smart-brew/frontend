@@ -9,13 +9,12 @@ import Button from '../components/shared/Button';
 import { IngredientsT } from '../types/RecipeData/IngredientType';
 
 interface Props {
-  showPage: string;
   recipeId: number;
 }
 
-const RecipeProgress: React.FC<Props> = ({ showPage, recipeId }: Props) => {
+const RecipeProgress: React.FC<Props> = ({ recipeId }: Props) => {
   const [showStartConfirmation, setShowStartConfirmation] = useState(false); // pupup to start a new brewing process
-  const [page, setPage] = useState(showPage);
+  const [page, setPage] = useState('BeforeBrewingPage');
 
   const [selectedRecipe, setSelectedRecipe] = React.useState<RecipeType | null>(
     null
@@ -67,11 +66,6 @@ const RecipeProgress: React.FC<Props> = ({ showPage, recipeId }: Props) => {
     );
   }
 
-  function setPageFunction(newPage: string): void {
-    setPage(newPage);
-    console.log(showPage);
-  }
-
   function renderSwitch(pageName: string): JSX.Element {
     switch (pageName) {
       default:
@@ -88,7 +82,10 @@ const RecipeProgress: React.FC<Props> = ({ showPage, recipeId }: Props) => {
               />
               <Button
                 title="Stop process"
-                onClick={() => setPageFunction('MainPage')}
+                onClick={() => {
+                  setPage('MainPage');
+                  console.log('TODO: STOP BREWING');
+                }}
               />
             </div>
             <RecipePreview recipe={selectedRecipe} size="w-full" />

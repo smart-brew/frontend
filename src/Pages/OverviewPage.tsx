@@ -5,7 +5,6 @@ import RecipeProgress from '../SideBars/RecipeProgress';
 
 interface CustomState {
   rId: number;
-  setShowPage: string;
 }
 
 const OverviewPage: React.FC = () => {
@@ -20,7 +19,7 @@ const OverviewPage: React.FC = () => {
       <div className="sidebar w-1/3 h-full border-l-2 border-gray-300">
         <div className="h-full">
           {state ? (
-            <RecipeProgress showPage={state.setShowPage} recipeId={state.rId} />
+            <RecipeProgress recipeId={state.rId} />
           ) : (
             <div>This is the welcome page</div>
           )}
