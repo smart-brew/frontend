@@ -1,18 +1,13 @@
 /* eslint-disable camelcase */
 
 import React, { useState } from 'react';
-import { type } from 'os';
+
 import InstructionPopup from '../components/RecipeBuilding/InstructionPopup/InstructionPopup';
-import FunctionListType from '../types/FunctionData/FunctionListType';
-import FunctionType from '../types/FunctionData/FunctionType';
-import EditableInstruction from '../components/RecipeBuilding/InstructionComponents/EditableInstruction';
 import InstructionTemplateType from '../types/FunctionData/InstructionTemplateType';
 import InstructionTemplateListType from '../types/FunctionData/InstructionTemplateListType';
 import InstructionForBackendType from '../types/RecipeData/InstructionForBackendType';
-import AddInstructionButton from '../components/RecipeBuilding/AddInstructionButton';
 import RecipeBlock from '../components/RecipeBuilding/RecipeBlock';
 import RecipeBlockType from '../types/RecipeData/RecipeBlockType';
-import Block from '../components/recipe/Blocks/Block';
 import EditableInstructionTemplateType from '../components/RecipeBuilding/InstructionComponents/EditableInstructionTemplateType';
 import AddBlockButton from '../components/RecipeBuilding/AddBlockButton';
 
@@ -152,14 +147,13 @@ const RecipeInstructionsPage: React.FC = () => {
 
   const [addedBlocks, setAddedBlocks] = useState(Array<RecipeBlockType>());
 
-  const [selectedInstr, setSelectedInstr] = useState(emptyInstr);
   const popupRef = React.useRef<HTMLDivElement>(null);
 
   const updateAddedInstructions = (): void => {
     let instrCounter = 0;
     const newAddedInstructions: Array<EditableInstructionTemplateType> = [];
     // iterate over blocks and assign ordering to the instructions
-    addedBlocks.forEach((block, index) => {
+    addedBlocks.forEach((block) => {
       block.instructions.forEach((instruction) => {
         instruction.ordering = instrCounter;
         newAddedInstructions.push(instruction);

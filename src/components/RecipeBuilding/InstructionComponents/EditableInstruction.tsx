@@ -6,9 +6,6 @@ import TransferEditableInstr from './TransferEditableInstr';
 import UnloadEditableInstr from './UnloadEditableInstr';
 import WaitEditableInstr from './WaitEditableInstr';
 import ManualEditableInstr from './ManualEditableInstr';
-import InstructionTemplateType from '../../../types/FunctionData/InstructionTemplateType';
-import InstructionForBackendType from '../../../types/RecipeData/InstructionForBackendType';
-import EditableInstrRefType from '../../../types/RecipeData/EditableInstrRefType';
 import ParamType from '../../../types/ParamType';
 import EditableInstructionTemplateType from './EditableInstructionTemplateType';
 
@@ -30,8 +27,6 @@ const EditableInstruction: React.FC<EditableInstructionProps> = ({
   onDelete,
   onInstructionEdit,
 }: EditableInstructionProps) => {
-  const currBodyRef = React.createRef<EditableInstrRefType>();
-
   const registerChange = (params: ParamType): void => {
     const newInstruction = instruction;
     newInstruction.param = params.value;

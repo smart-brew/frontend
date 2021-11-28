@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
-import FunctionType from '../../../types/FunctionData/FunctionType';
+
 import ParamType from '../../../types/ParamType';
-import InstructionTemplateType from '../../../types/FunctionData/InstructionTemplateType';
-import EditableInstrRefType from '../../../types/RecipeData/EditableInstrRefType';
 import EditableInstructionTemplateType from './EditableInstructionTemplateType';
 
 interface Props {

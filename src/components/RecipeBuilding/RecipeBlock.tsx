@@ -1,10 +1,8 @@
 import React from 'react';
-import InstructionTemplateType from '../../types/FunctionData/InstructionTemplateType';
+
 import EditableInstruction from './InstructionComponents/EditableInstruction';
 import AddInstructionButton from './AddInstructionButton';
-import InstructionForBackendType from '../../types/RecipeData/InstructionForBackendType';
 import EditableInstructionTemplateType from './InstructionComponents/EditableInstructionTemplateType';
-import ParamType from '../../types/ParamType';
 
 interface Props {
   instructions: Array<EditableInstructionTemplateType>;

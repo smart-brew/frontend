@@ -1,8 +1,6 @@
 import React, { useRef } from 'react';
-import FunctionType from '../../../types/FunctionData/FunctionType';
+
 import ParamType from '../../../types/ParamType';
-import InstructionTemplateType from '../../../types/FunctionData/InstructionTemplateType';
-import EditableInstrRefType from '../../../types/RecipeData/EditableInstrRefType';
 import EditableInstructionTemplateType from './EditableInstructionTemplateType';
 
 interface Props {
@@ -39,8 +37,8 @@ const UnloadEditableInstr: React.FC<Props> = ({
         ref={selectRef}
         onChange={sendParams}
       >
-        {options.map((ele, index) => {
-          return <option value={ele.toUpperCase()}>{ele}</option>;
+        {options.map((option) => {
+          return <option value={option.toUpperCase()}>{option}</option>;
         })}
       </select>
     </div>

@@ -1,6 +1,5 @@
 import React from 'react';
 
-import FunctionType from '../../../types/FunctionData/FunctionType';
 import InstructionForSelection from './InstructionForSelection';
 import InstructionTemplateType from '../../../types/FunctionData/InstructionTemplateType';
 import InstructionTemplateListType from '../../../types/FunctionData/InstructionTemplateListType';

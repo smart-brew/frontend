@@ -1,5 +1,4 @@
 import React from 'react';
-import InstructionTemplateType from '../../types/FunctionData/InstructionTemplateType';
 
 interface Props {
   index: number;
