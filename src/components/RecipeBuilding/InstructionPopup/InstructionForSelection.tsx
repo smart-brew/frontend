@@ -1,5 +1,10 @@
 import React from 'react';
-import InstrSelectionProps from '../../../types/Props/InstrSelectionProps';
+import InstructionTemplateType from '../../../types/FunctionData/InstructionTemplateType';
+
+interface InstrSelectionProps {
+  instruction: InstructionTemplateType;
+  onClick: (arg: InstructionTemplateType) => void;
+}
 
 const InstructionForSelection: React.FC<InstrSelectionProps> = ({
   instruction,
