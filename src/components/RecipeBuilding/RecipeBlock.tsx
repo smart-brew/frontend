@@ -79,7 +79,7 @@ const RecipeBlock: React.FC<Props> = ({
         ) : (
           instructions.map((instr, index) => {
             return (
-              <div>
+              <div key={instr.id + instr.name}>
                 <EditableInstruction
                   instruction={instr}
                   blockId={blockId}

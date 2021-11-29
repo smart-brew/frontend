@@ -78,11 +78,12 @@ const IngredietsForm: React.FC<Props> = ({
     return r;
   }, Object.create(null));
 
-  const infoGroup = unloadChoices.map((item: string) => {
+  const infoGroup = unloadChoices.map((sectionName) => {
     return (
       <FormSection
-        inputFields={result[item]}
-        sectionName={item}
+        key={sectionName}
+        inputFields={result[sectionName]}
+        sectionName={sectionName}
         handleAdd={handleAddFields}
         handleRemove={handleRemoveField}
         handleChange={handleChangeInput}

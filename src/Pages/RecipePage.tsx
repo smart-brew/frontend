@@ -6,6 +6,7 @@ import RecipeType, { RecipeSimple } from '../types/RecipeData/RecipeType';
 import RecipePreview from '../components/RecipeMaking/RecipePreview';
 import { getRecipe, getRecipes } from '../api/recipe';
 import AllRecipesSidebar from '../SideBars/AllRecipesSidebar';
+import SplitPage from '../components/shared/SplitPage';
 
 const RecipePage: React.FC = () => {
   const [recipeId, setRecipeId] = useState<number>(1);
@@ -40,17 +41,15 @@ const RecipePage: React.FC = () => {
   }, [recipeId]);
 
   return (
-    <div className="flex flex-row h-full">
-      <RecipePreview recipe={selectedRecipe} size="w-2/3" />
+    <SplitPage>
+      <RecipePreview recipe={selectedRecipe} />
 
-      <div className="sidebar h-full w-1/3 border-l border-gray-300">
-        <AllRecipesSidebar
-          recipes={recipes}
-          recipeId={recipeId}
-          setRecipeId={setRecipeId}
-        />
-      </div>
-    </div>
+      <AllRecipesSidebar
+        recipes={recipes}
+        recipeId={recipeId}
+        setRecipeId={setRecipeId}
+      />
+    </SplitPage>
   );
 };
 export default RecipePage;

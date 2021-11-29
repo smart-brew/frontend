@@ -28,7 +28,13 @@ const InstructionPopup: React.FC<InstrPopupProps> = ({
   };
 
   const instructions = templates.map((func) => {
-    return <InstructionForSelection instruction={func} onClick={callback} />;
+    return (
+      <InstructionForSelection
+        key={func.codeName}
+        instruction={func}
+        onClick={callback}
+      />
+    );
   });
   return (
     <div

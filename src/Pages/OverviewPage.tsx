@@ -1,31 +1,22 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 import Brewery from '../components/overview/Brewery';
+import SplitPage from '../components/shared/SplitPage';
 import RecipeProgress from '../SideBars/RecipeProgress';
 
-interface CustomState {
-  rId: number;
+export interface OverviewPageState {
+  recipeId: number;
 }
 
 const OverviewPage: React.FC = () => {
   const location = useLocation();
-  const state = location.state as CustomState;
+  const state = location.state as OverviewPageState;
 
   return (
-    <div className="flex flex-row justify-center h-full min-h-full max-h-full">
-      <div className="picture h-full w-2/3">
-        <Brewery />
-      </div>
-      <div className="sidebar w-1/3 h-full border-l-2 border-gray-300">
-        <div className="h-full">
-          {state ? (
-            <RecipeProgress recipeId={state.rId} />
-          ) : (
-            <div>This is the welcome page</div>
-          )}
-        </div>
-      </div>
-    </div>
+    <SplitPage>
+      <Brewery />
+      <RecipeProgress recipeId={state?.recipeId} />
+    </SplitPage>
   );
 };
 

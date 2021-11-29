@@ -14,6 +14,7 @@ import AddBlockButton from '../components/RecipeBuilding/AddBlockButton';
 import { IngredientsFormProps } from './RecipeIngredientsPage';
 import { templates } from '../components/RecipeBuilding/instructionTemplates';
 import { createRecipe } from '../api/recipe';
+import SplitPage from '../components/shared/SplitPage';
 
 const RecipeInstructionsPage: React.FC = () => {
   const history = useHistory();
@@ -224,27 +225,28 @@ const RecipeInstructionsPage: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col space-y-5 justify-center">
-      {addedBlocks.map((block, index) => (
-        <div>
-          <RecipeBlock
-            key={block.blockName}
-            blockName={block.blockName}
-            blockId={index}
-            instructions={block.instructions}
-            handleAddButtonClick={handleAddInstructionButtonClicked}
-            onNameChange={handleChangeBlockName}
-            onInstructionEdit={handleEditInstruction}
-            onBlockDelete={handleBlockDelete}
-            onInstructionDelete={handleInstructionDelete}
-          />
-        </div>
-      ))}
-      <AddBlockButton
-        buttonIndex={addedBlocks.length}
-        onBlockAdd={handleAddBlock}
-      />
-      {/* <span>{selectedInstr.name}</span>
+    <SplitPage>
+      <div className="flex flex-col space-y-5 justify-center">
+        {addedBlocks.map((block, index) => (
+          <div key={block.blockName}>
+            <RecipeBlock
+              key={block.blockName}
+              blockName={block.blockName}
+              blockId={index}
+              instructions={block.instructions}
+              handleAddButtonClick={handleAddInstructionButtonClicked}
+              onNameChange={handleChangeBlockName}
+              onInstructionEdit={handleEditInstruction}
+              onBlockDelete={handleBlockDelete}
+              onInstructionDelete={handleInstructionDelete}
+            />
+          </div>
+        ))}
+        <AddBlockButton
+          buttonIndex={addedBlocks.length}
+          onBlockAdd={handleAddBlock}
+        />
+        {/* <span>{selectedInstr.name}</span>
       <EditableInstruction
         instruction={selectedInstr}
         blockId={-1}
@@ -252,7 +254,7 @@ const RecipeInstructionsPage: React.FC = () => {
           return true;
         }}
       /> */}
-      {/*      {addedInstructions.map((instr, index) => {
+        {/*      {addedInstructions.map((instr, index) => {
         return (
           <div>
             <EditableInstruction
@@ -266,7 +268,7 @@ const RecipeInstructionsPage: React.FC = () => {
           </div>
         );
       })} */}
-      {/* <button
+        {/* <button
         className="select-button w-1/5"
         type="button"
         onClick={(e) => {
@@ -276,20 +278,24 @@ const RecipeInstructionsPage: React.FC = () => {
       >
         Select instruction
       </button> */}
-      <button
-        type="button"
-        className="select-button"
-        onClick={() => saveRecipe()}
-      >
-        Save recipe
-      </button>
-      <div className="modal-bg" ref={popupRef}>
-        <InstructionPopup
-          functions={templates}
-          callback={handleInstrSelection}
-        />
+        <div className="modal-bg" ref={popupRef}>
+          <InstructionPopup
+            functions={templates}
+            callback={handleInstrSelection}
+          />
+        </div>
       </div>
-    </div>
+
+      <div className="buttons">
+        <button
+          type="button"
+          className="select-button"
+          onClick={() => saveRecipe()}
+        >
+          Save recipe
+        </button>
+      </div>
+    </SplitPage>
   );
 };
 

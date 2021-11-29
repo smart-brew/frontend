@@ -9,15 +9,15 @@ interface Props {
 
 const CreateIngredientsSidebar: React.FC<Props> = ({ saveForm }: Props) => {
   return (
-    <div className="h-full pt-10 pr-10">
-      <div className="context h-4/6" />
-      <div className="buttons text-center flex flex-col">
+    <React.StrictMode>
+      <div className="context h-2/3" />
+      <div className="buttons flex flex-col">
         <Link to="/recipe">
           <Button title="Cancel" />
         </Link>
         <Button title="Next step" onClick={() => saveForm()} />
       </div>
-    </div>
+    </React.StrictMode>
   );
 };
 

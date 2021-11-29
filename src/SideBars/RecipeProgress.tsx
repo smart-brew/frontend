@@ -93,7 +93,7 @@ const RecipeProgress: React.FC<Props> = ({ recipeId }: Props) => {
                 }}
               />
             </div>
-            <RecipePreview recipe={selectedRecipe} size="w-full" />
+            <RecipePreview recipe={selectedRecipe} />
           </>
         );
       case 'WhileBrewingPage':
@@ -103,7 +103,7 @@ const RecipeProgress: React.FC<Props> = ({ recipeId }: Props) => {
 
   return (
     <>
-      <div className="pt-10 h-full">{renderSwitch(page)}</div>
+      {renderSwitch(page)}
       {showStartConfirmation && showConfrirmPopup()}
     </>
   );

@@ -47,7 +47,7 @@ const FormSection: React.FC<FormSectionProps> = ({
     <div className="my-5">
       <div className="text-left font-bold">{sectionName}</div>
       {inputFields.map((inputField) => (
-        <div className="flex flex-row flow-root">
+        <div className="flex flex-row flow-root" key={inputField.id}>
           <label htmlFor="amount">
             <input
               className="w-24 px-4 shadow"

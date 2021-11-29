@@ -4,6 +4,7 @@ import { loadRecipe as loadRecipeAPI } from '../api/recipe';
 import RecipeList from '../components/RecipeMaking/RecipeList';
 
 import Button from '../components/shared/Button';
+import { OverviewPageState } from '../Pages/OverviewPage';
 import { RecipeSimple } from '../types/RecipeData/RecipeType';
 
 interface Props {
@@ -22,15 +23,16 @@ const AllRecipesSidebar: React.FC<Props> = ({
   const loadRecipe = async (): Promise<void> => {
     loadRecipeAPI(recipeId);
     // TODO pridat kontrolu ci OK
-    history.push('/', {
-      rId: recipeId,
-    });
+    const data: OverviewPageState = {
+      recipeId,
+    };
+    history.push('/', data);
   };
 
   return (
-    <div className="h-full pt-10 pr-10">
-      <div className="context h-4/6">
-        <div className="text-center text-2xl font-bold pb-8">Recipes</div>
+    <React.StrictMode>
+      <div className="context h-2/3">
+        <div className="text-center text-2xl font-bold p-8">Recipes</div>
 
         <RecipeList
           recipes={recipes}
@@ -46,7 +48,7 @@ const AllRecipesSidebar: React.FC<Props> = ({
         </Link>
         <Button title="Load recipe" onClick={() => loadRecipe()} />
       </div>
-    </div>
+    </React.StrictMode>
   );
 };
 
