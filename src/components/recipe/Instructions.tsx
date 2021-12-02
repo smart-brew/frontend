@@ -15,8 +15,9 @@ const Ingredients: React.FC<Props> = ({ instructions }) => {
     status: 'WAITING',
   };
 
+  // TODO v tomto componente handlovat zgrupovanie do blokov
   return (
-    <div className="flex flex-col overflow-auto shadow rounded-3xl px-8 py-3 m-8">
+    <div className="flex flex-col shadow rounded-3xl px-8 py-3 mx-8 mb-3">
       {instructions.map((instr) => {
         return (
           <Instruction

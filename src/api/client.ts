@@ -2,6 +2,17 @@
 
 import { url as makeUrl, urlWithParams } from './helpers';
 
+export const get = (
+  url: string,
+  params?: {
+    [key: string]: number;
+  }
+): Promise<any> => {
+  return fetch(urlWithParams(url, params))
+    .then((response) => response.json())
+    .catch((error) => console.log(error));
+};
+
 export const put = (url: string, body?: unknown): Promise<any> => {
   return fetch(makeUrl(url), {
     body: JSON.stringify(body || {}),

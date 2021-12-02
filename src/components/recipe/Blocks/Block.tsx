@@ -1,6 +1,6 @@
 import React from 'react';
 import BlockType from '../../../types/BlockType';
-import Instruction from '../Instructions/Instruction';
+
 import InstructionStateMap from '../../../helper_scripts/InstructionStateMap';
 import TimeHelper from '../../../helper_scripts/TimeHelper';
 

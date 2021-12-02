@@ -14,7 +14,7 @@ const Instruction: React.FC<Props> = ({ instruction, status }: Props) => {
   if (status.currentInstruction === instruction.id) {
     return <FullInstruction instruction={instruction} status={status} />;
   }
-  return <HiddenInstruction instruction={instruction} status={status} />;
+  return <HiddenInstruction instruction={instruction} />;
 };
 
 export default Instruction;
