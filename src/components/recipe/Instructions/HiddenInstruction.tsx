@@ -1,13 +1,20 @@
 import React from 'react';
 import UnitsMap from '../../../helper_scripts/UnitsMap';
-import Props from '../../../types/Props/InstructionProps';
+import InstructionType from '../../../types/RecipeData/InstructionType';
+import { InstructionStatus } from '../../../types/SystemData';
 
-const HiddenInstruction: React.FC<Props> = ({ instruction, state }: Props) => {
-  const valueUnit = new UnitsMap().getUnit(instruction.name);
+interface Props {
+  instruction: InstructionType;
+  status: InstructionStatus;
+}
+
+const HiddenInstruction: React.FC<Props> = ({ instruction, status }: Props) => {
+  // const valueUnit = new UnitsMap().getUnit(instruction.name);
 
   return (
     <div className="opacity-75 text-lg shadow rounded-xl content-center justify-center py-4 mt-3 bg-white flex flex-col space-x-5">
-      <div className="flex flex-row content-center justify-center">
+      HIDDEN {instruction.id}
+      {/* <div className="flex flex-row content-center justify-center">
         <h3 className="text-xl text-gray-700 pr-3">
           <span className="font-bold">{instruction.name}</span>
           <span className="font-semibold"> in </span>
@@ -25,7 +32,7 @@ const HiddenInstruction: React.FC<Props> = ({ instruction, state }: Props) => {
       </div>
       <div className={`font-bold text-xl pt-2 ${state?.style}`}>
         {state?.name}
-      </div>
+      </div> */}
     </div>
   );
 };

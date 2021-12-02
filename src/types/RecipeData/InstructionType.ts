@@ -15,13 +15,15 @@ export type BlockInfo = {
 
 type InstructionType = {
   id: number;
-  recipe_id: number;
-  block_id: number;
-  function_template_id: number;
-  function_option_id: number | null;
+  recipeId: number;
+  templateId: number;
+  instruction: string;
+  param: number | string | null;
+  category: string;
+  device: string | null;
+  blockId: number;
+  block: string;
   ordering: number;
-  param: Parameters | null;
-  Blocks: BlockInfo;
 };
 
 export default InstructionType;

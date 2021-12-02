@@ -15,11 +15,12 @@ const Block: React.FC<BlockType> = ({ instructions, name }: BlockType) => {
       hasCurrentInstr = true;
     }
     return (
-      <Instruction
-        key={instr.orderNum}
-        instruction={instr}
-        state={instrStyle}
-      />
+      <div>INSTRUCTION IN BLOCK</div>
+      // <Instruction
+      //   key={instr.orderNum}
+      //   instruction={instr}
+      //   state={instrStyle}
+      // />
     );
   });
 

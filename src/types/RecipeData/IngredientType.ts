@@ -2,7 +2,7 @@
 
 type IngredientType = {
   id: number;
-  recipe_id: number;
+  recipeId: number;
   name: string;
   amount: number;
   type: string;

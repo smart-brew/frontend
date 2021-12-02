@@ -13,10 +13,10 @@ type RecipeType = {
   name: string;
   description: string;
   locked: boolean;
-  created_at: Date | null;
-  updated_at: Date | null;
-  Ingredients: Array<IngredientType> | null;
-  Instructions: Array<InstructionType> | null;
+  created_at?: Date | null;
+  updated_at?: Date | null;
+  Ingredients: Array<IngredientType>;
+  Instructions: Array<InstructionType>;
 };
 
 export default RecipeType;
