@@ -15,6 +15,7 @@ import { InstructionsContext } from '../contexts/instructionsContext';
 import FunctionTemplate from '../types/FunctionData/FunctionTemplate';
 
 import IngredientType from '../types/RecipeData/IngredientType';
+import CreateInstructionsSidebar from '../SideBars/CreateInstructionsSidebar';
 
 export interface RecipeDataProps {
   sendIngredients: IngredientType[];
@@ -27,20 +28,6 @@ const RecipeInstructionsPage: React.FC = () => {
   const location = useLocation();
   const { ingredients, recipeName, addBlocks } =
     location.state as IngredientsFormProps;
-
-  const toIngredients = (
-    sendIngredients: Array<IngredientType>,
-    sendRecipeName: string,
-    sendBlocks: Array<RecipeBlockType>
-  ): void => {
-    const data: RecipeDataProps = {
-      sendIngredients,
-      sendRecipeName,
-      sendBlocks,
-    };
-
-    history.push('/recipe/ingredients', data);
-  };
 
   const templates = React.useContext(InstructionsContext);
 
@@ -66,6 +53,19 @@ const RecipeInstructionsPage: React.FC = () => {
   const [addedBlocks, setAddedBlocks] = useState(addBlocks);
 
   const popupRef = React.useRef<HTMLDivElement>(null);
+
+  const toIngredients = (): // sendIngredients: Array<IngredientType>,
+  // sendRecipeName: string,
+  // sendBlocks: Array<RecipeBlockType>
+  void => {
+    const data: RecipeDataProps = {
+      sendIngredients: ingredients,
+      sendRecipeName: recipeName,
+      sendBlocks: addedBlocks,
+    };
+
+    history.push('/recipe/ingredients', data);
+  };
 
   const updateAddedInstructions = (): void => {
     let instrCounter = 0;
@@ -311,22 +311,12 @@ const RecipeInstructionsPage: React.FC = () => {
         </div>
       </div>
 
-      <div className="buttons">
-        <button
-          type="button"
-          className="select-button"
-          onClick={() => saveRecipe()}
-        >
-          Save recipe
-        </button>
-        <button
-          type="button"
-          className="select-button"
-          onClick={() => toIngredients(ingredients, recipeName, addedBlocks)}
-        >
-          Previous
-        </button>
-      </div>
+      <CreateInstructionsSidebar
+        saveRecipe={saveRecipe}
+        toIngredients={toIngredients}
+        ingredients={ingredients}
+        recipeName={recipeName}
+      />
     </SplitPage>
   );
 };

@@ -60,11 +60,8 @@ const AllRecipesSidebar: React.FC<Props> = ({
         />
       </div>
       {/* Buttons Edit, Start Brewing, Make a new recipe */}
-      <div className="buttons text-center flex flex-col">
+      <div className="buttons text-center flex flex-col mx-10">
         <Button title="Edit" />
-        {/* <Link to="/recipe/ingredients">
-          <Button title="Make a new recipe" />
-        </Link> */}
         <Button title="Make a new recipe" onClick={() => makeRecipe()} />
         <Button title="Load recipe" onClick={() => loadRecipe()} />
       </div>

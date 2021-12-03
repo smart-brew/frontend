@@ -5,10 +5,10 @@ interface Props {
   onClick?: () => void;
 }
 
-const Button: React.FC<Props> = ({ title, onClick }) => {
+const CancelButton: React.FC<Props> = ({ title, onClick }) => {
   return (
     <button
-      className="select-button"
+      className="cancel-button w-full"
       type="button"
       onClick={() => {
         if (onClick) onClick();
@@ -19,8 +19,8 @@ const Button: React.FC<Props> = ({ title, onClick }) => {
   );
 };
 
-Button.defaultProps = {
+CancelButton.defaultProps = {
   onClick: undefined,
 };
 
-export default Button;
+export default CancelButton;

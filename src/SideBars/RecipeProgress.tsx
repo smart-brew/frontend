@@ -8,6 +8,7 @@ import { getRecipe } from '../api/recipe';
 import Button from '../components/shared/Button';
 import { IngredientsT } from '../types/RecipeData/IngredientType';
 import { startBrewing as startBrewingAPI } from '../api/brew';
+import CancelButton from '../components/shared/CancelButton';
 
 interface Props {
   recipeId: number;
@@ -80,12 +81,12 @@ const RecipeProgress: React.FC<Props> = ({ recipeId }: Props) => {
       case 'BeforeBrewingPage':
         return (
           <>
-            <div className="buttons text-center flex flex-col">
+            <div className="buttons text-center flex flex-col mx-10">
               <Button
                 title="Start brewing"
                 onClick={() => setShowStartConfirmation(true)}
               />
-              <Button
+              <CancelButton
                 title="Stop process"
                 onClick={() => {
                   setPage('MainPage');
