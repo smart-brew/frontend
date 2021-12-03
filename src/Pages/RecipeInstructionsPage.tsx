@@ -15,30 +15,51 @@ import { IngredientsFormProps } from './RecipeIngredientsPage';
 import { templates } from '../components/RecipeBuilding/instructionTemplates';
 import { createRecipe } from '../api/recipe';
 import SplitPage from '../components/shared/SplitPage';
+import IngredientType from '../types/RecipeData/IngredientType';
+
+export interface RecipeDataProps {
+  sendIngredients: IngredientType[];
+  sendRecipeName: string | '';
+  sendInstructions: EditableInstructionTemplateType[] | null;
+}
 
 const RecipeInstructionsPage: React.FC = () => {
   const history = useHistory();
   const location = useLocation();
-  const { ingredients, recipeName } = location.state as IngredientsFormProps;
+  const { ingredients, recipeName, addInstructions } =
+    location.state as IngredientsFormProps;
 
-  const emptyInstr: EditableInstructionTemplateType = {
-    id: -1,
-    blockId: -1,
-    blockName: '',
-    codeName: 'EMPTY',
-    name: 'Empty instruction',
-    category: 'EMPTY',
-    units: null,
-    inputType: 'string',
-    description: 'This instruction is a placeholder.',
-    param: null,
-    device: null,
-    ordering: -1,
+  const toIngredients = (
+    sendIngredients: Array<IngredientType>,
+    sendRecipeName: string,
+    sendInstructions: Array<EditableInstructionTemplateType>
+  ): void => {
+    const data: RecipeDataProps = {
+      sendIngredients,
+      sendRecipeName,
+      sendInstructions,
+    };
+
+    history.push('/recipe/ingredients', data);
   };
 
-  const [addedInstructions, setAddedInstructions] = useState(
-    Array<EditableInstructionTemplateType>(emptyInstr)
-  );
+  // const emptyInstr: EditableInstructionTemplateType = {
+  //   id: -1,
+  //   blockId: -1,
+  //   blockName: '',
+  //   codeName: 'EMPTY',
+  //   name: 'Empty instruction',
+  //   category: 'EMPTY',
+  //   units: null,
+  //   inputType: 'string',
+  //   description: 'This instruction is a placeholder.',
+  //   param: null,
+  //   device: null,
+  //   ordering: -1,
+  // };
+
+  console.log(addInstructions);
+  const [addedInstructions, setAddedInstructions] = useState(addInstructions);
 
   const [addedBlocks, setAddedBlocks] = useState(Array<RecipeBlockType>());
 
@@ -293,6 +314,15 @@ const RecipeInstructionsPage: React.FC = () => {
           onClick={() => saveRecipe()}
         >
           Save recipe
+        </button>
+        <button
+          type="button"
+          className="select-button"
+          onClick={() =>
+            toIngredients(ingredients, recipeName, addedInstructions)
+          }
+        >
+          Previous
         </button>
       </div>
     </SplitPage>
