@@ -19,8 +19,9 @@ const FullInstruction: React.FC<Props> = ({ instruction, status }: Props) => {
     (templ) => templ.id === instruction.templateId
   );
 
+  // TODO lepsie mapovanie na pekny nazov
   function getName(): string {
-    return `Full ${instruction.id}`;
+    return instruction.codeName;
   }
 
   // TODO tiez upravit style a veci co sa zobrazuju ked bude BE updatnuty
@@ -40,13 +41,15 @@ const FullInstruction: React.FC<Props> = ({ instruction, status }: Props) => {
         <div className="flex flex-col">
           <span className="font-semibold">Now:</span>
           <span className="font-bold">
-            {status.currentValue} {template?.units}
+            {status.currentValue}
+            {template?.units}
           </span>
         </div>
         <div className="flex flex-col">
           <span className="font-semibold">Target:</span>
           <span className="font-bold">
-            {JSON.stringify(instruction.param)} {template?.units}
+            {instruction.param}
+            {template?.units}
           </span>
         </div>
       </div>

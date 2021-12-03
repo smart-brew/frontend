@@ -3,7 +3,7 @@
 type OptionType = {
   id: number;
   name: string;
-  device: string;
+  codeName: string;
 };
 
 export default OptionType;

@@ -4,13 +4,13 @@ import OptionType from './OptionType';
 
 type FunctionTemplate = {
   id: number;
-  instruction: string;
+  codeName: string;
   name: string;
   category: string;
   units: string | null;
   inputType: string | null;
   description: string;
-  devices: Array<OptionType>;
+  options: Array<OptionType>;
 };
 
 export default FunctionTemplate;

@@ -17,12 +17,12 @@ type InstructionType = {
   id: number;
   recipeId: number;
   templateId: number;
-  instruction: string;
+  codeName: string;
   param: number | string | null;
   category: string;
-  device: string | null;
+  optionCodeName: string | null;
   blockId: number;
-  block: string;
+  blockName: string;
   ordering: number;
 };
 
