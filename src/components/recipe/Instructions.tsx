@@ -7,7 +7,7 @@ interface Props {
   instructions: InstructionType[];
 }
 
-const Ingredients: React.FC<Props> = ({ instructions }) => {
+const Instructions: React.FC<Props> = ({ instructions }) => {
   const currentInstructionStatus = React.useContext(DataContext)
     ?.instruction || {
     currentInstruction: 0,
@@ -31,4 +31,4 @@ const Ingredients: React.FC<Props> = ({ instructions }) => {
   );
 };
 
-export default Ingredients;
+export default Instructions;

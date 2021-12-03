@@ -11,8 +11,6 @@ interface Props {
 }
 
 const FullInstruction: React.FC<Props> = ({ instruction, status }: Props) => {
-  // const valueUnit = new UnitsMap().getUnit(instruction.name);
-
   const templates = React.useContext(InstructionsContext);
 
   const template = templates?.data.find(
@@ -24,7 +22,7 @@ const FullInstruction: React.FC<Props> = ({ instruction, status }: Props) => {
     return instruction.codeName;
   }
 
-  // TODO tiez upravit style a veci co sa zobrazuju ked bude BE updatnuty
+  // TODO upravit style a veci co sa zobrazuju
   return (
     <div className="text-lg shadow rounded-xl justify-center bg-white m-2">
       <div className="relative">
