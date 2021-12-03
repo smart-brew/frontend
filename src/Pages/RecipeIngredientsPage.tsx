@@ -7,18 +7,19 @@ import IngredietsForm from '../components/RecipeMaking/form/IngredientsForm';
 import SplitPage from '../components/shared/SplitPage';
 import CreateIngredientsSidebar from '../SideBars/CreateIngredientsSidebar';
 import IngredientType from '../types/RecipeData/IngredientType';
+import RecipeBlockType from '../types/RecipeData/RecipeBlockType';
 import { RecipeDataProps } from './RecipeInstructionsPage';
 
 export interface IngredientsFormProps {
   ingredients: IngredientType[];
   recipeName: string;
-  addInstructions: EditableInstructionTemplateType[];
+  addBlocks: RecipeBlockType[];
 }
 
 const RecipeIngredientsPage: React.FC = () => {
   const history = useHistory();
   const location = useLocation();
-  const { sendIngredients, sendRecipeName, sendInstructions } =
+  const { sendIngredients, sendRecipeName, sendBlocks } =
     location.state as RecipeDataProps;
 
   const [recipeNameForm, setRecipeNameForm] = React.useState(sendRecipeName);
@@ -28,36 +29,24 @@ const RecipeIngredientsPage: React.FC = () => {
   const saveForm = (): void => {
     console.log('SAVE FORM INGREDIENTS');
 
-    console.log(inputFields, sendInstructions);
+    console.log(inputFields, sendBlocks);
 
-    if (sendInstructions == null) {
-      const emptyInstr: EditableInstructionTemplateType[] = [
-        {
-          id: -1,
-          blockId: -1,
-          blockName: '',
-          codeName: 'EMPTY',
-          name: 'Empty instruction',
-          category: 'EMPTY',
-          units: null,
-          inputType: 'string',
-          description: 'This instruction is a placeholder.',
-          param: null,
-          device: null,
-          ordering: -1,
-        },
-      ];
+    if (sendBlocks == null) {
+      // if no instructions were made beforehand
+      const emptyBlock: RecipeBlockType[] = [];
+
       const data: IngredientsFormProps = {
         ingredients: inputFields,
         recipeName: recipeNameForm,
-        addInstructions: emptyInstr,
+        addBlocks: emptyBlock,
       };
       history.push('/recipe/instructions', data);
     } else {
+      // if some instructions were made beforehand
       const data: IngredientsFormProps = {
         ingredients: inputFields,
         recipeName: recipeNameForm,
-        addInstructions: sendInstructions,
+        addBlocks: sendBlocks,
       };
       history.push('/recipe/instructions', data);
     }

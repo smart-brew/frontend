@@ -43,7 +43,7 @@ const AllRecipesSidebar: React.FC<Props> = ({
         },
       ],
       sendRecipeName: '',
-      sendInstructions: null,
+      sendBlocks: null,
     };
     history.push('/recipe/ingredients', data);
   };

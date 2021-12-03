@@ -20,48 +20,49 @@ import IngredientType from '../types/RecipeData/IngredientType';
 export interface RecipeDataProps {
   sendIngredients: IngredientType[];
   sendRecipeName: string | '';
-  sendInstructions: EditableInstructionTemplateType[] | null;
+  sendBlocks: RecipeBlockType[] | null;
 }
 
 const RecipeInstructionsPage: React.FC = () => {
   const history = useHistory();
   const location = useLocation();
-  const { ingredients, recipeName, addInstructions } =
+  const { ingredients, recipeName, addBlocks } =
     location.state as IngredientsFormProps;
 
   const toIngredients = (
     sendIngredients: Array<IngredientType>,
     sendRecipeName: string,
-    sendInstructions: Array<EditableInstructionTemplateType>
+    sendBlocks: Array<RecipeBlockType>
   ): void => {
     const data: RecipeDataProps = {
       sendIngredients,
       sendRecipeName,
-      sendInstructions,
+      sendBlocks,
     };
 
     history.push('/recipe/ingredients', data);
   };
 
-  // const emptyInstr: EditableInstructionTemplateType = {
-  //   id: -1,
-  //   blockId: -1,
-  //   blockName: '',
-  //   codeName: 'EMPTY',
-  //   name: 'Empty instruction',
-  //   category: 'EMPTY',
-  //   units: null,
-  //   inputType: 'string',
-  //   description: 'This instruction is a placeholder.',
-  //   param: null,
-  //   device: null,
-  //   ordering: -1,
-  // };
+  const emptyInstr: EditableInstructionTemplateType = {
+    id: -1,
+    blockId: -1,
+    blockName: '',
+    codeName: 'EMPTY',
+    name: 'Empty instruction',
+    category: 'EMPTY',
+    units: null,
+    inputType: 'string',
+    description: 'This instruction is a placeholder.',
+    param: null,
+    device: null,
+    ordering: -1,
+  };
 
-  console.log(addInstructions);
-  const [addedInstructions, setAddedInstructions] = useState(addInstructions);
+  const [addedInstructions, setAddedInstructions] = useState(
+    Array<EditableInstructionTemplateType>(emptyInstr)
+  );
 
-  const [addedBlocks, setAddedBlocks] = useState(Array<RecipeBlockType>());
+  const [addedBlocks, setAddedBlocks] = useState(addBlocks);
 
   const popupRef = React.useRef<HTMLDivElement>(null);
 
@@ -318,9 +319,7 @@ const RecipeInstructionsPage: React.FC = () => {
         <button
           type="button"
           className="select-button"
-          onClick={() =>
-            toIngredients(ingredients, recipeName, addedInstructions)
-          }
+          onClick={() => toIngredients(ingredients, recipeName, addedBlocks)}
         >
           Previous
         </button>
