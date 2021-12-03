@@ -107,6 +107,7 @@ const RecipeInstructionsPage: React.FC = () => {
   const handleInstrSelection = (instr: InstructionTemplate): undefined => {
     const popupNode = popupRef?.current;
     const dataOriginal = popupNode?.getAttribute('data-original');
+    console.log(dataOriginal);
     if (dataOriginal) {
       const [index, blockId, blockName] = dataOriginal.split('_');
 
@@ -122,6 +123,8 @@ const RecipeInstructionsPage: React.FC = () => {
         blockId: parseInt(blockId, 10),
         blockName,
       };
+
+      console.log(newInstruction.blockId);
 
       handleAddInstructionToBlock(
         newInstruction,

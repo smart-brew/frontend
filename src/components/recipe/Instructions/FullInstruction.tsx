@@ -7,10 +7,15 @@ import { InstructionsContext } from '../../../contexts/instructionsContext';
 
 interface Props {
   instruction: InstructionType;
+  instructionName: string | undefined;
   status: InstructionStatus;
 }
 
-const FullInstruction: React.FC<Props> = ({ instruction, status }: Props) => {
+const FullInstruction: React.FC<Props> = ({
+  instruction,
+  instructionName,
+  status,
+}: Props) => {
   const templates = React.useContext(InstructionsContext);
 
   const template = templates?.data.find(
@@ -33,7 +38,11 @@ const FullInstruction: React.FC<Props> = ({ instruction, status }: Props) => {
         />
       </div>
       <h3 className="text-xl">
-        <span className="font-bold">{getName()}</span>
+        <span className="font-bold">
+          {instructionName !== undefined
+            ? instructionName
+            : instruction.codeName}
+        </span>
       </h3>
       <div className="flex flex-row items-center content-center justify-center space-x-8">
         <div className="flex flex-col">

@@ -19,6 +19,7 @@ const Instructions: React.FC<Props> = ({ instructions }) => {
   return (
     <div className="flex flex-col shadow rounded-3xl px-8 py-3 mx-8 mb-3">
       {instructions.map((instr) => {
+        console.log(`${instr.blockId} ${instr.blockName}`);
         return (
           <Instruction
             key={instr.id}
