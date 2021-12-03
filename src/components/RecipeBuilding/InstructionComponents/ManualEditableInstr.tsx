@@ -35,6 +35,7 @@ const ManualEditableInstr: React.FC<Props> = ({
       <textarea
         className="w-4/5 border border-gray-200 p-1"
         ref={textRef}
+        defaultValue={instruction.param !== null ? instruction.param : ''}
         onBlur={sendParams}
       />
     </div>

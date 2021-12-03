@@ -12,6 +12,10 @@ const WaitEditableInstr: React.FC<Props> = ({
   instruction,
   onChange,
 }: Props) => {
+  const MILLIS_DAYS = 86400000;
+  const MILLIS_HOURS = 3600000;
+  const MILLIS_MINUTES = 60000;
+
   const daysRef = useRef<HTMLInputElement>(null);
   const hoursRef = useRef<HTMLInputElement>(null);
   const minutesRef = useRef<HTMLInputElement>(null);
@@ -22,11 +26,40 @@ const WaitEditableInstr: React.FC<Props> = ({
     minutes: number
   ): number => {
     let millis = 0;
-    millis += minutes * 60000;
-    millis += hours * 3600000;
-    millis += days * 86400000;
+    millis += minutes * MILLIS_MINUTES;
+    millis += hours * MILLIS_HOURS;
+    millis += days * MILLIS_DAYS;
 
     return millis;
+  };
+
+  const getDaysFromMillis = (millis: string | number): number => {
+    if (typeof millis === 'number') {
+      return Math.floor(millis / MILLIS_DAYS);
+    }
+    return 0;
+  };
+
+  const getHoursFromMillis = (millis: string | number): number => {
+    if (typeof millis === 'number') {
+      const newMillis = millis % MILLIS_DAYS;
+      if (newMillis > 0) {
+        return Math.floor(newMillis / MILLIS_HOURS);
+      }
+    }
+    return 0;
+  };
+
+  const getMinutesFromMillis = (millis: string | number): number => {
+    if (typeof millis === 'number') {
+      let newMillis = millis % MILLIS_DAYS;
+      newMillis %= MILLIS_HOURS;
+
+      if (newMillis > 0) {
+        return Math.floor(newMillis / MILLIS_MINUTES);
+      }
+    }
+    return 0;
   };
 
   const readParams = (): ParamType | null => {
@@ -60,7 +93,11 @@ const WaitEditableInstr: React.FC<Props> = ({
           className="w-4/5 border rounded border-gray-200 p-1"
           type="number"
           min={0}
-          defaultValue={0}
+          defaultValue={
+            instruction.param !== null
+              ? getDaysFromMillis(instruction.param)
+              : 0
+          }
           ref={daysRef}
           onBlur={sendParams}
         />
@@ -72,7 +109,11 @@ const WaitEditableInstr: React.FC<Props> = ({
           type="number"
           max={23}
           min={0}
-          defaultValue={0}
+          defaultValue={
+            instruction.param !== null
+              ? getHoursFromMillis(instruction.param)
+              : 0
+          }
           ref={hoursRef}
           onBlur={sendParams}
         />
@@ -84,7 +125,11 @@ const WaitEditableInstr: React.FC<Props> = ({
           type="number"
           max={59}
           min={0}
-          defaultValue={0}
+          defaultValue={
+            instruction.param !== null
+              ? getMinutesFromMillis(instruction.param)
+              : 0
+          }
           ref={minutesRef}
           onBlur={sendParams}
         />

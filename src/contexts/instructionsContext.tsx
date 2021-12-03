@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { getSupportedFunctions } from '../api/functions';
-import FunctionTemplate from '../types/FunctionData/FunctionTemplate';
+import InstructionTemplate from '../types/FunctionData/InstructionTemplate';
 
 interface Props {
   enabled: boolean;
@@ -10,7 +10,7 @@ interface Props {
 export const InstructionsContext = React.createContext<State | null>(null);
 
 interface State {
-  data: FunctionTemplate[];
+  data: InstructionTemplate[];
   refresh: () => Promise<void>;
 }
 

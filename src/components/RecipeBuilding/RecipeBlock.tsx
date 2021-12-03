@@ -52,22 +52,24 @@ const RecipeBlock: React.FC<Props> = ({
 
   return (
     <div className="bg-blue-100 border-2 border-gray-500 shadow w-4/5 text-left rounded-xl p-4">
-      <input
-        className="bg-white bg-opacity-50 border border-gray-500 text-2xl font-bold my-3 ml-8 rounded-lg p-1"
-        type="text"
-        placeholder="Block name"
-        defaultValue={blockName !== '' ? blockName : ''}
-        onBlur={(e) => {
-          onNameChange(blockId, e.target.value);
-        }}
-      />
-      <button
-        type="button"
-        className="text-4xl font-extrabold text-red-900 text-right w-5/12"
-        onClick={() => onBlockDelete(blockId)}
-      >
-        X
-      </button>
+      <div className="flex flex-row justify-between">
+        <input
+          className="bg-white bg-opacity-50 border border-gray-500 text-2xl font-bold my-3 ml-8 rounded-lg p-1"
+          type="text"
+          placeholder="Block name"
+          defaultValue={blockName !== '' ? blockName : ''}
+          onBlur={(e) => {
+            onNameChange(blockId, e.target.value);
+          }}
+        />
+        <button
+          type="button"
+          className="text-4xl font-extrabold text-red-900 text-right"
+          onClick={() => onBlockDelete(blockId)}
+        >
+          X
+        </button>
+      </div>
       <div className="flex flex-col">
         {instructions.length === 0 ? (
           <AddInstructionButton
