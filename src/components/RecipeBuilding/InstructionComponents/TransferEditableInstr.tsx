@@ -21,7 +21,7 @@ const TransferEditableInstr: React.FC<Props> = ({
     const select2Node = select2Ref.current;
     if (select1Node != null && select2Node != null) {
       if (parseInt(select1Node?.value, 10) < parseInt(select2Node?.value, 10)) {
-        return { device: `PUMP_${select1Node?.value}`, value: null };
+        return { optionCodeName: `PUMP_${select1Node?.value}`, value: null };
       }
     }
     return null;

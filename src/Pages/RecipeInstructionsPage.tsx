@@ -1,20 +1,19 @@
-/* eslint-disable camelcase */
-
 import React, { useState } from 'react';
 
 import { useLocation, useHistory } from 'react-router-dom';
 
 import InstructionPopup from '../components/RecipeBuilding/InstructionPopup/InstructionPopup';
-import InstructionTemplateType from '../types/FunctionData/InstructionTemplateType';
 import InstructionForBackendType from '../types/RecipeData/InstructionForBackendType';
 import RecipeBlock from '../components/RecipeBuilding/RecipeBlock';
 import RecipeBlockType from '../types/RecipeData/RecipeBlockType';
 import EditableInstructionTemplateType from '../components/RecipeBuilding/InstructionComponents/EditableInstructionTemplateType';
 import AddBlockButton from '../components/RecipeBuilding/AddBlockButton';
 import { IngredientsFormProps } from './RecipeIngredientsPage';
-import { templates } from '../components/RecipeBuilding/instructionTemplates';
 import { createRecipe } from '../api/recipe';
 import SplitPage from '../components/shared/SplitPage';
+import { InstructionsContext } from '../contexts/instructionsContext';
+import FunctionTemplate from '../types/FunctionData/FunctionTemplate';
+
 import IngredientType from '../types/RecipeData/IngredientType';
 
 export interface RecipeDataProps {
@@ -43,6 +42,8 @@ const RecipeInstructionsPage: React.FC = () => {
     history.push('/recipe/ingredients', data);
   };
 
+  const templates = React.useContext(InstructionsContext);
+
   const emptyInstr: EditableInstructionTemplateType = {
     id: -1,
     blockId: -1,
@@ -54,7 +55,7 @@ const RecipeInstructionsPage: React.FC = () => {
     inputType: 'string',
     description: 'This instruction is a placeholder.',
     param: null,
-    device: null,
+    optionCodeName: null,
     ordering: -1,
   };
 
@@ -78,7 +79,6 @@ const RecipeInstructionsPage: React.FC = () => {
       });
     });
 
-    console.log(newAddedInstructions);
     setAddedInstructions(newAddedInstructions);
   };
 
@@ -103,18 +103,18 @@ const RecipeInstructionsPage: React.FC = () => {
     // setAddedInstructions(addedInstructions.splice(index, 0, editableInstr));
   };
 
-  const handleInstrSelection = (instr: InstructionTemplateType): undefined => {
+  const handleInstrSelection = (instr: FunctionTemplate): undefined => {
     const popupNode = popupRef?.current;
     const dataOriginal = popupNode?.getAttribute('data-original');
     if (dataOriginal) {
       const [index, blockId, blockName] = dataOriginal.split('_');
-      console.log(instr.devices);
+
       const newInstruction: EditableInstructionTemplateType = {
         ...instr,
         param: null,
-        device:
-          instr.devices !== null && instr.devices.length !== 0
-            ? instr.devices[0].device
+        optionCodeName:
+          instr.options !== null && instr.options.length !== 0
+            ? instr.options[0].codeName
             : null,
         ordering: -1,
         blockId: parseInt(blockId, 10),
@@ -151,18 +151,18 @@ const RecipeInstructionsPage: React.FC = () => {
   };
 
   const returnInstructionsForBackend = (): Array<InstructionForBackendType> => {
-    const mappedInstructions = new Array<InstructionForBackendType>();
-    addedInstructions.forEach((instruction) => {
-      const newInstruction: InstructionForBackendType = {
-        templateId: instruction.id,
-        blockId: instruction.blockId,
-        blockName: instruction.blockName,
-        param: instruction.param,
-        device: instruction.device,
-        ordering: instruction.ordering,
-      };
-      mappedInstructions.push(newInstruction);
-    });
+    const mappedInstructions: InstructionForBackendType[] =
+      addedInstructions.map((instruction) => {
+        const newInstruction: InstructionForBackendType = {
+          templateId: instruction.id,
+          blockId: instruction.blockId,
+          blockName: instruction.blockName,
+          param: instruction.param,
+          optionCodeName: instruction.optionCodeName,
+          ordering: instruction.ordering,
+        };
+        return newInstruction;
+      });
 
     return mappedInstructions;
   };
@@ -241,8 +241,11 @@ const RecipeInstructionsPage: React.FC = () => {
       Instructions: instructions,
     }).then((res) => {
       console.log({ res });
-      // TODO pridat kontorolu ci OK
-      history.push('/recipe');
+
+      if (res.id) history.push('/recipe');
+      else {
+        console.log('Error creating recipe');
+      }
     });
   };
 
@@ -302,7 +305,7 @@ const RecipeInstructionsPage: React.FC = () => {
       </button> */}
         <div className="modal-bg" ref={popupRef}>
           <InstructionPopup
-            functions={templates}
+            templates={templates?.data || []}
             callback={handleInstrSelection}
           />
         </div>

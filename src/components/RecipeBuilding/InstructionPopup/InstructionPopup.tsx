@@ -1,20 +1,17 @@
 import React from 'react';
 
 import InstructionForSelection from './InstructionForSelection';
-import InstructionTemplateType from '../../../types/FunctionData/InstructionTemplateType';
-import InstructionTemplateListType from '../../../types/FunctionData/InstructionTemplateListType';
+import FunctionTemplate from '../../../types/FunctionData/FunctionTemplate';
 
 interface InstrPopupProps {
-  functions: InstructionTemplateListType;
-  callback: (instr: InstructionTemplateType) => undefined;
+  templates: FunctionTemplate[];
+  callback: (instr: FunctionTemplate) => undefined;
 }
 
 const InstructionPopup: React.FC<InstrPopupProps> = ({
-  functions,
+  templates,
   callback,
 }: InstrPopupProps) => {
-  const { templates } = functions;
-
   const instructionPopupRef = React.useRef<HTMLDivElement>(null);
 
   // const myCallback = (instr: InstructionTemplateType): void => {
