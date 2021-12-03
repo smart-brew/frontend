@@ -1,5 +1,5 @@
 interface ParamType {
-  device: string | null;
+  optionCodeName: string | null;
   value: number | string | null;
 }
 

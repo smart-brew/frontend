@@ -34,16 +34,26 @@ const IngredietsForm: React.FC<Props> = ({
   // const [recipeName, setRecipeName] = useState('');
 
   const handleChangeInput = (
-    ids: number,
+    id: number,
     event:
       | React.ChangeEvent<HTMLInputElement>
       | React.ChangeEvent<HTMLSelectElement>
   ): void => {
-    const index = getIndex(inputFields, ids);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const values = [...inputFields] as any;
-    values[index][event.target.name as keyof IngredientType] =
-      event.target.value;
+    const index = getIndex(inputFields, id);
+    const values = [...inputFields];
+
+    if (event.target.name === 'amount') {
+      if (event.target.value)
+        values[index].amount = parseFloat(event.target.value);
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      else values[index].amount = '';
+    } else if (event.target.name === 'name') {
+      values[index].name = event.target.value;
+    } else if (event.target.name === 'units') {
+      values[index].units = event.target.value;
+    }
+
     setInputFields(values);
   };
 

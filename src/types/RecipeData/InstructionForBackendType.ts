@@ -3,7 +3,7 @@ type InstructionForBackendType = {
   blockId: number;
   blockName: string;
   param: number | string | null;
-  device: string | null;
+  optionCodeName: string | null;
   ordering: number;
 };
 

@@ -17,7 +17,7 @@ const ManualEditableInstr: React.FC<Props> = ({
   const readParams = (): ParamType | null => {
     const textNode = textRef.current;
     if (textNode != null) {
-      return { device: null, value: textNode.value };
+      return { optionCodeName: null, value: textNode.value };
     }
     return null;
   };
