@@ -5,6 +5,7 @@ import RecipeList from '../components/RecipeMaking/RecipeList';
 
 import Button from '../components/shared/Button';
 import { OverviewPageState } from '../Pages/OverviewPage';
+import { RecipeDataProps } from '../Pages/RecipeInstructionsPage';
 import { RecipeSimple } from '../types/RecipeData/RecipeType';
 
 interface Props {
@@ -29,6 +30,24 @@ const AllRecipesSidebar: React.FC<Props> = ({
     history.push('/', data);
   };
 
+  const makeRecipe = async (): Promise<void> => {
+    const data: RecipeDataProps = {
+      sendIngredients: [
+        {
+          amount: 0,
+          units: 'KG',
+          name: '',
+          id: 0,
+          type: 'Fermentables',
+          recipeId: 0,
+        },
+      ],
+      sendRecipeName: '',
+      sendBlocks: null,
+    };
+    history.push('/recipe/ingredients', data);
+  };
+
   return (
     <React.StrictMode>
       <div className="context h-2/3">
@@ -43,9 +62,10 @@ const AllRecipesSidebar: React.FC<Props> = ({
       {/* Buttons Edit, Start Brewing, Make a new recipe */}
       <div className="buttons text-center flex flex-col">
         <Button title="Edit" />
-        <Link to="/recipe/ingredients">
+        {/* <Link to="/recipe/ingredients">
           <Button title="Make a new recipe" />
-        </Link>
+        </Link> */}
+        <Button title="Make a new recipe" onClick={() => makeRecipe()} />
         <Button title="Load recipe" onClick={() => loadRecipe()} />
       </div>
     </React.StrictMode>

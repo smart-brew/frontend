@@ -1,43 +1,55 @@
 /* eslint-disable camelcase */
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
+import EditableInstructionTemplateType from '../components/RecipeBuilding/InstructionComponents/EditableInstructionTemplateType';
 
 import IngredietsForm from '../components/RecipeMaking/form/IngredientsForm';
 import SplitPage from '../components/shared/SplitPage';
 import CreateIngredientsSidebar from '../SideBars/CreateIngredientsSidebar';
 import IngredientType from '../types/RecipeData/IngredientType';
+import RecipeBlockType from '../types/RecipeData/RecipeBlockType';
+import { RecipeDataProps } from './RecipeInstructionsPage';
 
 export interface IngredientsFormProps {
   ingredients: IngredientType[];
   recipeName: string;
+  addBlocks: RecipeBlockType[];
 }
 
 const RecipeIngredientsPage: React.FC = () => {
   const history = useHistory();
+  const location = useLocation();
+  const { sendIngredients, sendRecipeName, sendBlocks } =
+    location.state as RecipeDataProps;
 
-  const [recipeNameForm, setRecipeNameForm] = React.useState('');
-  const [inputFields, setInputFields] = React.useState<IngredientType[]>([
-    {
-      amount: 0,
-      units: 'KG',
-      name: '',
-      id: 0,
-      type: 'Fermentables',
-      recipeId: 0,
-    },
-  ]);
+  const [recipeNameForm, setRecipeNameForm] = React.useState(sendRecipeName);
+  const [inputFields, setInputFields] =
+    React.useState<IngredientType[]>(sendIngredients);
 
   const saveForm = (): void => {
     console.log('SAVE FORM INGREDIENTS');
 
-    console.log(inputFields);
+    console.log(inputFields, sendBlocks);
 
-    const data: IngredientsFormProps = {
-      ingredients: inputFields,
-      recipeName: recipeNameForm,
-    };
+    if (sendBlocks == null) {
+      // if no instructions were made beforehand
+      const emptyBlock: RecipeBlockType[] = [];
 
-    history.push('/recipe/instructions', data);
+      const data: IngredientsFormProps = {
+        ingredients: inputFields,
+        recipeName: recipeNameForm,
+        addBlocks: emptyBlock,
+      };
+      history.push('/recipe/instructions', data);
+    } else {
+      // if some instructions were made beforehand
+      const data: IngredientsFormProps = {
+        ingredients: inputFields,
+        recipeName: recipeNameForm,
+        addBlocks: sendBlocks,
+      };
+      history.push('/recipe/instructions', data);
+    }
   };
 
   return (

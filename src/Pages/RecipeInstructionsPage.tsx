@@ -14,10 +14,33 @@ import SplitPage from '../components/shared/SplitPage';
 import { InstructionsContext } from '../contexts/instructionsContext';
 import FunctionTemplate from '../types/FunctionData/FunctionTemplate';
 
+import IngredientType from '../types/RecipeData/IngredientType';
+
+export interface RecipeDataProps {
+  sendIngredients: IngredientType[];
+  sendRecipeName: string | '';
+  sendBlocks: RecipeBlockType[] | null;
+}
+
 const RecipeInstructionsPage: React.FC = () => {
   const history = useHistory();
   const location = useLocation();
-  const { ingredients, recipeName } = location.state as IngredientsFormProps;
+  const { ingredients, recipeName, addBlocks } =
+    location.state as IngredientsFormProps;
+
+  const toIngredients = (
+    sendIngredients: Array<IngredientType>,
+    sendRecipeName: string,
+    sendBlocks: Array<RecipeBlockType>
+  ): void => {
+    const data: RecipeDataProps = {
+      sendIngredients,
+      sendRecipeName,
+      sendBlocks,
+    };
+
+    history.push('/recipe/ingredients', data);
+  };
 
   const templates = React.useContext(InstructionsContext);
 
@@ -40,7 +63,7 @@ const RecipeInstructionsPage: React.FC = () => {
     Array<EditableInstructionTemplateType>(emptyInstr)
   );
 
-  const [addedBlocks, setAddedBlocks] = useState(Array<RecipeBlockType>());
+  const [addedBlocks, setAddedBlocks] = useState(addBlocks);
 
   const popupRef = React.useRef<HTMLDivElement>(null);
 
@@ -295,6 +318,13 @@ const RecipeInstructionsPage: React.FC = () => {
           onClick={() => saveRecipe()}
         >
           Save recipe
+        </button>
+        <button
+          type="button"
+          className="select-button"
+          onClick={() => toIngredients(ingredients, recipeName, addedBlocks)}
+        >
+          Previous
         </button>
       </div>
     </SplitPage>
