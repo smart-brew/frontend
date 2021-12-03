@@ -18,10 +18,10 @@ const MotorEditableInstr: React.FC<Props> = ({
   const readParams = (): ParamType | null => {
     const inputNode = inputRef.current;
     const selectNode = selectRef.current;
-    const paramObj = { device: 'NONE', value: 0 };
+    const paramObj: ParamType = { optionCodeName: 'NONE', value: 0 };
     if (inputNode != null && selectNode != null) {
       paramObj.value = parseInt(inputNode?.value, 10);
-      paramObj.device = `MOTOR_${selectNode.value.toString()}`;
+      paramObj.optionCodeName = `MOTOR_${selectNode.value.toString()}`;
       return paramObj;
     }
     return null;

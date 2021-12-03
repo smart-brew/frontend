@@ -30,7 +30,7 @@ const EditableInstruction: React.FC<EditableInstructionProps> = ({
   const registerChange = (params: ParamType): void => {
     const newInstruction = instruction;
     newInstruction.param = params.value;
-    newInstruction.device = params.device;
+    newInstruction.optionCodeName = params.optionCodeName;
     onInstructionEdit(newInstruction, index);
   };
 

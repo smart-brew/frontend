@@ -41,7 +41,7 @@ const WaitEditableInstr: React.FC<Props> = ({
         parseInt(minutesNode?.value, 10)
       );
 
-      return { device: null, value: millis };
+      return { optionCodeName: null, value: millis };
     }
     return null;
   };

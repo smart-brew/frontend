@@ -18,7 +18,7 @@ const UnloadEditableInstr: React.FC<Props> = ({
   const readParams = (): ParamType | null => {
     const selectNode = selectRef.current;
     if (selectNode != null) {
-      return { device: selectNode.value, value: null };
+      return { optionCodeName: selectNode.value, value: null };
     }
     return null;
   };

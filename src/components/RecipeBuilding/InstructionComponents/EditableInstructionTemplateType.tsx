@@ -1,5 +1,3 @@
-import DeviceType from '../../../types/FunctionData/DeviceType';
-
 type EditableInstructionTemplateType = {
   id: number;
   codeName: string;
@@ -9,7 +7,7 @@ type EditableInstructionTemplateType = {
   units: string | null;
   inputType: string | null;
   description: string;
-  device: string | null;
+  optionCodeName: string | null;
   blockId: number;
   blockName: string;
   ordering: number;

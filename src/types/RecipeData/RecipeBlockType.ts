@@ -1,4 +1,3 @@
-import InstructionTemplateType from '../FunctionData/InstructionTemplateType';
 import EditableInstructionTemplateType from '../../components/RecipeBuilding/InstructionComponents/EditableInstructionTemplateType';
 
 type RecipeBlockType = {
