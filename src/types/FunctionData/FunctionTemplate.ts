@@ -2,15 +2,15 @@
 
 import OptionType from './OptionType';
 
-type FunctionType = {
+type FunctionTemplate = {
   id: number;
-  code_name: string;
+  codeName: string;
   name: string;
   category: string;
   units: string | null;
-  input_type: string | null;
+  inputType: string | null;
   description: string;
-  Function_options?: Array<OptionType>;
+  options: Array<OptionType>;
 };
 
-export default FunctionType;
+export default FunctionTemplate;

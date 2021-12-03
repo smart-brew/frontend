@@ -60,7 +60,7 @@ const IngredietsForm: React.FC<Props> = ({
       units: 'KG',
       name: '',
       id: generateid(),
-      recipe_id: 0,
+      recipeId: 0,
       type: sectionName,
     });
     setInputFields(values);

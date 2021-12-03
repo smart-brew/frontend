@@ -1,6 +1,7 @@
 import React from 'react';
 
 import RecipeType from '../../types/RecipeData/RecipeType';
+import Instructions from '../recipe/Instructions';
 import Ingredients from './ingredients/Ingredients';
 
 interface Props {
@@ -17,7 +18,7 @@ const RecipePreview: React.FC<Props> = ({ recipe }) => {
 
       <Ingredients ingredients={recipe.Ingredients} />
 
-      {/* TODO: tuto pridat vsetko co sa bude tykat krokov receptu - Peto */}
+      <Instructions instructions={recipe.Instructions} />
     </div>
   ) : (
     <span>Please select a recipe</span>

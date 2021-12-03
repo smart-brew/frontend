@@ -16,14 +16,14 @@ const RecipeIngredientsPage: React.FC = () => {
   const history = useHistory();
 
   const [recipeNameForm, setRecipeNameForm] = React.useState('');
-  const [inputFields, setInputFields] = React.useState([
+  const [inputFields, setInputFields] = React.useState<IngredientType[]>([
     {
       amount: 0,
       units: 'KG',
       name: '',
       id: 0,
       type: 'Fermentables',
-      recipe_id: 0,
+      recipeId: 0,
     },
   ]);
 
