@@ -12,7 +12,7 @@ interface Props {
 const Instructions: React.FC<Props> = ({ instructions }) => {
   const currentInstructionStatus = React.useContext(DataContext)
     ?.instruction || {
-    currentInstruction: 0,
+    currentInstruction: 4,
     currentValue: 0,
     status: 'WAITING',
   };
@@ -49,7 +49,7 @@ const Instructions: React.FC<Props> = ({ instructions }) => {
   };
 
   return (
-    <div className="flex flex-col shadow rounded-3xl px-8 py-3 mx-8 mb-3 space-y-6">
+    <div className="flex flex-col shadow rounded-3xl pl-12 px-8 py-3 mx-8 mb-3 space-y-6">
       {divideTheInstructions().map((block) => {
         return (
           <InstructionBlock

@@ -97,7 +97,7 @@ const RecipeProgress: React.FC<Props> = ({ recipeId }: Props) => {
           </>
         );
       case 'WhileBrewingPage':
-        return <RecipeOverview />;
+        return <RecipePreview recipe={selectedRecipe} />;
     }
   }
 

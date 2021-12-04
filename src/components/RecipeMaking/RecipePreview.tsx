@@ -4,6 +4,7 @@ import RecipeType from '../../types/RecipeData/RecipeType';
 import Instructions from '../recipe/Instructions';
 import Ingredients from './ingredients/Ingredients';
 import InstructionBlock from '../recipe/Blocks/InstructionBlock';
+import { DataContext } from '../../contexts/dataContext';
 
 interface Props {
   recipe: RecipeType | null;
@@ -11,13 +12,17 @@ interface Props {
 
 // TODO: tento recipe preview sa moze pouzit aj na OverviewPage, kde je vidno cely recept, a tento isty tam moze byt, len size bude ten mensi
 const RecipePreview: React.FC<Props> = ({ recipe }) => {
+  const systemStatus = React.useContext(DataContext);
+
   return recipe ? (
     <div className="flex flex-col">
-      <span className="text-center text-2xl font-bold pt-8">
+      <span className="text-center text-2xl font-bold pt-8 pb-8">
         {recipe?.name}
       </span>
 
-      <Ingredients ingredients={recipe.Ingredients} />
+      {systemStatus?.brewStatus !== 'IN_PROGRESS' && (
+        <Ingredients ingredients={recipe.Ingredients} />
+      )}
 
       <Instructions instructions={recipe.Instructions} />
     </div>
