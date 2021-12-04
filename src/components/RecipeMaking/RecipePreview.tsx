@@ -3,6 +3,7 @@ import React from 'react';
 import RecipeType from '../../types/RecipeData/RecipeType';
 import Instructions from '../recipe/Instructions';
 import Ingredients from './ingredients/Ingredients';
+import InstructionBlock from '../recipe/Blocks/InstructionBlock';
 
 interface Props {
   recipe: RecipeType | null;

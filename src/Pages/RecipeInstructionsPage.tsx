@@ -166,6 +166,7 @@ const RecipeInstructionsPage: React.FC = () => {
           optionCodeName: instruction.optionCodeName,
           ordering: instruction.ordering,
         };
+        console.log(newInstruction);
         return newInstruction;
       });
 

@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 
 import ParamType from '../../../types/ParamType';
 import EditableInstructionTemplateType from './EditableInstructionTemplateType';
+import TimeHelper from '../../../helper_scripts/TimeHelper';
 
 interface Props {
   instruction: EditableInstructionTemplateType;
@@ -12,10 +13,6 @@ const WaitEditableInstr: React.FC<Props> = ({
   instruction,
   onChange,
 }: Props) => {
-  const MILLIS_DAYS = 86400000;
-  const MILLIS_HOURS = 3600000;
-  const MILLIS_MINUTES = 60000;
-
   const daysRef = useRef<HTMLInputElement>(null);
   const hoursRef = useRef<HTMLInputElement>(null);
   const minutesRef = useRef<HTMLInputElement>(null);
@@ -26,40 +23,11 @@ const WaitEditableInstr: React.FC<Props> = ({
     minutes: number
   ): number => {
     let millis = 0;
-    millis += minutes * MILLIS_MINUTES;
-    millis += hours * MILLIS_HOURS;
-    millis += days * MILLIS_DAYS;
+    millis += minutes * TimeHelper.MILLIS_MINUTES;
+    millis += hours * TimeHelper.MILLIS_HOURS;
+    millis += days * TimeHelper.MILLIS_DAYS;
 
     return millis;
-  };
-
-  const getDaysFromMillis = (millis: string | number): number => {
-    if (typeof millis === 'number') {
-      return Math.floor(millis / MILLIS_DAYS);
-    }
-    return 0;
-  };
-
-  const getHoursFromMillis = (millis: string | number): number => {
-    if (typeof millis === 'number') {
-      const newMillis = millis % MILLIS_DAYS;
-      if (newMillis > 0) {
-        return Math.floor(newMillis / MILLIS_HOURS);
-      }
-    }
-    return 0;
-  };
-
-  const getMinutesFromMillis = (millis: string | number): number => {
-    if (typeof millis === 'number') {
-      let newMillis = millis % MILLIS_DAYS;
-      newMillis %= MILLIS_HOURS;
-
-      if (newMillis > 0) {
-        return Math.floor(newMillis / MILLIS_MINUTES);
-      }
-    }
-    return 0;
   };
 
   const readParams = (): ParamType | null => {
@@ -95,7 +63,7 @@ const WaitEditableInstr: React.FC<Props> = ({
           min={0}
           defaultValue={
             instruction.param !== null
-              ? getDaysFromMillis(instruction.param)
+              ? TimeHelper.getDaysFromMillis(instruction.param)
               : 0
           }
           ref={daysRef}
@@ -111,7 +79,7 @@ const WaitEditableInstr: React.FC<Props> = ({
           min={0}
           defaultValue={
             instruction.param !== null
-              ? getHoursFromMillis(instruction.param)
+              ? TimeHelper.getHoursFromMillis(instruction.param)
               : 0
           }
           ref={hoursRef}
@@ -127,7 +95,7 @@ const WaitEditableInstr: React.FC<Props> = ({
           min={0}
           defaultValue={
             instruction.param !== null
-              ? getMinutesFromMillis(instruction.param)
+              ? TimeHelper.getMinutesFromMillis(instruction.param)
               : 0
           }
           ref={minutesRef}

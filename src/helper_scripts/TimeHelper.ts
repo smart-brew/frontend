@@ -7,6 +7,12 @@ export default class TimeHelper {
 
   private static failedState = 'FAILED';
 
+  static MILLIS_DAYS = 86400000;
+
+  static MILLIS_HOURS = 3600000;
+
+  static MILLIS_MINUTES = 60000;
+
   static getState(start: number | null, end: number | null): string | null {
     let returnString = null;
     if (start === null && end === null) {
@@ -19,4 +25,35 @@ export default class TimeHelper {
 
     return returnString;
   }
+
+  static getDaysFromMillis = (millis: string | number): number => {
+    if (typeof millis === 'string') {
+      millis = parseInt(millis, 10);
+    }
+    return Math.floor(millis / TimeHelper.MILLIS_DAYS);
+    return 0;
+  };
+
+  static getHoursFromMillis = (millis: string | number): number => {
+    if (typeof millis === 'string') {
+      millis = parseInt(millis, 10);
+    }
+    const newMillis = millis % TimeHelper.MILLIS_DAYS;
+    if (newMillis > 0) {
+      return Math.floor(newMillis / TimeHelper.MILLIS_HOURS);
+    }
+    return 0;
+  };
+
+  static getMinutesFromMillis = (millis: string | number): number => {
+    if (typeof millis === 'string') {
+      millis = parseInt(millis, 10);
+    }
+    let newMillis = millis % TimeHelper.MILLIS_DAYS;
+    newMillis %= TimeHelper.MILLIS_HOURS;
+    if (newMillis > 0) {
+      return Math.floor(newMillis / TimeHelper.MILLIS_MINUTES);
+    }
+    return 0;
+  };
 }
