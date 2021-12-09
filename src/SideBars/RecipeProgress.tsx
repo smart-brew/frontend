@@ -7,7 +7,10 @@ import RecipePreview from '../components/RecipeMaking/RecipePreview';
 import { getRecipe } from '../api/recipe';
 import Button from '../components/shared/Button';
 import { IngredientsT } from '../types/RecipeData/IngredientType';
-import { startBrewing as startBrewingAPI } from '../api/brew';
+import {
+  abortBrewing as abortBrewingAPI,
+  startBrewing as startBrewingAPI,
+} from '../api/brew';
 import CancelButton from '../components/shared/CancelButton';
 
 interface Props {
@@ -87,10 +90,11 @@ const RecipeProgress: React.FC<Props> = ({ recipeId }: Props) => {
                 onClick={() => setShowStartConfirmation(true)}
               />
               <CancelButton
-                title="Stop process"
+                title="Abort brewing"
                 onClick={() => {
+                  console.log('TODO: ABORT BREWING');
+                  abortBrewingAPI(0);
                   setPage('MainPage');
-                  console.log('TODO: STOP BREWING');
                 }}
               />
             </div>
