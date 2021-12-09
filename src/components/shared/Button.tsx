@@ -1,14 +1,29 @@
 import React from 'react';
 
 interface Props {
+  className?: string;
   title: string;
+  secondary?: boolean;
+  cancel?: boolean;
   onClick?: () => void;
 }
 
-const Button: React.FC<Props> = ({ title, onClick }) => {
+const Button: React.FC<Props> = ({
+  className,
+  title,
+  secondary,
+  cancel,
+  onClick,
+}) => {
+  function getColor(): string {
+    if (cancel) return 'text-gray-600 bg-transparent border-gray-600';
+    if (secondary) return 'text-green-600 bg-transparent border-green-600';
+    return 'text-white bg-green-600 border-green-600';
+  }
+
   return (
     <button
-      className="bg-green-400 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full m-auto w-52 mb-2"
+      className={`border-4 text-xl py-1 px-5 my-1 shadow rounded-full font-bold ${getColor()} ${className}`}
       type="button"
       onClick={() => {
         if (onClick) onClick();
@@ -21,6 +36,9 @@ const Button: React.FC<Props> = ({ title, onClick }) => {
 
 Button.defaultProps = {
   onClick: undefined,
+  secondary: undefined,
+  cancel: undefined,
+  className: undefined,
 };
 
 export default Button;

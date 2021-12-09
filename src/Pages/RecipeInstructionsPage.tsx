@@ -15,6 +15,7 @@ import { InstructionsContext } from '../contexts/instructionsContext';
 import InstructionTemplate from '../types/FunctionData/InstructionTemplate';
 
 import IngredientType from '../types/RecipeData/IngredientType';
+import CreateInstructionsSidebar from '../SideBars/CreateInstructionsSidebar';
 
 export interface RecipeDataProps {
   sendIngredients: IngredientType[];
@@ -27,20 +28,6 @@ const RecipeInstructionsPage: React.FC = () => {
   const location = useLocation();
   const { ingredients, recipeName, addBlocks } =
     location.state as IngredientsFormProps;
-
-  const toIngredients = (
-    sendIngredients: Array<IngredientType>,
-    sendRecipeName: string,
-    sendBlocks: Array<RecipeBlockType>
-  ): void => {
-    const data: RecipeDataProps = {
-      sendIngredients,
-      sendRecipeName,
-      sendBlocks,
-    };
-
-    history.push('/recipe/ingredients', data);
-  };
 
   const templates = React.useContext(InstructionsContext);
 
@@ -67,6 +54,19 @@ const RecipeInstructionsPage: React.FC = () => {
   const [addedBlocks, setAddedBlocks] = useState(addBlocks);
 
   const popupRef = React.useRef<HTMLDivElement>(null);
+
+  const toIngredients = (): // sendIngredients: Array<IngredientType>,
+  // sendRecipeName: string,
+  // sendBlocks: Array<RecipeBlockType>
+  void => {
+    const data: RecipeDataProps = {
+      sendIngredients: ingredients,
+      sendRecipeName: recipeName,
+      sendBlocks: addedBlocks,
+    };
+
+    history.push('/recipe/ingredients', data);
+  };
 
   const updateAddedInstructions = (): void => {
     let instrCounter = 0;
@@ -259,9 +259,11 @@ const RecipeInstructionsPage: React.FC = () => {
     <SplitPage>
       <div className="flex flex-col space-y-5 justify-center">
         {addedBlocks.map((block, index) => (
-          <div key={block.blockName}>
+          <div
+            key={block.blockName}
+            className="flex justify-center items-center"
+          >
             <RecipeBlock
-              key={block.blockName}
               blockName={block.blockName}
               blockId={index}
               instructions={block.instructions}
@@ -309,7 +311,7 @@ const RecipeInstructionsPage: React.FC = () => {
       >
         Select instruction
       </button> */}
-        <div className="modal-bg" ref={popupRef}>
+        <div className="modal-bg" ref={popupRef} style={{ margin: 0 }}>
           <InstructionPopup
             templates={templates?.data || []}
             callback={handleInstrSelection}
@@ -317,22 +319,12 @@ const RecipeInstructionsPage: React.FC = () => {
         </div>
       </div>
 
-      <div className="buttons">
-        <button
-          type="button"
-          className="select-button"
-          onClick={() => saveRecipe()}
-        >
-          Save recipe
-        </button>
-        <button
-          type="button"
-          className="select-button"
-          onClick={() => toIngredients(ingredients, recipeName, addedBlocks)}
-        >
-          Previous
-        </button>
-      </div>
+      <CreateInstructionsSidebar
+        saveRecipe={saveRecipe}
+        toIngredients={toIngredients}
+        ingredients={ingredients}
+        recipeName={recipeName}
+      />
     </SplitPage>
   );
 };
