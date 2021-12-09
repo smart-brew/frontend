@@ -253,9 +253,11 @@ const RecipeInstructionsPage: React.FC = () => {
     <SplitPage>
       <div className="flex flex-col space-y-5 justify-center">
         {addedBlocks.map((block, index) => (
-          <div key={block.blockName}>
+          <div
+            key={block.blockName}
+            className="flex justify-center items-center"
+          >
             <RecipeBlock
-              key={block.blockName}
               blockName={block.blockName}
               blockId={index}
               instructions={block.instructions}
@@ -303,7 +305,7 @@ const RecipeInstructionsPage: React.FC = () => {
       >
         Select instruction
       </button> */}
-        <div className="modal-bg" ref={popupRef}>
+        <div className="modal-bg" ref={popupRef} style={{ margin: 0 }}>
           <InstructionPopup
             templates={templates?.data || []}
             callback={handleInstrSelection}

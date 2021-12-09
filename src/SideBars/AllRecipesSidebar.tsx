@@ -50,7 +50,7 @@ const AllRecipesSidebar: React.FC<Props> = ({
 
   return (
     <React.StrictMode>
-      <div className="context h-2/3">
+      <div className="context h-2/3 overflow-auto">
         <div className="text-center text-2xl font-bold p-8">Recipes</div>
 
         <RecipeList
@@ -59,11 +59,27 @@ const AllRecipesSidebar: React.FC<Props> = ({
           current={recipeId}
         />
       </div>
+      {/* bottom shadow for list */}
+      <div
+        style={{
+          left: 0,
+          right: 0,
+          bottom: '30px',
+          position: 'relative',
+          height: '30px',
+          background:
+            'linear-gradient(180deg, rgba(139,167,32,0) 0%, #ffffff 100%)',
+        }}
+      />
+
       {/* Buttons Edit, Start Brewing, Make a new recipe */}
-      <div className="buttons text-center flex flex-col mx-10">
-        <Button title="Edit" />
-        <Button title="Make a new recipe" onClick={() => makeRecipe()} />
+      <div
+        className="buttons text-center flex flex-col px-10 w-full"
+        style={{ transform: 'translateY(-30px)' }}
+      >
         <Button title="Load recipe" onClick={() => loadRecipe()} />
+        <Button secondary title="Create new" onClick={() => makeRecipe()} />
+        <Button secondary title="Edit" />
       </div>
     </React.StrictMode>
   );

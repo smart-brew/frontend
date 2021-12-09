@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import Button from '../components/shared/Button';
-import CancelButton from '../components/shared/CancelButton';
 
 interface Props {
   saveForm: () => void;
@@ -16,7 +15,7 @@ const CreateIngredientsSidebar: React.FC<Props> = ({ saveForm }: Props) => {
         <Button title="Next step" onClick={() => saveForm()} />
 
         <Link to="/recipe">
-          <CancelButton title="Cancel" />
+          <Button cancel className="w-full" title="Cancel" />
         </Link>
       </div>
     </React.StrictMode>

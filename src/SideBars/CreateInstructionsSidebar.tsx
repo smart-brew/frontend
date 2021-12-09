@@ -3,8 +3,6 @@ import { Link } from 'react-router-dom';
 import Ingredients from '../components/RecipeMaking/ingredients/Ingredients';
 
 import Button from '../components/shared/Button';
-import CancelButton from '../components/shared/CancelButton';
-import BlockType from '../types/BlockType';
 import IngredientType from '../types/RecipeData/IngredientType';
 
 interface Props {
@@ -32,9 +30,13 @@ const CreateInstructionsSidebar: React.FC<Props> = ({
       </div>
       <div className="buttons text-center flex flex-col mx-10">
         <Button title="Save recipe" onClick={() => saveRecipe()} />
-        <Button title="Previous" onClick={() => toIngredients()} />
+        <Button
+          secondary
+          title="Previous step"
+          onClick={() => toIngredients()}
+        />
         <Link to="/recipe">
-          <CancelButton title="Cancel" />
+          <Button cancel className="w-full" title="Cancel" />
         </Link>
       </div>
     </React.StrictMode>

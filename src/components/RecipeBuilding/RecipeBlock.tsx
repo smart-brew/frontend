@@ -51,7 +51,7 @@ const RecipeBlock: React.FC<Props> = ({
   };
 
   return (
-    <div className="bg-blue-100 border-2 border-gray-500 shadow w-4/5 text-left rounded-xl p-4">
+    <div className="bg-blue-100 shadow w-4/5 text-left rounded-xl p-4">
       <input
         className="bg-white bg-opacity-50 border border-gray-500 text-2xl font-bold my-3 ml-8 rounded-lg p-1"
         type="text"
