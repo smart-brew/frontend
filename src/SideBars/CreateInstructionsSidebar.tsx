@@ -3,7 +3,9 @@ import { Link } from 'react-router-dom';
 import Ingredients from '../components/RecipeMaking/ingredients/Ingredients';
 
 import Button from '../components/shared/Button';
+import ConfirmPopup from '../Popups/ConfirmPopup';
 import IngredientType from '../types/RecipeData/IngredientType';
+import { openPopup } from '../Popups/PopupFunctions';
 
 interface Props {
   saveRecipe: () => void;
@@ -20,6 +22,9 @@ const CreateInstructionsSidebar: React.FC<Props> = ({
   ingredients,
   recipeName,
 }: Props) => {
+  const popupRef = React.useRef<HTMLDivElement>(null);
+  const popupRefSave = React.useRef<HTMLDivElement>(null);
+
   return (
     <React.StrictMode>
       <div className="context h-2/3">
@@ -29,15 +34,39 @@ const CreateInstructionsSidebar: React.FC<Props> = ({
         <Ingredients ingredients={ingredients} />
       </div>
       <div className="buttons text-center flex flex-col mx-10">
-        <Button title="Save recipe" onClick={() => saveRecipe()} />
+        <Button title="Save recipe" onClick={() => openPopup(popupRefSave)} />
+        <div>
+          <div className="modal-bg" ref={popupRefSave} style={{ margin: 0 }}>
+            <ConfirmPopup
+              popupName="Do you want to save the recipe?"
+              popupDescription="By pressing Confirm the recipe will be saved"
+              popupRef={popupRefSave}
+              setUseFunction={() => saveRecipe()}
+            />
+          </div>
+        </div>
         <Button
           secondary
           title="Previous step"
           onClick={() => toIngredients()}
         />
-        <Link to="/recipe">
-          <Button cancel className="w-full" title="Cancel" />
-        </Link>
+
+        <Button
+          cancel
+          className="w-full"
+          title="Cancel"
+          onClick={() => openPopup(popupRef)}
+        />
+        <div>
+          <div className="modal-bg" ref={popupRef} style={{ margin: 0 }}>
+            <ConfirmPopup
+              pathPage="/recipe"
+              popupName="Do you want to stop making new recipe?"
+              popupDescription="By leaving this page, all the changes will be lost"
+              popupRef={popupRef}
+            />
+          </div>
+        </div>
       </div>
     </React.StrictMode>
   );
