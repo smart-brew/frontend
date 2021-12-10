@@ -12,7 +12,7 @@ import { IngredientsFormProps } from './RecipeIngredientsPage';
 import { createRecipe } from '../api/recipe';
 import SplitPage from '../components/shared/SplitPage';
 import { InstructionsContext } from '../contexts/instructionsContext';
-import FunctionTemplate from '../types/FunctionData/FunctionTemplate';
+import InstructionTemplate from '../types/FunctionData/InstructionTemplate';
 
 import IngredientType from '../types/RecipeData/IngredientType';
 import CreateInstructionsSidebar from '../SideBars/CreateInstructionsSidebar';
@@ -43,6 +43,7 @@ const RecipeInstructionsPage: React.FC = () => {
     description: 'This instruction is a placeholder.',
     param: null,
     optionCodeName: null,
+    options: [],
     ordering: -1,
   };
 
@@ -103,9 +104,10 @@ const RecipeInstructionsPage: React.FC = () => {
     // setAddedInstructions(addedInstructions.splice(index, 0, editableInstr));
   };
 
-  const handleInstrSelection = (instr: FunctionTemplate): undefined => {
+  const handleInstrSelection = (instr: InstructionTemplate): undefined => {
     const popupNode = popupRef?.current;
     const dataOriginal = popupNode?.getAttribute('data-original');
+    console.log(dataOriginal);
     if (dataOriginal) {
       const [index, blockId, blockName] = dataOriginal.split('_');
 
@@ -116,10 +118,13 @@ const RecipeInstructionsPage: React.FC = () => {
           instr.options !== null && instr.options.length !== 0
             ? instr.options[0].codeName
             : null,
+        options: instr.options,
         ordering: -1,
         blockId: parseInt(blockId, 10),
         blockName,
       };
+
+      console.log(newInstruction.blockId);
 
       handleAddInstructionToBlock(
         newInstruction,
@@ -161,6 +166,7 @@ const RecipeInstructionsPage: React.FC = () => {
           optionCodeName: instruction.optionCodeName,
           ordering: instruction.ordering,
         };
+        console.log(newInstruction);
         return newInstruction;
       });
 

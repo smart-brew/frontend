@@ -2,30 +2,26 @@ import InstructionState from '../types/InstructionState';
 
 export default class InstructionStateMap {
   private states = [
-    { name: 'waiting', style: 'text-gray-500', inProgress: false },
-    { name: 'in progress', style: 'text-blue-500', inProgress: true },
-    { name: 'finished', style: 'text-green-500', inProgress: false },
-    { name: 'failed', style: 'text-red-500', inProgress: false },
+    { codeName: 'WAITING', name: 'WAITING', style: 'text-gray-500' },
+    { codeName: 'IN_PROGRESS', name: 'IN PROGRESS', style: 'text-blue-500' },
+    { codeName: 'DONE', name: 'DONE', style: 'text-green-500' },
+    { codeName: 'ERROR', name: 'ERROR', style: 'text-red-500' },
   ];
 
-  getStyle(state: string | null): InstructionState | null {
-    if (state) {
-      const instrState: InstructionState = {
-        name: state,
-        style: null,
-        inProgress: false,
-      };
-      this.states.forEach((possibleState) => {
-        if (possibleState.name === instrState.name.toLowerCase()) {
-          instrState.style = possibleState.style;
-          if (possibleState.inProgress) {
-            instrState.inProgress = true;
-          }
-        }
-      });
-      return instrState;
-    }
+  getStyle(state: string): InstructionState | null {
+    // this.states.forEach((possibleState) => {
+    //   if (possibleState.codeName === state) {
+    //     return possibleState;
+    //   }
+    // });
 
+    const style = this.states.find((possibleState) => {
+      return possibleState.codeName === state;
+    });
+
+    if (style !== undefined) {
+      return style;
+    }
     return null;
   }
 }

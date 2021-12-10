@@ -50,6 +50,7 @@ const TemperatureEditableInstr: React.FC<Props> = ({
           className="w-1/4 border border-gray-300 px-2"
           type="number"
           ref={inputRef}
+          defaultValue={instruction.param === null ? 0 : instruction.param}
           onBlur={sendParams}
         />
         <span>°C</span>

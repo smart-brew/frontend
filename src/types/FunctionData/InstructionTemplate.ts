@@ -2,7 +2,7 @@
 
 import OptionType from './OptionType';
 
-type FunctionTemplate = {
+type InstructionTemplate = {
   id: number;
   codeName: string;
   name: string;
@@ -13,4 +13,4 @@ type FunctionTemplate = {
   options: Array<OptionType>;
 };
 
-export default FunctionTemplate;
+export default InstructionTemplate;

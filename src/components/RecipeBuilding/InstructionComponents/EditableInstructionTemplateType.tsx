@@ -1,3 +1,5 @@
+import OptionType from '../../../types/FunctionData/OptionType';
+
 type EditableInstructionTemplateType = {
   id: number;
   codeName: string;
@@ -8,6 +10,7 @@ type EditableInstructionTemplateType = {
   inputType: string | null;
   description: string;
   optionCodeName: string | null;
+  options: Array<OptionType>;
   blockId: number;
   blockName: string;
   ordering: number;

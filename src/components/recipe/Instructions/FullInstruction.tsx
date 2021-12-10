@@ -4,23 +4,31 @@ import arrow from '../../../blue-arrow.svg';
 import InstructionType from '../../../types/RecipeData/InstructionType';
 import { InstructionStatus } from '../../../types/SystemData';
 import { InstructionsContext } from '../../../contexts/instructionsContext';
+import InstructionStateMap from '../../../helper_scripts/InstructionStateMap';
 
 interface Props {
   instruction: InstructionType;
+  instructionName: string | undefined;
   status: InstructionStatus;
 }
 
-const FullInstruction: React.FC<Props> = ({ instruction, status }: Props) => {
+const FullInstruction: React.FC<Props> = ({
+  instruction,
+  instructionName,
+  status,
+}: Props) => {
   const templates = React.useContext(InstructionsContext);
+  const styleMap = new InstructionStateMap();
 
   const template = templates?.data.find(
     (templ) => templ.id === instruction.templateId
   );
 
-  // TODO lepsie mapovanie na pekny nazov
   function getName(): string {
-    return instruction.codeName;
+    return instructionName || instruction.codeName;
   }
+
+  const style = styleMap.getStyle(status.status);
 
   // TODO upravit style a veci co sa zobrazuju
   return (
@@ -51,7 +59,9 @@ const FullInstruction: React.FC<Props> = ({ instruction, status }: Props) => {
           </span>
         </div>
       </div>
-      <div className="font-bold text-xl">{status.status}</div>
+      <div className={`font-bold text-xl ${style?.style}`}>
+        {style?.name || status.status}
+      </div>
     </div>
   );
 };

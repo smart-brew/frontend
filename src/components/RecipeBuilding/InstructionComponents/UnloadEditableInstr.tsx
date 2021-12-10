@@ -37,8 +37,15 @@ const UnloadEditableInstr: React.FC<Props> = ({
         ref={selectRef}
         onChange={sendParams}
       >
-        {options.map((option) => {
-          return <option value={option.toUpperCase()}>{option}</option>;
+        {instruction.options.map((option) => {
+          return (
+            <option
+              value={option.codeName}
+              selected={instruction.optionCodeName === option.codeName}
+            >
+              {option.name}
+            </option>
+          );
         })}
       </select>
     </div>

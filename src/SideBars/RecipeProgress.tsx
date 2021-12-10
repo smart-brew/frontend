@@ -159,7 +159,7 @@ const RecipeProgress: React.FC<Props> = ({ recipeId }: Props) => {
               </div>
             </div>
 
-            <RecipeOverview />
+            <RecipePreview recipe={selectedRecipe} />
           </div>
         );
     }

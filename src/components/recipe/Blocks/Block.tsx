@@ -5,15 +5,15 @@ import InstructionStateMap from '../../../helper_scripts/InstructionStateMap';
 import TimeHelper from '../../../helper_scripts/TimeHelper';
 
 const Block: React.FC<BlockType> = ({ instructions, name }: BlockType) => {
-  let hasCurrentInstr = false;
+  const hasCurrentInstr = false;
   const instructionsShow = instructions.map((instr) => {
     const { start, end } = instr;
-    const instrStyle = new InstructionStateMap().getStyle(
+    /*    const instrStyle = new InstructionStateMap().getStyle(
       TimeHelper.getState(start, end)
     );
     if (instrStyle?.inProgress) {
       hasCurrentInstr = true;
-    }
+    } */
     return (
       <div>INSTRUCTION IN BLOCK</div>
       // <Instruction
