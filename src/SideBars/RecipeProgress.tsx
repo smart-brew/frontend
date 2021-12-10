@@ -8,12 +8,14 @@ import { getRecipe } from '../api/recipe';
 import Button from '../components/shared/Button';
 import { IngredientsT } from '../types/RecipeData/IngredientType';
 import {
+  abortBrewing,
   abortBrewing as abortBrewingAPI,
   startBrewing as startBrewingAPI,
+  pauseBrewing,
 } from '../api/brew';
+
 import { openPopup } from '../Popups/PopupFunctions';
 import ConfirmPopup from '../Popups/ConfirmPopup';
-import AbortPopup from '../Popups/AbortPopup';
 
 interface Props {
   recipeId: number;
@@ -102,6 +104,21 @@ const RecipeProgress: React.FC<Props> = ({ recipeId }: Props) => {
                   setPage('MainPage');
                 }}
               /> */}
+            </div>
+
+            <RecipePreview recipe={selectedRecipe} />
+          </>
+        );
+      case 'WhileBrewingPage':
+        return (
+          <div>
+            <div className="buttons text-center flex flex-col mx-10">
+              <Button
+                title="Pause brewing"
+                onClick={() => {
+                  openPopup(popupRefPause);
+                }}
+              />
               <Button
                 cancel
                 title="Abort brewing"
@@ -112,44 +129,32 @@ const RecipeProgress: React.FC<Props> = ({ recipeId }: Props) => {
               />
             </div>
             <div>
-              <div className="modal-bg" ref={popupRef} style={{ margin: 0 }}>
-                <AbortPopup
-                  pathPage="/"
-                  popupName="Do you want to abort the brewing process?"
-                  popupDescription="By clicking Confirm, the brewing process will be aborted without the chance to resume"
-                  popupRef={popupRef}
-                  setPage={setPage}
-                  pageName="MainPage"
-                  theState="Abort"
-                />
-              </div>
-            </div>
-            <RecipePreview recipe={selectedRecipe} />
-          </>
-        );
-      case 'WhileBrewingPage':
-        return (
-          <div>
-            <Button
-              title="Pause brewing"
-              onClick={() => {
-                openPopup(popupRefPause);
-              }}
-            />
-            <div>
               <div
                 className="modal-bg"
                 ref={popupRefPause}
                 style={{ margin: 0 }}
               >
-                <AbortPopup
-                  pathPage="/"
+                <ConfirmPopup
+                  setUseFunctionProm={pauseBrewing}
+                  setParameterNumber={7} // can be changed
                   popupName="Do you want to pause the brewing process?"
                   popupDescription="By clicking Confirm, the brewery will keep its initial state till resume"
                   popupRef={popupRefPause}
-                  setPage={setPage}
-                  pageName="MainPage"
-                  theState="Pause"
+                  // setPage={setPage}
+                  // pageName="MainPage"  this will probably needed to be changed to that it shows pause
+                />
+              </div>
+            </div>
+            <div>
+              <div className="modal-bg" ref={popupRef} style={{ margin: 0 }}>
+                <ConfirmPopup
+                  popupName="Do you want to abort the brewing process?"
+                  popupDescription="By clicking Confirm, the brewing process will be aborted without the chance to resume"
+                  popupRef={popupRef}
+                  setUseFunctionProm={abortBrewing}
+                  setParameterNumber={7} // can be changed
+                  // setPage={setPage}
+                  // pageName="MainPage"
                 />
               </div>
             </div>

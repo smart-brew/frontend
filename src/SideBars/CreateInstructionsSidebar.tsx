@@ -38,7 +38,6 @@ const CreateInstructionsSidebar: React.FC<Props> = ({
         <div>
           <div className="modal-bg" ref={popupRefSave} style={{ margin: 0 }}>
             <ConfirmPopup
-              pathPage="/"
               popupName="Do you want to save the recipe?"
               popupDescription="By pressing Confirm the recipe will be saved"
               popupRef={popupRefSave}

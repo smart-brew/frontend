@@ -23,7 +23,6 @@ const Off: React.FC = () => {
       <div>
         <div className="modal-bg" ref={popupRef} style={{ margin: 0 }}>
           <ConfirmPopup
-            pathPage="/"
             popupName="Do you want to turm off the whole system?"
             popupDescription="By confirming this, the whole system will be shut down"
             popupRef={popupRef}

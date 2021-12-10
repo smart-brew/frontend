@@ -1,14 +1,22 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { IdReturn } from '../api/helpers';
 import Button from '../components/shared/Button';
+import ChangePage from './PopupComponents/ChangePage';
+import PromiseFunction from './PopupComponents/PromiseFunction';
+import SimpleFunction from './PopupComponents/SimpleFunction';
 import { closePopup } from './PopupFunctions';
 
 interface ConfirmPopupProps {
-  pathPage: string;
+  pathPage?: string;
   popupName: string;
   popupDescription: string;
   popupRef: React.RefObject<HTMLDivElement>;
   setUseFunction?: () => void;
+  setUseFunctionProm?: (parn: number) => Promise<IdReturn>;
+  setParameterNumber?: number;
+  // setPage?: (page: string) => void;
+  // pageName?: string;
 }
 
 const ConfirmPopup: React.FC<ConfirmPopupProps> = ({
@@ -17,10 +25,18 @@ const ConfirmPopup: React.FC<ConfirmPopupProps> = ({
   popupDescription,
   popupRef,
   setUseFunction,
-}: // funcPar,
+  setUseFunctionProm,
+  setParameterNumber,
+}: // setPage,
+// pageName,
 ConfirmPopupProps) => {
   ConfirmPopup.defaultProps = {
+    pathPage: undefined,
     setUseFunction: undefined,
+    setUseFunctionProm: undefined,
+    setParameterNumber: undefined,
+    // setPage: undefined,
+    // pageName: undefined,
   };
   const confirmPopupRef = React.useRef<HTMLDivElement>(null);
 
@@ -32,26 +48,22 @@ ConfirmPopupProps) => {
       <h2 className="font-bold text-2xl p-3 pb-10">{popupName}</h2>
       <div className="justify-items-center text-xl">{popupDescription}</div>
 
-      <div className="grid grid-cols-2 pt-8">
-        {typeof setUseFunction !== 'undefined' ? (
-          <Button
-            className="w-full"
-            title="Confirm"
-            onClick={() => setUseFunction()}
+      <div className=" pt-8">
+        {pathPage ? (
+          <ChangePage pathPage={pathPage} popupRef={popupRef} />
+        ) : null}
+        {setUseFunction ? (
+          <SimpleFunction setUseFunction={setUseFunction} popupRef={popupRef} />
+        ) : null}
+        {setUseFunctionProm && setParameterNumber ? (
+          <PromiseFunction
+            setUseFunctionProm={setUseFunctionProm}
+            popupRef={popupRef}
+            setParameterNumber={setParameterNumber}
+            // setPage={setPage}
+            // pageName={pageName}
           />
-        ) : (
-          <Link to={pathPage}>
-            <Button className="w-full" title="Confirm" />
-          </Link>
-        )}
-
-        <Button
-          cancel
-          title="Cancel"
-          onClick={() => {
-            closePopup(popupRef);
-          }}
-        />
+        ) : null}
       </div>
     </div>
   );
