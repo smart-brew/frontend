@@ -1,8 +1,8 @@
 /* eslint-disable camelcase */
 
-import FunctionTemplate from '../types/FunctionData/FunctionTemplate';
+import InstructionTemplate from '../types/FunctionData/InstructionTemplate';
 
-export const emptyInstr: FunctionTemplate = {
+export const emptyInstr: InstructionTemplate = {
   id: -1,
   codeName: 'EMPTY',
   name: 'Empty instruction',
@@ -13,7 +13,7 @@ export const emptyInstr: FunctionTemplate = {
   options: [],
 };
 
-export const functions: FunctionTemplate[] = [
+export const functions: InstructionTemplate[] = [
   {
     id: 1,
     codeName: 'SET_TEMPERATURE',

@@ -1,11 +1,11 @@
 import React from 'react';
 
 import InstructionForSelection from './InstructionForSelection';
-import FunctionTemplate from '../../../types/FunctionData/FunctionTemplate';
+import InstructionTemplate from '../../../types/FunctionData/InstructionTemplate';
 
 interface InstrPopupProps {
-  templates: FunctionTemplate[];
-  callback: (instr: FunctionTemplate) => undefined;
+  templates: InstructionTemplate[];
+  callback: (instr: InstructionTemplate) => undefined;
 }
 
 const InstructionPopup: React.FC<InstrPopupProps> = ({

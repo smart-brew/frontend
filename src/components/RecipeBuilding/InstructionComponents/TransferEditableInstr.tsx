@@ -50,10 +50,32 @@ const TransferEditableInstr: React.FC<Props> = ({
           handleFirstSelection(parseInt(e.currentTarget.value, 10));
         }}
       >
-        <option value={1} selected>
+        <option
+          value={1}
+          selected={
+            parseInt(
+              instruction.optionCodeName?.split('_')
+                ? instruction.optionCodeName?.split('_')[1]
+                : '0',
+              10
+            ) === 1
+          }
+        >
           Chamber 1
         </option>
-        <option value={2}>Chamber 2</option>
+        <option
+          value={2}
+          selected={
+            parseInt(
+              instruction.optionCodeName?.split('_')
+                ? instruction.optionCodeName?.split('_')[1]
+                : '0',
+              10
+            ) === 2
+          }
+        >
+          Chamber 2
+        </option>
       </select>
       <span>to</span>
       <select

@@ -1,22 +1,22 @@
-import FunctionTemplate from '../types/FunctionData/FunctionTemplate';
+import InstructionTemplate from '../types/FunctionData/InstructionTemplate';
 
 class SupportedInstructionTemplateHelper {
-  functionMap = new Map<number, FunctionTemplate>();
+  functionMap = new Map<number, InstructionTemplate>();
 
-  functionArray = new Array<FunctionTemplate>();
+  functionArray = new Array<InstructionTemplate>();
 
-  constructor(functions: FunctionTemplate[]) {
+  constructor(functions: InstructionTemplate[]) {
     functions.forEach((func) => {
       this.functionMap.set(func.id, func);
     });
     this.functionArray = functions;
   }
 
-  getFunctionStructure(index: number): FunctionTemplate | null {
+  getFunctionStructure(index: number): InstructionTemplate | null {
     return this.functionMap.get(index) || null;
   }
 
-  getAllFunctions(): Array<FunctionTemplate> {
+  getAllFunctions(): Array<InstructionTemplate> {
     return this.functionArray;
   }
 }

@@ -2,18 +2,13 @@ export default class UnitsMap {
   private units: Map<string, string> = new Map<string, string>();
 
   constructor() {
-    this.units.set('heat up', '°C');
-    this.units.set('motor', 'RPM');
-    this.units.set('in_progress', 'ON');
-    this.units.set('waiting', 'OFF');
-    this.units.set('done', 'OFF');
-    this.units.set('wait', 'minutes');
+    this.units.set('SET_TEMPERATURE', '°C');
+    this.units.set('SET_MOTOR_SPEED', 'RPM');
   }
 
   getUnit(instruction: string): string | undefined {
-    const tempInstr = instruction.toLowerCase();
-    if (this.units.has(tempInstr)) {
-      return this.units.get(tempInstr);
+    if (this.units.has(instruction)) {
+      return this.units.get(instruction);
     }
     return undefined;
   }

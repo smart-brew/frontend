@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 
 import ParamType from '../../../types/ParamType';
 import EditableInstructionTemplateType from './EditableInstructionTemplateType';
+import TimeHelper from '../../../helper_scripts/TimeHelper';
 
 interface Props {
   instruction: EditableInstructionTemplateType;
@@ -22,9 +23,9 @@ const WaitEditableInstr: React.FC<Props> = ({
     minutes: number
   ): number => {
     let millis = 0;
-    millis += minutes * 60000;
-    millis += hours * 3600000;
-    millis += days * 86400000;
+    millis += minutes * TimeHelper.MILLIS_MINUTES;
+    millis += hours * TimeHelper.MILLIS_HOURS;
+    millis += days * TimeHelper.MILLIS_DAYS;
 
     return millis;
   };
@@ -60,7 +61,11 @@ const WaitEditableInstr: React.FC<Props> = ({
           className="w-4/5 border rounded border-gray-200 p-1"
           type="number"
           min={0}
-          defaultValue={0}
+          defaultValue={
+            instruction.param !== null
+              ? TimeHelper.getDaysFromMillis(instruction.param)
+              : 0
+          }
           ref={daysRef}
           onBlur={sendParams}
         />
@@ -72,7 +77,11 @@ const WaitEditableInstr: React.FC<Props> = ({
           type="number"
           max={23}
           min={0}
-          defaultValue={0}
+          defaultValue={
+            instruction.param !== null
+              ? TimeHelper.getHoursFromMillis(instruction.param)
+              : 0
+          }
           ref={hoursRef}
           onBlur={sendParams}
         />
@@ -84,7 +93,11 @@ const WaitEditableInstr: React.FC<Props> = ({
           type="number"
           max={59}
           min={0}
-          defaultValue={0}
+          defaultValue={
+            instruction.param !== null
+              ? TimeHelper.getMinutesFromMillis(instruction.param)
+              : 0
+          }
           ref={minutesRef}
           onBlur={sendParams}
         />

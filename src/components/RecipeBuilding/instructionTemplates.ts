@@ -1,6 +1,6 @@
-import FunctionTemplate from '../../types/FunctionData/FunctionTemplate';
+import InstructionTemplate from '../../types/FunctionData/InstructionTemplate';
 
-export const templates: FunctionTemplate[] = [
+export const templates: InstructionTemplate[] = [
   {
     id: 1,
     codeName: 'SET_TEMPERATURE',
