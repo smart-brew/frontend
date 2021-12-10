@@ -15,8 +15,8 @@ interface ConfirmPopupProps {
   setUseFunction?: () => void;
   setUseFunctionProm?: (parn: number) => Promise<IdReturn>;
   setParameterNumber?: number;
-  // setPage?: (page: string) => void;
-  // pageName?: string;
+  setPage?: (page: string) => void;
+  pageName?: string;
 }
 
 const ConfirmPopup: React.FC<ConfirmPopupProps> = ({
@@ -27,6 +27,8 @@ const ConfirmPopup: React.FC<ConfirmPopupProps> = ({
   setUseFunction,
   setUseFunctionProm,
   setParameterNumber,
+  setPage,
+  pageName,
 }: // setPage,
 // pageName,
 ConfirmPopupProps) => {
@@ -35,8 +37,8 @@ ConfirmPopupProps) => {
     setUseFunction: undefined,
     setUseFunctionProm: undefined,
     setParameterNumber: undefined,
-    // setPage: undefined,
-    // pageName: undefined,
+    setPage: undefined,
+    pageName: undefined,
   };
   const confirmPopupRef = React.useRef<HTMLDivElement>(null);
 
@@ -55,13 +57,23 @@ ConfirmPopupProps) => {
         {setUseFunction ? (
           <SimpleFunction setUseFunction={setUseFunction} popupRef={popupRef} />
         ) : null}
-        {setUseFunctionProm && setParameterNumber ? (
+        {setUseFunctionProm &&
+        setParameterNumber &&
+        setPage === undefined &&
+        pageName === undefined ? (
           <PromiseFunction
             setUseFunctionProm={setUseFunctionProm}
             popupRef={popupRef}
             setParameterNumber={setParameterNumber}
-            // setPage={setPage}
-            // pageName={pageName}
+          />
+        ) : null}
+        {setUseFunctionProm && setParameterNumber && setPage && pageName ? (
+          <PromiseFunction
+            setUseFunctionProm={setUseFunctionProm}
+            popupRef={popupRef}
+            setParameterNumber={setParameterNumber}
+            setPage={setPage}
+            pageName={pageName}
           />
         ) : null}
       </div>

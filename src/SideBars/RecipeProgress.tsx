@@ -140,8 +140,8 @@ const RecipeProgress: React.FC<Props> = ({ recipeId }: Props) => {
                   popupName="Do you want to pause the brewing process?"
                   popupDescription="By clicking Confirm, the brewery will keep its initial state till resume"
                   popupRef={popupRefPause}
-                  // setPage={setPage}
-                  // pageName="MainPage"  this will probably needed to be changed to that it shows pause
+                  setPage={setPage}
+                  pageName="MainPage" // this will probably needed to be changed to that it shows pause
                 />
               </div>
             </div>
@@ -153,8 +153,8 @@ const RecipeProgress: React.FC<Props> = ({ recipeId }: Props) => {
                   popupRef={popupRef}
                   setUseFunctionProm={abortBrewing}
                   setParameterNumber={7} // can be changed
-                  // setPage={setPage}
-                  // pageName="MainPage"
+                  setPage={setPage}
+                  pageName="MainPage"
                 />
               </div>
             </div>
