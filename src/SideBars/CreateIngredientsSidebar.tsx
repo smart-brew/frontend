@@ -2,15 +2,15 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 
 import Button from '../components/shared/Button';
-import Popup from '../Popups/Popup';
-import { openPopup } from '../Popups/PopupFunctions';
+import { usePopup } from '../contexts/popupContext';
 
 interface Props {
   saveForm: () => void;
 }
 
 const CreateIngredientsSidebar: React.FC<Props> = ({ saveForm }: Props) => {
-  const popupRef = React.useRef<HTMLDivElement>(null);
+  const popup = usePopup();
+
   const history = useHistory();
 
   return (
@@ -22,13 +22,13 @@ const CreateIngredientsSidebar: React.FC<Props> = ({ saveForm }: Props) => {
           cancel
           className="w-full"
           title="Cancel"
-          onClick={() => openPopup(popupRef)}
-        />
-        <Popup
-          onConfirm={() => history.push('/recipe')}
-          title="Do you want to stop making new recipe?"
-          description="By leaving this page, all the changes will be lost"
-          ref={popupRef}
+          onClick={() =>
+            popup?.open({
+              title: 'Do you want to stop making new recipe?',
+              description: 'By leaving this page, all the changes will be lost',
+              onConfirm: () => history.push('/recipe'),
+            })
+          }
         />
       </div>
     </React.StrictMode>

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { usePopup } from '../contexts/popupContext';
 
 import { IngredientSection } from '../components/RecipeMaking/ingredients/IngredientSection';
 import { StartBrewingPopup } from '../components/RecipeMaking/ConfirmBrewingStart/StartBrewingPopup';
@@ -13,16 +14,13 @@ import {
   pauseBrewing as pauseBrewingAPI,
 } from '../api/brew';
 
-import { openPopup } from '../Popups/PopupFunctions';
-import Popup from '../Popups/Popup';
-
 interface Props {
   recipeId: number;
 }
 
 const RecipeProgress: React.FC<Props> = ({ recipeId }: Props) => {
-  const abortPopupRef = React.useRef<HTMLDivElement>(null);
-  const pausePopupRef = React.useRef<HTMLDivElement>(null);
+  const popup = usePopup();
+
   const [showStartConfirmation, setShowStartConfirmation] = useState(false); // pupup to start a new brewing process
   const [page, setPage] = useState('BeforeBrewingPage');
 
@@ -115,7 +113,15 @@ const RecipeProgress: React.FC<Props> = ({ recipeId }: Props) => {
               <Button
                 title="Pause brewing"
                 onClick={() => {
-                  openPopup(pausePopupRef);
+                  popup?.open({
+                    title: 'Do you want to pause the brewing process?',
+                    description:
+                      'By clicking Confirm, the brewery will keep its initial state till resume',
+                    onConfirm: () => {
+                      pauseBrewingAPI(0);
+                      setPage('MainPage'); // this will probably needed to be changed to that it shows pause
+                    },
+                  });
                 }}
               />
               <Button
@@ -123,30 +129,18 @@ const RecipeProgress: React.FC<Props> = ({ recipeId }: Props) => {
                 title="Abort brewing"
                 onClick={() => {
                   console.log('TODO: ABORT BREWING');
-                  openPopup(abortPopupRef);
+                  popup?.open({
+                    title: 'Do you want to abort the brewing process?',
+                    description:
+                      'By clicking Confirm, the brewing process will be aborted without the chance to resume',
+                    onConfirm: () => {
+                      abortBrewingAPI(0);
+                      setPage('MainPage');
+                    },
+                  });
                 }}
               />
             </div>
-
-            <Popup
-              title="Do you want to pause the brewing process?"
-              description="By clicking Confirm, the brewery will keep its initial state till resume"
-              onConfirm={() => {
-                pauseBrewingAPI(0);
-                setPage('MainPage'); // this will probably needed to be changed to that it shows pause
-              }}
-              ref={pausePopupRef}
-            />
-
-            <Popup
-              title="Do you want to abort the brewing process?"
-              description="By clicking Confirm, the brewing process will be aborted without the chance to resume"
-              onConfirm={() => {
-                abortBrewingAPI(0);
-                setPage('MainPage');
-              }}
-              ref={abortPopupRef}
-            />
 
             <RecipePreview recipe={selectedRecipe} />
           </div>
