@@ -42,6 +42,8 @@ const PromiseFunction: React.FC<Props> = ({
           title="Confirm"
           onClick={() => {
             setUseFunctionProm(setParameterNumber);
+            closePopup(popupRef);
+            window.location.reload(); // page reload
           }}
         />
       )}
