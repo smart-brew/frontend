@@ -1,9 +1,9 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import Ingredients from '../components/RecipeMaking/ingredients/Ingredients';
 
 import Button from '../components/shared/Button';
-import ConfirmPopup from '../Popups/ConfirmPopup';
+import Popup from '../Popups/Popup';
 import IngredientType from '../types/RecipeData/IngredientType';
 import { openPopup } from '../Popups/PopupFunctions';
 
@@ -24,6 +24,7 @@ const CreateInstructionsSidebar: React.FC<Props> = ({
 }: Props) => {
   const popupRef = React.useRef<HTMLDivElement>(null);
   const popupRefSave = React.useRef<HTMLDivElement>(null);
+  const history = useHistory();
 
   return (
     <React.StrictMode>
@@ -35,16 +36,14 @@ const CreateInstructionsSidebar: React.FC<Props> = ({
       </div>
       <div className="buttons text-center flex flex-col mx-10">
         <Button title="Save recipe" onClick={() => openPopup(popupRefSave)} />
-        <div>
-          <div className="modal-bg" ref={popupRefSave} style={{ margin: 0 }}>
-            <ConfirmPopup
-              popupName="Do you want to save the recipe?"
-              popupDescription="By pressing Confirm the recipe will be saved"
-              popupRef={popupRefSave}
-              setUseFunction={() => saveRecipe()}
-            />
-          </div>
-        </div>
+
+        <Popup
+          title="Do you want to save the recipe?"
+          description="By pressing Confirm the recipe will be saved"
+          ref={popupRefSave}
+          onConfirm={() => saveRecipe()}
+        />
+
         <Button
           secondary
           title="Previous step"
@@ -57,16 +56,13 @@ const CreateInstructionsSidebar: React.FC<Props> = ({
           title="Cancel"
           onClick={() => openPopup(popupRef)}
         />
-        <div>
-          <div className="modal-bg" ref={popupRef} style={{ margin: 0 }}>
-            <ConfirmPopup
-              pathPage="/recipe"
-              popupName="Do you want to stop making new recipe?"
-              popupDescription="By leaving this page, all the changes will be lost"
-              popupRef={popupRef}
-            />
-          </div>
-        </div>
+
+        <Popup
+          onConfirm={() => history.push('/recipe')}
+          title="Do you want to stop making new recipe?"
+          description="By leaving this page, all the changes will be lost"
+          ref={popupRef}
+        />
       </div>
     </React.StrictMode>
   );

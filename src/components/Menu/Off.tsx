@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPowerOff } from '@fortawesome/free-solid-svg-icons';
 import { postShutDown } from '../../api/shutdown';
 import { openPopup } from '../../Popups/PopupFunctions';
-import ConfirmPopup from '../../Popups/ConfirmPopup';
+import Popup from '../../Popups/Popup';
 
 const Off: React.FC = () => {
   const popupRef = React.useRef<HTMLDivElement>(null);
@@ -20,16 +20,13 @@ const Off: React.FC = () => {
       >
         <FontAwesomeIcon icon={faPowerOff} size="2x" />
       </button>
-      <div>
-        <div className="modal-bg" ref={popupRef} style={{ margin: 0 }}>
-          <ConfirmPopup
-            popupName="Do you want to turm off the whole system?"
-            popupDescription="By confirming this, the whole system will be shut down"
-            popupRef={popupRef}
-            setUseFunction={postShutDown}
-          />
-        </div>
-      </div>
+
+      <Popup
+        title="Do you want to turm off the whole system?"
+        description="By confirming this, the whole system will be shut down"
+        ref={popupRef}
+        onConfirm={postShutDown}
+      />
     </>
   );
 };

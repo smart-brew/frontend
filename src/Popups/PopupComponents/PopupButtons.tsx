@@ -1,16 +1,15 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+
 import Button from '../../components/shared/Button';
-import { closePopup } from '../PopupFunctions';
 
 interface Props {
-  setUseFunction: () => void;
-  popupRef: React.RefObject<HTMLDivElement>;
+  onConfirm: () => void;
+  closePopup: () => void;
 }
 
 const SimpleFunction: React.FC<Props> = ({
-  setUseFunction,
-  popupRef,
+  onConfirm: setUseFunction,
+  closePopup,
 }: Props) => {
   return (
     <div className="grid grid-cols-2">
@@ -24,7 +23,7 @@ const SimpleFunction: React.FC<Props> = ({
         cancel
         title="Cancel"
         onClick={() => {
-          closePopup(popupRef);
+          closePopup();
         }}
       />
     </div>
