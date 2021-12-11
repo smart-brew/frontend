@@ -3,14 +3,14 @@ import React from 'react';
 import PopupButtons from './PopupComponents/PopupButtons';
 import { closePopup } from './PopupFunctions';
 
-interface Props {
+export interface PopupProps {
   title: string;
   description: string;
   onConfirm: () => void;
 }
 
-const Popup = React.forwardRef<HTMLDivElement, Props>(
-  ({ title, description, onConfirm }: Props, reference) => {
+const Popup = React.forwardRef<HTMLDivElement, PopupProps>(
+  ({ title, description, onConfirm }: PopupProps, reference) => {
     const ref = reference as React.MutableRefObject<HTMLDivElement>;
 
     return (

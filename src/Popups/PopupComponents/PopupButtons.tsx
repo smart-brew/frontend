@@ -7,17 +7,10 @@ interface Props {
   closePopup: () => void;
 }
 
-const SimpleFunction: React.FC<Props> = ({
-  onConfirm: setUseFunction,
-  closePopup,
-}: Props) => {
+const SimpleFunction: React.FC<Props> = ({ onConfirm, closePopup }: Props) => {
   return (
     <div className="grid grid-cols-2">
-      <Button
-        className="w-full"
-        title="Confirm"
-        onClick={() => setUseFunction()}
-      />
+      <Button className="w-full" title="Confirm" onClick={() => onConfirm()} />
 
       <Button
         cancel
