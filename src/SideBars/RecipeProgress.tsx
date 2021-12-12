@@ -1,29 +1,26 @@
 import React, { useState } from 'react';
+import { usePopup } from '../contexts/popupContext';
+
 import { IngredientSection } from '../components/RecipeMaking/ingredients/IngredientSection';
 import { StartBrewingPopup } from '../components/RecipeMaking/ConfirmBrewingStart/StartBrewingPopup';
-import RecipeOverview from '../components/overview/RecipeOverview';
 import RecipeType from '../types/RecipeData/RecipeType';
 import RecipePreview from '../components/RecipeMaking/RecipePreview';
 import { getRecipe } from '../api/recipe';
 import Button from '../components/shared/Button';
 import { IngredientsT } from '../types/RecipeData/IngredientType';
 import {
-  abortBrewing,
   abortBrewing as abortBrewingAPI,
   startBrewing as startBrewingAPI,
-  pauseBrewing,
+  pauseBrewing as pauseBrewingAPI,
 } from '../api/brew';
-
-import { openPopup } from '../Popups/PopupFunctions';
-import ConfirmPopup from '../Popups/ConfirmPopup';
 
 interface Props {
   recipeId: number;
 }
 
 const RecipeProgress: React.FC<Props> = ({ recipeId }: Props) => {
-  const popupRef = React.useRef<HTMLDivElement>(null);
-  const popupRefPause = React.useRef<HTMLDivElement>(null);
+  const popup = usePopup();
+
   const [showStartConfirmation, setShowStartConfirmation] = useState(false); // pupup to start a new brewing process
   const [page, setPage] = useState('BeforeBrewingPage');
 
@@ -116,7 +113,15 @@ const RecipeProgress: React.FC<Props> = ({ recipeId }: Props) => {
               <Button
                 title="Pause brewing"
                 onClick={() => {
-                  openPopup(popupRefPause);
+                  popup?.open({
+                    title: 'Do you want to pause the brewing process?',
+                    description:
+                      'By clicking Confirm, the brewery will keep its initial state till resume',
+                    onConfirm: () => {
+                      pauseBrewingAPI(0);
+                      setPage('MainPage'); // this will probably needed to be changed to that it shows pause
+                    },
+                  });
                 }}
               />
               <Button
@@ -124,39 +129,17 @@ const RecipeProgress: React.FC<Props> = ({ recipeId }: Props) => {
                 title="Abort brewing"
                 onClick={() => {
                   console.log('TODO: ABORT BREWING');
-                  openPopup(popupRef);
+                  popup?.open({
+                    title: 'Do you want to abort the brewing process?',
+                    description:
+                      'By clicking Confirm, the brewing process will be aborted without the chance to resume',
+                    onConfirm: () => {
+                      abortBrewingAPI(0);
+                      setPage('MainPage');
+                    },
+                  });
                 }}
               />
-            </div>
-            <div>
-              <div
-                className="modal-bg"
-                ref={popupRefPause}
-                style={{ margin: 0 }}
-              >
-                <ConfirmPopup
-                  setUseFunctionProm={pauseBrewing}
-                  setParameterNumber={7} // can be changed
-                  popupName="Do you want to pause the brewing process?"
-                  popupDescription="By clicking Confirm, the brewery will keep its initial state till resume"
-                  popupRef={popupRefPause}
-                  setPage={setPage}
-                  pageName="MainPage" // this will probably needed to be changed to that it shows pause
-                />
-              </div>
-            </div>
-            <div>
-              <div className="modal-bg" ref={popupRef} style={{ margin: 0 }}>
-                <ConfirmPopup
-                  popupName="Do you want to abort the brewing process?"
-                  popupDescription="By clicking Confirm, the brewing process will be aborted without the chance to resume"
-                  popupRef={popupRef}
-                  setUseFunctionProm={abortBrewing}
-                  setParameterNumber={7} // can be changed
-                  setPage={setPage}
-                  pageName="MainPage"
-                />
-              </div>
             </div>
 
             <RecipePreview recipe={selectedRecipe} />

@@ -1,16 +1,18 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 import Button from '../components/shared/Button';
-import ConfirmPopup from '../Popups/ConfirmPopup';
-import { openPopup } from '../Popups/PopupFunctions';
+import { usePopup } from '../contexts/popupContext';
 
 interface Props {
   saveForm: () => void;
 }
 
 const CreateIngredientsSidebar: React.FC<Props> = ({ saveForm }: Props) => {
-  const popupRef = React.useRef<HTMLDivElement>(null);
+  const popup = usePopup();
+
+  const history = useHistory();
+
   return (
     <React.StrictMode>
       <div className="context h-2/3" />
@@ -20,18 +22,14 @@ const CreateIngredientsSidebar: React.FC<Props> = ({ saveForm }: Props) => {
           cancel
           className="w-full"
           title="Cancel"
-          onClick={() => openPopup(popupRef)}
+          onClick={() =>
+            popup?.open({
+              title: 'Do you want to stop making new recipe?',
+              description: 'By leaving this page, all the changes will be lost',
+              onConfirm: () => history.push('/recipe'),
+            })
+          }
         />
-        <div>
-          <div className="modal-bg" ref={popupRef} style={{ margin: 0 }}>
-            <ConfirmPopup
-              pathPage="/recipe"
-              popupName="Do you want to stop making new recipe?"
-              popupDescription="By leaving this page, all the changes will be lost"
-              popupRef={popupRef}
-            />
-          </div>
-        </div>
       </div>
     </React.StrictMode>
   );

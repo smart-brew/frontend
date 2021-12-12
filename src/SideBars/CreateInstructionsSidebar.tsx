@@ -1,11 +1,10 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import Ingredients from '../components/RecipeMaking/ingredients/Ingredients';
+import { useHistory } from 'react-router-dom';
+import { usePopup } from '../contexts/popupContext';
 
+import Ingredients from '../components/RecipeMaking/ingredients/Ingredients';
 import Button from '../components/shared/Button';
-import ConfirmPopup from '../Popups/ConfirmPopup';
 import IngredientType from '../types/RecipeData/IngredientType';
-import { openPopup } from '../Popups/PopupFunctions';
 
 interface Props {
   saveRecipe: () => void;
@@ -22,8 +21,8 @@ const CreateInstructionsSidebar: React.FC<Props> = ({
   ingredients,
   recipeName,
 }: Props) => {
-  const popupRef = React.useRef<HTMLDivElement>(null);
-  const popupRefSave = React.useRef<HTMLDivElement>(null);
+  const popup = usePopup();
+  const history = useHistory();
 
   return (
     <React.StrictMode>
@@ -34,17 +33,17 @@ const CreateInstructionsSidebar: React.FC<Props> = ({
         <Ingredients ingredients={ingredients} />
       </div>
       <div className="buttons text-center flex flex-col mx-10">
-        <Button title="Save recipe" onClick={() => openPopup(popupRefSave)} />
-        <div>
-          <div className="modal-bg" ref={popupRefSave} style={{ margin: 0 }}>
-            <ConfirmPopup
-              popupName="Do you want to save the recipe?"
-              popupDescription="By pressing Confirm the recipe will be saved"
-              popupRef={popupRefSave}
-              setUseFunction={() => saveRecipe()}
-            />
-          </div>
-        </div>
+        <Button
+          title="Save recipe"
+          onClick={() =>
+            popup?.open({
+              title: 'Do you want to save the recipe?',
+              description: 'By pressing Confirm the recipe will be saved',
+              onConfirm: () => saveRecipe(),
+            })
+          }
+        />
+
         <Button
           secondary
           title="Previous step"
@@ -55,18 +54,14 @@ const CreateInstructionsSidebar: React.FC<Props> = ({
           cancel
           className="w-full"
           title="Cancel"
-          onClick={() => openPopup(popupRef)}
+          onClick={() =>
+            popup?.open({
+              title: 'Do you want to stop making new recipe?',
+              description: 'By leaving this page, all the changes will be lost',
+              onConfirm: () => history.push('/recipe'),
+            })
+          }
         />
-        <div>
-          <div className="modal-bg" ref={popupRef} style={{ margin: 0 }}>
-            <ConfirmPopup
-              pathPage="/recipe"
-              popupName="Do you want to stop making new recipe?"
-              popupDescription="By leaving this page, all the changes will be lost"
-              popupRef={popupRef}
-            />
-          </div>
-        </div>
       </div>
     </React.StrictMode>
   );
