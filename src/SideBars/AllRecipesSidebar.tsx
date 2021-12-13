@@ -1,12 +1,17 @@
 import React from 'react';
-import { Link, useHistory } from 'react-router-dom';
-import { loadRecipe as loadRecipeAPI } from '../api/recipe';
+import { useHistory } from 'react-router-dom';
+import {
+  loadRecipe as loadRecipeAPI,
+  deleteRecipe as deleteRecipeAPI,
+} from '../api/recipe';
 import RecipeList from '../components/RecipeMaking/RecipeList';
 
 import Button from '../components/shared/Button';
 import { OverviewPageState } from '../Pages/OverviewPage';
 import { RecipeDataProps } from '../Pages/RecipeInstructionsPage';
 import { RecipeSimple } from '../types/RecipeData/RecipeType';
+
+import { usePopup } from '../contexts/popupContext';
 
 interface Props {
   setRecipeId: (recipeId: number) => void;
@@ -20,6 +25,7 @@ const AllRecipesSidebar: React.FC<Props> = ({
   recipes,
 }) => {
   const history = useHistory();
+  const popup = usePopup();
 
   const loadRecipe = async (): Promise<void> => {
     loadRecipeAPI(recipeId);
@@ -72,7 +78,7 @@ const AllRecipesSidebar: React.FC<Props> = ({
         }}
       />
 
-      {/* Buttons Edit, Start Brewing, Make a new recipe */}
+      {/* Buttons Edit, Start Brewing, Make a new recipe, Delete a recipe */}
       <div
         className="buttons text-center flex flex-col px-10 w-full"
         style={{ transform: 'translateY(-30px)' }}
@@ -80,6 +86,20 @@ const AllRecipesSidebar: React.FC<Props> = ({
         <Button title="Load recipe" onClick={() => loadRecipe()} />
         <Button secondary title="Create new" onClick={() => makeRecipe()} />
         <Button secondary title="Edit" />
+        <Button
+          secondary
+          title="Delete"
+          onClick={() => {
+            popup?.open({
+              title: 'Do you want to delete the recipe?',
+              description: 'By clicking Confirm, the recipe will be deleted',
+              onConfirm: () => {
+                deleteRecipeAPI(recipeId);
+                window.location.reload();
+              },
+            });
+          }}
+        />
       </div>
     </React.StrictMode>
   );

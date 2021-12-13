@@ -4,6 +4,7 @@ export const allRecipes = '/api/recipe';
 export const singleRecipe = '/api/recipe/:id';
 export const createRecipeUrl = '/api/recipe';
 export const loadRecipeUrl = '/api/recipe/:id/load';
+export const deleteRecipeUrl = '/api/recipe/:id/delete';
 export const startBrew = '/api/brew/0/start';
 
 export const pauseBrew = '/api/brew/:id/pause';

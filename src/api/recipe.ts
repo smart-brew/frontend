@@ -6,6 +6,7 @@ import {
   createRecipeUrl,
   loadRecipeUrl,
   singleRecipe,
+  deleteRecipeUrl,
 } from './endpoints';
 import { IdReturn, url, urlWithParams } from './helpers';
 
@@ -32,4 +33,8 @@ export const createRecipe = async (
 
 export const loadRecipe = async (recipeId: number): Promise<IdReturn> => {
   return post(loadRecipeUrl, { id: recipeId });
+};
+
+export const deleteRecipe = async (recipeId: number): Promise<IdReturn> => {
+  return post(deleteRecipeUrl, { id: recipeId });
 };
