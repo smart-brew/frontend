@@ -5,6 +5,8 @@ import InstructionType from '../../../types/RecipeData/InstructionType';
 import { InstructionStatus } from '../../../types/SystemData';
 import { InstructionsContext } from '../../../contexts/instructionsContext';
 import InstructionStateMap from '../../../helper_scripts/InstructionStateMap';
+import InstructionConstants from '../../../helper_scripts/InstructionConstants';
+import TimeHelper from '../../../helper_scripts/TimeHelper';
 
 interface Props {
   instruction: InstructionType;
@@ -28,6 +30,104 @@ const FullInstruction: React.FC<Props> = ({
     return instructionName || instruction.codeName;
   }
 
+  function getShownBody(): JSX.Element | undefined {
+    if (
+      instruction.codeName === InstructionConstants.MOTOR ||
+      instruction.codeName === InstructionConstants.TEMPERATURE
+    ) {
+      return (
+        <div className="flex flex-row items-center content-center justify-center space-x-8">
+          <div className="flex flex-col">
+            <span className="font-semibold">Now:</span>
+            <span className="font-bold">
+              {status.currentValue}
+              {template?.units}
+            </span>
+          </div>
+          <div className="flex flex-col">
+            <span className="font-semibold">Target:</span>
+            <span className="font-bold">
+              {instruction.param}
+              {template?.units}
+            </span>
+          </div>
+        </div>
+      );
+    }
+    if (instruction.codeName === InstructionConstants.UNLOADER) {
+      return (
+        <div className="flex flex-row items-center content-center justify-center space-x-8">
+          <span className="font-semibold py-2">
+            {instruction.optionCodeName}
+          </span>
+        </div>
+      );
+    }
+    if (instruction.codeName === InstructionConstants.PUMP) {
+      const chamberNum = parseInt(
+        instruction.optionCodeName
+          ? instruction.optionCodeName?.split('_')[1]
+          : '0',
+        10
+      );
+      return (
+        <div className="flex flex-row items-center content-center justify-center space-x-8">
+          <div className="flex flex-col">
+            <span className="font-semibold">From:</span>
+            <span className="font-bold">{chamberNum}</span>
+          </div>
+          <div className="flex flex-col">
+            <span className="font-semibold">To:</span>
+            <span className="font-bold">{chamberNum + 1}</span>
+          </div>
+        </div>
+      );
+    }
+    if (instruction.codeName === InstructionConstants.WAIT) {
+      const timeString = `${TimeHelper.getHoursFromMillis(
+        instruction.param ? instruction.param : 'a'
+      ).toLocaleString('en-US', {
+        minimumIntegerDigits: 2,
+        useGrouping: false,
+      })}:${TimeHelper.getMinutesFromMillis(
+        instruction.param ? instruction.param : 'a'
+      ).toLocaleString('en-US', {
+        minimumIntegerDigits: 2,
+        useGrouping: false,
+      })}:${TimeHelper.getSecondsFromMillis(
+        instruction.param ? instruction.param : 'a'
+      ).toLocaleString('en-US', {
+        minimumIntegerDigits: 2,
+        useGrouping: false,
+      })}`;
+      return (
+        <div className="flex flex-row items-center content-center justify-center space-x-8">
+          <div className="flex flex-col font-semibold py-1">
+            <span>
+              {TimeHelper.getDaysFromMillis(
+                instruction.param ? instruction.param : 'a'
+              ).toLocaleString('en-US', {
+                minimumIntegerDigits: 1,
+                useGrouping: false,
+              })}{' '}
+              days
+            </span>
+            <span>{timeString}</span>
+          </div>
+        </div>
+      );
+    }
+    if (instruction.codeName === InstructionConstants.MANUAL) {
+      // TODO call callback which will show popup
+      return (
+        <div className="flex flex-row items-center content-center justify-center space-x-8">
+          <span>{instruction.param ? instruction.param : '---'}</span>
+        </div>
+      );
+    }
+    return undefined;
+  }
+
   const style = styleMap.getStyle(status.status);
 
   // TODO upravit style a veci co sa zobrazuju
@@ -43,7 +143,8 @@ const FullInstruction: React.FC<Props> = ({
       <h3 className="text-xl">
         <span className="font-bold">{getName()}</span>
       </h3>
-      <div className="flex flex-row items-center content-center justify-center space-x-8">
+      {getShownBody()}
+      {/* <div className="flex flex-row items-center content-center justify-center space-x-8">
         <div className="flex flex-col">
           <span className="font-semibold">Now:</span>
           <span className="font-bold">
@@ -58,7 +159,7 @@ const FullInstruction: React.FC<Props> = ({
             {template?.units}
           </span>
         </div>
-      </div>
+      </div> */}
       <div className={`font-bold text-xl ${style?.style}`}>
         {style?.name || status.status}
       </div>
