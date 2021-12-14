@@ -13,6 +13,8 @@ export default class TimeHelper {
 
   static MILLIS_MINUTES = 60000;
 
+  static MILLIS_SECONDS = 1000;
+
   static getState(start: number | null, end: number | null): string | null {
     let returnString = null;
     if (start === null && end === null) {
@@ -53,6 +55,19 @@ export default class TimeHelper {
     newMillis %= TimeHelper.MILLIS_HOURS;
     if (newMillis > 0) {
       return Math.floor(newMillis / TimeHelper.MILLIS_MINUTES);
+    }
+    return 0;
+  };
+
+  static getSecondsFromMillis = (millis: string | number): number => {
+    if (typeof millis === 'string') {
+      millis = parseInt(millis, 10);
+    }
+    let newMillis = millis % TimeHelper.MILLIS_DAYS;
+    newMillis %= TimeHelper.MILLIS_HOURS;
+    newMillis %= TimeHelper.MILLIS_MINUTES;
+    if (newMillis > 0) {
+      return Math.floor(newMillis / TimeHelper.MILLIS_SECONDS);
     }
     return 0;
   };

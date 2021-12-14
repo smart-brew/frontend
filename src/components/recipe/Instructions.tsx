@@ -12,7 +12,7 @@ interface Props {
 const Instructions: React.FC<Props> = ({ instructions }) => {
   const currentInstructionStatus = React.useContext(DataContext)
     ?.instruction || {
-    currentInstruction: 4,
+    currentInstruction: 2,
     currentValue: 0,
     status: 'WAITING',
   };
