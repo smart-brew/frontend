@@ -9,7 +9,7 @@ import AllRecipesSidebar from '../SideBars/AllRecipesSidebar';
 import SplitPage from '../components/shared/SplitPage';
 
 const RecipePage: React.FC = () => {
-  const [recipeId, setRecipeId] = useState<number>(1);
+  const [recipeId, setRecipeId] = useState<number>(0);
 
   // all recipes known to system
   const [recipes, setRecipes] = React.useState<RecipeSimple[]>([]);
