@@ -21,7 +21,7 @@ const RecipePreview: React.FC<Props> = ({ recipe }) => {
     popup?.open({
       title: 'To continue, press Confirm that this step was taken',
       description: param,
-      onConfirm: () => confirmManualInstruction(recipe?.id || 0, instrId),
+      onConfirm: () => confirmManualInstruction(0, instrId),
     });
   };
 

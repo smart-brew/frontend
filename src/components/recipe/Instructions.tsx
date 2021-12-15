@@ -13,7 +13,7 @@ interface Props {
 const Instructions: React.FC<Props> = ({ instructions, manualCallback }) => {
   const currentInstructionStatus = React.useContext(DataContext)
     ?.instruction || {
-    currentInstruction: 2,
+    currentInstruction: 61,
     currentValue: 0,
     status: 'WAITING',
   };

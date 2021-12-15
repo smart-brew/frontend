@@ -31,13 +31,6 @@ const FullInstruction: React.FC<Props> = ({
     (templ) => templ.id === instruction.templateId
   );
 
-  // function manualCallbackFunction(): void {
-  //   manualCallback(
-  //     instruction.id,
-  //     instruction.param?.toString() || 'no parametres were added'
-  //   );
-  // }
-
   function getName(): string {
     return instructionName || instruction.codeName;
   }
