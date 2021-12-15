@@ -1,4 +1,4 @@
-import { post } from './client';
+import { post, put } from './client';
 import {
   abortBrew,
   confirmInstructionUrl,
@@ -9,7 +9,7 @@ import {
 import { IdReturn } from './helpers';
 
 export const startBrewing = async (recipeId: number): Promise<IdReturn> => {
-  return post(startBrew, {}, { recipeId });
+  return put(startBrew, { recipeId });
 };
 
 export const pauseBrewing = async (brewId: number): Promise<IdReturn> => {

@@ -5,6 +5,8 @@ import Instructions from '../recipe/Instructions';
 import Ingredients from './ingredients/Ingredients';
 import InstructionBlock from '../recipe/Blocks/InstructionBlock';
 import { DataContext } from '../../contexts/dataContext';
+import { usePopup } from '../../contexts/popupContext';
+import { confirmManualInstruction } from '../../api/brew';
 
 interface Props {
   recipe: RecipeType | null;
@@ -13,6 +15,15 @@ interface Props {
 // TODO: tento recipe preview sa moze pouzit aj na OverviewPage, kde je vidno cely recept, a tento isty tam moze byt, len size bude ten mensi
 const RecipePreview: React.FC<Props> = ({ recipe }) => {
   const systemStatus = React.useContext(DataContext);
+  const popup = usePopup();
+
+  const manualCallback = (instrId: number, param: string): void => {
+    popup?.open({
+      title: 'To continue, press Confirm that this step was taken',
+      description: param,
+      onConfirm: () => confirmManualInstruction(0, instrId),
+    });
+  };
 
   return recipe ? (
     <div className="flex flex-col">
@@ -24,7 +35,10 @@ const RecipePreview: React.FC<Props> = ({ recipe }) => {
         <Ingredients ingredients={recipe.Ingredients} />
       )}
 
-      <Instructions instructions={recipe.Instructions} />
+      <Instructions
+        instructions={recipe.Instructions}
+        manualCallback={manualCallback}
+      />
     </div>
   ) : (
     <span>Please select a recipe</span>

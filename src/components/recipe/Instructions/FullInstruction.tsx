@@ -7,17 +7,22 @@ import { InstructionsContext } from '../../../contexts/instructionsContext';
 import InstructionStateMap from '../../../helper_scripts/InstructionStateMap';
 import InstructionConstants from '../../../helper_scripts/InstructionConstants';
 import TimeHelper from '../../../helper_scripts/TimeHelper';
+import Popup from '../../../Popups/Popup';
+import { usePopup } from '../../../contexts/popupContext';
+import { confirmManualInstruction } from '../../../api/brew';
 
 interface Props {
   instruction: InstructionType;
   instructionName: string | undefined;
   status: InstructionStatus;
+  manualCallback(instrId: number, param: string): void;
 }
 
 const FullInstruction: React.FC<Props> = ({
   instruction,
   instructionName,
   status,
+  manualCallback,
 }: Props) => {
   const templates = React.useContext(InstructionsContext);
   const styleMap = new InstructionStateMap();
@@ -118,7 +123,10 @@ const FullInstruction: React.FC<Props> = ({
       );
     }
     if (instruction.codeName === InstructionConstants.MANUAL) {
-      // TODO call callback which will show popup
+      manualCallback(
+        instruction.id,
+        instruction.param?.toString() || 'no parametres were added'
+      );
       return (
         <div className="flex flex-row items-center content-center justify-center space-x-8">
           <span>{instruction.param ? instruction.param : '---'}</span>
