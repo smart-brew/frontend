@@ -7,9 +7,10 @@ import InstructionBlockType from '../../types/RecipeData/InstructionBlockType';
 
 interface Props {
   instructions: InstructionType[];
+  manualCallback(instrId: number, param: string): void;
 }
 
-const Instructions: React.FC<Props> = ({ instructions }) => {
+const Instructions: React.FC<Props> = ({ instructions, manualCallback }) => {
   const currentInstructionStatus = React.useContext(DataContext)
     ?.instruction || {
     currentInstruction: 2,
@@ -55,6 +56,7 @@ const Instructions: React.FC<Props> = ({ instructions }) => {
           <InstructionBlock
             block={block}
             instructionStatus={currentInstructionStatus}
+            manualCallback={manualCallback}
           />
         );
       })}
