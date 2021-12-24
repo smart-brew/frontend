@@ -13,9 +13,9 @@ type RecipeType = {
   name: string;
   description: string;
   locked: boolean;
-  created_at?: Date | null;
-  updated_at?: Date | null;
-  deleted_at?: Date | null;
+  createdAt?: Date | null;
+  updatedAt?: Date | null;
+  deletedAt?: Date | null;
   Ingredients: Array<IngredientType>;
   Instructions: Array<InstructionType>;
 };

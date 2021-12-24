@@ -7,7 +7,6 @@ import { InstructionsContext } from '../../../contexts/instructionsContext';
 import InstructionStateMap from '../../../helper_scripts/InstructionStateMap';
 import InstructionConstants from '../../../helper_scripts/InstructionConstants';
 import TimeHelper from '../../../helper_scripts/TimeHelper';
-import Popup from '../../../Popups/Popup';
 import { usePopup } from '../../../contexts/popupContext';
 import { confirmManualInstruction } from '../../../api/brew';
 
@@ -15,16 +14,15 @@ interface Props {
   instruction: InstructionType;
   instructionName: string | undefined;
   status: InstructionStatus;
-  manualCallback(instrId: number, param: string): void;
 }
 
 const FullInstruction: React.FC<Props> = ({
   instruction,
   instructionName,
   status,
-  manualCallback,
 }: Props) => {
   const templates = React.useContext(InstructionsContext);
+  const popup = usePopup();
   const styleMap = new InstructionStateMap();
 
   const template = templates?.data.find(
@@ -34,6 +32,14 @@ const FullInstruction: React.FC<Props> = ({
   function getName(): string {
     return instructionName || instruction.codeName;
   }
+
+  const manualCallback = (instrId: number, param: string): void => {
+    popup?.open({
+      title: 'To continue, press Confirm that this step was taken',
+      description: param,
+      onConfirm: () => confirmManualInstruction(0, instrId),
+    });
+  };
 
   function getShownBody(): JSX.Element | undefined {
     if (
@@ -151,23 +157,9 @@ const FullInstruction: React.FC<Props> = ({
       <h3 className="text-xl">
         <span className="font-bold">{getName()}</span>
       </h3>
+
       {getShownBody()}
-      {/* <div className="flex flex-row items-center content-center justify-center space-x-8">
-        <div className="flex flex-col">
-          <span className="font-semibold">Now:</span>
-          <span className="font-bold">
-            {status.currentValue}
-            {template?.units}
-          </span>
-        </div>
-        <div className="flex flex-col">
-          <span className="font-semibold">Target:</span>
-          <span className="font-bold">
-            {instruction.param}
-            {template?.units}
-          </span>
-        </div>
-      </div> */}
+
       <div className={`font-bold text-xl ${style?.style}`}>
         {style?.name || status.status}
       </div>

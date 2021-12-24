@@ -1,5 +1,3 @@
-/* eslint-disable camelcase */
-
 import RecipeListType from '../types/RecipeData/RecipeListType';
 
 export const recipeList: RecipeListType = {
@@ -100,8 +98,8 @@ export const recipeList: RecipeListType = {
       name: 'TEST_RECIPE_2',
       description: 'Seed recipe 1',
       locked: false,
-      created_at: new Date('2021-11-02T20:18:23.509Z'),
-      updated_at: new Date('2021-11-02T20:18:23.511Z'),
+      createdAt: new Date('2021-11-02T20:18:23.509Z'),
+      updatedAt: new Date('2021-11-02T20:18:23.511Z'),
       Ingredients: [
         {
           id: 55,
@@ -148,8 +146,8 @@ export const recipeList: RecipeListType = {
       name: 'TEST_RECIPE_1',
       description: 'Seed recipe 1',
       locked: false,
-      created_at: new Date('2021-11-02T20:18:23.509Z'),
-      updated_at: new Date('2021-11-02T20:18:23.511Z'),
+      createdAt: new Date('2021-11-02T20:18:23.509Z'),
+      updatedAt: new Date('2021-11-02T20:18:23.511Z'),
       Ingredients: [
         {
           id: 5,
@@ -196,8 +194,8 @@ export const recipeList: RecipeListType = {
       name: 'TEST_RECIPE_4',
       description: 'Seed recipe 1',
       locked: false,
-      created_at: new Date('2021-11-02T20:18:23.509Z'),
-      updated_at: new Date('2021-11-02T20:18:23.511Z'),
+      createdAt: new Date('2021-11-02T20:18:23.509Z'),
+      updatedAt: new Date('2021-11-02T20:18:23.511Z'),
       Ingredients: [
         {
           id: 5,
@@ -244,8 +242,8 @@ export const recipeList: RecipeListType = {
       name: 'TEST_RECIPE_5',
       description: 'Seed recipe 1',
       locked: false,
-      created_at: new Date('2021-11-02T20:18:23.509Z'),
-      updated_at: new Date('2021-11-02T20:18:23.511Z'),
+      createdAt: new Date('2021-11-02T20:18:23.509Z'),
+      updatedAt: new Date('2021-11-02T20:18:23.511Z'),
       Ingredients: [
         {
           id: 5,
@@ -276,8 +274,8 @@ export const recipeList: RecipeListType = {
       name: 'TEST_RECIPE_6',
       description: 'Seed recipe 1',
       locked: false,
-      created_at: new Date('2021-11-02T20:18:23.509Z'),
-      updated_at: new Date('2021-11-02T20:18:23.511Z'),
+      createdAt: new Date('2021-11-02T20:18:23.509Z'),
+      updatedAt: new Date('2021-11-02T20:18:23.511Z'),
       Ingredients: [
         {
           id: 5,

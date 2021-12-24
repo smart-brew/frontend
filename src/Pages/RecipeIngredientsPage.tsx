@@ -1,7 +1,5 @@
-/* eslint-disable camelcase */
 import React from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
-import EditableInstructionTemplateType from '../components/RecipeBuilding/InstructionComponents/EditableInstructionTemplateType';
 
 import IngredietsForm from '../components/RecipeMaking/form/IngredientsForm';
 import SplitPage from '../components/shared/SplitPage';

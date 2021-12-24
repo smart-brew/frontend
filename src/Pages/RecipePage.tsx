@@ -1,5 +1,3 @@
-/* eslint-disable camelcase */
-
 import React, { useState } from 'react';
 
 import RecipeType, { RecipeSimple } from '../types/RecipeData/RecipeType';

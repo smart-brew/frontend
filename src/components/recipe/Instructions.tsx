@@ -1,16 +1,14 @@
 import React from 'react';
 import { DataContext } from '../../contexts/dataContext';
 import InstructionType from '../../types/RecipeData/InstructionType';
-import Instruction from './Instructions/Instruction';
 import InstructionBlock from './Blocks/InstructionBlock';
 import InstructionBlockType from '../../types/RecipeData/InstructionBlockType';
 
 interface Props {
   instructions: InstructionType[];
-  manualCallback(instrId: number, param: string): void;
 }
 
-const Instructions: React.FC<Props> = ({ instructions, manualCallback }) => {
+const Instructions: React.FC<Props> = ({ instructions }) => {
   const currentInstructionStatus = React.useContext(DataContext)
     ?.instruction || {
     currentInstruction: 61,
@@ -26,7 +24,7 @@ const Instructions: React.FC<Props> = ({ instructions, manualCallback }) => {
     let prevBlockInstructions = new Array<InstructionType>();
     let currentBlockInstructions = new Array<InstructionType>();
 
-    instructions.forEach((instr, index) => {
+    instructions.forEach((instr) => {
       if (instr.blockName !== currentBlockName) {
         currentBlockName = instr.blockName;
         console.log(`New current name ${currentBlockName}`);
@@ -51,25 +49,12 @@ const Instructions: React.FC<Props> = ({ instructions, manualCallback }) => {
 
   return (
     <div className="flex flex-col shadow rounded-3xl pl-12 px-8 py-3 mx-8 mb-3 space-y-6">
-      {divideTheInstructions().map((block) => {
-        return (
-          <InstructionBlock
-            block={block}
-            instructionStatus={currentInstructionStatus}
-            manualCallback={manualCallback}
-          />
-        );
-      })}
-      {/* {instructions.map((instr) => {
-        console.log(`${instr.blockId} ${instr.blockName}`);
-        return (
-          <Instruction
-            key={instr.id}
-            instruction={instr}
-            status={currentInstructionStatus}
-          />
-        );
-      })} */}
+      {divideTheInstructions().map((block) => (
+        <InstructionBlock
+          block={block}
+          instructionStatus={currentInstructionStatus}
+        />
+      ))}
     </div>
   );
 };

@@ -9,14 +9,9 @@ import InstructionCodeNameMap from '../../../helper_scripts/InstructionCodeNameM
 interface Props {
   instruction: InstructionType;
   status: InstructionStatus;
-  manualCallback(instrId: number, param: string): void;
 }
 
-const Instruction: React.FC<Props> = ({
-  instruction,
-  status,
-  manualCallback,
-}: Props) => {
+const Instruction: React.FC<Props> = ({ instruction, status }: Props) => {
   const codeNameMap = new InstructionCodeNameMap();
   if (status.currentInstruction === instruction.id) {
     return (
@@ -24,7 +19,6 @@ const Instruction: React.FC<Props> = ({
         instruction={instruction}
         instructionName={codeNameMap.getInstructionName(instruction.codeName)}
         status={status}
-        manualCallback={manualCallback}
       />
     );
   }

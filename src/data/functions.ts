@@ -1,5 +1,3 @@
-/* eslint-disable camelcase */
-
 import InstructionTemplate from '../types/FunctionData/InstructionTemplate';
 
 export const emptyInstr: InstructionTemplate = {

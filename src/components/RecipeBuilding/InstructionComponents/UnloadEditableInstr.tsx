@@ -12,7 +12,6 @@ const UnloadEditableInstr: React.FC<Props> = ({
   instruction,
   onChange,
 }: Props) => {
-  const options = ['Fermentables', 'Hops', 'Yeast', 'Other'];
   const selectRef = useRef<HTMLSelectElement>(null);
 
   const readParams = (): ParamType | null => {

@@ -1,5 +1,3 @@
-/* eslint-disable camelcase */
-
 type IngredientType = {
   id: number;
   recipeId: number;

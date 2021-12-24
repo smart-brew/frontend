@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 import React from 'react';
 import IngredientType from '../../../types/RecipeData/IngredientType';
 import FormSection from './FormSection';
