@@ -2,7 +2,7 @@ import React from 'react';
 
 import Chambers from './Chambers';
 import { DataContext } from '../../contexts/dataContext';
-import imgPlaceholder from '../../brewery_placeholder.svg';
+import imgPlaceholder from '../../assets/brewery_placeholder.svg';
 import { moduleData } from '../../data/moduleData';
 
 const Brewery: React.FC = () => {

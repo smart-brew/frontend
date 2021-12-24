@@ -1,6 +1,6 @@
 import React from 'react';
 
-import arrow from '../../../blue-arrow.svg';
+import arrow from '../../../assets/blue-arrow.svg';
 import InstructionType from '../../../types/RecipeData/InstructionType';
 import { InstructionStatus } from '../../../types/SystemData';
 import { InstructionsContext } from '../../../contexts/instructionsContext';
