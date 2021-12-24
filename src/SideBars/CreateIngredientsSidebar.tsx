@@ -19,7 +19,7 @@ const CreateIngredientsSidebar: React.FC<Props> = ({ saveForm }: Props) => {
       <div className="buttons flex flex-col mx-10">
         <Button title="Next step" onClick={() => saveForm()} />
         <Button
-          cancel
+          neutral
           className="w-full"
           title="Cancel"
           onClick={() =>

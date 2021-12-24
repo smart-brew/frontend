@@ -22,7 +22,7 @@ const Popup = React.forwardRef<HTMLDivElement, PopupProps>(
           <div className="pt-8">
             <PopupButtons
               onConfirm={onConfirm}
-              closePopup={() => closePopup(ref)}
+              onCancel={() => closePopup(ref)}
             />
           </div>
         </div>

@@ -51,7 +51,7 @@ const CreateInstructionsSidebar: React.FC<Props> = ({
         />
 
         <Button
-          cancel
+          neutral
           className="w-full"
           title="Cancel"
           onClick={() =>

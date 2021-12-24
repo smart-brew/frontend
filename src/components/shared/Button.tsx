@@ -4,7 +4,9 @@ interface Props {
   className?: string;
   title: string;
   secondary?: boolean;
-  cancel?: boolean;
+  neutral?: boolean;
+  warn?: boolean;
+  danger?: boolean;
   onClick?: () => void;
 }
 
@@ -12,12 +14,16 @@ const Button: React.FC<Props> = ({
   className,
   title,
   secondary,
-  cancel,
+  neutral,
+  warn,
+  danger,
   onClick,
 }) => {
   function getColor(): string {
-    if (cancel) return 'text-gray-600 bg-transparent border-gray-600';
+    if (neutral) return 'text-gray-600 bg-transparent border-gray-600';
     if (secondary) return 'text-green-600 bg-transparent border-green-600';
+    if (warn) return 'text-red-500 bg-transparent border-red-500';
+    if (danger) return 'text-white bg-red-500 border-red-500';
     return 'text-white bg-green-600 border-green-600';
   }
 
@@ -37,7 +43,9 @@ const Button: React.FC<Props> = ({
 Button.defaultProps = {
   onClick: undefined,
   secondary: undefined,
-  cancel: undefined,
+  neutral: undefined,
+  danger: undefined,
+  warn: undefined,
   className: undefined,
 };
 

@@ -4,23 +4,28 @@ import Button from '../../components/shared/Button';
 
 interface Props {
   onConfirm: () => void;
-  closePopup: () => void;
+  onCancel: () => void;
 }
 
-const SimpleFunction: React.FC<Props> = ({ onConfirm, closePopup }: Props) => {
+const PopupButtons: React.FC<Props> = ({ onConfirm, onCancel }: Props) => {
   return (
-    <div className="grid grid-cols-2">
-      <Button className="w-full" title="Confirm" onClick={() => onConfirm()} />
+    <div className="flex flex-row justify-center">
+      <Button
+        className="w-2/5 mr-4"
+        title="Confirm"
+        onClick={() => onConfirm()}
+      />
 
       <Button
-        cancel
+        neutral
+        className="w-2/5"
         title="Cancel"
         onClick={() => {
-          closePopup();
+          onCancel();
         }}
       />
     </div>
   );
 };
 
-export default SimpleFunction;
+export default PopupButtons;

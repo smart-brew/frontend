@@ -111,6 +111,7 @@ const RecipeProgress: React.FC<Props> = ({ recipeId }: Props) => {
           <div>
             <div className="buttons text-center flex flex-col mx-10">
               <Button
+                warn
                 title="Pause brewing"
                 onClick={() => {
                   popup?.open({
@@ -125,7 +126,7 @@ const RecipeProgress: React.FC<Props> = ({ recipeId }: Props) => {
                 }}
               />
               <Button
-                cancel
+                danger
                 title="Abort brewing"
                 onClick={() => {
                   console.log('TODO: ABORT BREWING');

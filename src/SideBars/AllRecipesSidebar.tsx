@@ -87,7 +87,7 @@ const AllRecipesSidebar: React.FC<Props> = ({
         <Button secondary title="Create new" onClick={() => makeRecipe()} />
         <Button secondary title="Edit" />
         <Button
-          secondary
+          warn
           title="Delete"
           onClick={() => {
             popup?.open({
