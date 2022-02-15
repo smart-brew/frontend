@@ -12,6 +12,7 @@ import { RecipeDataProps } from '../Pages/RecipeInstructionsPage';
 import { RecipeSimple } from '../types/RecipeData/RecipeType';
 
 import { usePopup } from '../contexts/popupContext';
+import { MENU_HEIGHT } from '../components/Menu/MenuContainer';
 
 interface Props {
   setRecipeId: (recipeId: number) => void;
@@ -27,7 +28,7 @@ const AllRecipesSidebar: React.FC<Props> = ({
   const history = useHistory();
   const popup = usePopup();
 
-  const loadRecipe = async (): Promise<void> => {
+  const handleLoadRecipe = async (): Promise<void> => {
     loadRecipeAPI(recipeId);
     // TODO pridat kontrolu ci OK
     const data: OverviewPageState = {
@@ -36,7 +37,7 @@ const AllRecipesSidebar: React.FC<Props> = ({
     history.push('/', data);
   };
 
-  const makeRecipe = async (): Promise<void> => {
+  const handleCreateNewRecipe = async (): Promise<void> => {
     const data: RecipeDataProps = {
       sendIngredients: [
         {
@@ -56,7 +57,10 @@ const AllRecipesSidebar: React.FC<Props> = ({
 
   return (
     <React.StrictMode>
-      <div className="context h-2/3 overflow-auto">
+      <div
+        className="context h-2/3 overflow-auto pb-2"
+        style={{ maxHeight: `calc(66vh - ${MENU_HEIGHT}px)` }}
+      >
         <div className="text-center text-2xl font-bold p-8">Recipes</div>
 
         <RecipeList
@@ -79,27 +83,42 @@ const AllRecipesSidebar: React.FC<Props> = ({
       />
 
       {/* Buttons Edit, Start Brewing, Make a new recipe, Delete a recipe */}
-      <div
-        className="buttons text-center flex flex-col px-10 w-full"
-        style={{ transform: 'translateY(-30px)' }}
-      >
-        <Button title="Load recipe" onClick={() => loadRecipe()} />
-        <Button secondary title="Create new" onClick={() => makeRecipe()} />
-        <Button secondary title="Edit" />
-        <Button
-          warn
-          title="Delete"
-          onClick={() => {
-            popup?.open({
-              title: 'Do you want to delete the recipe?',
-              description: 'By clicking Confirm, the recipe will be deleted',
-              onConfirm: () => {
-                deleteRecipeAPI(recipeId);
-                window.location.reload();
-              },
-            });
-          }}
-        />
+      <div className="flex w-full justify-center">
+        <div
+          className="buttons text-center flex flex-col w-full max-w-xs"
+          style={{ transform: 'translateY(-30px)' }}
+        >
+          <Button
+            title="Load recipe"
+            onClick={() => handleLoadRecipe()}
+            className="min-w-full"
+          />
+
+          <Button
+            secondary
+            title="Create new"
+            onClick={() => handleCreateNewRecipe()}
+            className="min-w-full"
+          />
+
+          <Button secondary title="Edit" className="min-w-full" />
+
+          <Button
+            warn
+            title="Delete"
+            onClick={() => {
+              popup?.open({
+                title: 'Do you want to delete the recipe?',
+                description: 'By clicking Confirm, the recipe will be deleted',
+                onConfirm: () => {
+                  deleteRecipeAPI(recipeId);
+                  window.location.reload();
+                },
+              });
+            }}
+            className="min-w-full"
+          />
+        </div>
       </div>
     </React.StrictMode>
   );

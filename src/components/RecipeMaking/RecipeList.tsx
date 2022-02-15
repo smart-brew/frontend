@@ -14,7 +14,7 @@ const RecipeList: React.FC<RecipeListTypeProps> = ({
   current,
 }) => {
   return (
-    <div className="min-h-full overflow-auto">
+    <div className="overflow-auto">
       <ul className="flex flex-col">
         {recipes.map((recipe: RecipeSimple) => (
           <RecipeListItem

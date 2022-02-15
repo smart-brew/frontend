@@ -29,7 +29,7 @@ const Button: React.FC<Props> = ({
 
   return (
     <button
-      className={`border-4 text-xl py-1 px-5 my-1 shadow rounded-full font-bold ${getColor()} ${className}`}
+      className={`max-w-xs border-4 text-xl py-1 px-5 my-1 shadow rounded-full font-bold ${getColor()} ${className}`}
       type="button"
       onClick={() => {
         if (onClick) onClick();

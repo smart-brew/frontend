@@ -16,8 +16,12 @@ const CreateIngredientsSidebar: React.FC<Props> = ({ saveForm }: Props) => {
   return (
     <React.StrictMode>
       <div className="context h-2/3" />
-      <div className="buttons flex flex-col mx-10">
-        <Button title="Next step" onClick={() => saveForm()} />
+      <div className="buttons flex flex-col mx-10 items-center">
+        <Button
+          title="Next step"
+          onClick={() => saveForm()}
+          className="w-full"
+        />
         <Button
           neutral
           className="w-full"

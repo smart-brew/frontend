@@ -32,7 +32,7 @@ const CreateInstructionsSidebar: React.FC<Props> = ({
         </div>
         <Ingredients ingredients={ingredients} />
       </div>
-      <div className="buttons text-center flex flex-col mx-10">
+      <div className="buttons text-center flex flex-col mx-10 items-center">
         <Button
           title="Save recipe"
           onClick={() =>
@@ -42,12 +42,14 @@ const CreateInstructionsSidebar: React.FC<Props> = ({
               onConfirm: () => saveRecipe(),
             })
           }
+          className="w-full"
         />
 
         <Button
           secondary
           title="Previous step"
           onClick={() => toIngredients()}
+          className="w-full"
         />
 
         <Button

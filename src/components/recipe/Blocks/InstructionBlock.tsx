@@ -15,10 +15,22 @@ const InstructionBlock: React.FC<Props> = ({
 }: Props) => {
   const { blockName, instructions } = block;
   return (
-    <div className="bg-yellow-100 border-2 border-gray-500 shadow rounded-xl space-y-2 py-5 px-3">
+    <div
+      className="border rounded-xl space-y-2 py-5 px-3"
+      style={{
+        background: 'rgba(254, 208, 8, 0.1)',
+        borderColor: 'rgba(254, 208, 8, 0.5)',
+      }}
+    >
       <div className="text-xl font-bold pb-3">{blockName}</div>
       {instructions.map((instr) => {
-        return <Instruction instruction={instr} status={instructionStatus} />;
+        return (
+          <Instruction
+            key={instr.id}
+            instruction={instr}
+            status={instructionStatus}
+          />
+        );
       })}
     </div>
   );
