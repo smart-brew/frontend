@@ -1,6 +1,6 @@
 import React from 'react';
-import Popup, { PopupProps } from '../Popups/Popup';
-import { closePopup, openPopup } from '../Popups/PopupFunctions';
+import Popup, { PopupProps } from '../components/popup/Popup';
+import { closePopup, openPopup } from '../components/popup/PopupFunctions';
 
 const PopupContext = React.createContext<State | null>(null);
 

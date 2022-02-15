@@ -1,4 +1,4 @@
-import EditableInstructionTemplateType from '../../components/RecipeBuilding/InstructionComponents/EditableInstructionTemplateType';
+import EditableInstructionTemplateType from '../../components/recipe/instructions/single-instruction/EditableInstructionTemplateType';
 
 type RecipeBlockType = {
   instructions: Array<EditableInstructionTemplateType>;

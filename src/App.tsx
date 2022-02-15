@@ -3,7 +3,7 @@ import './App.css';
 import DataContextProvider from './contexts/dataContext';
 import InstructionsContextProvider from './contexts/instructionsContext';
 import PopupContextProvider from './contexts/popupContext';
-import SmartBrew from './Pages/SmartBrew';
+import SmartBrew from './pages/SmartBrew';
 
 const App: React.FC = () => {
   return (

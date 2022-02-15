@@ -1,5 +1,5 @@
 import React from 'react';
-import { MENU_HEIGHT } from '../Menu/MenuContainer';
+import { MENU_HEIGHT } from '../menu/MenuContainer';
 
 const SplitPage: React.FC = ({ children }) => {
   const [left, right] = React.Children.toArray(children);

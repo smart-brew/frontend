@@ -1,6 +1,6 @@
 import React from 'react';
 import ChamberInfo from '../../types/ChamberInfo';
-import UnitsMap from '../../helper_scripts/UnitsMap';
+import UnitsMap from '../../helpers/UnitsMap';
 
 // bolo by treba namapovat ale pravdepodobne sa bude prerabat tak zatial len takto
 const Chamber: React.FC<ChamberInfo> = ({
