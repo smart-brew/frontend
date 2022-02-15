@@ -67,7 +67,7 @@ const HiddenInstruction: React.FC<Props> = ({
   };
 
   return (
-    <div className="text-lg  shadow rounded-xl content-center justify-center bg-white flex flex-row m-2">
+    <div className="text-lg shadow rounded-xl content-center justify-center bg-white flex flex-row m-2">
       <span className="w-1/2 font-bold border-r border-gray-300 flex content-center justify-center p-2">
         {instructionName !== undefined ? instructionName : instruction.codeName}
       </span>
