@@ -4,6 +4,8 @@ export default class UnitsMap {
   constructor() {
     this.units.set('SET_TEMPERATURE', '°C');
     this.units.set('SET_MOTOR_SPEED', 'RPM');
+    // this.units.set('false', 'OFF');
+    // this.units.set('true', 'ON');
   }
 
   getUnit(instruction: string): string | undefined {

@@ -11,6 +11,8 @@ export type BrewingStatus =
 export interface BasicData {
   STATE: Status;
   DEVICE: string;
+  CODENAME: string;
+  CATEGORY: string;
 }
 
 export type Temperature = BasicData & {
@@ -26,7 +28,9 @@ export type Motor = BasicData & {
 export type Unloader = BasicData & {};
 
 // eslint-disable-next-line @typescript-eslint/ban-types
-export type Pump = BasicData & {};
+export type Pump = BasicData & {
+  ENABLED: string;
+};
 
 export interface ModuleData {
   TEMPERATURE: Array<Temperature>;
@@ -45,4 +49,10 @@ export interface SystemData {
   data: ModuleData;
   instruction: InstructionStatus;
   brewStatus: BrewingStatus;
+}
+
+export interface OneChamberData {
+  NAME: string;
+  TEMPERATURE: Temperature;
+  MOTOR: Motor;
 }
