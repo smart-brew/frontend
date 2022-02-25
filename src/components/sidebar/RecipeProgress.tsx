@@ -22,7 +22,7 @@ const RecipeProgress: React.FC<Props> = ({ recipeId }: Props) => {
   const popup = usePopup();
 
   const [showStartConfirmation, setShowStartConfirmation] = useState(false); // pupup to start a new brewing process
-  const [page, setPage] = useState('BeforeBrewingPage');
+  const [page, setPage] = useState('MainPage');
 
   const [selectedRecipe, setSelectedRecipe] = React.useState<RecipeType | null>(
     null
@@ -31,7 +31,10 @@ const RecipeProgress: React.FC<Props> = ({ recipeId }: Props) => {
   // if new selected recipe (by ID) -> fetch the entire recipe with details
   React.useEffect(() => {
     const f = async (): Promise<void> => {
-      if (recipeId) setSelectedRecipe(await getRecipe(recipeId));
+      if (recipeId) {
+        setSelectedRecipe(await getRecipe(recipeId));
+        setPage('BeforeBrewingPage');
+      }
     };
     f();
   }, [recipeId]);
