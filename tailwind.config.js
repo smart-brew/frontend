@@ -6,6 +6,11 @@ module.exports = {
   presets: [],
   darkMode: false, // or 'media' or 'class'
   theme: {
+    extend: {
+      spacing: {
+        '500px': '500px',
+      },
+    },
     screens: {
       sm: '640px',
       md: '768px',
@@ -64,6 +69,13 @@ module.exports = {
       72: '18rem',
       80: '20rem',
       96: '24rem',
+      112: '28rem',
+      128: '32rem',
+      130: '33rem',
+      132: '34rem',
+      148: '38rem',
+      156: '40rem',
+      164: '42rem',
     },
     animation: {
       none: 'none',

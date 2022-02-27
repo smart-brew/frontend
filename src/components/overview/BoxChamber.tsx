@@ -15,7 +15,7 @@ const BoxChamber: React.FC<OneChamberData> = ({
 
   return (
     <div
-      className={`chamber w-1/6 content-center rounded-3xl absolute top-1/4 ${positionX} p-2 bg-white border-2 border-black`}
+      className={`chamber w-1/6 content-center rounded-3xl absolute top-1/3 ${positionX} p-2 bg-gray-200 border-2 border-black`}
     >
       <div className="space-y-5">
         <div className="font-bold text-lg">{NAME}</div>
