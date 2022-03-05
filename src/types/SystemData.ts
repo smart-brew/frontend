@@ -55,6 +55,5 @@ export interface OneChamberData {
   NAME: string;
   TEMPERATURE: Temperature;
   MOTOR: Motor;
-  positionX?: string;
-  positionY?: string;
+  cssPositionClass?: string;
 }

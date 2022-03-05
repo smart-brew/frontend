@@ -25,13 +25,13 @@ const Brewery: React.FC = () => {
         NAME="Nádoba 1"
         TEMPERATURE={data.TEMPERATURE[0]}
         MOTOR={data.MOTOR[0]}
-        positionX="left-64"
+        cssPositionClass="brewery-left-box"
       />
       <BoxChamber
         NAME="Nádoba 2"
         TEMPERATURE={data.TEMPERATURE[1]}
         MOTOR={data.MOTOR[1]}
-        positionX="left-148"
+        cssPositionClass="brewery-right-box"
       />
       {/* If there is a possibility to add more pumps, it can be remade */}
       <BoxPump

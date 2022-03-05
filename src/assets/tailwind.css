@@ -76,3 +76,21 @@
 textarea {
   resize: none;
 }
+
+.brewery-left-box {
+  position: absolute;
+  left: calc(33% - 5vw);
+  top: calc(49% - 12vh);
+}
+
+.brewery-right-box {
+  position: absolute;
+  left: calc(69% - 5vw);
+  top: calc(49% - 12vh);
+}
+
+.brewery-pump {
+  position: absolute;
+  left: calc(50% - 5vw);
+  top: calc(72% - 4vh);
+}

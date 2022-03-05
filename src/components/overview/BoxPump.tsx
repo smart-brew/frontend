@@ -11,7 +11,7 @@ const BoxPump: React.FC<ItemInfo> = ({
 
   return (
     <div
-      className={`chamber w-1/6 content-center rounded-3xl absolute top-3/4 left-1/3 p-2 ${backgroundColour} border-2 border-black`}
+      className={`chamber w-1/6 content-center rounded-3xl brewery-pump p-2 ${backgroundColour} border-2 border-black`}
     >
       <p className="font-bold text-lg">{name}</p>
       <p className="">{itemValue === 'false' ? 'OFF' : 'ON'}</p>
