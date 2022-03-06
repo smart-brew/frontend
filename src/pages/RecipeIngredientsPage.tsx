@@ -25,7 +25,7 @@ const RecipeIngredientsPage: React.FC = () => {
   // all recipes known to system
   const [recipes, setRecipes] = React.useState<RecipeSimple[]>([]);
   const [nameError, setNameError] = React.useState<string>('');
-  const [fieldError, setFieldError] = React.useState<string>('');
+  // const [fieldError, setFieldError] = React.useState<string>('');
   const [recipeNameForm, setRecipeNameForm] = React.useState(sendRecipeName);
   const [inputFields, setInputFields] =
     React.useState<IngredientType[]>(sendIngredients);
@@ -38,11 +38,10 @@ const RecipeIngredientsPage: React.FC = () => {
     if (recipeNameForm === '') {
       setNameError('choose the recipe name');
     }
-  }, []);
+  }, [recipeNameForm]);
 
   const validateNameInput = (name: string): void => {
     const searchTerm = name.toLowerCase();
-    console.log(name);
     const matches = recipes.filter(
       (obj) => obj.name.toLowerCase() === searchTerm
     );
@@ -55,15 +54,12 @@ const RecipeIngredientsPage: React.FC = () => {
     }
 
     setRecipeNameForm(name);
-
-    console.log(recipes, name, recipeNameForm);
   };
 
   const validateInputFields = (): boolean => {
     const field = inputFields.filter((obj) => obj.name === '');
     console.log(field);
     if (field.length > 0) {
-      setFieldError('some input fields stayed empty');
       return false;
     }
     return true;

@@ -8,6 +8,7 @@ import IngredientType from '../../types/RecipeData/IngredientType';
 
 interface Props {
   saveRecipe: () => void;
+  isSavable: boolean;
   toIngredients: () => void;
 
   ingredients: IngredientType[];
@@ -20,6 +21,7 @@ const CreateInstructionsSidebar: React.FC<Props> = ({
   toIngredients,
   ingredients,
   recipeName,
+  isSavable,
 }: Props) => {
   const popup = usePopup();
   const history = useHistory();
@@ -35,6 +37,7 @@ const CreateInstructionsSidebar: React.FC<Props> = ({
       <div className="buttons text-center flex flex-col mx-10 items-center">
         <Button
           title="Save recipe"
+          disabled={!isSavable}
           onClick={() =>
             popup?.open({
               title: 'Do you want to save the recipe?',

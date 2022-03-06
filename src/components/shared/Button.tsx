@@ -8,6 +8,7 @@ interface Props {
   warn?: boolean;
   danger?: boolean;
   onClick?: () => void;
+  disabled?: boolean;
 }
 
 const Button: React.FC<Props> = ({
@@ -18,6 +19,7 @@ const Button: React.FC<Props> = ({
   warn,
   danger,
   onClick,
+  disabled,
 }) => {
   function getColor(): string {
     if (neutral) return 'text-gray-600 bg-transparent border-gray-600';
@@ -30,6 +32,7 @@ const Button: React.FC<Props> = ({
   return (
     <button
       className={`max-w-xs border-4 text-xl py-1 px-5 my-1 shadow rounded-full font-bold ${getColor()} ${className}`}
+      disabled={disabled}
       type="button"
       onClick={() => {
         if (onClick) onClick();
@@ -47,6 +50,7 @@ Button.defaultProps = {
   danger: undefined,
   warn: undefined,
   className: undefined,
+  disabled: false,
 };
 
 export default Button;

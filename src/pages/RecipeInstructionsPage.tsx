@@ -52,6 +52,7 @@ const RecipeInstructionsPage: React.FC = () => {
   );
 
   const [addedBlocks, setAddedBlocks] = useState(addBlocks);
+  const [isSavable, setIsSavable] = React.useState<boolean>(true);
 
   const popupRef = React.useRef<HTMLDivElement>(null);
 
@@ -183,21 +184,25 @@ const RecipeInstructionsPage: React.FC = () => {
     setAddedBlocks(newAddedBlocks);
   };
 
-  const checkBlockName = (name: string, index: number): boolean => {
-    const allBlocks = [...addedBlocks];
-    const matches = allBlocks.filter(
-      (obj) => obj.blockName.toLowerCase() === name
-    );
-    if (matches.length > 0 && index !== matches[0].blockId) {
-      console.log('it already exists', matches);
-      return false;
-    }
-    console.log('it doesnt exist', matches);
-    return true;
+  // const checkBlockName = (name: string, index: number): boolean => {
+  //   const allBlocks = [...addedBlocks];
+  //   const matches = allBlocks.filter(
+  //     (obj) => obj.blockName.toLowerCase() === name
+  //   );
+  //   if (matches.length > 0 && index !== matches[0].blockId) {
+  //     console.log('it already exists', matches);
+  //     return false;
+  //   }
+  //   console.log('it doesnt exist', matches);
+  //   return true;
+  // };
+
+  const getBlocks = (): RecipeBlockType[] => {
+    return addedBlocks;
   };
 
-  const handleChangeBlockName = (index: number, name: string): boolean => {
-    const nameMatch = checkBlockName(name, index);
+  const handleChangeBlockName = (index: number, name: string): void => {
+    // const nameMatch = checkBlockName(name, index);
     const newAddedBlocks = [...addedBlocks];
     newAddedBlocks[index].blockName = name;
     newAddedBlocks[index].instructions.forEach((instruction) => {
@@ -205,7 +210,7 @@ const RecipeInstructionsPage: React.FC = () => {
     });
 
     setAddedBlocks(newAddedBlocks);
-    return nameMatch;
+    // return nameMatch;
   };
 
   const handleBlockDelete = (blockId: number): void => {
@@ -248,23 +253,25 @@ const RecipeInstructionsPage: React.FC = () => {
   };
 
   const saveRecipe = async (): Promise<void> => {
-    const instructions = returnInstructionsForBackend();
-    console.log({ instructions, ingredients, recipeName });
+    if (isSavable) {
+      const instructions = returnInstructionsForBackend();
+      console.log({ instructions, ingredients, recipeName });
 
-    await createRecipe({
-      name: recipeName,
-      description: '',
-      locked: false,
-      Ingredients: ingredients,
-      Instructions: instructions,
-    }).then((res) => {
-      console.log({ res });
+      await createRecipe({
+        name: recipeName,
+        description: '',
+        locked: false,
+        Ingredients: ingredients,
+        Instructions: instructions,
+      }).then((res) => {
+        console.log({ res });
 
-      if (res.id) history.push('/recipe');
-      else {
-        console.log('Error creating recipe');
-      }
-    });
+        if (res.id) history.push('/recipe');
+        else {
+          console.log('Error creating recipe');
+        }
+      });
+    }
   };
 
   return (
@@ -280,7 +287,9 @@ const RecipeInstructionsPage: React.FC = () => {
               blockName={block.blockName}
               blockId={index}
               instructions={block.instructions}
+              isSavable={setIsSavable}
               handleAddButtonClick={handleAddInstructionButtonClicked}
+              getBlocks={getBlocks}
               onNameChange={handleChangeBlockName}
               onInstructionEdit={handleEditInstruction}
               onBlockDelete={handleBlockDelete}
@@ -334,6 +343,7 @@ const RecipeInstructionsPage: React.FC = () => {
 
       <CreateInstructionsSidebar
         saveRecipe={saveRecipe}
+        isSavable={isSavable}
         toIngredients={toIngredients}
         ingredients={ingredients}
         recipeName={recipeName}

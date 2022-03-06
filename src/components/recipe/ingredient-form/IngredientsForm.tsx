@@ -77,11 +77,11 @@ const IngredietsForm: React.FC<Props> = ({
     setInputFields(values);
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
-    e.preventDefault();
-    const values = [...inputFields] as IngredientType[];
-    console.log(values);
-  };
+  // const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
+  //   e.preventDefault();
+  //   const values = [...inputFields] as IngredientType[];
+  //   console.log(values);
+  // };
 
   const result = inputFields?.reduce((r, a) => {
     r[a.type] = r[a.type] || [];
