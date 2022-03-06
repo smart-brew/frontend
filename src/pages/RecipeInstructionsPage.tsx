@@ -174,19 +174,30 @@ const RecipeInstructionsPage: React.FC = () => {
   };
 
   const handleAddBlock = (index: number): void => {
-    console.log(addedBlocks);
-    console.log(index);
     const newAddedBlocks = [...addedBlocks];
     newAddedBlocks.splice(index, 0, {
       blockId: index,
       blockName: '',
       instructions: new Array<EditableInstructionTemplateType>(),
     });
-    console.log(newAddedBlocks);
     setAddedBlocks(newAddedBlocks);
   };
 
-  const handleChangeBlockName = (index: number, name: string): void => {
+  const checkBlockName = (name: string, index: number): boolean => {
+    const allBlocks = [...addedBlocks];
+    const matches = allBlocks.filter(
+      (obj) => obj.blockName.toLowerCase() === name
+    );
+    if (matches.length > 0 && index !== matches[0].blockId) {
+      console.log('it already exists', matches);
+      return false;
+    }
+    console.log('it doesnt exist', matches);
+    return true;
+  };
+
+  const handleChangeBlockName = (index: number, name: string): boolean => {
+    const nameMatch = checkBlockName(name, index);
     const newAddedBlocks = [...addedBlocks];
     newAddedBlocks[index].blockName = name;
     newAddedBlocks[index].instructions.forEach((instruction) => {
@@ -194,6 +205,7 @@ const RecipeInstructionsPage: React.FC = () => {
     });
 
     setAddedBlocks(newAddedBlocks);
+    return nameMatch;
   };
 
   const handleBlockDelete = (blockId: number): void => {
@@ -260,7 +272,8 @@ const RecipeInstructionsPage: React.FC = () => {
       <div className="flex flex-col space-y-5 justify-center">
         {addedBlocks.map((block, index) => (
           <div
-            key={block.blockName}
+            // eslint-disable-next-line react/no-array-index-key
+            key={block.blockName + index}
             className="flex justify-center items-center"
           >
             <RecipeBlock

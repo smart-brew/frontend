@@ -7,6 +7,7 @@ interface Props {
   setInputFields: (ingredients: IngredientType[]) => void;
   recipeNameForm: string;
   setRecipeNameForm: (name: string) => void;
+  nameError: string;
 }
 
 function getIndex(
@@ -23,6 +24,7 @@ const IngredietsForm: React.FC<Props> = ({
   setInputFields,
   recipeNameForm,
   setRecipeNameForm,
+  nameError,
 }: Props) => {
   const generateid = (): number => {
     const values = [...inputFields];
@@ -90,17 +92,20 @@ const IngredietsForm: React.FC<Props> = ({
   return (
     <div className="">
       <label htmlFor="name">
-        <input
-          type="text"
-          className="w-80 px-8 border border-gray-300 text-2xl font-bold m-10"
-          name="name"
-          placeholder="recipe name"
-          value={recipeNameForm}
-          required
-          onChange={(event) => setRecipeNameForm(event.target.value)}
-        />
+        <div className="m-10">
+          <input
+            type="text"
+            className="w-80 px-8 border border-gray-300 text-2xl font-bold "
+            name="name"
+            placeholder="recipe name"
+            value={recipeNameForm}
+            required
+            onChange={(event) => setRecipeNameForm(event.target.value)}
+          />
+          <div className="invalid-feedback text-red-700">{nameError}</div>
+        </div>
       </label>
-      <form className="mx-20" onSubmit={handleSubmit}>
+      <form className="mx-20">
         <div className="container border border-gray-300 rounded-3xl px-20">
           <header className="center py-8 font-bold">
             <h3>Ingredients</h3>

@@ -28,6 +28,15 @@ const IngredientSection: React.FC<FormSectionProps> = ({
     { value: 'oz', label: 'oz' },
   ];
 
+  // const [nameError, setNameError] = React.useState<string>('');
+
+  // const checkInput = (value: string): void => {
+  //   if (!value) {
+  //     console.log('nothing');
+  //     setNameError('required');
+  //   }
+  // };
+
   if (!inputFields) {
     return (
       <div className="my-5">
@@ -44,7 +53,7 @@ const IngredientSection: React.FC<FormSectionProps> = ({
   }
 
   return (
-    <div className="my-5">
+    <form className="my-5">
       <div className="text-left font-bold">{sectionName}</div>
       {inputFields.map((inputField) => (
         <div className="flex flex-row flow-root" key={inputField.id}>
@@ -78,13 +87,26 @@ const IngredientSection: React.FC<FormSectionProps> = ({
           <label htmlFor="name">
             <input
               type="text"
-              className="w-80 px-8 shadow"
+              className="w-80 px-8 shadow
+        "
               name="name"
+              required
+              id="name-input"
               placeholder="ingredient"
               value={inputField.name}
-              required
-              onChange={(event) => handleChange(inputField.id, event)}
+              onChange={(event) => {
+                handleChange(inputField.id, event);
+              }}
             />
+            {/* <span
+              className="msg text-red-700 text-2xl"
+              style={{ color: 'visibility: visible' }}
+            >
+              &#10033;
+            </span>
+            <p className="mt-2 visible peer-valid:visible text-pink-600 text-sm">
+              Please provide a valid email address.
+            </p> */}
           </label>
 
           <button
@@ -104,7 +126,7 @@ const IngredientSection: React.FC<FormSectionProps> = ({
           </button>
         </div>
       ))}
-    </div>
+    </form>
   );
 };
 

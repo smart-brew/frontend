@@ -13,7 +13,7 @@ interface Props {
     blockId: number,
     blockName: string
   ) => void;
-  onNameChange: (index: number, name: string) => void;
+  onNameChange: (index: number, name: string) => boolean;
   onInstructionEdit: (
     instr: EditableInstructionTemplateType,
     index: number,
@@ -43,6 +43,8 @@ const RecipeBlock: React.FC<Props> = ({
   //   return [];
   // };
 
+  const [isValid, setIsValid] = React.useState<boolean>(true);
+
   const instructionEditCallback = (
     instr: EditableInstructionTemplateType,
     index: number
@@ -56,12 +58,25 @@ const RecipeBlock: React.FC<Props> = ({
         <input
           className="bg-white bg-opacity-50 border border-gray-500 text-2xl font-bold my-3 ml-8 rounded-lg p-1"
           type="text"
+          required
           placeholder="Block name"
           defaultValue={blockName !== '' ? blockName : ''}
           onBlur={(e) => {
-            onNameChange(blockId, e.target.value);
+            console.log(isValid);
+            const toto = onNameChange(blockId, e.target.value);
+            console.log(toto);
+            setIsValid(toto);
+            console.log(isValid);
           }}
         />
+        {!isValid && (
+          <span
+            className="msg text-red-700 "
+            style={{ color: 'visibility: visible' }}
+          >
+            This block name is already used, choose different one
+          </span>
+        )}
         <button
           type="button"
           className="text-4xl font-extrabold text-red-900 text-right"
