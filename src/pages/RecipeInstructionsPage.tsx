@@ -213,6 +213,18 @@ const RecipeInstructionsPage: React.FC = () => {
     // return nameMatch;
   };
 
+  const checkEmptyBoxes = (): boolean => {
+    const matches = addedBlocks.filter(
+      (obj) => obj.blockName.toLowerCase() === ''
+    );
+    if (matches.length > 0) {
+      console.log({ matches });
+      return false;
+    }
+    console.log({ matches });
+    return true;
+  };
+
   const handleBlockDelete = (blockId: number): void => {
     const newAddedBlocks = addedBlocks.filter(
       (block) => block.blockId !== blockId
@@ -344,6 +356,7 @@ const RecipeInstructionsPage: React.FC = () => {
       <CreateInstructionsSidebar
         saveRecipe={saveRecipe}
         isSavable={isSavable}
+        isBlockNameEmpty={checkEmptyBoxes}
         toIngredients={toIngredients}
         ingredients={ingredients}
         recipeName={recipeName}

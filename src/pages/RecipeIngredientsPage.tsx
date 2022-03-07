@@ -35,8 +35,8 @@ const RecipeIngredientsPage: React.FC = () => {
       setRecipes(await getRecipes());
     };
     f();
-    if (recipeNameForm === '') {
-      setNameError('choose the recipe name');
+    if (recipeNameForm.length < 3) {
+      setNameError('choose the recipe name longer then 3 characters');
     }
   }, [recipeNameForm]);
 

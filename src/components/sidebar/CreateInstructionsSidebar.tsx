@@ -10,6 +10,7 @@ interface Props {
   saveRecipe: () => void;
   isSavable: boolean;
   toIngredients: () => void;
+  isBlockNameEmpty: () => boolean;
 
   ingredients: IngredientType[];
   //   ingredients:IngredientType[],recipeName:string,addedBlocks:BlockType[]
@@ -22,6 +23,7 @@ const CreateInstructionsSidebar: React.FC<Props> = ({
   ingredients,
   recipeName,
   isSavable,
+  isBlockNameEmpty,
 }: Props) => {
   const popup = usePopup();
   const history = useHistory();
@@ -37,7 +39,7 @@ const CreateInstructionsSidebar: React.FC<Props> = ({
       <div className="buttons text-center flex flex-col mx-10 items-center">
         <Button
           title="Save recipe"
-          disabled={!isSavable}
+          disabled={!isSavable || !isBlockNameEmpty()}
           onClick={() =>
             popup?.open({
               title: 'Do you want to save the recipe?',
