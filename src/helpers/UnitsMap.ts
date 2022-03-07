@@ -2,15 +2,19 @@ export default class UnitsMap {
   private units: Map<string, string> = new Map<string, string>();
 
   constructor() {
-    this.units.set('SET_TEMPERATURE', '°C');
-    this.units.set('SET_MOTOR_SPEED', 'RPM');
+    this.units.set('TEMP', '°C');
+    this.units.set('MOTOR', 'RPM');
     // this.units.set('false', 'OFF');
     // this.units.set('true', 'ON');
   }
 
   getUnit(instruction: string): string | undefined {
-    if (this.units.has(instruction)) {
-      return this.units.get(instruction);
+    if (instruction !== undefined) {
+      console.log(instruction);
+      const instr = instruction.split('_');
+      if (this.units.has(instr[0])) {
+        return this.units.get(instr[0]);
+      }
     }
     return undefined;
   }

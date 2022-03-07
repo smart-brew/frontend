@@ -13,19 +13,19 @@ const BoxChamber: React.FC<OneChamberData> = ({
   // const heatingN = new UnitsMap().getUnit(heating);
   return (
     <div
-      className={`chamber w-1/6 content-center rounded-3xl ${cssPositionClass} p-2 bg-gray-200 border-2 border-black`}
+      className={`chamber content-center rounded-3xl brewery-box ${cssPositionClass} p-2 bg-gray-200 border-2 border-black`}
     >
       <div className="space-y-5">
         <div className="font-bold text-lg">{NAME}</div>
         <Item
           itemValue={formatNumToDefinedNumOfDecimal(TEMPERATURE.TEMP, 1)}
-          name={TEMPERATURE.CATEGORY}
-          codeName={TEMPERATURE.CODENAME}
+          name="TEPLOTA"
+          codeName={TEMPERATURE.DEVICE}
         />
         <Item
-          itemValue={MOTOR.RPM}
-          name={MOTOR.CATEGORY}
-          codeName={MOTOR.CODENAME}
+          itemValue={formatNumToDefinedNumOfDecimal(MOTOR.RPM, 1)}
+          name="MOTOR"
+          codeName={MOTOR.DEVICE}
         />
       </div>
     </div>

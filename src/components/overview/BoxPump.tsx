@@ -1,11 +1,7 @@
 import React from 'react';
 import ItemInfo from '../../types/ItemInfo';
 
-const BoxPump: React.FC<ItemInfo> = ({
-  name,
-  itemValue,
-  codeName,
-}: ItemInfo) => {
+const BoxPump: React.FC<ItemInfo> = ({ name, itemValue }: ItemInfo) => {
   const backgroundColour =
     itemValue === 'false' ? 'bg-gray-200' : 'bg-green-200';
 

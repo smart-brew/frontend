@@ -77,20 +77,32 @@ textarea {
   resize: none;
 }
 
-.brewery-left-box {
+.brewery-box {
+  width: 14%;
+  max-width: 14%;
   position: absolute;
-  left: calc(33% - 5vw);
-  top: calc(49% - 12vh);
+  top: calc(45% - 12vh);
+  min-width: 10%;
+  --width-orig: 14%;
+  --width-min: 10%;
+  --width-dif: calc(var(--width-orig) - var(--width-min));
 }
 
-.brewery-right-box {
-  position: absolute;
-  left: calc(69% - 5vw);
-  top: calc(49% - 12vh);
+
+.left-box {
+  left: calc(28% - var(--width-dif));
+
+}
+
+.right-box {
+  left: calc(62% - var(--width-dif));
 }
 
 .brewery-pump {
   position: absolute;
-  left: calc(50% - 5vw);
+  left: calc(49% - 6vw);
   top: calc(72% - 4vh);
+  width: 14%;
+  max-width: 14%;
+  min-width: 10%;
 }

@@ -4,7 +4,6 @@ import { DataContext } from '../../contexts/dataContext';
 import imgPlaceholder from '../../assets/schema.svg';
 import { moduleData } from '../../data/moduleData';
 import { Unloader } from '../../types/SystemData';
-import Item from './Item';
 import BoxChamber from './BoxChamber';
 import BoxUnloader from './BoxUnloader';
 import BoxPump from './BoxPump';
@@ -18,20 +17,20 @@ const Brewery: React.FC = () => {
   const data = React.useContext(DataContext)?.data || moduleData;
 
   return (
-    <div className="h-full overflow-hidden overscroll-none relative space-y-5 left-">
+    <div className="h-full overflow-hidden overscroll-none relative space-y-5">
       <img src={imgPlaceholder} className="h-full" alt="placeholder" />
       {/* There is no other way to connect the right temperature and motor values together  */}
       <BoxChamber
         NAME="Nádoba 1"
         TEMPERATURE={data.TEMPERATURE[0]}
         MOTOR={data.MOTOR[0]}
-        cssPositionClass="brewery-left-box"
+        cssPositionClass="left-box"
       />
       <BoxChamber
         NAME="Nádoba 2"
         TEMPERATURE={data.TEMPERATURE[1]}
         MOTOR={data.MOTOR[1]}
-        cssPositionClass="brewery-right-box"
+        cssPositionClass="right-box"
       />
       {/* If there is a possibility to add more pumps, it can be remade */}
       <BoxPump

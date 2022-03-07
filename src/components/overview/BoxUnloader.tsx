@@ -1,5 +1,4 @@
 import React from 'react';
-import Item from './Item';
 import { Unloaders } from './Brewery';
 import UnloaderItem from './UnloaderItem';
 

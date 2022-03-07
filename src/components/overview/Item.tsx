@@ -1,7 +1,6 @@
 import React from 'react';
 import UnitsMap from '../../helpers/UnitsMap';
 import ItemInfo from '../../types/ItemInfo';
-import { formatNumToDefinedNumOfDecimal } from '../../helpers/DataFormatter';
 
 // bolo by treba namapovat ale pravdepodobne sa bude prerabat tak zatial len takto
 const Item: React.FC<ItemInfo> = ({
