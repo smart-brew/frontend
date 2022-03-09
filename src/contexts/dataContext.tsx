@@ -22,9 +22,6 @@ const DataContextProvider: React.FC<Props> = ({ children, enabled }) => {
     return () => clearInterval(periodicFetch);
   }, [enabled]);
 
-  // TODO delete
-  React.useEffect(() => console.log('Got new data:', data), [data]);
-
   return <DataContext.Provider value={data}>{children}</DataContext.Provider>;
 };
 

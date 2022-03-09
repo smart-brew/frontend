@@ -1,3 +1,7 @@
+// -----------------------------------------------------------
+// DO NOT MODIFY THIS FILE - IT CONTAINS EXACT TYPES FROM API
+// -----------------------------------------------------------
+
 export type Status = 'WAITING' | 'IN_PROGRESS' | 'DONE' | 'ERROR';
 
 export type BrewingStatus =
@@ -11,6 +15,7 @@ export type BrewingStatus =
 export interface BasicData {
   STATE: Status;
   DEVICE: string;
+  CATEGORY: string;
 }
 
 export type Temperature = BasicData & {
@@ -26,7 +31,9 @@ export type Motor = BasicData & {
 export type Unloader = BasicData & {};
 
 // eslint-disable-next-line @typescript-eslint/ban-types
-export type Pump = BasicData & {};
+export type Pump = BasicData & {
+  ENABLED: string;
+};
 
 export interface ModuleData {
   TEMPERATURE: Array<Temperature>;
