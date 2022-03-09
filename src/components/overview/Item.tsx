@@ -6,10 +6,10 @@ import ItemInfo from '../../types/ItemInfo';
 const Item: React.FC<ItemInfo> = ({
   name,
   itemValue,
-  codeName,
+  device = '',
   itemLayout,
 }: ItemInfo) => {
-  const unit = new UnitsMap().getUnit(codeName);
+  const unit = new UnitsMap().getUnit(device);
   const itemLayoutStyle = itemLayout || 'flex-col';
 
   return (

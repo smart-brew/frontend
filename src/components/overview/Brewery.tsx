@@ -36,7 +36,7 @@ const Brewery: React.FC = () => {
       <BoxPump
         name="Pumpa"
         itemValue={data.PUMP[0].ENABLED}
-        codeName={data.PUMP[0].CODENAME}
+        device={data.PUMP[0].DEVICE}
       />
       <BoxUnloader unloadDevices={data.UNLOADER} name="Násypníky" />
     </div>

@@ -1,3 +1,7 @@
+// -----------------------------------------------------------
+// DO NOT MODIFY THIS FILE - IT CONTAINS EXACT TYPES FROM API
+// -----------------------------------------------------------
+
 export type Status = 'WAITING' | 'IN_PROGRESS' | 'DONE' | 'ERROR';
 
 export type BrewingStatus =
@@ -11,7 +15,6 @@ export type BrewingStatus =
 export interface BasicData {
   STATE: Status;
   DEVICE: string;
-  CODENAME: string;
   CATEGORY: string;
 }
 
@@ -49,11 +52,4 @@ export interface SystemData {
   data: ModuleData;
   instruction: InstructionStatus;
   brewStatus: BrewingStatus;
-}
-
-export interface OneChamberData {
-  NAME: string;
-  TEMPERATURE: Temperature;
-  MOTOR: Motor;
-  cssPositionClass?: string;
 }

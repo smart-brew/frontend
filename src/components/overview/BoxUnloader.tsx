@@ -7,8 +7,6 @@ const BoxUnloader: React.FC<Unloaders> = ({
   unloadDevices,
   name,
 }: Unloaders) => {
-  // const heatingN = new UnitsMap().getUnit(heating);
-
   return (
     <div className="chamber w-64 content-center shadow rounded-3xl absolute -top-3 left-5 bg-gray-200 border-2 border-black">
       <div className="font-bold text-lg">{name}</div>
@@ -16,7 +14,6 @@ const BoxUnloader: React.FC<Unloaders> = ({
         <UnloaderItem
           itemValue={unl.STATE}
           name={unl.DEVICE}
-          codeName={unl.CODENAME}
           itemLayout="flex-row"
         />
       ))}
