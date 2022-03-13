@@ -26,6 +26,8 @@ const Button: React.FC<Props> = ({
     if (secondary) return 'text-green-600 bg-transparent border-green-600';
     if (warn) return 'text-red-500 bg-transparent border-red-500';
     if (danger) return 'text-white bg-red-500 border-red-500';
+    if (disabled)
+      return 'text-gray-400 bg-gray-300 border-gray-400 cursor-not-allowed';
     return 'text-white bg-green-600 border-green-600';
   }
 

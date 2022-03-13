@@ -8,13 +8,12 @@ import IngredientType from '../../types/RecipeData/IngredientType';
 
 interface Props {
   saveRecipe: () => void;
-  isSavable: boolean;
+  checkEmptyBoxes: () => boolean;
+  checkBlockNameDoublesBoolean: () => boolean;
   toIngredients: () => void;
-  isBlockNameEmpty: () => boolean;
-
   ingredients: IngredientType[];
-  //   ingredients:IngredientType[],recipeName:string,addedBlocks:BlockType[]
   recipeName: string;
+  // blockSize:number;
 }
 
 const CreateInstructionsSidebar: React.FC<Props> = ({
@@ -22,12 +21,11 @@ const CreateInstructionsSidebar: React.FC<Props> = ({
   toIngredients,
   ingredients,
   recipeName,
-  isSavable,
-  isBlockNameEmpty,
+  checkEmptyBoxes,
+  checkBlockNameDoublesBoolean,
 }: Props) => {
   const popup = usePopup();
   const history = useHistory();
-
   return (
     <React.StrictMode>
       <div className="context h-2/3">
@@ -36,10 +34,11 @@ const CreateInstructionsSidebar: React.FC<Props> = ({
         </div>
         <Ingredients ingredients={ingredients} />
       </div>
+
       <div className="buttons text-center flex flex-col mx-10 items-center">
         <Button
           title="Save recipe"
-          disabled={!isSavable || !isBlockNameEmpty()}
+          disabled={checkEmptyBoxes() || checkBlockNameDoublesBoolean()}
           onClick={() =>
             popup?.open({
               title: 'Do you want to save the recipe?',

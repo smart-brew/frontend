@@ -27,12 +27,10 @@ const IngredietsForm: React.FC<Props> = ({
   nameError,
 }: Props) => {
   const generateid = (): number => {
-    const values = [...inputFields];
+    const values = inputFields;
     const max = Math.max(...values.map((o) => o.id), 0);
     return max + 1;
   };
-
-  // const [recipeName, setRecipeName] = useState('');
 
   const handleChangeInput = (
     id: number,
@@ -77,12 +75,6 @@ const IngredietsForm: React.FC<Props> = ({
     setInputFields(values);
   };
 
-  // const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
-  //   e.preventDefault();
-  //   const values = [...inputFields] as IngredientType[];
-  //   console.log(values);
-  // };
-
   const result = inputFields?.reduce((r, a) => {
     r[a.type] = r[a.type] || [];
     r[a.type].push(a);
@@ -105,7 +97,7 @@ const IngredietsForm: React.FC<Props> = ({
           <div className="invalid-feedback text-red-700">{nameError}</div>
         </div>
       </label>
-      <form className="mx-20">
+      <div className="mx-20">
         <div className="container border border-gray-300 rounded-3xl px-20">
           <header className="center py-8 font-bold">
             <h3>Ingredients</h3>
@@ -124,7 +116,7 @@ const IngredietsForm: React.FC<Props> = ({
             ))}
           </div>
         </div>
-      </form>
+      </div>
     </div>
   );
 };

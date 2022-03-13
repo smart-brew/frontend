@@ -52,7 +52,6 @@ const RecipeInstructionsPage: React.FC = () => {
   );
 
   const [addedBlocks, setAddedBlocks] = useState(addBlocks);
-  const [isSavable, setIsSavable] = React.useState<boolean>(true);
 
   const popupRef = React.useRef<HTMLDivElement>(null);
 
@@ -184,25 +183,7 @@ const RecipeInstructionsPage: React.FC = () => {
     setAddedBlocks(newAddedBlocks);
   };
 
-  // const checkBlockName = (name: string, index: number): boolean => {
-  //   const allBlocks = [...addedBlocks];
-  //   const matches = allBlocks.filter(
-  //     (obj) => obj.blockName.toLowerCase() === name
-  //   );
-  //   if (matches.length > 0 && index !== matches[0].blockId) {
-  //     console.log('it already exists', matches);
-  //     return false;
-  //   }
-  //   console.log('it doesnt exist', matches);
-  //   return true;
-  // };
-
-  const getBlocks = (): RecipeBlockType[] => {
-    return addedBlocks;
-  };
-
   const handleChangeBlockName = (index: number, name: string): void => {
-    // const nameMatch = checkBlockName(name, index);
     const newAddedBlocks = [...addedBlocks];
     newAddedBlocks[index].blockName = name;
     newAddedBlocks[index].instructions.forEach((instruction) => {
@@ -210,19 +191,25 @@ const RecipeInstructionsPage: React.FC = () => {
     });
 
     setAddedBlocks(newAddedBlocks);
-    // return nameMatch;
   };
 
   const checkEmptyBoxes = (): boolean => {
-    const matches = addedBlocks.filter(
-      (obj) => obj.blockName.toLowerCase() === ''
+    return addedBlocks.find((block) => block.blockName === '') !== undefined; // returns true if there are empty boxes
+  };
+
+  const checkBlockNameDoubles = (): number[] => {
+    const unique = addedBlocks.filter(
+      (
+        (set) => (f: RecipeBlockType) =>
+          !set.has(f.blockName) && set.add(f.blockName)
+      )(new Set())
     );
-    if (matches.length > 0) {
-      console.log({ matches });
-      return false;
-    }
-    console.log({ matches });
-    return true;
+
+    return unique.map((a) => a.blockId); // returns array of blockIds of blocks with unique names
+  };
+
+  const checkBlockNameDoublesBoolean = (): boolean => {
+    return checkBlockNameDoubles().length !== addedBlocks.length; // returns true if there are doubles
   };
 
   const handleBlockDelete = (blockId: number): void => {
@@ -265,25 +252,23 @@ const RecipeInstructionsPage: React.FC = () => {
   };
 
   const saveRecipe = async (): Promise<void> => {
-    if (isSavable) {
-      const instructions = returnInstructionsForBackend();
-      console.log({ instructions, ingredients, recipeName });
+    const instructions = returnInstructionsForBackend();
+    console.log({ instructions, ingredients, recipeName });
 
-      await createRecipe({
-        name: recipeName,
-        description: '',
-        locked: false,
-        Ingredients: ingredients,
-        Instructions: instructions,
-      }).then((res) => {
-        console.log({ res });
+    await createRecipe({
+      name: recipeName,
+      description: '',
+      locked: false,
+      Ingredients: ingredients,
+      Instructions: instructions,
+    }).then((res) => {
+      console.log({ res });
 
-        if (res.id) history.push('/recipe');
-        else {
-          console.log('Error creating recipe');
-        }
-      });
-    }
+      if (res.id) history.push('/recipe');
+      else {
+        console.log('Error creating recipe');
+      }
+    });
   };
 
   return (
@@ -299,9 +284,8 @@ const RecipeInstructionsPage: React.FC = () => {
               blockName={block.blockName}
               blockId={index}
               instructions={block.instructions}
-              isSavable={setIsSavable}
+              checkBlockNameDoubles={checkBlockNameDoubles}
               handleAddButtonClick={handleAddInstructionButtonClicked}
-              getBlocks={getBlocks}
               onNameChange={handleChangeBlockName}
               onInstructionEdit={handleEditInstruction}
               onBlockDelete={handleBlockDelete}
@@ -355,8 +339,8 @@ const RecipeInstructionsPage: React.FC = () => {
 
       <CreateInstructionsSidebar
         saveRecipe={saveRecipe}
-        isSavable={isSavable}
-        isBlockNameEmpty={checkEmptyBoxes}
+        checkEmptyBoxes={checkEmptyBoxes}
+        checkBlockNameDoublesBoolean={checkBlockNameDoublesBoolean}
         toIngredients={toIngredients}
         ingredients={ingredients}
         recipeName={recipeName}

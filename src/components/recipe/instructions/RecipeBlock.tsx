@@ -3,13 +3,11 @@ import React from 'react';
 import EditableInstruction from './single-instruction/EditableInstruction';
 import AddInstructionButton from './AddInstructionButton';
 import EditableInstructionTemplateType from './single-instruction/EditableInstructionTemplateType';
-import RecipeBlockType from '../../../types/RecipeData/RecipeBlockType';
 
 interface Props {
   instructions: Array<EditableInstructionTemplateType>;
   blockId: number;
   blockName: string;
-  getBlocks: () => RecipeBlockType[];
   handleAddButtonClick: (
     index: number,
     blockId: number,
@@ -23,7 +21,7 @@ interface Props {
   ) => void;
   onBlockDelete: (blockId: number) => void;
   onInstructionDelete: (index: number, blockId: number) => void;
-  isSavable: (toSave: boolean) => void;
+  checkBlockNameDoubles: () => number[];
 }
 
 const RecipeBlock: React.FC<Props> = ({
@@ -31,12 +29,11 @@ const RecipeBlock: React.FC<Props> = ({
   blockId,
   blockName,
   handleAddButtonClick,
-  getBlocks,
   onNameChange,
   onInstructionEdit,
   onBlockDelete,
   onInstructionDelete,
-  isSavable,
+  checkBlockNameDoubles,
 }) => {
   // const parseInstructions = (): Array<InstructionForBackendType> => {
   //   const formattedInstructions: Array<InstructionForBackendType> =
@@ -51,21 +48,9 @@ const RecipeBlock: React.FC<Props> = ({
   const [isValid, setIsValid] = React.useState<boolean>(true);
 
   React.useEffect(() => {
-    const f = async (): Promise<void> => {
-      const allBlocks = getBlocks();
-      const matches = allBlocks.filter(
-        (obj) => obj.blockName.toLowerCase() === blockName
-      );
-      console.log(allBlocks, matches);
-      if (matches.length > 0 && blockId !== matches[0].blockId) {
-        setIsValid(false);
-        isSavable(false);
-      } else {
-        isSavable(true);
-      }
-    };
-    f();
-  }, [blockId, blockName, getBlocks, isSavable]);
+    const uniques = checkBlockNameDoubles();
+    setIsValid(uniques.includes(blockId));
+  }, [blockId, checkBlockNameDoubles]);
 
   const instructionEditCallback = (
     instr: EditableInstructionTemplateType,
@@ -81,13 +66,10 @@ const RecipeBlock: React.FC<Props> = ({
           className="bg-white bg-opacity-50 border border-gray-500 text-2xl font-bold my-3 ml-8 rounded-lg p-1"
           type="text"
           required
-          placeholder="Block name"
+          placeholder="RECIPE STAGE"
           defaultValue={blockName !== '' ? blockName : ''}
           onBlur={(e) => {
             onNameChange(blockId, e.target.value);
-            // console.log(toto);
-            // setIsValid(toto);
-            // console.log(isValid);
           }}
         />
         {!isValid && (
@@ -95,7 +77,7 @@ const RecipeBlock: React.FC<Props> = ({
             className="msg text-red-700 "
             style={{ color: 'visibility: visible' }}
           >
-            This block name is already used, choose different one
+            Not a valid name for the stage of recipe. Choose a different one
           </span>
         )}
         <button

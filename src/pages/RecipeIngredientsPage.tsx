@@ -25,16 +25,15 @@ const RecipeIngredientsPage: React.FC = () => {
   // all recipes known to system
   const [recipes, setRecipes] = React.useState<RecipeSimple[]>([]);
   const [nameError, setNameError] = React.useState<string>('');
-  // const [fieldError, setFieldError] = React.useState<string>('');
   const [recipeNameForm, setRecipeNameForm] = React.useState(sendRecipeName);
   const [inputFields, setInputFields] =
     React.useState<IngredientType[]>(sendIngredients);
 
   React.useEffect(() => {
-    const f = async (): Promise<void> => {
-      setRecipes(await getRecipes());
-    };
-    f();
+    getRecipes().then((allRecipes) => setRecipes(allRecipes));
+  }, []);
+
+  React.useEffect(() => {
     if (recipeNameForm.length < 3) {
       setNameError('choose the recipe name longer then 3 characters');
     }
@@ -43,7 +42,7 @@ const RecipeIngredientsPage: React.FC = () => {
   const validateNameInput = (name: string): void => {
     const searchTerm = name.toLowerCase();
     const matches = recipes.filter(
-      (obj) => obj.name.toLowerCase() === searchTerm
+      (recipeItem) => recipeItem.name.toLowerCase() === searchTerm
     );
     if (!name) {
       setNameError('choose the recipe name');
@@ -57,9 +56,8 @@ const RecipeIngredientsPage: React.FC = () => {
   };
 
   const validateInputFields = (): boolean => {
-    const field = inputFields.filter((obj) => obj.name === '');
-    console.log(field);
-    if (field.length > 0) {
+    const field = inputFields.filter((inputItem) => inputItem.name === '');
+    if (field.length > 0 || nameError !== '') {
       return false;
     }
     return true;
@@ -71,26 +69,13 @@ const RecipeIngredientsPage: React.FC = () => {
     console.log(inputFields, sendBlocks);
 
     // only let to leave the page if the recipe name was chosen or isnt duplicate
-    if (nameError === '' && validateInputFields()) {
-      if (sendBlocks == null) {
-        // if no instructions were made beforehand
-        const emptyBlock: RecipeBlockType[] = [];
-
-        const data: IngredientsFormProps = {
-          ingredients: inputFields,
-          recipeName: recipeNameForm,
-          addBlocks: emptyBlock,
-        };
-        history.push('/recipe/instructions', data);
-      } else {
-        // if some instructions were made beforehand
-        const data: IngredientsFormProps = {
-          ingredients: inputFields,
-          recipeName: recipeNameForm,
-          addBlocks: sendBlocks,
-        };
-        history.push('/recipe/instructions', data);
-      }
+    if (nameError === '') {
+      const data: IngredientsFormProps = {
+        ingredients: inputFields,
+        recipeName: recipeNameForm,
+        addBlocks: sendBlocks ?? [],
+      };
+      history.push('/recipe/instructions', data);
     }
   };
 
@@ -106,10 +91,12 @@ const RecipeIngredientsPage: React.FC = () => {
           setRecipeNameForm={(name: string) => validateNameInput(name)}
           nameError={nameError}
         />
-        {/* <p className="invalid-feedback">{fieldError}</p> */}
       </div>
 
-      <CreateIngredientsSidebar saveForm={saveForm} />
+      <CreateIngredientsSidebar
+        saveForm={saveForm}
+        validateInputFields={validateInputFields}
+      />
     </SplitPage>
   );
 };
