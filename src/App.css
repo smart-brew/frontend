@@ -23,3 +23,14 @@
 .App-credits {
   font-size: 0.5rem;
 }
+
+
+input:required {
+  border-color: red;
+  border-width: 2px;
+}
+
+input:required:valid {
+  border-width: 0;
+
+}

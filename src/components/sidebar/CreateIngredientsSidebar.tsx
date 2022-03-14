@@ -6,9 +6,13 @@ import { usePopup } from '../../contexts/popupContext';
 
 interface Props {
   saveForm: () => void;
+  validateInputFields: () => boolean;
 }
 
-const CreateIngredientsSidebar: React.FC<Props> = ({ saveForm }: Props) => {
+const CreateIngredientsSidebar: React.FC<Props> = ({
+  saveForm,
+  validateInputFields,
+}: Props) => {
   const popup = usePopup();
 
   const history = useHistory();
@@ -19,6 +23,7 @@ const CreateIngredientsSidebar: React.FC<Props> = ({ saveForm }: Props) => {
       <div className="buttons flex flex-col mx-10 items-center">
         <Button
           title="Next step"
+          disabled={!validateInputFields()}
           onClick={() => saveForm()}
           className="w-full"
         />

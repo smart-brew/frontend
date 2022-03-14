@@ -174,15 +174,12 @@ const RecipeInstructionsPage: React.FC = () => {
   };
 
   const handleAddBlock = (index: number): void => {
-    console.log(addedBlocks);
-    console.log(index);
     const newAddedBlocks = [...addedBlocks];
     newAddedBlocks.splice(index, 0, {
       blockId: index,
       blockName: '',
       instructions: new Array<EditableInstructionTemplateType>(),
     });
-    console.log(newAddedBlocks);
     setAddedBlocks(newAddedBlocks);
   };
 
@@ -194,6 +191,25 @@ const RecipeInstructionsPage: React.FC = () => {
     });
 
     setAddedBlocks(newAddedBlocks);
+  };
+
+  const checkEmptyBoxes = (): boolean => {
+    return addedBlocks.find((block) => block.blockName === '') !== undefined; // returns true if there are empty boxes
+  };
+
+  const checkBlockNameDoubles = (): number[] => {
+    const unique = addedBlocks.filter(
+      (
+        (set) => (f: RecipeBlockType) =>
+          !set.has(f.blockName) && set.add(f.blockName)
+      )(new Set())
+    );
+
+    return unique.map((a) => a.blockId); // returns array of blockIds of blocks with unique names
+  };
+
+  const checkBlockNameDoublesBoolean = (): boolean => {
+    return checkBlockNameDoubles().length !== addedBlocks.length; // returns true if there are doubles
   };
 
   const handleBlockDelete = (blockId: number): void => {
@@ -260,13 +276,15 @@ const RecipeInstructionsPage: React.FC = () => {
       <div className="flex flex-col space-y-5 justify-center">
         {addedBlocks.map((block, index) => (
           <div
-            key={block.blockName}
+            // eslint-disable-next-line react/no-array-index-key
+            key={block.blockName + index}
             className="flex justify-center items-center"
           >
             <RecipeBlock
               blockName={block.blockName}
               blockId={index}
               instructions={block.instructions}
+              checkBlockNameDoubles={checkBlockNameDoubles}
               handleAddButtonClick={handleAddInstructionButtonClicked}
               onNameChange={handleChangeBlockName}
               onInstructionEdit={handleEditInstruction}
@@ -321,6 +339,8 @@ const RecipeInstructionsPage: React.FC = () => {
 
       <CreateInstructionsSidebar
         saveRecipe={saveRecipe}
+        checkEmptyBoxes={checkEmptyBoxes}
+        checkBlockNameDoublesBoolean={checkBlockNameDoublesBoolean}
         toIngredients={toIngredients}
         ingredients={ingredients}
         recipeName={recipeName}

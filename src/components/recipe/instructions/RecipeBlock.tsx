@@ -21,6 +21,7 @@ interface Props {
   ) => void;
   onBlockDelete: (blockId: number) => void;
   onInstructionDelete: (index: number, blockId: number) => void;
+  checkBlockNameDoubles: () => number[];
 }
 
 const RecipeBlock: React.FC<Props> = ({
@@ -32,6 +33,7 @@ const RecipeBlock: React.FC<Props> = ({
   onInstructionEdit,
   onBlockDelete,
   onInstructionDelete,
+  checkBlockNameDoubles,
 }) => {
   // const parseInstructions = (): Array<InstructionForBackendType> => {
   //   const formattedInstructions: Array<InstructionForBackendType> =
@@ -42,6 +44,13 @@ const RecipeBlock: React.FC<Props> = ({
   //
   //   return [];
   // };
+
+  const [isValid, setIsValid] = React.useState<boolean>(true);
+
+  React.useEffect(() => {
+    const uniques = checkBlockNameDoubles();
+    setIsValid(uniques.includes(blockId));
+  }, [blockId, checkBlockNameDoubles]);
 
   const instructionEditCallback = (
     instr: EditableInstructionTemplateType,
@@ -56,12 +65,21 @@ const RecipeBlock: React.FC<Props> = ({
         <input
           className="bg-white bg-opacity-50 border border-gray-500 text-2xl font-bold my-3 ml-8 rounded-lg p-1"
           type="text"
-          placeholder="Block name"
+          required
+          placeholder="RECIPE STAGE"
           defaultValue={blockName !== '' ? blockName : ''}
           onBlur={(e) => {
             onNameChange(blockId, e.target.value);
           }}
         />
+        {!isValid && (
+          <span
+            className="msg text-red-700 "
+            style={{ color: 'visibility: visible' }}
+          >
+            Not a valid name for the stage of recipe. Choose a different one
+          </span>
+        )}
         <button
           type="button"
           className="text-4xl font-extrabold text-red-900 text-right"

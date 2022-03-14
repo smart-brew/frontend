@@ -80,10 +80,13 @@ const IngredientSection: React.FC<FormSectionProps> = ({
               type="text"
               className="w-80 px-8 shadow"
               name="name"
+              required
+              id="name-input"
               placeholder="ingredient"
               value={inputField.name}
-              required
-              onChange={(event) => handleChange(inputField.id, event)}
+              onChange={(event) => {
+                handleChange(inputField.id, event);
+              }}
             />
           </label>
 
