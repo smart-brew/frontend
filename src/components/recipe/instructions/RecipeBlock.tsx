@@ -62,24 +62,26 @@ const RecipeBlock: React.FC<Props> = ({
   return (
     <div className="bg-blue-100 shadow w-4/5 text-left rounded-xl p-4">
       <div className="flex flex-row justify-between">
-        <input
-          className="bg-white bg-opacity-50 border border-gray-500 text-2xl font-bold my-3 ml-8 rounded-lg p-1"
-          type="text"
-          required
-          placeholder="RECIPE STAGE"
-          defaultValue={blockName !== '' ? blockName : ''}
-          onBlur={(e) => {
-            onNameChange(blockId, e.target.value);
-          }}
-        />
-        {!isValid && (
-          <span
-            className="msg text-red-700 "
-            style={{ color: 'visibility: visible' }}
-          >
-            Not a valid name for the stage of recipe. Choose a different one
-          </span>
-        )}
+        <div className="my-3 ml-8">
+          <input
+            className="bg-white bg-opacity-50 border border-gray-500 text-2xl font-bold  rounded-lg p-1"
+            type="text"
+            required
+            placeholder="RECIPE STAGE"
+            defaultValue={blockName !== '' ? blockName : ''}
+            onBlur={(e) => {
+              onNameChange(blockId, e.target.value);
+            }}
+          />
+          {!isValid && (
+            <div
+              className="msg text-red-700 text-lg pt-2"
+              style={{ color: 'visibility: visible' }}
+            >
+              This stage name already exists.
+            </div>
+          )}
+        </div>
         <button
           type="button"
           className="text-4xl font-extrabold text-red-900 text-right"

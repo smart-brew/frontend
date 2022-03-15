@@ -84,15 +84,20 @@ const IngredietsForm: React.FC<Props> = ({
   return (
     <div className="">
       <label htmlFor="name">
-        <input
-          type="text"
-          className="w-1/3 px-8 border border-gray-300 text-2xl font-bold m-10 rounded-2xl p-3"
-          name="name"
-          placeholder="Recipe name"
-          value={recipeNameForm}
-          required
-          onChange={(event) => setRecipeNameForm(event.target.value)}
-        />
+        <div className="m-10">
+          <input
+            type="text"
+            className="w-1/3 px-8 border border-gray-300 text-2xl font-bold mx-10 my-3 rounded-2xl p-3"
+            name="name"
+            placeholder="Recipe name"
+            value={recipeNameForm}
+            required
+            onChange={(event) => setRecipeNameForm(event.target.value)}
+          />
+          <div className="invalid-feedback text-red-700 text-lg">
+            {nameError}
+          </div>
+        </div>
       </label>
       <div className="mx-20">
         <div className="container border border-gray-300 rounded-3xl px-20">
