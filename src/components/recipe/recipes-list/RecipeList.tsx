@@ -14,18 +14,16 @@ const RecipeList: React.FC<RecipeListTypeProps> = ({
   current,
 }) => {
   return (
-    <div className="overflow-auto">
-      <ul className="flex flex-col">
-        {recipes.map((recipe: RecipeSimple) => (
-          <RecipeListItem
-            key={recipe.id}
-            recipe={recipe}
-            onClick={callback}
-            current={current}
-          />
-        ))}
-      </ul>
-    </div>
+    <ul className="flex flex-col">
+      {recipes.map((recipe: RecipeSimple) => (
+        <RecipeListItem
+          key={recipe.id}
+          recipe={recipe}
+          onClick={callback}
+          current={current}
+        />
+      ))}
+    </ul>
   );
 };
 

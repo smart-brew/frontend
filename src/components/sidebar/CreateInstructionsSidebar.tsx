@@ -5,6 +5,7 @@ import { usePopup } from '../../contexts/popupContext';
 import Ingredients from '../recipe/ingredients/Ingredients';
 import Button from '../shared/Button';
 import IngredientType from '../../types/RecipeData/IngredientType';
+import { MENU_HEIGHT } from '../menu/MenuContainer';
 
 interface Props {
   saveRecipe: () => void;
@@ -28,9 +29,12 @@ const CreateInstructionsSidebar: React.FC<Props> = ({
   const history = useHistory();
   return (
     <React.StrictMode>
-      <div className="context h-2/3">
-        <div className="pl-2 font-bold p-2 mx-7 my-1 content-center shadow rounded-3xl flex flex-row items-center justify-start bg-yellow-200">
-          Recipe name: {recipeName}
+      <div
+        className="context h-2/3 overflow-auto pb-2"
+        style={{ maxHeight: `calc(66vh - ${MENU_HEIGHT}px)` }}
+      >
+        <div className="pl-2 p-2 mx-7 my-1 content-center shadow rounded-3xl flex flex-row items-center justify-start bg-yellow-200">
+          <p className="font-bold truncate">Recipe name: {recipeName}</p>
         </div>
         <Ingredients ingredients={ingredients} />
       </div>
