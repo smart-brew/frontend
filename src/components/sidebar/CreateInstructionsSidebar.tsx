@@ -9,21 +9,26 @@ import { MENU_HEIGHT } from '../menu/MenuContainer';
 
 interface Props {
   saveRecipe: () => void;
+  editRecipe: () => void;
   checkEmptyBoxes: () => boolean;
   checkBlockNameDoublesBoolean: () => boolean;
   toIngredients: () => void;
   ingredients: IngredientType[];
   recipeName: string;
-  // blockSize:number;
+  recipeId: number;
+  recipeLocked: boolean;
 }
 
 const CreateInstructionsSidebar: React.FC<Props> = ({
   saveRecipe,
+  editRecipe,
   toIngredients,
   ingredients,
   recipeName,
   checkEmptyBoxes,
   checkBlockNameDoublesBoolean,
+  recipeId,
+  recipeLocked,
 }: Props) => {
   const popup = usePopup();
   const history = useHistory();
@@ -40,19 +45,55 @@ const CreateInstructionsSidebar: React.FC<Props> = ({
       </div>
 
       <div className="buttons text-center flex flex-col mx-10 items-center">
-        <Button
-          title="Save recipe"
-          disabled={checkEmptyBoxes() || checkBlockNameDoublesBoolean()}
-          onClick={() =>
-            popup?.open({
-              title: 'Do you want to save the recipe?',
-              description: 'By pressing Confirm the recipe will be saved',
-              onConfirm: () => saveRecipe(),
-            })
-          }
-          className="w-full"
-        />
+        {recipeId === -1 && (
+          <Button
+            title="Save recipe"
+            disabled={checkEmptyBoxes() || checkBlockNameDoublesBoolean()}
+            onClick={() =>
+              popup?.open({
+                title: 'Do you want to save the recipe?',
+                description: 'By pressing Confirm the recipe will be saved',
+                onConfirm: () => saveRecipe(),
+              })
+            }
+            className="w-full"
+          />
+        )}
+        {recipeId > 0 && (
+          <div>
+            <Button
+              title="Save copy"
+              disabled={checkEmptyBoxes() || checkBlockNameDoublesBoolean()}
+              onClick={() =>
+                popup?.open({
+                  title: 'Do you want to save the new copy of the recipe?',
+                  description:
+                    'By pressing Confirm the new version of the recipe will be saved, while the old one will still exist',
+                  onConfirm: () => saveRecipe(),
+                })
+              }
+              className="w-full"
+            />
 
+            <Button
+              title="Save this version"
+              disabled={
+                checkEmptyBoxes() ||
+                checkBlockNameDoublesBoolean() ||
+                recipeLocked
+              }
+              onClick={() =>
+                popup?.open({
+                  title: 'Do you want to rewrite the recipe?',
+                  description:
+                    'By pressing Confirm the new version of the recipe will be saved instead of the old one',
+                  onConfirm: () => editRecipe(),
+                })
+              }
+              className="w-full"
+            />
+          </div>
+        )}
         <Button
           secondary
           title="Previous step"
@@ -66,7 +107,7 @@ const CreateInstructionsSidebar: React.FC<Props> = ({
           title="Cancel"
           onClick={() =>
             popup?.open({
-              title: 'Do you want to stop making new recipe?',
+              title: 'Do you want to stop creating the recipe?',
               description: 'By leaving this page, all the changes will be lost',
               onConfirm: () => history.push('/recipe'),
             })

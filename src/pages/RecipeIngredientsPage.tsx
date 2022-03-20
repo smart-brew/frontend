@@ -14,13 +14,20 @@ export interface IngredientsFormProps {
   ingredients: IngredientType[];
   recipeName: string;
   addBlocks: RecipeBlockType[];
+  sendRecipeId: number;
+  sendLockedState: boolean;
 }
 
 const RecipeIngredientsPage: React.FC = () => {
   const history = useHistory();
   const location = useLocation();
-  const { sendIngredients, sendRecipeName, sendBlocks } =
-    location.state as RecipeDataProps;
+  const {
+    sendIngredients,
+    sendRecipeName,
+    sendBlocks,
+    sendRecipeId,
+    sendLockedState,
+  } = location.state as RecipeDataProps;
 
   // all recipes known to system
   const [recipes, setRecipes] = React.useState<RecipeSimple[]>([]);
@@ -74,6 +81,8 @@ const RecipeIngredientsPage: React.FC = () => {
         ingredients: inputFields,
         recipeName: recipeNameForm,
         addBlocks: sendBlocks ?? [],
+        sendRecipeId,
+        sendLockedState,
       };
       history.push('/recipe/instructions', data);
     }

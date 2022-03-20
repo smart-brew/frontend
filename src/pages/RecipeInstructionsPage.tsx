@@ -9,47 +9,51 @@ import RecipeBlockType from '../types/RecipeData/RecipeBlockType';
 import EditableInstructionTemplateType from '../components/recipe/instructions/single-instruction/EditableInstructionTemplateType';
 import AddBlockButton from '../components/recipe/instructions/AddBlockButton';
 import { IngredientsFormProps } from './RecipeIngredientsPage';
-import { createRecipe } from '../api/recipe';
+import { createRecipe, editRecipe } from '../api/recipe';
 import SplitPage from '../components/shared/SplitPage';
 import { InstructionsContext } from '../contexts/instructionsContext';
 import InstructionTemplate from '../types/FunctionData/InstructionTemplate';
 
 import IngredientType from '../types/RecipeData/IngredientType';
 import CreateInstructionsSidebar from '../components/sidebar/CreateInstructionsSidebar';
+import IngredientForBackendType from '../types/RecipeData/IngredientForBackendType';
 
 export interface RecipeDataProps {
   sendIngredients: IngredientType[];
   sendRecipeName: string | '';
   sendBlocks: RecipeBlockType[] | null;
+  sendRecipeId: number;
+  sendLockedState: boolean;
 }
 
 const RecipeInstructionsPage: React.FC = () => {
   const history = useHistory();
   const location = useLocation();
-  const { ingredients, recipeName, addBlocks } =
+  const { ingredients, recipeName, addBlocks, sendRecipeId, sendLockedState } =
     location.state as IngredientsFormProps;
 
   const templates = React.useContext(InstructionsContext);
 
-  const emptyInstr: EditableInstructionTemplateType = {
-    id: -1,
-    blockId: -1,
-    blockName: '',
-    codeName: 'EMPTY',
-    name: 'Empty instruction',
-    category: 'EMPTY',
-    units: null,
-    inputType: 'string',
-    description: 'This instruction is a placeholder.',
-    param: null,
-    optionCodeName: null,
-    options: [],
-    ordering: -1,
-  };
+  // IT SEEMS TO WORK WITHOUT IT BUT FURTHER TESTING MAY BEE NEEDED
+  // const emptyInstr: EditableInstructionTemplateType = {
+  //   id: -1,
+  //   blockId: -1,
+  //   blockName: '',
+  //   codeName: 'EMPTY',
+  //   name: 'Empty instruction',
+  //   category: 'EMPTY',
+  //   units: null,
+  //   inputType: 'string',
+  //   description: 'This instruction is a placeholder.',
+  //   param: null,
+  //   optionCodeName: null,
+  //   options: [],
+  //   ordering: -1,
+  // };
 
-  const [addedInstructions, setAddedInstructions] = useState(
-    Array<EditableInstructionTemplateType>(emptyInstr)
-  );
+  // const [addedInstructions, setAddedInstructions] = useState(
+  //   Array<EditableInstructionTemplateType>(emptyInstr)
+  // );
 
   const [addedBlocks, setAddedBlocks] = useState(addBlocks);
 
@@ -60,6 +64,8 @@ const RecipeInstructionsPage: React.FC = () => {
       sendIngredients: ingredients,
       sendRecipeName: recipeName,
       sendBlocks: addedBlocks,
+      sendRecipeId,
+      sendLockedState,
     };
 
     history.push('/recipe/ingredients', data);
@@ -77,7 +83,7 @@ const RecipeInstructionsPage: React.FC = () => {
       });
     });
 
-    setAddedInstructions(newAddedInstructions);
+    // setAddedInstructions(newAddedInstructions);
   };
 
   const handleAddInstructionToBlock = (
@@ -89,7 +95,6 @@ const RecipeInstructionsPage: React.FC = () => {
     newBlocks
       .find((block) => block.blockId === blockId)
       ?.instructions.splice(index, 0, instr);
-
     setAddedBlocks(newBlocks);
     updateAddedInstructions();
   };
@@ -103,6 +108,7 @@ const RecipeInstructionsPage: React.FC = () => {
 
       const newInstruction: EditableInstructionTemplateType = {
         ...instr,
+        templateId: instr.id,
         param: null,
         optionCodeName:
           instr.options !== null && instr.options.length !== 0
@@ -141,20 +147,45 @@ const RecipeInstructionsPage: React.FC = () => {
     updateAddedInstructions();
   };
 
+  const returnInstructionsFromBlocks =
+    (): Array<EditableInstructionTemplateType> => {
+      const allInstructions = addedBlocks.map((block) => {
+        return block.instructions;
+      });
+      return allInstructions.flat();
+    };
+
   const returnInstructionsForBackend = (): Array<InstructionForBackendType> => {
-    const mappedInstructions: InstructionForBackendType[] =
-      addedInstructions.map((instruction) => {
+    const allInstructions = returnInstructionsFromBlocks();
+    const mappedInstructions: InstructionForBackendType[] = allInstructions.map(
+      (instruction) => {
         const newInstruction: InstructionForBackendType = {
-          templateId: instruction.id,
-          blockId: instruction.blockId,
+          templateId: instruction.templateId,
           blockName: instruction.blockName,
           param: instruction.param,
           optionCodeName: instruction.optionCodeName,
           ordering: instruction.ordering,
         };
-        console.log(newInstruction);
         return newInstruction;
-      });
+      }
+    );
+
+    return mappedInstructions;
+  };
+
+  const returnIngredientForBackend = (): Array<IngredientForBackendType> => {
+    const allIngredients = ingredients;
+    const mappedInstructions: IngredientForBackendType[] = allIngredients.map(
+      (ingredient) => {
+        const newIngredient: IngredientForBackendType = {
+          name: ingredient.name,
+          amount: ingredient.amount,
+          type: ingredient.type,
+          units: ingredient.units,
+        };
+        return newIngredient;
+      }
+    );
 
     return mappedInstructions;
   };
@@ -244,13 +275,13 @@ const RecipeInstructionsPage: React.FC = () => {
 
   const saveRecipe = async (): Promise<void> => {
     const instructions = returnInstructionsForBackend();
-    console.log({ instructions, ingredients, recipeName });
-
+    const ingr = returnIngredientForBackend();
+    console.log({ recipeName, sendLockedState, ingr, instructions });
     await createRecipe({
       name: recipeName,
       description: '',
-      locked: false,
-      Ingredients: ingredients,
+      locked: sendLockedState,
+      Ingredients: ingr,
       Instructions: instructions,
     }).then((res) => {
       console.log({ res });
@@ -258,6 +289,30 @@ const RecipeInstructionsPage: React.FC = () => {
       if (res.id) history.push('/recipe');
       else {
         console.log('Error creating recipe');
+      }
+    });
+  };
+
+  const editTheRecipe = async (): Promise<void> => {
+    const instructions = returnInstructionsForBackend();
+    const ingr = returnIngredientForBackend();
+    console.log({ recipeName, sendLockedState, ingr, instructions });
+
+    await editRecipe(
+      {
+        name: recipeName,
+        description: '',
+        locked: sendLockedState,
+        Ingredients: ingr,
+        Instructions: instructions,
+      },
+      sendRecipeId
+    ).then((res) => {
+      console.log({ res });
+
+      if (res.id) history.push('/recipe');
+      else {
+        console.log('Error editing recipe');
       }
     });
   };
@@ -299,6 +354,9 @@ const RecipeInstructionsPage: React.FC = () => {
 
       <CreateInstructionsSidebar
         saveRecipe={saveRecipe}
+        editRecipe={editTheRecipe}
+        recipeId={sendRecipeId}
+        recipeLocked={sendLockedState}
         checkEmptyBoxes={checkEmptyBoxes}
         checkBlockNameDoublesBoolean={checkBlockNameDoublesBoolean}
         toIngredients={toIngredients}

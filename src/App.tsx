@@ -8,7 +8,7 @@ import SmartBrew from './pages/SmartBrew';
 const App: React.FC = () => {
   return (
     <InstructionsContextProvider enabled>
-      <DataContextProvider enabled>
+      <DataContextProvider enabled={false}>
         <PopupContextProvider>
           <SmartBrew />
         </PopupContextProvider>
