@@ -35,8 +35,8 @@ const Brewery: React.FC = () => {
       {/* If there is a possibility to add more pumps, it can be remade */}
       <BoxPump
         name="Pumpa"
-        itemValue={data.PUMP[0].ENABLED}
-        device={data.PUMP[0].DEVICE}
+        itemValue={data.PUMP[0]?.ENABLED}
+        device={data.PUMP[0]?.DEVICE}
       />
       <BoxUnloader unloadDevices={data.UNLOADER} name="Násypníky" />
     </div>

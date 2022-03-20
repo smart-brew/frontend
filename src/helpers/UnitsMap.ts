@@ -2,6 +2,7 @@ export default class UnitsMap {
   private units: Map<string, string> = new Map<string, string>();
 
   constructor() {
+    this.units.set('TEMPERATURE', '°C');
     this.units.set('TEMP', '°C');
     this.units.set('MOTOR', 'RPM');
   }

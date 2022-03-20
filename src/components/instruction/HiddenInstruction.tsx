@@ -15,37 +15,29 @@ const HiddenInstruction: React.FC<Props> = ({
   instructionName,
 }: Props) => {
   const unitMap = new UnitsMap();
-  /* TODO
-   - treba upravit, ze ked mam specialne instrukcie ako WAIT, MANUAL, TRANSFER_LIQUIDS, co sa bude zobrazovat na pravej strane
-   - na lavej strane mapovat "codeName" na nieco krajsie
-   */
+
   const formatInstrParam = (): string | null => {
-    const unit = unitMap.getUnit(instruction.codeName);
+    const unit = unitMap.getUnit(instruction.category);
+
     if (unit !== undefined) {
       return `${instruction.param} ${unit}`;
     }
+
     if (instruction.codeName === InstructionConstants.MANUAL) {
       return `${instruction.param}`;
     }
+
     if (instruction.codeName === InstructionConstants.UNLOADER) {
       return `${instruction.optionCodeName}`;
     }
+
     if (instruction.codeName === InstructionConstants.PUMP) {
       return `to Chamber ${
-        parseInt(
-          instruction.optionCodeName?.split('_')[1]
-            ? instruction.optionCodeName?.split('_')[1]
-            : '0',
-          10
-        ) + 1
+        parseInt(instruction.optionCodeName?.split('_')[1] ?? '0', 10) + 1
       }`;
     }
+
     if (instruction.codeName === InstructionConstants.WAIT) {
-      console.log(
-        TimeHelper.getDaysFromMillis(
-          instruction.param ? instruction.param : 'a'
-        )
-      );
       return `${TimeHelper.getDaysFromMillis(
         instruction.param ? instruction.param : 'a'
       ).toLocaleString('en-US', {
@@ -63,6 +55,7 @@ const HiddenInstruction: React.FC<Props> = ({
         useGrouping: false,
       })}`;
     }
+
     return '';
   };
 
