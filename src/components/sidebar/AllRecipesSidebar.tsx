@@ -17,7 +17,6 @@ import { MENU_HEIGHT } from '../menu/MenuContainer';
 
 import { InstructionsContext } from '../../contexts/instructionsContext';
 import { returnEditFormat } from './EditFunctions';
-// import { functions } from '../../data/functions';
 
 interface Props {
   setRecipeId: (recipeId: number) => void;

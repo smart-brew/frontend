@@ -19,10 +19,13 @@ const TransferEditableInstr: React.FC<Props> = ({
 
   const readParams = (): ParamType | null => {
     const selectNode = selectRef.current;
-    const paramObj: ParamType = { optionCodeName: 'NONE', value: 0 };
     if (selectNode != null) {
-      paramObj.optionCodeName = `PUMP_${selectNode.value.toString()}`;
-      return paramObj;
+      const parameter: ParamType = {
+        optionCodeName: `PUMP_${selectNode.value}`,
+        value: 0,
+      };
+
+      return parameter;
     }
     return null;
   };

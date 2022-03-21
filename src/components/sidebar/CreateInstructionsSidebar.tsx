@@ -60,23 +60,9 @@ const CreateInstructionsSidebar: React.FC<Props> = ({
           />
         )}
         {recipeId > 0 && (
-          <div>
+          <>
             <Button
-              title="Save as new"
-              disabled={checkEmptyBoxes() || checkBlockNameDoublesBoolean()}
-              onClick={() =>
-                popup?.open({
-                  title: 'Do you want to save the new copy of the recipe?',
-                  description:
-                    'By pressing Confirm the new version of the recipe will be saved, while the old one will still exist',
-                  onConfirm: () => saveRecipe('edit'),
-                })
-              }
-              className="w-full"
-            />
-
-            <Button
-              title="Save recipe"
+              title="Save"
               disabled={
                 checkEmptyBoxes() ||
                 checkBlockNameDoublesBoolean() ||
@@ -92,7 +78,21 @@ const CreateInstructionsSidebar: React.FC<Props> = ({
               }
               className="w-full"
             />
-          </div>
+
+            <Button
+              title="Save as new"
+              disabled={checkEmptyBoxes() || checkBlockNameDoublesBoolean()}
+              onClick={() =>
+                popup?.open({
+                  title: 'Do you want to save the new copy of the recipe?',
+                  description:
+                    'By pressing Confirm the new version of the recipe will be saved, while the old one will still exist',
+                  onConfirm: () => saveRecipe('edit'),
+                })
+              }
+              className="w-full"
+            />
+          </>
         )}
         <Button
           secondary

@@ -40,27 +40,6 @@ const RecipeInstructionsPage: React.FC = () => {
   } = location.state as IngredientsFormProps;
   const templates = React.useContext(InstructionsContext);
 
-  // IT SEEMS TO WORK WITHOUT IT BUT FURTHER TESTING MAY BE NEEDED
-  // const emptyInstr: EditableInstructionTemplateType = {
-  //   id: -1,
-  //   blockId: -1,
-  //   blockName: '',
-  //   codeName: 'EMPTY',
-  //   name: 'Empty instruction',
-  //   category: 'EMPTY',
-  //   units: null,
-  //   inputType: 'string',
-  //   description: 'This instruction is a placeholder.',
-  //   param: null,
-  //   optionCodeName: null,
-  //   options: [],
-  //   ordering: -1,
-  // };
-
-  // const [addedInstructions, setAddedInstructions] = useState(
-  //   Array<EditableInstructionTemplateType>(emptyInstr)
-  // );
-
   const [addedBlocks, setAddedBlocks] = useState(addBlocks);
 
   const popupRef = React.useRef<HTMLDivElement>(null);
@@ -88,8 +67,6 @@ const RecipeInstructionsPage: React.FC = () => {
         instrCounter += 1;
       });
     });
-
-    // setAddedInstructions(newAddedInstructions);
   };
 
   const handleAddInstructionToBlock = (
@@ -304,7 +281,6 @@ const RecipeInstructionsPage: React.FC = () => {
   const editTheRecipe = async (): Promise<void> => {
     const instructions = returnInstructionsForBackend();
     const ingr = returnIngredientForBackend();
-    console.log({ recipeName, sendLockedState, ingr, instructions });
 
     await editRecipe(
       {
