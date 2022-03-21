@@ -17,7 +17,7 @@ import { MENU_HEIGHT } from '../menu/MenuContainer';
 
 import { InstructionsContext } from '../../contexts/instructionsContext';
 import { returnEditFormat } from './EditFunctions';
-import { functions } from '../../data/functions';
+// import { functions } from '../../data/functions';
 
 interface Props {
   setRecipeId: (recipeId: number) => void;
@@ -32,7 +32,7 @@ const AllRecipesSidebar: React.FC<Props> = ({
 }) => {
   const history = useHistory();
   const popup = usePopup();
-  let templates = React.useContext(InstructionsContext)?.data;
+  const templates = React.useContext(InstructionsContext)?.data;
 
   const handleLoadRecipe = async (): Promise<void> => {
     loadRecipeAPI(recipeId);
@@ -65,11 +65,12 @@ const AllRecipesSidebar: React.FC<Props> = ({
 
   const handleEditRecipe = async (): Promise<void> => {
     const data: RecipeType = await getRecipe(recipeId);
-    if (!templates) {
-      templates = functions;
+    if (templates) {
+      const newData = returnEditFormat(data, templates);
+      if (newData) {
+        history.push('/recipe/ingredients', newData);
+      }
     }
-    const newData = returnEditFormat(data, templates);
-    history.push('/recipe/ingredients', newData);
   };
 
   return (
