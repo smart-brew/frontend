@@ -13,6 +13,7 @@ import {
   startBrewing as startBrewingAPI,
   pauseBrewing as pauseBrewingAPI,
 } from '../../api/brew';
+import { MENU_HEIGHT } from '../menu/MenuContainer';
 
 interface Props {
   recipeId: number;
@@ -85,37 +86,36 @@ const RecipeProgress: React.FC<Props> = ({ recipeId }: Props) => {
     switch (pageName) {
       default:
       case 'MainPage':
-        return <div>This is the welcome page</div>;
+        return <div>Select recipe in order to start brewing</div>;
 
       case 'BeforeBrewingPage':
         return (
-          <>
-            <div className="buttons text-center flex flex-col mx-10">
+          <div
+            className="context overflow-auto pb-2 w-full"
+            style={{ maxHeight: `calc(100vh - ${MENU_HEIGHT}px)` }}
+          >
+            <div className="buttons items-center flex flex-col w-full">
               <Button
                 title="Start brewing"
                 onClick={() => setShowStartConfirmation(true)}
+                className="w-full max-w-xs"
               />
-              {/* <Button
-                cancel
-                title="Abort brewing"
-                onClick={() => {
-                  console.log('TODO: ABORT BREWING');
-                  abortBrewingAPI(0);
-                  setPage('MainPage');
-                }}
-              /> */}
             </div>
 
             <RecipePreview recipe={selectedRecipe} />
-          </>
+          </div>
         );
       case 'WhileBrewingPage':
         return (
-          <div>
-            <div className="buttons text-center flex flex-col mx-10">
+          <div
+            className="context overflow-auto pb-2"
+            style={{ maxHeight: `calc(100vh - ${MENU_HEIGHT}px)` }}
+          >
+            <div className="buttons items-center flex flex-col w-full">
               <Button
                 warn
                 title="Pause brewing"
+                className="w-full max-w-xs"
                 onClick={() => {
                   popup?.open({
                     title: 'Do you want to pause the brewing process?',
@@ -131,6 +131,7 @@ const RecipeProgress: React.FC<Props> = ({ recipeId }: Props) => {
               <Button
                 danger
                 title="Abort brewing"
+                className="w-full max-w-xs"
                 onClick={() => {
                   console.log('TODO: ABORT BREWING');
                   popup?.open({

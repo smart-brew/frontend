@@ -12,6 +12,7 @@ const BoxUnloader: React.FC<Unloaders> = ({
       <div className="font-bold text-lg">{name}</div>
       {unloadDevices.map((unl) => (
         <UnloaderItem
+          key={unl.DEVICE}
           itemValue={unl.STATE}
           name={unl.DEVICE}
           itemLayout="flex-row"

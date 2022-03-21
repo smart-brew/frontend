@@ -70,24 +70,10 @@ const AllRecipesSidebar: React.FC<Props> = ({
         />
       </div>
       {/* bottom shadow for list */}
-      <div
-        style={{
-          left: 0,
-          right: 0,
-          bottom: '30px',
-          position: 'relative',
-          height: '30px',
-          background:
-            'linear-gradient(180deg, rgba(139,167,32,0) 0%, #ffffff 100%)',
-        }}
-      />
 
       {/* Buttons Edit, Start Brewing, Make a new recipe, Delete a recipe */}
       <div className="flex w-full justify-center">
-        <div
-          className="buttons text-center flex flex-col w-full max-w-xs"
-          style={{ transform: 'translateY(-30px)' }}
-        >
+        <div className="buttons text-center flex flex-col w-full max-w-xs">
           <Button
             title="Load recipe"
             onClick={() => handleLoadRecipe()}

@@ -16,27 +16,26 @@ const Instructions: React.FC<Props> = ({ instructions }) => {
     status: 'WAITING',
   };
 
-  const divideTheInstructions = (): Array<InstructionBlockType> => {
-    console.log(instructions);
-    const blocks = new Array<InstructionBlockType>();
+  const divideTheInstructions = (): InstructionBlockType[] => {
+    const blocks: InstructionBlockType[] = [];
     let currentBlockName = instructions[0].blockName;
-    console.log(currentBlockName);
-    let prevBlockInstructions = new Array<InstructionType>();
-    let currentBlockInstructions = new Array<InstructionType>();
+
+    let prevBlockInstructions: InstructionType[] = [];
+    let currentBlockInstructions: InstructionType[] = [];
 
     instructions.forEach((instr) => {
       if (instr.blockName !== currentBlockName) {
         currentBlockName = instr.blockName;
-        console.log(`New current name ${currentBlockName}`);
+
         prevBlockInstructions = [...currentBlockInstructions];
-        currentBlockInstructions = new Array<InstructionType>();
+        currentBlockInstructions = [];
         blocks.push({
           blockId: prevBlockInstructions[0].blockId,
           blockName: prevBlockInstructions[0].blockName,
           instructions: prevBlockInstructions,
         });
       }
-      console.log(`Current instructions ${currentBlockInstructions}`);
+
       currentBlockInstructions.push(instr);
     });
     blocks.push({

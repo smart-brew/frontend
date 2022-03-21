@@ -55,10 +55,7 @@ const RecipeInstructionsPage: React.FC = () => {
 
   const popupRef = React.useRef<HTMLDivElement>(null);
 
-  const toIngredients = (): // sendIngredients: Array<IngredientType>,
-  // sendRecipeName: string,
-  // sendBlocks: Array<RecipeBlockType>
-  void => {
+  const toIngredients = (): void => {
     const data: RecipeDataProps = {
       sendIngredients: ingredients,
       sendRecipeName: recipeName,
@@ -95,13 +92,6 @@ const RecipeInstructionsPage: React.FC = () => {
 
     setAddedBlocks(newBlocks);
     updateAddedInstructions();
-
-    // let editableInstr: EditableInstructionTemplateType = {
-    //   ...emptyInstr,
-    // };
-    // editableInstr = Object.assign(editableInstr, instr);
-    // editableInstr.blockId = index;
-    // setAddedInstructions(addedInstructions.splice(index, 0, editableInstr));
   };
 
   const handleInstrSelection = (instr: InstructionTemplate): undefined => {
@@ -131,10 +121,6 @@ const RecipeInstructionsPage: React.FC = () => {
         parseInt(index, 10),
         parseInt(blockId, 10)
       );
-
-      // const newAddedInstructions = [...addedInstructions];
-      // newAddedInstructions.splice(parseInt(index, 10), 0, newInstruction);
-      // setAddedInstructions(newAddedInstructions);
     }
 
     popupNode?.classList.remove('modal-bg-active');
@@ -297,38 +283,6 @@ const RecipeInstructionsPage: React.FC = () => {
           buttonIndex={addedBlocks.length}
           onBlockAdd={handleAddBlock}
         />
-        {/* <span>{selectedInstr.name}</span>
-      <EditableInstruction
-        instruction={selectedInstr}
-        blockId={-1}
-        onDelete={() => {
-          return true;
-        }}
-      /> */}
-        {/*      {addedInstructions.map((instr, index) => {
-        return (
-          <div>
-            <EditableInstruction
-              instruction={instr}
-              blockId={0}
-              onDelete={() => {
-                return true;
-              }}
-            />
-            <AddInstructionButton index={index} />
-          </div>
-        );
-      })} */}
-        {/* <button
-        className="select-button w-1/5"
-        type="button"
-        onClick={(e) => {
-          const instructionPopupNode = popupRef?.current;
-          instructionPopupNode?.classList.add('modal-bg-active');
-        }}
-      >
-        Select instruction
-      </button> */}
         <div className="modal-bg" ref={popupRef} style={{ margin: 0 }}>
           <InstructionPopup
             templates={templates?.data || []}
