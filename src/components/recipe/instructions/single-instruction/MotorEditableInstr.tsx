@@ -2,11 +2,17 @@ import React, { useRef } from 'react';
 
 import ParamType from '../../../../types/ParamType';
 import EditableInstructionTemplateType from './EditableInstructionTemplateType';
+import { getSelectedOption } from './helper';
 
 interface Props {
   instruction: EditableInstructionTemplateType;
   onChange: (params: ParamType) => void;
 }
+
+const OPTIONS = [
+  { value: 1, label: 'Chamber 1', optionCodeName: 'MOTOR_1' },
+  { value: 2, label: 'Chamber 2', optionCodeName: 'MOTOR_2' },
+];
 
 const MotorEditableInstr: React.FC<Props> = ({
   instruction,
@@ -15,19 +21,15 @@ const MotorEditableInstr: React.FC<Props> = ({
   const inputRef = useRef<HTMLInputElement>(null);
   const selectRef = useRef<HTMLSelectElement>(null);
 
-  const options = [
-    { value: 1, label: 'Chamber 1', optionCodeName: 'MOTOR_1' },
-    { value: 2, label: 'Chamber 2', optionCodeName: 'MOTOR_2' },
-  ];
-
   const readParams = (): ParamType | null => {
     const inputNode = inputRef.current;
     const selectNode = selectRef.current;
-    const paramObj: ParamType = { optionCodeName: 'NONE', value: 0 };
     if (inputNode != null && selectNode != null) {
-      paramObj.value = parseInt(inputNode?.value, 10);
-      paramObj.optionCodeName = `MOTOR_${selectNode.value.toString()}`;
-      return paramObj;
+      const parameter: ParamType = {
+        optionCodeName: `MOTOR_${selectNode.value}`,
+        value: parseInt(inputNode?.value, 10),
+      };
+      return parameter;
     }
     return null;
   };
@@ -39,28 +41,19 @@ const MotorEditableInstr: React.FC<Props> = ({
     }
   };
 
-  const returnValue = (): number => {
-    const myOption = options.find((element) => {
-      return element.optionCodeName === instruction.optionCodeName;
-    });
-    return myOption ? myOption.value : options[0].value;
-  };
-
   return (
     <div className="flex flex-row justify-evenly text-lg align-middle space-x-8">
       <select
         className="border border-gray-300 p-2 rounded-lg"
         ref={selectRef}
         onChange={sendParams}
-        value={returnValue()}
+        value={getSelectedOption(OPTIONS, instruction.optionCodeName)}
       >
-        {options.map((e) => {
-          return (
-            <option key={e.value} value={e.value}>
-              {e.label}
-            </option>
-          );
-        })}
+        {OPTIONS.map((option) => (
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        ))}
       </select>
       <div className="flex flex-row space-x-3 items-center">
         <span>Value:</span>

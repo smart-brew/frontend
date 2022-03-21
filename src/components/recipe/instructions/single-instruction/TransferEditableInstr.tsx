@@ -2,19 +2,20 @@ import React from 'react';
 
 import ParamType from '../../../../types/ParamType';
 import EditableInstructionTemplateType from './EditableInstructionTemplateType';
+import { getSelectedOption } from './helper';
 
 interface Props {
   instruction: EditableInstructionTemplateType;
   onChange: (params: ParamType) => void;
 }
 
+const OPTIONS = [{ value: 1, label: 'Pump 1', optionCodeName: 'PUMP_1' }];
+
 const TransferEditableInstr: React.FC<Props> = ({
   instruction,
   onChange,
 }: Props) => {
   const selectRef = React.useRef<HTMLSelectElement>(null);
-
-  const options = [{ value: 1, label: 'Pump 1', optionCodeName: 'PUMP_1' }];
 
   const readParams = (): ParamType | null => {
     const selectNode = selectRef.current;
@@ -33,25 +34,18 @@ const TransferEditableInstr: React.FC<Props> = ({
     }
   };
 
-  const returnValue = (): number => {
-    const myOption = options.find((element) => {
-      return element.optionCodeName === instruction.optionCodeName;
-    });
-    return myOption ? myOption.value : options[0].value;
-  };
-
   return (
     <div className="flex flex-row justify-evenly text-lg items-center">
       <select
-        className="border border-gray-300 px-2 w-2/3"
+        className="border border-gray-300 p-2 text-lg rounded-lg"
         ref={selectRef}
         onChange={sendParams}
-        value={returnValue()}
+        value={getSelectedOption(OPTIONS, instruction.optionCodeName)}
       >
-        {options.map((e) => {
+        {OPTIONS.map((option) => {
           return (
-            <option key={e.value} value={e.value}>
-              {e.label}
+            <option key={option.value} value={option.value}>
+              {option.label}
             </option>
           );
         })}

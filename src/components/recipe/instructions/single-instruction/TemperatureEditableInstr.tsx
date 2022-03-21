@@ -2,11 +2,17 @@ import React, { useRef } from 'react';
 
 import ParamType from '../../../../types/ParamType';
 import EditableInstructionTemplateType from './EditableInstructionTemplateType';
+import { getSelectedOption } from './helper';
 
 interface Props {
   instruction: EditableInstructionTemplateType;
   onChange: (params: ParamType) => void;
 }
+
+const OPTIONS = [
+  { value: 1, label: 'Chamber 1', optionCodeName: 'TEMP_1' },
+  { value: 2, label: 'Chamber 2', optionCodeName: 'TEMP_2' },
+];
 
 const TemperatureEditableInstr: React.FC<Props> = ({
   instruction,
@@ -14,11 +20,6 @@ const TemperatureEditableInstr: React.FC<Props> = ({
 }: Props) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const selectRef = useRef<HTMLSelectElement>(null);
-
-  const options = [
-    { value: 1, label: 'Chamber 1', optionCodeName: 'TEMP_1' },
-    { value: 2, label: 'Chamber 2', optionCodeName: 'TEMP_2' },
-  ];
 
   const readParams = (): ParamType | null => {
     const inputNode = inputRef.current;
@@ -39,25 +40,18 @@ const TemperatureEditableInstr: React.FC<Props> = ({
     }
   };
 
-  const returnValue = (): number => {
-    const myOption = options.find((element) => {
-      return element.optionCodeName === instruction.optionCodeName;
-    });
-    return myOption ? myOption.value : options[0].value;
-  };
-
   return (
     <div className="flex flex-row justify-evenly align-middle space-x-8">
       <select
         className="border border-gray-300 p-2 text-lg rounded-lg"
         ref={selectRef}
         onChange={sendParams}
-        value={returnValue()}
+        value={getSelectedOption(OPTIONS, instruction.optionCodeName)}
       >
-        {options.map((e) => {
+        {OPTIONS.map((option) => {
           return (
-            <option key={e.value} value={e.value}>
-              {e.label}
+            <option key={option.value} value={option.value}>
+              {option.label}
             </option>
           );
         })}

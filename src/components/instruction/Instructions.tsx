@@ -17,6 +17,10 @@ const Instructions: React.FC<Props> = ({ instructions }) => {
   };
 
   const divideTheInstructions = (): InstructionBlockType[] => {
+    if (!instructions.length) {
+      return [];
+    }
+
     const blocks: InstructionBlockType[] = [];
     let currentBlockName = instructions[0].blockName;
 
@@ -38,6 +42,7 @@ const Instructions: React.FC<Props> = ({ instructions }) => {
 
       currentBlockInstructions.push(instr);
     });
+
     blocks.push({
       blockId: currentBlockInstructions[0].blockId,
       blockName: currentBlockInstructions[0].blockName,

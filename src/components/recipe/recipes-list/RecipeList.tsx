@@ -13,9 +13,18 @@ const RecipeList: React.FC<RecipeListTypeProps> = ({
   callback,
   current,
 }) => {
+  const sortedRecipes = [
+    ...recipes
+      .filter((recipe) => recipe.locked)
+      .sort((a, b) => a.name.localeCompare(b.name)),
+    ...recipes
+      .filter((recipe) => !recipe.locked)
+      .sort((a, b) => a.name.localeCompare(b.name)),
+  ];
+
   return (
     <ul className="flex flex-col">
-      {recipes.map((recipe: RecipeSimple) => (
+      {sortedRecipes.map((recipe: RecipeSimple) => (
         <RecipeListItem
           key={recipe.id}
           recipe={recipe}

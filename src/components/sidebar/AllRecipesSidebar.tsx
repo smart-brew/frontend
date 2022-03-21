@@ -58,7 +58,7 @@ const AllRecipesSidebar: React.FC<Props> = ({
       sendRecipeName: '',
       sendBlocks: null,
       sendRecipeId: -1,
-      sendLockedState: true,
+      sendLockedState: false,
     };
     history.push('/recipe/ingredients', data);
   };
