@@ -20,8 +20,8 @@ const InstructionForSelection: React.FC<InstrSelectionProps> = ({
         onClick(instruction);
       }}
     >
-      <h3 className="font-bold text-lg mb-2">{name}</h3>
-      <span className="italic">{description}</span>
+      <h3 className="font-bold text-xl mb-2">{name}</h3>
+      <span className="text-lg italic">{description}</span>
     </button>
   );
 };

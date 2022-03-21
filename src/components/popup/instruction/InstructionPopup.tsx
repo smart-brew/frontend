@@ -6,11 +6,13 @@ import InstructionTemplate from '../../../types/FunctionData/InstructionTemplate
 interface InstrPopupProps {
   templates: InstructionTemplate[];
   callback: (instr: InstructionTemplate) => undefined;
+  hideCallback: () => void;
 }
 
 const InstructionPopup: React.FC<InstrPopupProps> = ({
   templates,
   callback,
+  hideCallback,
 }: InstrPopupProps) => {
   const instructionPopupRef = React.useRef<HTMLDivElement>(null);
 
@@ -18,11 +20,11 @@ const InstructionPopup: React.FC<InstrPopupProps> = ({
   //   callback(instr);
   // };
 
-  const hidePopup = (): void => {
+  /*  const hidePopup = (): void => {
     console.log('Click registered');
     const instructionPopupNode = instructionPopupRef?.current;
     instructionPopupNode?.classList.remove('modal-bg-active');
-  };
+  }; */
 
   const instructions = templates.map((func) => {
     return (
@@ -46,7 +48,7 @@ const InstructionPopup: React.FC<InstrPopupProps> = ({
         type="button"
         className="cancel-button"
         onClick={() => {
-          hidePopup();
+          hideCallback();
         }}
       >
         Cancel
