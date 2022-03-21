@@ -29,12 +29,12 @@ export interface RecipeDataProps {
 const RecipeInstructionsPage: React.FC = () => {
   const history = useHistory();
   const location = useLocation();
+
   const { ingredients, recipeName, addBlocks, sendRecipeId, sendLockedState } =
     location.state as IngredientsFormProps;
-
   const templates = React.useContext(InstructionsContext);
 
-  // IT SEEMS TO WORK WITHOUT IT BUT FURTHER TESTING MAY BEE NEEDED
+  // IT SEEMS TO WORK WITHOUT IT BUT FURTHER TESTING MAY BE NEEDED
   // const emptyInstr: EditableInstructionTemplateType = {
   //   id: -1,
   //   blockId: -1,

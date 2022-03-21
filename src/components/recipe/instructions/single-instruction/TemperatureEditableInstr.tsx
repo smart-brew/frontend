@@ -15,6 +15,11 @@ const TemperatureEditableInstr: React.FC<Props> = ({
   const inputRef = useRef<HTMLInputElement>(null);
   const selectRef = useRef<HTMLSelectElement>(null);
 
+  const options = [
+    { value: 1, label: 'Chamber 1', optionCodeName: 'TEMP_1' },
+    { value: 2, label: 'Chamber 2', optionCodeName: 'TEMP_2' },
+  ];
+
   const readParams = (): ParamType | null => {
     const inputNode = inputRef.current;
     const selectNode = selectRef.current;
@@ -34,15 +39,28 @@ const TemperatureEditableInstr: React.FC<Props> = ({
     }
   };
 
+  const returnValue = (): number => {
+    const myOption = options.find((element) => {
+      return element.optionCodeName === instruction.optionCodeName;
+    });
+    return myOption ? myOption.value : options[0].value;
+  };
+
   return (
     <div className="flex flex-row justify-evenly align-middle space-x-8">
       <select
         className="border border-gray-300 p-2 text-lg rounded-lg"
         ref={selectRef}
         onChange={sendParams}
+        value={returnValue()}
       >
-        <option value={1}>Chamber 1</option>
-        <option value={2}>Chamber 2</option>
+        {options.map((e) => {
+          return (
+            <option key={e.value} value={e.value}>
+              {e.label}
+            </option>
+          );
+        })}
       </select>
       <div className="flex flex-row space-x-3 h-auto align-middle text-lg items-center">
         <span>Value:</span>
