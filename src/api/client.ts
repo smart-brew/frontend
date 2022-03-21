@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { url as makeUrl, urlWithParams } from './helpers';
+import { urlWithParams } from './helpers';
 
 export const get = (
   url: string,
