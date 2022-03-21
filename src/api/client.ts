@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { url as makeUrl, urlWithParams } from './helpers';
+import { urlWithParams } from './helpers';
 
 export const get = (
   url: string,
@@ -13,8 +13,14 @@ export const get = (
     .catch((error) => console.log(error));
 };
 
-export const put = (url: string, body?: unknown): Promise<any> => {
-  return fetch(makeUrl(url), {
+export const put = (
+  url: string,
+  body?: unknown,
+  params?: {
+    [key: string]: number;
+  }
+): Promise<any> => {
+  return fetch(urlWithParams(url, params), {
     body: JSON.stringify(body || {}),
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },

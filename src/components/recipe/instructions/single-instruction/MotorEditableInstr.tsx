@@ -2,11 +2,17 @@ import React, { useRef } from 'react';
 
 import ParamType from '../../../../types/ParamType';
 import EditableInstructionTemplateType from './EditableInstructionTemplateType';
+import { getSelectedOption } from './helper';
 
 interface Props {
   instruction: EditableInstructionTemplateType;
   onChange: (params: ParamType) => void;
 }
+
+const OPTIONS = [
+  { value: 1, label: 'Chamber 1', optionCodeName: 'MOTOR_1' },
+  { value: 2, label: 'Chamber 2', optionCodeName: 'MOTOR_2' },
+];
 
 const MotorEditableInstr: React.FC<Props> = ({
   instruction,
@@ -18,11 +24,12 @@ const MotorEditableInstr: React.FC<Props> = ({
   const readParams = (): ParamType | null => {
     const inputNode = inputRef.current;
     const selectNode = selectRef.current;
-    const paramObj: ParamType = { optionCodeName: 'NONE', value: 0 };
     if (inputNode != null && selectNode != null) {
-      paramObj.value = parseInt(inputNode?.value, 10);
-      paramObj.optionCodeName = `MOTOR_${selectNode.value.toString()}`;
-      return paramObj;
+      const parameter: ParamType = {
+        optionCodeName: `MOTOR_${selectNode.value}`,
+        value: parseInt(inputNode?.value, 10),
+      };
+      return parameter;
     }
     return null;
   };
@@ -40,9 +47,13 @@ const MotorEditableInstr: React.FC<Props> = ({
         className="border border-gray-300 p-2 rounded-lg"
         ref={selectRef}
         onChange={sendParams}
+        value={getSelectedOption(OPTIONS, instruction.optionCodeName)}
       >
-        <option value={1}>Chamber 1</option>
-        <option value={2}>Chamber 2</option>
+        {OPTIONS.map((option) => (
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        ))}
       </select>
       <div className="flex flex-row space-x-3 items-center">
         <span>Value:</span>

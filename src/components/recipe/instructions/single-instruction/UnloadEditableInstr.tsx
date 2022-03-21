@@ -35,17 +35,13 @@ const UnloadEditableInstr: React.FC<Props> = ({
         className="border border-gray-300 p-2 w-2/3 rounded-lg"
         ref={selectRef}
         onChange={sendParams}
+        defaultValue={instruction.optionCodeName ?? ''}
       >
-        {instruction.options.map((option) => {
-          return (
-            <option
-              value={option.codeName}
-              selected={instruction.optionCodeName === option.codeName}
-            >
-              {option.name}
-            </option>
-          );
-        })}
+        {instruction.options.map((option) => (
+          <option key={option.codeName} value={option.codeName}>
+            {option.name}
+          </option>
+        ))}
       </select>
     </div>
   );

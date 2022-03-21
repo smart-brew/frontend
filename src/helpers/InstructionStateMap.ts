@@ -9,12 +9,6 @@ export default class InstructionStateMap {
   ];
 
   getStyle(state: string): InstructionState | null {
-    // this.states.forEach((possibleState) => {
-    //   if (possibleState.codeName === state) {
-    //     return possibleState;
-    //   }
-    // });
-
     const style = this.states.find((possibleState) => {
       return possibleState.codeName === state;
     });

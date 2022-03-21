@@ -34,7 +34,7 @@ const EditableInstruction: React.FC<EditableInstructionProps> = ({
     onInstructionEdit(newInstruction, index);
   };
 
-  const getCorrectInstructionBody = (
+  const formatInstruction = (
     instr: EditableInstructionTemplateType
   ): JSX.Element | null => {
     if (instr.codeName === InstructionConstants.TEMPERATURE) {
@@ -73,23 +73,6 @@ const EditableInstruction: React.FC<EditableInstructionProps> = ({
     return null;
   };
 
-  const instructionCustomization = getCorrectInstructionBody(instruction);
-
-  // const parseInstruction = (): InstructionForBackendType | null => {
-  //   const params: ParamType | null | undefined =
-  //     currBodyRef.current?.readParams();
-  //   if (params) {
-  //     return {
-  //       templateId: instruction.id,
-  //       blockId,
-  //       param: params ? params.value : null,
-  //       device: params ? params.device : null,
-  //       ordering: -1,
-  //     };
-  //   }
-  //   return null;
-  // };
-
   return (
     <div className="flex flex-row align-middle items-center">
       <div className="flex flex-col border-2 border-gray-500 shadow w-4/5 rounded-2xl p-3 px-10 space-y-5 text-left bg-white bg-opacity-75">
@@ -105,7 +88,7 @@ const EditableInstruction: React.FC<EditableInstructionProps> = ({
             X
           </button>
         </div>
-        <div>{instructionCustomization}</div>
+        <div>{formatInstruction(instruction)}</div>
       </div>
       <span className="pl-3 italic text-md w-1/5 flex-wrap">
         {instruction.description}

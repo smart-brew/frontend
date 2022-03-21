@@ -101,7 +101,8 @@ const RecipeBlock: React.FC<Props> = ({
         ) : (
           instructions.map((instr, index) => {
             return (
-              <div key={instr.id + instr.name}>
+              // eslint-disable-next-line react/no-array-index-key
+              <div key={instr.blockId + instr.name + index}>
                 <EditableInstruction
                   instruction={instr}
                   blockId={blockId}

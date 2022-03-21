@@ -3,16 +3,20 @@ import { useHistory } from 'react-router-dom';
 import {
   loadRecipe as loadRecipeAPI,
   deleteRecipe as deleteRecipeAPI,
+  getRecipe,
 } from '../../api/recipe';
 import RecipeList from '../recipe/recipes-list/RecipeList';
 
 import Button from '../shared/Button';
 import { OverviewPageState } from '../../pages/OverviewPage';
 import { RecipeDataProps } from '../../pages/RecipeInstructionsPage';
-import { RecipeSimple } from '../../types/RecipeData/RecipeType';
+import RecipeType, { RecipeSimple } from '../../types/RecipeData/RecipeType';
 
 import { usePopup } from '../../contexts/popupContext';
 import { MENU_HEIGHT } from '../menu/MenuContainer';
+
+import { InstructionsContext } from '../../contexts/instructionsContext';
+import { returnEditFormat } from './EditFunctions';
 
 interface Props {
   setRecipeId: (recipeId: number) => void;
@@ -27,6 +31,7 @@ const AllRecipesSidebar: React.FC<Props> = ({
 }) => {
   const history = useHistory();
   const popup = usePopup();
+  const templates = React.useContext(InstructionsContext)?.data;
 
   const handleLoadRecipe = async (): Promise<void> => {
     loadRecipeAPI(recipeId);
@@ -51,8 +56,20 @@ const AllRecipesSidebar: React.FC<Props> = ({
       ],
       sendRecipeName: '',
       sendBlocks: null,
+      sendRecipeId: -1,
+      sendLockedState: false,
     };
     history.push('/recipe/ingredients', data);
+  };
+
+  const handleEditRecipe = async (): Promise<void> => {
+    const data: RecipeType = await getRecipe(recipeId);
+    if (templates) {
+      const newData = returnEditFormat(data, templates);
+      if (newData) {
+        history.push('/recipe/ingredients', newData);
+      }
+    }
   };
 
   return (
@@ -87,7 +104,12 @@ const AllRecipesSidebar: React.FC<Props> = ({
             className="min-w-full"
           />
 
-          <Button secondary title="Edit" className="min-w-full" />
+          <Button
+            secondary
+            title="Edit"
+            className="min-w-full"
+            onClick={() => handleEditRecipe()}
+          />
 
           <Button
             warn

@@ -2,11 +2,17 @@ import React, { useRef } from 'react';
 
 import ParamType from '../../../../types/ParamType';
 import EditableInstructionTemplateType from './EditableInstructionTemplateType';
+import { getSelectedOption } from './helper';
 
 interface Props {
   instruction: EditableInstructionTemplateType;
   onChange: (params: ParamType) => void;
 }
+
+const OPTIONS = [
+  { value: 1, label: 'Chamber 1', optionCodeName: 'TEMP_1' },
+  { value: 2, label: 'Chamber 2', optionCodeName: 'TEMP_2' },
+];
 
 const TemperatureEditableInstr: React.FC<Props> = ({
   instruction,
@@ -40,9 +46,15 @@ const TemperatureEditableInstr: React.FC<Props> = ({
         className="border border-gray-300 p-2 text-lg rounded-lg"
         ref={selectRef}
         onChange={sendParams}
+        value={getSelectedOption(OPTIONS, instruction.optionCodeName)}
       >
-        <option value={1}>Chamber 1</option>
-        <option value={2}>Chamber 2</option>
+        {OPTIONS.map((option) => {
+          return (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          );
+        })}
       </select>
       <div className="flex flex-row space-x-3 h-auto align-middle text-lg items-center">
         <span>Value:</span>

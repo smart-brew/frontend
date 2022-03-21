@@ -14,13 +14,21 @@ export interface IngredientsFormProps {
   ingredients: IngredientType[];
   recipeName: string;
   addBlocks: RecipeBlockType[];
+  sendRecipeId: number;
+  sendLockedState: boolean;
+  savedRecipesInfo: RecipeSimple[];
 }
 
 const RecipeIngredientsPage: React.FC = () => {
   const history = useHistory();
   const location = useLocation();
-  const { sendIngredients, sendRecipeName, sendBlocks } =
-    location.state as RecipeDataProps;
+  const {
+    sendIngredients,
+    sendRecipeName,
+    sendBlocks,
+    sendRecipeId,
+    sendLockedState,
+  } = location.state as RecipeDataProps;
 
   // all recipes known to system
   const [recipes, setRecipes] = React.useState<RecipeSimple[]>([]);
@@ -64,16 +72,15 @@ const RecipeIngredientsPage: React.FC = () => {
   };
 
   const saveForm = (): void => {
-    console.log('SAVE FORM INGREDIENTS');
-
-    console.log(inputFields, sendBlocks);
-
     // only let to leave the page if the recipe name was chosen or isnt duplicate
     if (nameError === '') {
       const data: IngredientsFormProps = {
         ingredients: inputFields,
         recipeName: recipeNameForm,
         addBlocks: sendBlocks ?? [],
+        sendRecipeId,
+        sendLockedState,
+        savedRecipesInfo: recipes,
       };
       history.push('/recipe/instructions', data);
     }

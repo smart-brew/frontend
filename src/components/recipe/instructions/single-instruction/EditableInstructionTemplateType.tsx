@@ -1,7 +1,7 @@
 import OptionType from '../../../../types/FunctionData/OptionType';
 
 type EditableInstructionTemplateType = {
-  id: number;
+  templateId: number;
   codeName: string;
   name: string;
   category: string;
