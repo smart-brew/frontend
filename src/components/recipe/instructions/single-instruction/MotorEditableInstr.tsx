@@ -35,19 +35,19 @@ const MotorEditableInstr: React.FC<Props> = ({
   };
 
   return (
-    <div className="flex flex-row justify-evenly">
+    <div className="flex flex-row justify-evenly text-lg align-middle space-x-8">
       <select
-        className="border border-gray-300 px-2"
+        className="border border-gray-300 p-2 rounded-lg"
         ref={selectRef}
         onChange={sendParams}
       >
         <option value={1}>Chamber 1</option>
         <option value={2}>Chamber 2</option>
       </select>
-      <div className="flex flex-row space-x-3">
+      <div className="flex flex-row space-x-3 items-center">
         <span>Value:</span>
         <input
-          className="w-1/4 border border-gray-300 px-2"
+          className="w-1/4 border border-gray-300 p-2 rounded-lg"
           type="number"
           ref={inputRef}
           defaultValue={instruction.param === null ? 0 : instruction.param}

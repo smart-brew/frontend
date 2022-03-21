@@ -55,10 +55,10 @@ const WaitEditableInstr: React.FC<Props> = ({
   };
 
   return (
-    <div className="flex flex-row space-x-5">
-      <div className="flex flex-row w-1/3 space-x-3 align-baseline">
+    <div className="flex flex-row space-x-8 text-lg">
+      <div className="flex flex-row w-1/3 space-x-3 items-center">
         <input
-          className="w-4/5 border rounded border-gray-200 p-1"
+          className="w-4/5 border rounded border-gray-200 p-1 rounded-lg"
           type="number"
           min={0}
           defaultValue={
@@ -71,9 +71,9 @@ const WaitEditableInstr: React.FC<Props> = ({
         />
         <span>days</span>
       </div>
-      <div className="flex flex-row w-1/3 space-x-3">
+      <div className="flex flex-row w-1/3 space-x-3 items-center">
         <input
-          className="w-4/5 border rounded border-gray-200 p-1"
+          className="w-4/5 border rounded border-gray-200 p-1 rounded-lg"
           type="number"
           max={23}
           min={0}
@@ -87,9 +87,9 @@ const WaitEditableInstr: React.FC<Props> = ({
         />
         <span>hours</span>
       </div>
-      <div className="flex flex-row w-1/3 space-x-3">
+      <div className="flex flex-row w-1/3 space-x-3 items-center">
         <input
-          className="w-4/5 border rounded border-gray-200 p-1"
+          className="w-4/5 border rounded border-gray-200 p-1 rounded-lg"
           type="number"
           max={59}
           min={0}

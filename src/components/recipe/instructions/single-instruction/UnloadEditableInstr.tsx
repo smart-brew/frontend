@@ -30,9 +30,9 @@ const UnloadEditableInstr: React.FC<Props> = ({
   };
 
   return (
-    <div className="text-center">
+    <div className="text-center text-lg">
       <select
-        className="border border-gray-300 px-2 w-2/3"
+        className="border border-gray-300 p-2 w-2/3 rounded-lg"
         ref={selectRef}
         onChange={sendParams}
       >

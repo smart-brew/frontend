@@ -42,9 +42,9 @@ const TransferEditableInstr: React.FC<Props> = ({
   const options = [1, 2];
 
   return (
-    <div className="flex flex-row justify-evenly">
+    <div className="flex flex-row justify-evenly text-lg items-center">
       <select
-        className="border border-gray-300 px-2"
+        className="border border-gray-300 p-2 rounded-lg"
         ref={select1Ref}
         onChange={(e) => {
           handleFirstSelection(parseInt(e.currentTarget.value, 10));
@@ -79,7 +79,7 @@ const TransferEditableInstr: React.FC<Props> = ({
       </select>
       <span>to</span>
       <select
-        className="border border-gray-300 px-2"
+        className="border border-gray-300 p-2 rounded-lg"
         ref={select2Ref}
         onChange={sendParams}
       >

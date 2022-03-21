@@ -35,19 +35,19 @@ const TemperatureEditableInstr: React.FC<Props> = ({
   };
 
   return (
-    <div className="flex flex-row justify-evenly space-x-8">
+    <div className="flex flex-row justify-evenly align-middle space-x-8">
       <select
-        className="border border-gray-300 px-2"
+        className="border border-gray-300 p-2 text-lg rounded-lg"
         ref={selectRef}
         onChange={sendParams}
       >
         <option value={1}>Chamber 1</option>
         <option value={2}>Chamber 2</option>
       </select>
-      <div className="flex flex-row space-x-3">
+      <div className="flex flex-row space-x-3 h-auto align-middle text-lg items-center">
         <span>Value:</span>
         <input
-          className="w-1/4 border border-gray-300 px-2"
+          className="w-1/4 border border-gray-300 p-2 rounded-lg"
           type="number"
           ref={inputRef}
           defaultValue={instruction.param === null ? 0 : instruction.param}
