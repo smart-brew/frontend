@@ -82,9 +82,9 @@ const IngredietsForm: React.FC<Props> = ({
   }, Object.create(null));
 
   return (
-    <div className="">
+    <>
       <label htmlFor="name">
-        <div className="m-10">
+        <div className="mt-7 mb-10">
           <input
             type="text"
             className="w-1/3 px-8 border border-gray-300 text-2xl font-bold mx-10 my-3 rounded-2xl p-3"
@@ -119,7 +119,7 @@ const IngredietsForm: React.FC<Props> = ({
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

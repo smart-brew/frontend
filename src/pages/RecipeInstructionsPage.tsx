@@ -264,7 +264,7 @@ const RecipeInstructionsPage: React.FC = () => {
 
   return (
     <SplitPage>
-      <div className="flex flex-col space-y-5 justify-center">
+      <div className="flex flex-col space-y-5 justify-center py-4">
         {addedBlocks.map((block, index) => (
           <div
             // eslint-disable-next-line react/no-array-index-key

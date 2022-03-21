@@ -81,7 +81,7 @@ const RecipeIngredientsPage: React.FC = () => {
 
   return (
     <SplitPage>
-      <div>
+      <div className="py-4">
         <IngredietsForm
           inputFields={inputFields}
           setInputFields={(newIngredients: IngredientType[]) =>
