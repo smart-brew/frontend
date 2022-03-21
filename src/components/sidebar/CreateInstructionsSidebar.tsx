@@ -8,7 +8,7 @@ import IngredientType from '../../types/RecipeData/IngredientType';
 import { MENU_HEIGHT } from '../menu/MenuContainer';
 
 interface Props {
-  saveRecipe: () => void;
+  saveRecipe: (state: string) => void;
   editRecipe: () => void;
   checkEmptyBoxes: () => boolean;
   checkBlockNameDoublesBoolean: () => boolean;
@@ -53,7 +53,7 @@ const CreateInstructionsSidebar: React.FC<Props> = ({
               popup?.open({
                 title: 'Do you want to save the recipe?',
                 description: 'By pressing Confirm the recipe will be saved',
-                onConfirm: () => saveRecipe(),
+                onConfirm: () => saveRecipe('save'),
               })
             }
             className="w-full"
@@ -69,7 +69,7 @@ const CreateInstructionsSidebar: React.FC<Props> = ({
                   title: 'Do you want to save the new copy of the recipe?',
                   description:
                     'By pressing Confirm the new version of the recipe will be saved, while the old one will still exist',
-                  onConfirm: () => saveRecipe(),
+                  onConfirm: () => saveRecipe('edit'),
                 })
               }
               className="w-full"

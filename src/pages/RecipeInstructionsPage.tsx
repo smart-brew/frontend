@@ -273,12 +273,12 @@ const RecipeInstructionsPage: React.FC = () => {
     instructionPopupNode?.classList.remove('modal-bg-active');
   };
 
-  const saveRecipe = async (): Promise<void> => {
+  const saveRecipe = async (state: string): Promise<void> => {
     const instructions = returnInstructionsForBackend();
     const ingr = returnIngredientForBackend();
     console.log({ recipeName, sendLockedState, ingr, instructions });
     await createRecipe({
-      name: recipeName,
+      name: state === 'edit' ? `${recipeName}_copy` : recipeName,
       description: '',
       locked: sendLockedState,
       Ingredients: ingr,
