@@ -62,7 +62,7 @@ const CreateInstructionsSidebar: React.FC<Props> = ({
         {recipeId > 0 && (
           <div>
             <Button
-              title="Save copy"
+              title="Save as new"
               disabled={checkEmptyBoxes() || checkBlockNameDoublesBoolean()}
               onClick={() =>
                 popup?.open({
@@ -76,7 +76,7 @@ const CreateInstructionsSidebar: React.FC<Props> = ({
             />
 
             <Button
-              title="Save this version"
+              title="Save recipe"
               disabled={
                 checkEmptyBoxes() ||
                 checkBlockNameDoublesBoolean() ||

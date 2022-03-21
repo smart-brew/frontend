@@ -30,8 +30,14 @@ const RecipeInstructionsPage: React.FC = () => {
   const history = useHistory();
   const location = useLocation();
 
-  const { ingredients, recipeName, addBlocks, sendRecipeId, sendLockedState } =
-    location.state as IngredientsFormProps;
+  const {
+    ingredients,
+    recipeName,
+    addBlocks,
+    sendRecipeId,
+    sendLockedState,
+    savedRecipesInfo,
+  } = location.state as IngredientsFormProps;
   const templates = React.useContext(InstructionsContext);
 
   // IT SEEMS TO WORK WITHOUT IT BUT FURTHER TESTING MAY BE NEEDED
@@ -102,7 +108,6 @@ const RecipeInstructionsPage: React.FC = () => {
   const handleInstrSelection = (instr: InstructionTemplate): undefined => {
     const popupNode = popupRef?.current;
     const dataOriginal = popupNode?.getAttribute('data-original');
-    console.log(dataOriginal);
     if (dataOriginal) {
       const [index, blockId, blockName] = dataOriginal.split('_');
 
@@ -119,8 +124,6 @@ const RecipeInstructionsPage: React.FC = () => {
         blockId: parseInt(blockId, 10),
         blockName,
       };
-
-      console.log(newInstruction.blockId);
 
       handleAddInstructionToBlock(
         newInstruction,
@@ -276,11 +279,16 @@ const RecipeInstructionsPage: React.FC = () => {
   const saveRecipe = async (state: string): Promise<void> => {
     const instructions = returnInstructionsForBackend();
     const ingr = returnIngredientForBackend();
-    console.log({ recipeName, sendLockedState, ingr, instructions });
+    let newRecipeName = recipeName;
+    if (state === 'edit') {
+      if (savedRecipesInfo.find((recipe) => recipe.name === recipeName)) {
+        newRecipeName = `${recipeName}_copy`;
+      }
+    }
     await createRecipe({
-      name: state === 'edit' ? `${recipeName}_copy` : recipeName,
+      name: newRecipeName,
       description: '',
-      locked: sendLockedState,
+      locked: state === 'edit' ? false : sendLockedState,
       Ingredients: ingr,
       Instructions: instructions,
     }).then((res) => {

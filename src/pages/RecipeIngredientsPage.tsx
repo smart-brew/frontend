@@ -16,6 +16,7 @@ export interface IngredientsFormProps {
   addBlocks: RecipeBlockType[];
   sendRecipeId: number;
   sendLockedState: boolean;
+  savedRecipesInfo: RecipeSimple[];
 }
 
 const RecipeIngredientsPage: React.FC = () => {
@@ -71,10 +72,6 @@ const RecipeIngredientsPage: React.FC = () => {
   };
 
   const saveForm = (): void => {
-    console.log('SAVE FORM INGREDIENTS');
-
-    console.log(inputFields, sendBlocks);
-
     // only let to leave the page if the recipe name was chosen or isnt duplicate
     if (nameError === '') {
       const data: IngredientsFormProps = {
@@ -83,6 +80,7 @@ const RecipeIngredientsPage: React.FC = () => {
         addBlocks: sendBlocks ?? [],
         sendRecipeId,
         sendLockedState,
+        savedRecipesInfo: recipes,
       };
       history.push('/recipe/instructions', data);
     }
