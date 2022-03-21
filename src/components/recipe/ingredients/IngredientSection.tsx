@@ -14,8 +14,8 @@ export const IngredientSection: React.FC<IngredientSectionProps> = ({
   showUnloader,
 }: IngredientSectionProps) => {
   return (
-    <ul className="">
-      <div className="flex flex-row font-bold py-1">{sectionName}</div>
+    <ul className="py-3">
+      <div className="flex flex-row font-bold py-1 text-xl">{sectionName}</div>
       {ingredients.map((ingr) => {
         return (
           <IngredientsListItem

@@ -34,8 +34,8 @@ const RecipeIngredientsPage: React.FC = () => {
   }, []);
 
   React.useEffect(() => {
-    if (recipeNameForm.length < 3) {
-      setNameError('choose the recipe name longer then 3 characters');
+    if (recipeNameForm.length > 0 && recipeNameForm.length < 3) {
+      setNameError('Recipe name has to be longer than 3 characters.');
     }
   }, [recipeNameForm]);
 
@@ -45,9 +45,9 @@ const RecipeIngredientsPage: React.FC = () => {
       (recipeItem) => recipeItem.name.toLowerCase() === searchTerm
     );
     if (!name) {
-      setNameError('choose the recipe name');
+      setNameError('Choose the recipe name.');
     } else if (matches.length > 0) {
-      setNameError('recipe with this name already exists');
+      setNameError('Recipe with this name already exists!');
     } else if (recipeNameForm) {
       setNameError('');
     }
@@ -81,7 +81,7 @@ const RecipeIngredientsPage: React.FC = () => {
 
   return (
     <SplitPage>
-      <div>
+      <div className="py-4">
         <IngredietsForm
           inputFields={inputFields}
           setInputFields={(newIngredients: IngredientType[]) =>

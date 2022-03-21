@@ -106,3 +106,14 @@ textarea {
   max-width: 14%;
   min-width: 10%;
 }
+
+input:required {
+  border-color: red;
+  border-width: 2px;
+}
+
+input:required:valid {
+  border-width: 1px;
+  border-color: rgb(212 212 212);
+
+}

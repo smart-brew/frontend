@@ -237,6 +237,11 @@ const RecipeInstructionsPage: React.FC = () => {
     instructionPopupNode?.classList.add('modal-bg-active');
   };
 
+  const handleInstrPopupCancel = (): void => {
+    const instructionPopupNode = popupRef?.current;
+    instructionPopupNode?.classList.remove('modal-bg-active');
+  };
+
   const saveRecipe = async (): Promise<void> => {
     const instructions = returnInstructionsForBackend();
     console.log({ instructions, ingredients, recipeName });
@@ -259,7 +264,7 @@ const RecipeInstructionsPage: React.FC = () => {
 
   return (
     <SplitPage>
-      <div className="flex flex-col space-y-5 justify-center">
+      <div className="flex flex-col space-y-5 justify-center py-4">
         {addedBlocks.map((block, index) => (
           <div
             // eslint-disable-next-line react/no-array-index-key
@@ -287,6 +292,7 @@ const RecipeInstructionsPage: React.FC = () => {
           <InstructionPopup
             templates={templates?.data || []}
             callback={handleInstrSelection}
+            hideCallback={handleInstrPopupCancel}
           />
         </div>
       </div>

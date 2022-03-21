@@ -1,4 +1,5 @@
 import React from 'react';
+import Button from '../../shared/Button';
 
 interface Props {
   infoGroup: JSX.Element[];
@@ -30,30 +31,27 @@ export const StartBrewingPopup: React.FC<Props> = ({
         &#8203;
       </span>
 
-      <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+      <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all w-1/2 sm:align-middle">
         <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-          <div className="sm:flex sm:items-start">
-            Je potrebne pripravit tieto ingredencie
+          <div className="sm:flex sm:items-start text-3xl font-semibold">
+            Ingredients to prepare:
           </div>
         </div>
-        <div className="bg-gray-50 px-4 py-3">
+        <div className="bg-gray-50 px-8 py-6 justify-center text-center">
           <div className="">{infoGroup}</div>
 
-          <div className="grid justify-items-stretch mt-8">
-            <button
-              type="button"
-              className="mt-3 w-full inline-flex bg-green-400 hover:bg-green-600 justify-center rounded-md shadow shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+          <div className="flex flex-col  mt-8">
+            <Button
+              title="Confirm"
               onClick={() => onConfirm()}
-            >
-              Confirm
-            </button>
-            <button
-              type="button"
-              onClick={onClose}
-              className="mt-3 w-full bg-red-200 inline-flex justify-center rounded-md shadow shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-red-300 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
-            >
-              Decline
-            </button>
+              className="w-full justify-center text-center"
+            />
+            <Button
+              neutral
+              title="Cancel"
+              onClick={() => onClose()}
+              className="w-full justify-center text-center"
+            />
           </div>
         </div>
       </div>
