@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { usePopup } from '../../contexts/popupContext';
 
 import { IngredientSection } from '../recipe/ingredients/IngredientSection';
@@ -25,6 +25,8 @@ const RecipeProgress: React.FC<Props> = ({ recipeId }: Props) => {
   const [showStartConfirmation, setShowStartConfirmation] = useState(false); // pupup to start a new brewing process
   const [page, setPage] = useState('MainPage');
 
+  const [currentRecipeId, setCurrentRecipeId] = useState('');
+
   const [selectedRecipe, setSelectedRecipe] = React.useState<RecipeType | null>(
     null
   );
@@ -32,13 +34,33 @@ const RecipeProgress: React.FC<Props> = ({ recipeId }: Props) => {
   // if new selected recipe (by ID) -> fetch the entire recipe with details
   React.useEffect(() => {
     const f = async (): Promise<void> => {
-      if (recipeId) {
+      if (recipeId && page === 'MainPage') {
         setSelectedRecipe(await getRecipe(recipeId));
+        setCurrentRecipeId(recipeId.toString());
         setPage('BeforeBrewingPage');
+      }
+      if (currentRecipeId !== '') {
+        setSelectedRecipe(await getRecipe(parseInt(currentRecipeId, 10)));
       }
     };
     f();
-  }, [recipeId]);
+  }, [currentRecipeId, page, recipeId]);
+
+  useEffect(() => {
+    const getPage = window.localStorage.getItem('page');
+    if (typeof getPage === 'string') {
+      setPage(getPage);
+    }
+    const getId = window.localStorage.getItem('currentRecipeId');
+    if (typeof getId === 'string') {
+      setCurrentRecipeId(getId);
+    }
+  }, []);
+
+  useEffect(() => {
+    window.localStorage.setItem('page', page);
+    window.localStorage.setItem('currentRecipeId', currentRecipeId);
+  }, [page, currentRecipeId]);
 
   async function startBrewing(): Promise<void> {
     console.log(
@@ -47,7 +69,8 @@ const RecipeProgress: React.FC<Props> = ({ recipeId }: Props) => {
     setShowStartConfirmation(false);
     setPage('WhileBrewingPage');
 
-    const res = await startBrewingAPI(recipeId);
+    const res = await startBrewingAPI(parseInt(currentRecipeId, 10));
+    setCurrentRecipeId(currentRecipeId);
     // TODO handlovanie odpovede
     console.log(res);
   }
@@ -141,6 +164,8 @@ const RecipeProgress: React.FC<Props> = ({ recipeId }: Props) => {
                     onConfirm: () => {
                       abortBrewingAPI(0);
                       setPage('MainPage');
+                      setCurrentRecipeId('');
+                      setSelectedRecipe(null);
                     },
                   });
                 }}
