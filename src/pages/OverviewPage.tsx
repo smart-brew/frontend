@@ -15,7 +15,7 @@ const OverviewPage: React.FC = () => {
   return (
     <SplitPage>
       <Brewery />
-      <RecipeProgress recipeId={state?.recipeId} />
+      <RecipeProgress recipeId={state?.recipeId ?? null} />
     </SplitPage>
   );
 };

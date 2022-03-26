@@ -14,6 +14,18 @@ import { IdReturn, url, urlWithParams } from './helpers';
 export const getRecipes = (): Promise<RecipeSimple[]> => {
   return fetch(url(allRecipes))
     .then((response) => response.json())
+    .then((recipes: RecipeSimple[]) => {
+      const sortedRecipes = [
+        ...recipes
+          .filter((recipe) => recipe.locked)
+          .sort((a, b) => a.name.localeCompare(b.name)),
+        ...recipes
+          .filter((recipe) => !recipe.locked)
+          .sort((a, b) => a.name.localeCompare(b.name)),
+      ];
+
+      return sortedRecipes;
+    })
     .catch((error) => {
       console.log(error);
       return [];
