@@ -2,6 +2,7 @@ module.exports = {
   env: {
     browser: true,
     es2021: true,
+    'cypress/globals': true,
   },
   extends: [
     'plugin:react/recommended',
@@ -10,6 +11,7 @@ module.exports = {
     'prettier',
     'prettier/prettier',
     'plugin:prettier/recommended',
+    'plugin:cypress/recommended',
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -19,7 +21,7 @@ module.exports = {
     ecmaVersion: 12,
     sourceType: 'module',
   },
-  plugins: ['react', '@typescript-eslint', 'react-hooks'],
+  plugins: ['react', '@typescript-eslint', 'react-hooks', 'cypress'],
   rules: {
     'import/no-unresolved': [
       'error',
@@ -66,6 +68,12 @@ module.exports = {
         endOfLine: 'auto',
       },
     ],
+    'cypress/no-assigning-return-values': 'error',
+    'cypress/no-unnecessary-waiting': 'error',
+    'cypress/assertion-before-screenshot': 'warn',
+    'cypress/no-force': 'warn',
+    'cypress/no-async-tests': 'error',
+    'cypress/no-pause': 'error',
   },
   settings: {
     'import/resolver': {
