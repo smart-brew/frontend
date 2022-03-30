@@ -21,24 +21,24 @@ const Brewery: React.FC = () => {
       <img src={imgPlaceholder} className="h-full" alt="placeholder" />
       {/* There is no other way to connect the right temperature and motor values together  */}
       <BoxChamber
-        NAME="Nádoba 1"
+        NAME="Chamber 1"
         TEMPERATURE={data.TEMPERATURE[0]}
         MOTOR={data.MOTOR[0]}
         cssPositionClass="left-box"
       />
       <BoxChamber
-        NAME="Nádoba 2"
+        NAME="Chamber 2"
         TEMPERATURE={data.TEMPERATURE[1]}
         MOTOR={data.MOTOR[1]}
         cssPositionClass="right-box"
       />
       {/* If there is a possibility to add more pumps, it can be remade */}
       <BoxPump
-        name="Pumpa"
+        name="Pump"
         itemValue={data.PUMP[0]?.ENABLED}
         device={data.PUMP[0]?.DEVICE}
       />
-      <BoxUnloader unloadDevices={data.UNLOADER} name="Násypníky" />
+      <BoxUnloader unloadDevices={data.UNLOADER} name="Hoppers" />
     </div>
   );
 };

@@ -25,7 +25,7 @@ const BoxChamber: React.FC<OneChamberData> = ({
         <div className="font-bold text-lg">{NAME}</div>
         <Item
           itemValue={formatNumToDefinedNumOfDecimal(TEMPERATURE.TEMP, 1)}
-          name="TEPLOTA"
+          name="TEMPERATURE"
           device={TEMPERATURE.DEVICE}
         />
         <Item
