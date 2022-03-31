@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import {
   loadRecipe as loadRecipeAPI,
@@ -18,6 +18,12 @@ import { MENU_HEIGHT } from '../menu/MenuContainer';
 import { InstructionsContext } from '../../contexts/instructionsContext';
 import { returnEditFormat } from './EditFunctions';
 
+const IS_BREW_IN_PROGRESS = 'isBrewInProgress';
+const SELECTED_RECIPE_FOR_BREW = 'selectedRecipeForBrew';
+const CANT_EDIT = 'recipeCantBeEdited';
+// const CANT_DELETE = 'recipeCantBeDeleted';
+const DELETE = 'Delete';
+
 interface Props {
   setRecipeId: (recipeId: number) => void;
   recipeId: number;
@@ -32,6 +38,24 @@ const AllRecipesSidebar: React.FC<Props> = ({
   const history = useHistory();
   const popup = usePopup();
   const templates = React.useContext(InstructionsContext)?.data;
+
+  const [recipeInProgressId, setRecipeInProgressId] = React.useState(-1);
+
+  const [isBrewingInProgress, setIsBrewingInProgress] = React.useState(false);
+
+  useEffect(() => {
+    const isInProgress = window.localStorage.getItem(IS_BREW_IN_PROGRESS);
+    const selectedRecipeId = window.localStorage.getItem(
+      SELECTED_RECIPE_FOR_BREW
+    );
+
+    if (typeof isInProgress === 'string' && isInProgress === 'true') {
+      setIsBrewingInProgress(true);
+      if (typeof selectedRecipeId === 'string') {
+        setRecipeInProgressId(parseInt(selectedRecipeId, 10));
+      }
+    }
+  }, []);
 
   const handleLoadRecipe = async (): Promise<void> => {
     loadRecipeAPI(recipeId);
@@ -72,6 +96,43 @@ const AllRecipesSidebar: React.FC<Props> = ({
     }
   };
 
+  // const decideConfirm = (step: string): void => {
+  //   if (step === CANT_EDIT) {
+  //     handleEditRecipe();
+  //   }
+  //   if (step === DELETE) {
+  //     handleDeleteRecipe();
+  //   }
+  // };
+
+  const setPopupType = (step: string): void => {
+    let popupText = 'Do you want to delete the recipe?';
+    let popupDescripion = 'By clicking Confirm, the recipe will be deleted';
+
+    if (step === CANT_EDIT) {
+      popupText = 'Recipe can not be edited';
+      popupDescripion =
+        'The brewing process is in process right now. Wait till proprocess ends to edit this recipe';
+    }
+    if (step === DELETE && recipeInProgressId === recipeId) {
+      popupText = 'Recipe can not be deleted';
+      popupDescripion =
+        'The brewing process is in process right now. Wait till proprocess ends to delete this recipe';
+    }
+    popup?.open({
+      title: popupText,
+      description: popupDescripion,
+      onConfirm: () => {
+        if (recipeInProgressId !== recipeId) {
+          deleteRecipeAPI(recipeId);
+          window.location.reload();
+        } else {
+          console.log('no');
+        }
+      },
+    });
+  };
+
   return (
     <React.StrictMode>
       <div
@@ -93,6 +154,7 @@ const AllRecipesSidebar: React.FC<Props> = ({
         <div className="buttons text-center flex flex-col w-full max-w-xs">
           <Button
             title="Load recipe"
+            disabled={isBrewingInProgress}
             onClick={() => handleLoadRecipe()}
             className="min-w-full"
           />
@@ -107,22 +169,24 @@ const AllRecipesSidebar: React.FC<Props> = ({
           <Button
             secondary
             title="Edit"
+            // disabled={recipeId === recipeInProgressId}
             className="min-w-full"
-            onClick={() => handleEditRecipe()}
+            // onClick={() => handleEditRecipe()}
+            onClick={() => {
+              if (isBrewingInProgress && recipeInProgressId === recipeId) {
+                setPopupType(CANT_EDIT);
+              } else {
+                handleEditRecipe();
+              }
+            }}
           />
 
           <Button
             warn
             title="Delete"
+            // disabled={recipeId === recipeInProgressId}
             onClick={() => {
-              popup?.open({
-                title: 'Do you want to delete the recipe?',
-                description: 'By clicking Confirm, the recipe will be deleted',
-                onConfirm: () => {
-                  deleteRecipeAPI(recipeId);
-                  window.location.reload();
-                },
-              });
+              setPopupType(DELETE);
             }}
             className="min-w-full"
           />
