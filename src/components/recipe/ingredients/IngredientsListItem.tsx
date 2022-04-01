@@ -17,7 +17,7 @@ export const IngredientsListItem: React.FC<IngredientItemsProps> = ({
         <div className="w-1/12 px-4 text-left italic">{ingredient.units}</div>
         <div className="w-10/12 px-4 text-left">{ingredient.name}</div>
       </div>
-      {showUnloader && <div className="w-auto px-4 text-left">nasypnik </div>}
+      {showUnloader && <div className="w-auto px-4 text-left">hopper </div>}
     </div>
   );
 };
