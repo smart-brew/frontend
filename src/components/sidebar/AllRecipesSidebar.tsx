@@ -41,7 +41,7 @@ const AllRecipesSidebar: React.FC<Props> = ({
 
   const [recipeInProgressId, setRecipeInProgressId] = React.useState(-1);
 
-  const [isBrewingInProgress, setIsBrewingInProgress] = React.useState(false);
+  const [isBrewingInProgress, setIsBrewingInProgress] = React.useState('false');
 
   useEffect(() => {
     const isInProgress = window.localStorage.getItem(IS_BREW_IN_PROGRESS);
@@ -50,7 +50,13 @@ const AllRecipesSidebar: React.FC<Props> = ({
     );
 
     if (typeof isInProgress === 'string' && isInProgress === 'true') {
-      setIsBrewingInProgress(true);
+      setIsBrewingInProgress('true');
+      if (typeof selectedRecipeId === 'string') {
+        setRecipeInProgressId(parseInt(selectedRecipeId, 10));
+      }
+    }
+    if (typeof isInProgress === 'string' && isInProgress === 'pause') {
+      setIsBrewingInProgress('pause');
       if (typeof selectedRecipeId === 'string') {
         setRecipeInProgressId(parseInt(selectedRecipeId, 10));
       }
@@ -154,7 +160,7 @@ const AllRecipesSidebar: React.FC<Props> = ({
         <div className="buttons text-center flex flex-col w-full max-w-xs">
           <Button
             title="Load recipe"
-            disabled={isBrewingInProgress}
+            disabled={isBrewingInProgress !== 'false'}
             onClick={() => handleLoadRecipe()}
             className="min-w-full"
           />
@@ -169,11 +175,12 @@ const AllRecipesSidebar: React.FC<Props> = ({
           <Button
             secondary
             title="Edit"
-            // disabled={recipeId === recipeInProgressId}
             className="min-w-full"
-            // onClick={() => handleEditRecipe()}
             onClick={() => {
-              if (isBrewingInProgress && recipeInProgressId === recipeId) {
+              if (
+                isBrewingInProgress !== 'false' &&
+                recipeInProgressId === recipeId
+              ) {
                 setPopupType(CANT_EDIT);
               } else {
                 handleEditRecipe();
@@ -184,7 +191,6 @@ const AllRecipesSidebar: React.FC<Props> = ({
           <Button
             warn
             title="Delete"
-            // disabled={recipeId === recipeInProgressId}
             onClick={() => {
               setPopupType(DELETE);
             }}
