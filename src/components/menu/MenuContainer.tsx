@@ -11,6 +11,7 @@ const menus = [
   { link: '/', title: 'Overview' },
   { link: '/recipe', title: 'Recipes' },
   { link: '/history', title: 'History' },
+  { link: '/tester', title: 'Tester' },
 ];
 
 const Menu: React.FC = () => {

@@ -6,6 +6,7 @@ import OverviewPage from './OverviewPage';
 import RecipeInstructionsPage from './RecipeInstructionsPage';
 import HistoryPage from './HistoryPage';
 import RecipeIngredientsPage from './RecipeIngredientsPage';
+import TesterPage from './TesterPage';
 
 const Pages: React.FC = () => {
   return (
@@ -15,6 +16,7 @@ const Pages: React.FC = () => {
       <Route path="/recipe/instructions" component={RecipeInstructionsPage} />
       <Route path="/recipe/ingredients" component={RecipeIngredientsPage} />
       <Route path="/history" component={HistoryPage} />
+      <Route path="/tester" component={TesterPage} />
     </div>
   );
 };
