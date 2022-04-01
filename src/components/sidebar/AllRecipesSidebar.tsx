@@ -110,7 +110,7 @@ const AllRecipesSidebar: React.FC<Props> = ({
     if (step === CANT_EDIT) {
       popupText = 'Recipe can not be edited';
       popupDescripion =
-        'his recipe is being prepared right now.. Wait till process ends, or abort the brewing to edit this recipe';
+        'This recipe is being prepared right now. Wait till process ends, or abort the brewing to edit this recipe';
     }
     if (step === DELETE && recipeInProgressId === recipeId) {
       popupText = 'Recipe can not be deleted';

@@ -156,7 +156,6 @@ const RecipeProgress: React.FC<Props> = ({ recipeId }: Props) => {
         'By clicking Confirm, the brewing process will be aborted without the chance to resume',
       onConfirm: () => {
         abortBrewingAPI(0);
-        setCurrentRecipeId(null);
         setIsBrewingInProgress(BREW_STATE_FALSE);
         showAbortConfirmation();
       },
