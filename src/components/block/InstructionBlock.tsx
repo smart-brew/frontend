@@ -16,7 +16,7 @@ const InstructionBlock: React.FC<Props> = ({
   const { blockName, instructions } = block;
   return (
     <div
-      className="border rounded-xl space-y-2 py-5 px-3"
+      className="border rounded-xl space-y-2 py-5 px-2"
       style={{
         background: 'rgba(254, 208, 8, 0.1)',
         borderColor: 'rgba(254, 208, 8, 0.5)',

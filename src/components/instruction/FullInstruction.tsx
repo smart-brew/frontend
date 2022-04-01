@@ -47,21 +47,30 @@ const FullInstruction: React.FC<Props> = ({
       instruction.codeName === InstructionConstants.MOTOR ||
       instruction.codeName === InstructionConstants.TEMPERATURE
     ) {
+      console.log(status.currentValue);
       return (
-        <div className="flex flex-row items-center content-center justify-center space-x-8">
-          <div className="flex flex-col">
-            <span className="font-semibold">Now:</span>
-            <span className="font-bold">
-              {formatNumToDefinedNumOfDecimal(status.currentValue, 1)}
-              {template?.units}
+        <div className="flex flex-col items-center content-center justify-center">
+          <span className="font-semibold">
+            Device:{' '}
+            <span className="font-normal px-2">
+              {instruction.optionCodeName}
             </span>
-          </div>
-          <div className="flex flex-col">
-            <span className="font-semibold">Target:</span>
-            <span className="font-bold">
-              {formatNumToDefinedNumOfDecimal(instruction.param || 0, 1)}
-              {template?.units}
-            </span>
+          </span>
+          <div className="flex flex-row items-center content-center justify-center  space-x-8 ">
+            <div className="flex flex-col">
+              <span className="font-semibold">Now:</span>
+              <span className="font-bold">
+                {formatNumToDefinedNumOfDecimal(status.currentValue, 1)}
+                {template?.units}
+              </span>
+            </div>
+            <div className="flex flex-col">
+              <span className="font-semibold">Target:</span>
+              <span className="font-bold">
+                {formatNumToDefinedNumOfDecimal(instruction.param || 0, 1)}
+                {template?.units}
+              </span>
+            </div>
           </div>
         </div>
       );
