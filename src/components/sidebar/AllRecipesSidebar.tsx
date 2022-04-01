@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import {
   loadRecipe as loadRecipeAPI,
@@ -21,8 +21,11 @@ import { returnEditFormat } from './EditFunctions';
 const IS_BREW_IN_PROGRESS = 'isBrewInProgress';
 const SELECTED_RECIPE_FOR_BREW = 'selectedRecipeForBrew';
 const CANT_EDIT = 'recipeCantBeEdited';
-// const CANT_DELETE = 'recipeCantBeDeleted';
-const DELETE = 'Delete';
+const DELETE = 'delete';
+
+const PAUSE_STATE = 'pause';
+const BREW_STATE_TRUE = 'true';
+const BREW_STATE_FALSE = 'false';
 
 interface Props {
   setRecipeId: (recipeId: number) => void;
@@ -41,7 +44,8 @@ const AllRecipesSidebar: React.FC<Props> = ({
 
   const [recipeInProgressId, setRecipeInProgressId] = React.useState(-1);
 
-  const [isBrewingInProgress, setIsBrewingInProgress] = React.useState('false');
+  const [isBrewingInProgress, setIsBrewingInProgress] =
+    React.useState(BREW_STATE_FALSE);
 
   useEffect(() => {
     const isInProgress = window.localStorage.getItem(IS_BREW_IN_PROGRESS);
@@ -49,14 +53,11 @@ const AllRecipesSidebar: React.FC<Props> = ({
       SELECTED_RECIPE_FOR_BREW
     );
 
-    if (typeof isInProgress === 'string' && isInProgress === 'true') {
-      setIsBrewingInProgress('true');
-      if (typeof selectedRecipeId === 'string') {
-        setRecipeInProgressId(parseInt(selectedRecipeId, 10));
-      }
-    }
-    if (typeof isInProgress === 'string' && isInProgress === 'pause') {
-      setIsBrewingInProgress('pause');
+    if (
+      typeof isInProgress === 'string' &&
+      (isInProgress === BREW_STATE_TRUE || isInProgress === PAUSE_STATE)
+    ) {
+      setIsBrewingInProgress(BREW_STATE_TRUE);
       if (typeof selectedRecipeId === 'string') {
         setRecipeInProgressId(parseInt(selectedRecipeId, 10));
       }
@@ -102,15 +103,6 @@ const AllRecipesSidebar: React.FC<Props> = ({
     }
   };
 
-  // const decideConfirm = (step: string): void => {
-  //   if (step === CANT_EDIT) {
-  //     handleEditRecipe();
-  //   }
-  //   if (step === DELETE) {
-  //     handleDeleteRecipe();
-  //   }
-  // };
-
   const setPopupType = (step: string): void => {
     let popupText = 'Do you want to delete the recipe?';
     let popupDescripion = 'By clicking Confirm, the recipe will be deleted';
@@ -118,12 +110,12 @@ const AllRecipesSidebar: React.FC<Props> = ({
     if (step === CANT_EDIT) {
       popupText = 'Recipe can not be edited';
       popupDescripion =
-        'The brewing process is in process right now. Wait till proprocess ends to edit this recipe';
+        'his recipe is being prepared right now.. Wait till process ends, or abort the brewing to edit this recipe';
     }
     if (step === DELETE && recipeInProgressId === recipeId) {
       popupText = 'Recipe can not be deleted';
       popupDescripion =
-        'The brewing process is in process right now. Wait till proprocess ends to delete this recipe';
+        'This recipe is being prepared right now. Wait till the process ends, or abort the brewing to delete this recipe';
     }
     popup?.open({
       title: popupText,
@@ -133,7 +125,7 @@ const AllRecipesSidebar: React.FC<Props> = ({
           deleteRecipeAPI(recipeId);
           window.location.reload();
         } else {
-          console.log('no');
+          console.log(step, ' can not be performed');
         }
       },
     });
@@ -160,7 +152,7 @@ const AllRecipesSidebar: React.FC<Props> = ({
         <div className="buttons text-center flex flex-col w-full max-w-xs">
           <Button
             title="Load recipe"
-            disabled={isBrewingInProgress !== 'false'}
+            disabled={isBrewingInProgress !== BREW_STATE_FALSE}
             onClick={() => handleLoadRecipe()}
             className="min-w-full"
           />
@@ -178,7 +170,7 @@ const AllRecipesSidebar: React.FC<Props> = ({
             className="min-w-full"
             onClick={() => {
               if (
-                isBrewingInProgress !== 'false' &&
+                isBrewingInProgress !== BREW_STATE_FALSE &&
                 recipeInProgressId === recipeId
               ) {
                 setPopupType(CANT_EDIT);
