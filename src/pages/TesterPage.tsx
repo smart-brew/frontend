@@ -19,8 +19,6 @@ const TesterPage: React.FC = () => {
 
   const instrSelectedCallback = (selectedInstr: InstructionTemplate | null) => {
     setSelectedInstrState(selectedInstr);
-    setSelectedOptionState(undefined);
-    setParamValueState(undefined);
   };
 
   const selectedOptionCallback = (
@@ -50,6 +48,8 @@ const TesterPage: React.FC = () => {
   };
 
   useEffect(() => {
+    setSelectedOptionState(undefined);
+    setParamValueState(undefined);
     setSubmitButtonState();
   }, [selectedInstrState]);
 
@@ -73,7 +73,7 @@ const TesterPage: React.FC = () => {
         title={'Submit'}
         disabled={!instructionCompleteState}
         onClick={() => {
-          console.log(instructionCompleteState);
+          // TODO create instruction object and send it to BE
         }}
       />
     </div>

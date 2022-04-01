@@ -71,4 +71,17 @@ export default class TimeHelper {
     }
     return 0;
   };
+
+  static convertTimeToMillis = (
+    days: number,
+    hours: number,
+    minutes: number
+  ): number => {
+    let millis = 0;
+    millis += minutes * TimeHelper.MILLIS_MINUTES;
+    millis += hours * TimeHelper.MILLIS_HOURS;
+    millis += days * TimeHelper.MILLIS_DAYS;
+
+    return millis;
+  };
 }
