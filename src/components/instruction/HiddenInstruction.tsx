@@ -4,6 +4,7 @@ import InstructionType from '../../types/RecipeData/InstructionType';
 import UnitsMap from '../../helpers/UnitsMap';
 import InstructionConstants from '../../helpers/InstructionConstants';
 import TimeHelper from '../../helpers/TimeHelper';
+import { formatNumToDefinedNumOfDecimal } from '../../helpers/DataFormatter';
 
 interface Props {
   instruction: InstructionType;
@@ -20,7 +21,10 @@ const HiddenInstruction: React.FC<Props> = ({
     const unit = unitMap.getUnit(instruction.category);
 
     if (unit !== undefined) {
-      return `${instruction.param} ${unit}`;
+      return `${formatNumToDefinedNumOfDecimal(
+        instruction.param || 0,
+        1
+      )} ${unit}`;
     }
 
     if (instruction.codeName === InstructionConstants.MANUAL) {

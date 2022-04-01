@@ -9,6 +9,7 @@ import InstructionConstants from '../../helpers/InstructionConstants';
 import TimeHelper from '../../helpers/TimeHelper';
 import { usePopup } from '../../contexts/popupContext';
 import { confirmManualInstruction } from '../../api/brew';
+import { formatNumToDefinedNumOfDecimal } from '../../helpers/DataFormatter';
 
 interface Props {
   instruction: InstructionType;
@@ -51,14 +52,14 @@ const FullInstruction: React.FC<Props> = ({
           <div className="flex flex-col">
             <span className="font-semibold">Now:</span>
             <span className="font-bold">
-              {status.currentValue}
+              {formatNumToDefinedNumOfDecimal(status.currentValue, 1)}
               {template?.units}
             </span>
           </div>
           <div className="flex flex-col">
             <span className="font-semibold">Target:</span>
             <span className="font-bold">
-              {instruction.param}
+              {formatNumToDefinedNumOfDecimal(instruction.param || 0, 1)}
               {template?.units}
             </span>
           </div>
