@@ -5,17 +5,15 @@ import OptionType from '../../types/FunctionData/OptionType';
 import TimeHelper from '../../helpers/TimeHelper';
 
 interface Props {
-  selectedInstr: InstructionTemplate | null;
-  selectOptionCallback: (selectedOption: OptionType | null | undefined) => void;
-  paramValueEnteredCallback: (
-    paramValue: number | string | null | undefined
-  ) => void;
+  selectedInstruction: InstructionTemplate | null;
+  onSelectOption: (selectedOption: OptionType | null) => void;
+  onParamChange: (paramValue: number | string | null) => void;
 }
 
 const TestParametersInput: React.FC<Props> = ({
-  selectedInstr,
-  selectOptionCallback,
-  paramValueEnteredCallback,
+  selectedInstruction,
+  onSelectOption,
+  onParamChange,
 }) => {
   const daysRef = useRef<HTMLInputElement>(null);
   const hoursRef = useRef<HTMLInputElement>(null);
@@ -37,32 +35,32 @@ const TestParametersInput: React.FC<Props> = ({
   };
 
   const getInstructionParametersInput = (): JSX.Element | null => {
-    if (selectedInstr !== null) {
+    if (selectedInstruction !== null) {
       if (
-        selectedInstr.codeName === InstructionConstants.TEMPERATURE ||
-        selectedInstr.codeName === InstructionConstants.MOTOR
+        selectedInstruction.codeName === InstructionConstants.TEMPERATURE ||
+        selectedInstruction.codeName === InstructionConstants.MOTOR
       ) {
         return (
           <div className="w-1/2 rounded-2xl p-5 space-y-3 text-left flex flex-col">
             <span className="text-xl font-bold px-8">Device:</span>
             <div className="flex flex-row flex-wrap justify-evenly radio-toolbar">
-              {selectedInstr.options.map((value, index) => {
+              {selectedInstruction.options.map((option) => {
                 return (
-                  <div className="text-lg my-3">
+                  <div key={option.codeName} className="text-lg my-3">
                     <input
                       className=""
                       type="radio"
                       name="options"
-                      id={`opt_${value.id.toString()}`}
+                      id={`opt_${option.id.toString()}`}
                       onClick={() => {
-                        selectOptionCallback(value);
+                        onSelectOption(option);
                       }}
                     />
                     <label
                       className="border border-gray-300 rounded-xl px-6 py-3 w-full"
-                      htmlFor={`opt_${value.id.toString()}`}
+                      htmlFor={`opt_${option.id.toString()}`}
                     >
-                      <span>{value.codeName}</span>
+                      <span>{option.codeName}</span>
                     </label>
                   </div>
                 );
@@ -77,46 +75,50 @@ const TestParametersInput: React.FC<Props> = ({
                 onChange={(e) => {
                   if (e.target.value === '') {
                     console.log(e.target.value);
-                    paramValueEnteredCallback(undefined);
+                    onParamChange(null);
                   } else {
-                    paramValueEnteredCallback(e.target.value);
+                    onParamChange(e.target.value);
                   }
                 }}
               />
               <span className="text-lg w-1/5">
-                {selectedInstr.codeName === InstructionConstants.TEMPERATURE
+                {selectedInstruction.codeName ===
+                InstructionConstants.TEMPERATURE
                   ? '°C'
                   : 'RPM'}
               </span>
             </div>
           </div>
         );
-      } else if (
-        selectedInstr.codeName === InstructionConstants.PUMP ||
-        selectedInstr.codeName === InstructionConstants.UNLOADER
+      }
+      if (
+        selectedInstruction.codeName === InstructionConstants.PUMP ||
+        selectedInstruction.codeName === InstructionConstants.UNLOADER
       ) {
+        onParamChange('');
+
         return (
           <div className=" rounded-2xl p-5 space-y-3 text-left flex flex-col">
             <span className="text-xl font-bold px-8">Device:</span>
             <div className="flex flex-row flex-wrap justify-evenly radio-toolbar">
-              {selectedInstr.options.map((value, index) => {
+              {selectedInstruction.options.map((option) => {
                 return (
-                  <div className="text-lg my-3">
+                  <div key={option.codeName} className="text-lg my-3">
                     <input
                       className=""
                       type="radio"
                       name="options"
-                      id={`opt_${value.id.toString()}`}
+                      id={`opt_${option.id.toString()}`}
                       onClick={() => {
-                        selectOptionCallback(value);
-                        paramValueEnteredCallback(null);
+                        onSelectOption(option);
+                        onParamChange(null);
                       }}
                     />
                     <label
                       className="border border-gray-300 rounded-xl px-6 py-3 w-full"
-                      htmlFor={`opt_${value.id.toString()}`}
+                      htmlFor={`opt_${option.id.toString()}`}
                     >
-                      <span>{value.codeName}</span>
+                      <span>{option.codeName}</span>
                     </label>
                   </div>
                 );
@@ -124,7 +126,10 @@ const TestParametersInput: React.FC<Props> = ({
             </div>
           </div>
         );
-      } else if (selectedInstr.codeName === InstructionConstants.WAIT) {
+      }
+      if (selectedInstruction.codeName === InstructionConstants.WAIT) {
+        onSelectOption(selectedInstruction);
+
         return (
           <div className="flex flex-row space-x-10 px-6 text-lg">
             <div className="flex flex-row w-1/3 space-x-3 items-center">
@@ -135,12 +140,12 @@ const TestParametersInput: React.FC<Props> = ({
                 defaultValue={0}
                 ref={daysRef}
                 onChange={() => {
-                  let time = readWaitParamValue();
-                  selectOptionCallback(null);
+                  const time = readWaitParamValue();
+                  onSelectOption(null);
                   if (time && time > 0) {
-                    paramValueEnteredCallback(time);
+                    onParamChange(time);
                   } else {
-                    paramValueEnteredCallback(undefined);
+                    onParamChange(null);
                   }
                 }}
               />
@@ -155,12 +160,12 @@ const TestParametersInput: React.FC<Props> = ({
                 defaultValue={0}
                 ref={hoursRef}
                 onChange={() => {
-                  let time = readWaitParamValue();
-                  selectOptionCallback(null);
+                  const time = readWaitParamValue();
+                  onSelectOption(null);
                   if (time && time > 0) {
-                    paramValueEnteredCallback(time);
+                    onParamChange(time);
                   } else {
-                    paramValueEnteredCallback(undefined);
+                    onParamChange(null);
                   }
                 }}
               />
@@ -175,12 +180,12 @@ const TestParametersInput: React.FC<Props> = ({
                 defaultValue={0}
                 ref={minutesRef}
                 onChange={() => {
-                  let time = readWaitParamValue();
-                  selectOptionCallback(null);
+                  const time = readWaitParamValue();
+                  onSelectOption(null);
                   if (time && time > 0) {
-                    paramValueEnteredCallback(time);
+                    onParamChange(time);
                   } else {
-                    paramValueEnteredCallback(undefined);
+                    onParamChange(null);
                   }
                 }}
               />
@@ -188,7 +193,10 @@ const TestParametersInput: React.FC<Props> = ({
             </div>
           </div>
         );
-      } else if (selectedInstr.codeName === InstructionConstants.MANUAL) {
+      }
+      if (selectedInstruction.codeName === InstructionConstants.MANUAL) {
+        onSelectOption(selectedInstruction);
+
         return (
           <div>
             <textarea
@@ -196,26 +204,25 @@ const TestParametersInput: React.FC<Props> = ({
               rows={5}
               cols={50}
               onChange={(e) => {
-                selectOptionCallback(null);
+                onSelectOption(null);
                 console.log(e.target.value);
                 if (e.target.value !== '') {
-                  paramValueEnteredCallback(e.target.value);
+                  onParamChange(e.target.value);
                 } else {
-                  paramValueEnteredCallback(undefined);
+                  onParamChange(null);
                 }
               }}
             />
           </div>
         );
-      } else {
-        return null;
       }
+      return null;
     }
     return null;
   };
 
   return (
-    <div className="w-1/2 border border-gray-300 shadow-md rounded-2xl p-5 space-y-4 justify-center">
+    <div className="w-full border border-gray-300 shadow-md rounded-2xl p-5 space-y-4 justify-center">
       <span className="text-2xl font-bold m-8">Set parameters:</span>
       <div className="justify-center">{getInstructionParametersInput()}</div>
     </div>

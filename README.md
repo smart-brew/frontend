@@ -8,7 +8,7 @@ docker compose up --build --detach
 
 ## Production
 
-*Needs to have already pre-built project using `yarn build` in order to work in production
+\*Needs to have already pre-built project using `yarn build` in order to work in production
 
 ```bash
 docker compose -f docker-compose.prod.yml up --build --detach

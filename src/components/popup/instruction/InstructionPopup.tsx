@@ -2,18 +2,19 @@ import React from 'react';
 
 import InstructionForSelection from './InstructionForSelection';
 import InstructionTemplate from '../../../types/FunctionData/InstructionTemplate';
+import { useInstructionsContext } from '../../../contexts/instructionsContext';
 
 interface InstrPopupProps {
-  templates: InstructionTemplate[];
   callback: (instr: InstructionTemplate) => undefined;
   hideCallback: () => void;
 }
 
 const InstructionPopup: React.FC<InstrPopupProps> = ({
-  templates,
   callback,
   hideCallback,
 }: InstrPopupProps) => {
+  const { data: templates } = useInstructionsContext();
+
   const instructionPopupRef = React.useRef<HTMLDivElement>(null);
 
   // const myCallback = (instr: InstructionTemplateType): void => {
