@@ -10,7 +10,7 @@ import RecipeList from '../recipe/recipes-list/RecipeList';
 import Button from '../shared/Button';
 import { OverviewPageState } from '../../pages/OverviewPage';
 import { RecipeDataProps } from '../../pages/RecipeInstructionsPage';
-import RecipeType, { RecipeSimple } from '../../types/RecipeData/RecipeType';
+import { RecipeSimple } from '../../types/RecipeData/RecipeType';
 
 import { usePopup } from '../../contexts/popupContext';
 import { MENU_HEIGHT } from '../menu/MenuContainer';
@@ -63,10 +63,12 @@ const AllRecipesSidebar: React.FC<Props> = ({
   };
 
   const handleEditRecipe = async (): Promise<void> => {
-    const data: RecipeType = await getRecipe(recipeId);
-    const newData = returnEditFormat(data, templates);
-    if (newData) {
-      history.push('/recipe/ingredients', newData);
+    const data = await getRecipe(recipeId);
+    if (templates && data) {
+      const newData = returnEditFormat(data, templates);
+      if (newData) {
+        history.push('/recipe/ingredients', newData);
+      }
     }
   };
 

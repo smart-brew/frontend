@@ -1,8 +1,7 @@
 import React from 'react';
 
-import { DataContext } from '../../contexts/dataContext';
+import { useDataContext } from '../../contexts/dataContext';
 import imgPlaceholder from '../../assets/schema.svg';
-import { moduleData } from '../../data/moduleData';
 import { Unloader } from '../../types/SystemData';
 import BoxChamber from './BoxChamber';
 import BoxUnloader from './BoxUnloader';
@@ -14,7 +13,7 @@ export type Unloaders = {
 };
 
 const Brewery: React.FC = () => {
-  const data = React.useContext(DataContext)?.data || moduleData;
+  const { data } = useDataContext();
 
   return (
     <div className="h-full overflow-hidden overscroll-none relative space-y-5">

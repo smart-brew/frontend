@@ -57,7 +57,12 @@ const RecipeProgress: React.FC<Props> = ({ recipeId }: Props) => {
           setSelectedRecipe(await getRecipe(recipes[0].id));
         }
       } else if (currentRecipeId !== null) {
-        setSelectedRecipe(await getRecipe(currentRecipeId));
+        const recipe = await getRecipe(currentRecipeId);
+
+        if (!recipe) {
+          setCurrentRecipeId(null);
+        }
+        setSelectedRecipe(recipe);
       }
     };
     f();
@@ -88,6 +93,8 @@ const RecipeProgress: React.FC<Props> = ({ recipeId }: Props) => {
         SELECTED_RECIPE_FOR_BREW,
         currentRecipeId.toString()
       );
+    } else {
+      window.localStorage.removeItem(SELECTED_RECIPE_FOR_BREW);
     }
   }, [currentRecipeId]);
 

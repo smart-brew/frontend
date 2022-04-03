@@ -1,32 +1,36 @@
-import { post, put } from './client';
-import {
-  abortBrew,
-  confirmInstructionUrl,
-  pauseBrew,
-  resumeBrew,
-  startBrew,
-} from './endpoints';
+import { apiClient } from './client';
 import { IdReturn } from './helpers';
 
-export const startBrewing = async (recipeId: number): Promise<IdReturn> => {
-  return put(startBrew, { recipeId });
+export const startBrewing = async (
+  recipeId: number
+): Promise<IdReturn | null> => {
+  return apiClient('PUT /api/brew/0/start', { recipeId });
 };
 
-export const pauseBrewing = async (brewId: number): Promise<IdReturn> => {
-  return post(pauseBrew, { id: brewId });
+export const pauseBrewing = async (
+  brewId: number
+): Promise<IdReturn | null> => {
+  return apiClient('POST /api/brew/:id/pause', { id: brewId });
 };
 
-export const abortBrewing = async (brewId: number): Promise<IdReturn> => {
-  return post(abortBrew, { id: brewId });
+export const abortBrewing = async (
+  brewId: number
+): Promise<IdReturn | null> => {
+  return apiClient('POST /api/brew/:id/abort', { id: brewId });
 };
 
-export const resumeBrewing = async (brewId: number): Promise<IdReturn> => {
-  return post(resumeBrew, { id: brewId });
+export const resumeBrewing = async (
+  brewId: number
+): Promise<IdReturn | null> => {
+  return apiClient('POST /api/brew/:id/resume', { id: brewId });
 };
 
 export const confirmManualInstruction = async (
   brewId: number,
   instructionId: number
-): Promise<IdReturn> => {
-  return post(confirmInstructionUrl, { brewId, instructionId });
+): Promise<IdReturn | null> => {
+  return apiClient('POST /api/brew/:brewId/instruction/:instructionId/done', {
+    brewId,
+    instructionId,
+  });
 };

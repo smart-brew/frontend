@@ -5,8 +5,8 @@ import { Motor, Temperature } from '../../types/SystemData';
 
 interface OneChamberData {
   NAME: string;
-  TEMPERATURE: Temperature;
-  MOTOR: Motor;
+  TEMPERATURE: Temperature | undefined;
+  MOTOR: Motor | undefined;
   cssPositionClass?: string;
 }
 
@@ -23,16 +23,20 @@ const BoxChamber: React.FC<OneChamberData> = ({
     >
       <div className="space-y-5">
         <div className="font-bold text-lg">{NAME}</div>
-        <Item
-          itemValue={formatNumToDefinedNumOfDecimal(TEMPERATURE.TEMP, 1)}
-          name="TEMPERATURE"
-          device={TEMPERATURE.DEVICE}
-        />
-        <Item
-          itemValue={formatNumToDefinedNumOfDecimal(MOTOR.RPM, 1)}
-          name="MOTOR"
-          device={MOTOR.DEVICE}
-        />
+        {TEMPERATURE && (
+          <Item
+            itemValue={formatNumToDefinedNumOfDecimal(TEMPERATURE.TEMP, 1)}
+            name="TEMPERATURE"
+            device={TEMPERATURE.DEVICE}
+          />
+        )}
+        {MOTOR && (
+          <Item
+            itemValue={formatNumToDefinedNumOfDecimal(MOTOR.RPM, 1)}
+            name="MOTOR"
+            device={MOTOR.DEVICE}
+          />
+        )}
       </div>
     </div>
   );
