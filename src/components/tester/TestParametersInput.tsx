@@ -95,8 +95,6 @@ const TestParametersInput: React.FC<Props> = ({
         selectedInstruction.codeName === InstructionConstants.PUMP ||
         selectedInstruction.codeName === InstructionConstants.UNLOADER
       ) {
-        onParamChange('');
-
         return (
           <div className=" rounded-2xl p-5 space-y-3 text-left flex flex-col">
             <span className="text-xl font-bold px-8">Device:</span>
@@ -128,8 +126,6 @@ const TestParametersInput: React.FC<Props> = ({
         );
       }
       if (selectedInstruction.codeName === InstructionConstants.WAIT) {
-        onSelectOption(selectedInstruction);
-
         return (
           <div className="flex flex-row space-x-10 px-6 text-lg">
             <div className="flex flex-row w-1/3 space-x-3 items-center">
@@ -195,8 +191,6 @@ const TestParametersInput: React.FC<Props> = ({
         );
       }
       if (selectedInstruction.codeName === InstructionConstants.MANUAL) {
-        onSelectOption(selectedInstruction);
-
         return (
           <div>
             <textarea

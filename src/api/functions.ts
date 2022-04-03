@@ -10,7 +10,7 @@ import { IdReturn } from './helpers';
 export const getSupportedFunctions = async (): Promise<
   InstructionTemplate[]
 > => {
-  return get(supportedFunctions);
+  return (await get(supportedFunctions)) ?? [];
 };
 
 export const sendInstructionTester = async (
