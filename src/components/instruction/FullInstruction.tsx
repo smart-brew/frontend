@@ -9,6 +9,7 @@ import InstructionConstants from '../../helpers/InstructionConstants';
 import TimeHelper from '../../helpers/TimeHelper';
 import { usePopup } from '../../contexts/popupContext';
 import { confirmManualInstruction } from '../../api/brew';
+import { formatNumToDefinedNumOfDecimal } from '../../helpers/DataFormatter';
 
 interface Props {
   instruction: InstructionType;
@@ -46,21 +47,30 @@ const FullInstruction: React.FC<Props> = ({
       instruction.codeName === InstructionConstants.MOTOR ||
       instruction.codeName === InstructionConstants.TEMPERATURE
     ) {
+      console.log(status.currentValue);
       return (
-        <div className="flex flex-row items-center content-center justify-center space-x-8">
-          <div className="flex flex-col">
-            <span className="font-semibold">Now:</span>
-            <span className="font-bold">
-              {status.currentValue}
-              {template?.units}
+        <div className="flex flex-col items-center content-center justify-center">
+          <span className="font-semibold">
+            Device:{' '}
+            <span className="font-normal px-2">
+              {instruction.optionCodeName}
             </span>
-          </div>
-          <div className="flex flex-col">
-            <span className="font-semibold">Target:</span>
-            <span className="font-bold">
-              {instruction.param}
-              {template?.units}
-            </span>
+          </span>
+          <div className="flex flex-row items-center content-center justify-center  space-x-8 ">
+            <div className="flex flex-col">
+              <span className="font-semibold">Now:</span>
+              <span className="font-bold">
+                {formatNumToDefinedNumOfDecimal(status.currentValue, 1)}
+                {template?.units}
+              </span>
+            </div>
+            <div className="flex flex-col">
+              <span className="font-semibold">Target:</span>
+              <span className="font-bold">
+                {formatNumToDefinedNumOfDecimal(instruction.param || 0, 1)}
+                {template?.units}
+              </span>
+            </div>
           </div>
         </div>
       );
@@ -151,7 +161,7 @@ const FullInstruction: React.FC<Props> = ({
         <img
           src={arrow}
           alt="arrow"
-          className="w-12 h-auto absolute -left-16 top-8 z-10"
+          className="w-12 h-auto absolute -left-16 top-8 z-2"
         />
       </div>
       <h3 className="text-xl">
