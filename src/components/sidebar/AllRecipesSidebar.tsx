@@ -6,7 +6,7 @@ import {
   getRecipe,
 } from '../../api/recipe';
 import RecipeList from '../recipe/recipes-list/RecipeList';
-
+import BrewingStateConstants from '../../helpers/BrewingStateConstants';
 import Button from '../shared/Button';
 import { OverviewPageState } from '../../pages/OverviewPage';
 import { RecipeDataProps } from '../../pages/RecipeInstructionsPage';
@@ -22,10 +22,6 @@ const IS_BREW_IN_PROGRESS = 'isBrewInProgress';
 const SELECTED_RECIPE_FOR_BREW = 'selectedRecipeForBrew';
 const CANT_EDIT = 'recipeCantBeEdited';
 const DELETE = 'delete';
-
-const PAUSE_STATE = 'pause';
-const BREW_STATE_TRUE = 'true';
-const BREW_STATE_FALSE = 'false';
 
 interface Props {
   setRecipeId: (recipeId: number) => void;
@@ -44,8 +40,9 @@ const AllRecipesSidebar: React.FC<Props> = ({
 
   const [recipeInProgressId, setRecipeInProgressId] = React.useState(-1);
 
-  const [isBrewingInProgress, setIsBrewingInProgress] =
-    React.useState(BREW_STATE_FALSE);
+  const [brewingState, setBrewingState] = React.useState(
+    BrewingStateConstants.BREW_STATE_INACTIVE
+  );
 
   useEffect(() => {
     const isInProgress = window.localStorage.getItem(IS_BREW_IN_PROGRESS);
@@ -55,9 +52,10 @@ const AllRecipesSidebar: React.FC<Props> = ({
 
     if (
       typeof isInProgress === 'string' &&
-      (isInProgress === BREW_STATE_TRUE || isInProgress === PAUSE_STATE)
+      (isInProgress === BrewingStateConstants.BREW_STATE_IN_PROGRESS ||
+        isInProgress === BrewingStateConstants.BREW_STATE_PAUSE)
     ) {
-      setIsBrewingInProgress(BREW_STATE_TRUE);
+      setBrewingState(BrewingStateConstants.BREW_STATE_IN_PROGRESS);
       if (typeof selectedRecipeId === 'string') {
         setRecipeInProgressId(parseInt(selectedRecipeId, 10));
       }
@@ -103,16 +101,16 @@ const AllRecipesSidebar: React.FC<Props> = ({
     }
   };
 
-  const setPopupType = (step: string): void => {
+  const openPopup = (type: string): void => {
     let popupText = 'Do you want to delete the recipe?';
     let popupDescripion = 'By clicking Confirm, the recipe will be deleted';
 
-    if (step === CANT_EDIT) {
+    if (type === CANT_EDIT) {
       popupText = 'Recipe can not be edited';
       popupDescripion =
         'This recipe is being prepared right now. Wait till process ends, or abort the brewing to edit this recipe';
     }
-    if (step === DELETE && recipeInProgressId === recipeId) {
+    if (type === DELETE && recipeInProgressId === recipeId) {
       popupText = 'Recipe can not be deleted';
       popupDescripion =
         'This recipe is being prepared right now. Wait till the process ends, or abort the brewing to delete this recipe';
@@ -125,7 +123,7 @@ const AllRecipesSidebar: React.FC<Props> = ({
           deleteRecipeAPI(recipeId);
           window.location.reload();
         } else {
-          console.log(step, ' can not be performed');
+          console.log(type, ' can not be performed');
         }
       },
     });
@@ -152,7 +150,9 @@ const AllRecipesSidebar: React.FC<Props> = ({
         <div className="buttons text-center flex flex-col w-full max-w-xs">
           <Button
             title="Load recipe"
-            disabled={isBrewingInProgress !== BREW_STATE_FALSE}
+            disabled={
+              brewingState !== BrewingStateConstants.BREW_STATE_INACTIVE
+            }
             onClick={() => handleLoadRecipe()}
             className="min-w-full"
           />
@@ -170,10 +170,10 @@ const AllRecipesSidebar: React.FC<Props> = ({
             className="min-w-full"
             onClick={() => {
               if (
-                isBrewingInProgress !== BREW_STATE_FALSE &&
+                brewingState !== BrewingStateConstants.BREW_STATE_INACTIVE &&
                 recipeInProgressId === recipeId
               ) {
-                setPopupType(CANT_EDIT);
+                openPopup(CANT_EDIT);
               } else {
                 handleEditRecipe();
               }
@@ -184,7 +184,7 @@ const AllRecipesSidebar: React.FC<Props> = ({
             warn
             title="Delete"
             onClick={() => {
-              setPopupType(DELETE);
+              openPopup(DELETE);
             }}
             className="min-w-full"
           />
