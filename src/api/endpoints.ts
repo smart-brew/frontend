@@ -16,3 +16,5 @@ export const confirmInstructionUrl =
   '/api/brew/:brewId/instruction/:instructionId/done';
 
 export const supportedFunctions = '/api/function';
+
+export const sendInstructionTester = '/api/instruction';

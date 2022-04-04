@@ -38,7 +38,7 @@ export const functions: InstructionTemplate[] = [
     codeName: 'SET_MOTOR_SPEED',
     name: 'Motor',
     category: 'MOTOR',
-    units: 'RMP',
+    units: 'RPM',
     inputType: 'float',
     description: 'Sets rpms for selected motor',
     options: [

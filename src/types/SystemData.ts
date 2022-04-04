@@ -53,3 +53,12 @@ export interface SystemData {
   instruction: InstructionStatus;
   brewStatus: BrewingStatus;
 }
+
+export interface Instruction {
+  type: 'instruction';
+  moduleId: number;
+  category: string;
+  device: string;
+  instruction: string;
+  params: string;
+}

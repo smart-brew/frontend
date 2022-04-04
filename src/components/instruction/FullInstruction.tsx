@@ -3,7 +3,7 @@ import React from 'react';
 import arrow from '../../assets/blue-arrow.svg';
 import InstructionType from '../../types/RecipeData/InstructionType';
 import { InstructionStatus } from '../../types/SystemData';
-import { InstructionsContext } from '../../contexts/instructionsContext';
+import { useInstructionsContext } from '../../contexts/instructionsContext';
 import InstructionStateMap from '../../helpers/InstructionStateMap';
 import InstructionConstants from '../../helpers/InstructionConstants';
 import TimeHelper from '../../helpers/TimeHelper';
@@ -22,11 +22,12 @@ const FullInstruction: React.FC<Props> = ({
   instructionName,
   status,
 }: Props) => {
-  const templates = React.useContext(InstructionsContext);
+  const { data: templates } = useInstructionsContext();
+
   const popup = usePopup();
   const styleMap = new InstructionStateMap();
 
-  const template = templates?.data.find(
+  const template = templates.find(
     (templ) => templ.id === instruction.templateId
   );
 

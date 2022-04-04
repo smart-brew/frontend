@@ -11,7 +11,6 @@ import AddBlockButton from '../components/recipe/instructions/AddBlockButton';
 import { IngredientsFormProps } from './RecipeIngredientsPage';
 import { createRecipe, editRecipe } from '../api/recipe';
 import SplitPage from '../components/shared/SplitPage';
-import { InstructionsContext } from '../contexts/instructionsContext';
 import InstructionTemplate from '../types/FunctionData/InstructionTemplate';
 
 import IngredientType from '../types/RecipeData/IngredientType';
@@ -38,7 +37,6 @@ const RecipeInstructionsPage: React.FC = () => {
     sendLockedState,
     savedRecipesInfo,
   } = location.state as IngredientsFormProps;
-  const templates = React.useContext(InstructionsContext);
 
   const [addedBlocks, setAddedBlocks] = useState(addBlocks);
 
@@ -329,7 +327,6 @@ const RecipeInstructionsPage: React.FC = () => {
         />
         <div className="modal-bg" ref={popupRef} style={{ margin: 0 }}>
           <InstructionPopup
-            templates={templates?.data || []}
             callback={handleInstrSelection}
             hideCallback={handleInstrPopupCancel}
           />

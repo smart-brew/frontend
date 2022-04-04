@@ -3,22 +3,27 @@ import React from 'react';
 import { getSupportedFunctions } from '../api/functions';
 import InstructionTemplate from '../types/FunctionData/InstructionTemplate';
 
-interface Props {
-  enabled: boolean;
-}
-
-export const InstructionsContext = React.createContext<State | null>(null);
-
 interface State {
   data: InstructionTemplate[];
   refresh: () => Promise<void>;
+}
+
+const InstructionsContext = React.createContext<State>({
+  data: [],
+  refresh: () => Promise.resolve(),
+});
+interface Props {
+  enabled: boolean;
 }
 
 const InstructionsContextProvider: React.FC<Props> = ({
   children,
   enabled,
 }) => {
-  const [value, setValue] = React.useState<State | null>(null);
+  const [value, setValue] = React.useState<State>({
+    data: [],
+    refresh: () => Promise.resolve(),
+  });
 
   if (!enabled) console.log('Instruction fetching is disabled (see App.tsx)');
 
@@ -42,5 +47,8 @@ const InstructionsContextProvider: React.FC<Props> = ({
     </InstructionsContext.Provider>
   );
 };
+
+export const useInstructionsContext = (): State =>
+  React.useContext(InstructionsContext);
 
 export default InstructionsContextProvider;
