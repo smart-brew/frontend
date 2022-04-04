@@ -65,9 +65,9 @@ const HiddenInstruction: React.FC<Props> = ({
 
   const getDeviceForInstruction = (): JSX.Element | null => {
     if (
-      instruction.codeName == InstructionConstants.TEMPERATURE ||
-      instruction.codeName == InstructionConstants.MOTOR ||
-      instruction.codeName == InstructionConstants.PUMP
+      instruction.codeName === InstructionConstants.TEMPERATURE ||
+      instruction.codeName === InstructionConstants.MOTOR ||
+      instruction.codeName === InstructionConstants.PUMP
     ) {
       const instrName = instruction.optionCodeName?.split('_');
       if (instrName) {
@@ -77,9 +77,8 @@ const HiddenInstruction: React.FC<Props> = ({
             {deviceShort}
           </span>
         );
-      } else {
-        return null;
       }
+      return null;
     }
     return null;
   };

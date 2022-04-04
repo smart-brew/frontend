@@ -6,17 +6,35 @@ interface Props {
   enabled: boolean;
 }
 
-export const DataContext = React.createContext<SystemData | null>(null);
+const emptyState: SystemData = {
+  brewStatus: 'IDLE',
+  data: {
+    MOTOR: [],
+    PUMP: [],
+    TEMPERATURE: [],
+    UNLOADER: [],
+  },
+  instruction: {
+    currentInstruction: -1,
+    currentValue: -1,
+    status: 'WAITING',
+  },
+};
+
+const DataContext = React.createContext<SystemData>(emptyState);
 
 const DataContextProvider: React.FC<Props> = ({ children, enabled }) => {
-  const [data, setData] = React.useState<SystemData | null>(null);
+  const [data, setData] = React.useState<SystemData>(emptyState);
 
   if (!enabled) console.log('Data fetching is disabled (see App.tsx)');
 
   React.useEffect(() => {
     // periodic fetch to update current state of system
     const periodicFetch = setInterval(async () => {
-      if (enabled) setData(await getBrewStatus());
+      if (enabled) {
+        const breweryStatus = await getBrewStatus();
+        if (breweryStatus) setData(breweryStatus);
+      }
     }, 1000);
 
     return () => clearInterval(periodicFetch);
@@ -24,5 +42,7 @@ const DataContextProvider: React.FC<Props> = ({ children, enabled }) => {
 
   return <DataContext.Provider value={data}>{children}</DataContext.Provider>;
 };
+
+export const useDataContext = (): SystemData => React.useContext(DataContext);
 
 export default DataContextProvider;

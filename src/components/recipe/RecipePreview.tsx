@@ -3,14 +3,14 @@ import React from 'react';
 import RecipeType from '../../types/RecipeData/RecipeType';
 import Instructions from '../instruction/Instructions';
 import Ingredients from './ingredients/Ingredients';
-import { DataContext } from '../../contexts/dataContext';
+import { useDataContext } from '../../contexts/dataContext';
 
 interface Props {
   recipe: RecipeType | null;
 }
 
 const RecipePreview: React.FC<Props> = ({ recipe }) => {
-  const systemStatus = React.useContext(DataContext);
+  const systemStatus = useDataContext();
 
   return recipe ? (
     <div className="flex flex-col">

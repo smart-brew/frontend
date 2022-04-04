@@ -1,5 +1,5 @@
 import React from 'react';
-import { DataContext } from '../../contexts/dataContext';
+import { useDataContext } from '../../contexts/dataContext';
 import InstructionType from '../../types/RecipeData/InstructionType';
 import InstructionBlock from '../block/InstructionBlock';
 import InstructionBlockType from '../../types/RecipeData/InstructionBlockType';
@@ -9,12 +9,7 @@ interface Props {
 }
 
 const Instructions: React.FC<Props> = ({ instructions }) => {
-  const currentInstructionStatus = React.useContext(DataContext)
-    ?.instruction || {
-    currentInstruction: 61,
-    currentValue: 0,
-    status: 'WAITING',
-  };
+  const { instruction: currentInstructionStatus } = useDataContext();
 
   const divideTheInstructions = (): InstructionBlockType[] => {
     if (!instructions.length) {

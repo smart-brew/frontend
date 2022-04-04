@@ -269,7 +269,7 @@ const RecipeInstructionsPage: React.FC = () => {
     }).then((res) => {
       console.log({ res });
 
-      if (res.id) history.push('/recipe');
+      if (res?.id) history.push('/recipe');
       else {
         console.log('Error creating recipe');
       }
@@ -292,7 +292,7 @@ const RecipeInstructionsPage: React.FC = () => {
     ).then((res) => {
       console.log({ res });
 
-      if (res.id) history.push('/recipe');
+      if (res?.id) history.push('/recipe');
       else {
         console.log('Error editing recipe');
       }

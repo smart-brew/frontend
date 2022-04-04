@@ -29,7 +29,7 @@ const InstructionsContextProvider: React.FC<Props> = ({
 
   const refresh = React.useCallback(async (): Promise<void> => {
     setValue({
-      data: await getSupportedFunctions(),
+      data: (await getSupportedFunctions()) ?? [],
       refresh,
     });
   }, []);

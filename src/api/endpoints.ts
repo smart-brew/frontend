@@ -1,20 +1,22 @@
-export const dataEndpoint = '/api/data';
-export const shutdown = '/api/shutdown';
-export const allRecipes = '/api/recipe';
-export const singleRecipe = '/api/recipe/:id';
-export const createRecipeUrl = '/api/recipe';
-export const loadRecipeUrl = '/api/recipe/:id/load';
-export const deleteRecipeUrl = '/api/recipe/:id/delete';
-export const startBrew = '/api/brew/0/start';
-export const editRecipeUrl = '/api/recipe/:id/edit';
+import InstructionTemplate from '../types/FunctionData/InstructionTemplate';
+import RecipeType, { RecipeSimple } from '../types/RecipeData/RecipeType';
+import { SystemData } from '../types/SystemData';
+import { IdReturn } from './helpers';
 
-export const pauseBrew = '/api/brew/:id/pause';
-export const abortBrew = '/api/brew/:id/abort';
-export const resumeBrew = '/api/brew/:id/resume';
-
-export const confirmInstructionUrl =
-  '/api/brew/:brewId/instruction/:instructionId/done';
-
-export const supportedFunctions = '/api/function';
-
-export const sendInstructionTester = '/api/instruction';
+export type Endpoints = {
+  'GET /api/data': SystemData;
+  'GET /api/function': InstructionTemplate[];
+  'GET /api/recipe': RecipeSimple[];
+  'GET /api/recipe/:id': RecipeType;
+  'POST /api/brew/:brewId/instruction/:instructionId/done': IdReturn;
+  'POST /api/brew/:id/abort': IdReturn;
+  'POST /api/brew/:id/pause': IdReturn;
+  'POST /api/brew/:id/resume': IdReturn;
+  'POST /api/recipe/:id/delete': IdReturn;
+  'POST /api/recipe/:id/load': IdReturn;
+  'POST /api/shutdown': void;
+  'PUT /api/brew/0/start': IdReturn;
+  'PUT /api/recipe': IdReturn;
+  'PUT /api/recipe/:id/edit': IdReturn;
+  'POST /api/instruction': IdReturn;
+};
