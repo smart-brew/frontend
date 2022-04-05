@@ -6,12 +6,14 @@ import { StartBrewingPopup } from '../popup/start-brewing/StartBrewingPopup';
 import RecipeType from '../../types/RecipeData/RecipeType';
 import RecipePreview from '../recipe/RecipePreview';
 import { getRecipe, getRecipes } from '../../api/recipe';
+import BrewingStateConstants from '../../helpers/BrewingStateConstants';
 import Button from '../shared/Button';
 import { IngredientsT } from '../../types/RecipeData/IngredientType';
 import {
   abortBrewing as abortBrewingAPI,
   startBrewing as startBrewingAPI,
   pauseBrewing as pauseBrewingAPI,
+  resumeBrewing as resumeBrewingAPI,
 } from '../../api/brew';
 import { MENU_HEIGHT } from '../menu/MenuContainer';
 
@@ -26,7 +28,9 @@ const RecipeProgress: React.FC<Props> = ({ recipeId }: Props) => {
   const popup = usePopup();
 
   const [showStartConfirmation, setShowStartConfirmation] = useState(false); // pupup to start a new brewing process
-  const [isBrewingInProgress, setIsBrewingInProgress] = useState(false);
+  const [brewingState, setBrewingState] = useState(
+    BrewingStateConstants.BREW_STATE_INACTIVE
+  );
 
   const [currentRecipeId, setCurrentRecipeId] = useState(recipeId);
 
@@ -73,7 +77,7 @@ const RecipeProgress: React.FC<Props> = ({ recipeId }: Props) => {
     const isInProgress = window.localStorage.getItem(IS_BREW_IN_PROGRESS);
 
     if (typeof isInProgress === 'string') {
-      setIsBrewingInProgress(isInProgress === 'true');
+      setBrewingState(isInProgress as BrewingStateConstants);
     }
 
     setCurrentRecipeId(getRecipeFromLocalStorage());
@@ -81,11 +85,8 @@ const RecipeProgress: React.FC<Props> = ({ recipeId }: Props) => {
 
   // on change save values to local storage
   useEffect(() => {
-    window.localStorage.setItem(
-      IS_BREW_IN_PROGRESS,
-      String(isBrewingInProgress)
-    );
-  }, [isBrewingInProgress]);
+    window.localStorage.setItem(IS_BREW_IN_PROGRESS, String(brewingState));
+  }, [brewingState]);
 
   useEffect(() => {
     if (currentRecipeId) {
@@ -107,7 +108,7 @@ const RecipeProgress: React.FC<Props> = ({ recipeId }: Props) => {
       `spustenim funkcie startBrewing sa potvrdilo zacanie varenia ktore je v sidebaroverviewpage ulozene pod Id ${recipeId}`
     );
     setShowStartConfirmation(false);
-    setIsBrewingInProgress(true);
+    setBrewingState(BrewingStateConstants.BREW_STATE_IN_PROGRESS);
 
     const res = await startBrewingAPI(currentRecipeId);
 
@@ -115,14 +116,37 @@ const RecipeProgress: React.FC<Props> = ({ recipeId }: Props) => {
     console.log(res);
   }
 
-  const handleOnPause = useCallback((): void => {
+  const showAbortConfirmation = useCallback((): void => {
+    popup?.open({
+      title: 'The process was aborted',
+      description:
+        'Check the brewing statistics of choose recipe and start brewing',
+      onConfirm: () => {
+        console.log('abort was performed');
+      },
+    });
+  }, [popup]);
+
+  const onPauseClick = useCallback((): void => {
     popup?.open({
       title: 'Do you want to pause the brewing process?',
       description:
         'By clicking Confirm, the brewery will keep its initial state till resume',
       onConfirm: () => {
         pauseBrewingAPI(0);
-        setIsBrewingInProgress(false); // this will probably needed to be changed to that it shows pause
+        setBrewingState(BrewingStateConstants.BREW_STATE_PAUSE);
+      },
+    });
+  }, [popup]);
+
+  const onResumeClick = useCallback((): void => {
+    popup?.open({
+      title: 'Do you want to resume the brewing process?',
+      description:
+        'By clicking Confirm, the brewery will continue brewing process',
+      onConfirm: () => {
+        setBrewingState(BrewingStateConstants.BREW_STATE_IN_PROGRESS);
+        resumeBrewingAPI(0);
       },
     });
   }, [popup]);
@@ -134,12 +158,11 @@ const RecipeProgress: React.FC<Props> = ({ recipeId }: Props) => {
         'By clicking Confirm, the brewing process will be aborted without the chance to resume',
       onConfirm: () => {
         abortBrewingAPI(0);
-        setIsBrewingInProgress(false);
-        setCurrentRecipeId(null);
-        setSelectedRecipe(null);
+        setBrewingState(BrewingStateConstants.BREW_STATE_INACTIVE);
+        showAbortConfirmation();
       },
     });
-  }, [popup]);
+  }, [popup, showAbortConfirmation]);
 
   function renderConfirmPopup(): React.ReactNode {
     const ingredients: IngredientsT = selectedRecipe?.Ingredients?.reduce(
@@ -170,11 +193,23 @@ const RecipeProgress: React.FC<Props> = ({ recipeId }: Props) => {
   }
 
   const renderButtons = useCallback(() => {
-    if (!isBrewingInProgress) {
+    if (brewingState === BrewingStateConstants.BREW_STATE_INACTIVE) {
       return (
         <Button
           title="Start brewing"
           onClick={() => setShowStartConfirmation(true)}
+          className="w-full max-w-xs"
+        />
+      );
+    }
+
+    if (brewingState === BrewingStateConstants.BREW_STATE_PAUSE) {
+      return (
+        <Button
+          title="Resume brewing"
+          onClick={() => {
+            onResumeClick();
+          }}
           className="w-full max-w-xs"
         />
       );
@@ -186,7 +221,7 @@ const RecipeProgress: React.FC<Props> = ({ recipeId }: Props) => {
           warn
           title="Pause brewing"
           className="w-full max-w-xs"
-          onClick={handleOnPause}
+          onClick={onPauseClick}
         />
         <Button
           danger
@@ -196,7 +231,7 @@ const RecipeProgress: React.FC<Props> = ({ recipeId }: Props) => {
         />
       </>
     );
-  }, [handleOnAbort, handleOnPause, isBrewingInProgress]);
+  }, [onResumeClick, handleOnAbort, onPauseClick, brewingState]);
 
   return (
     <div
