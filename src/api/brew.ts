@@ -4,7 +4,7 @@ import { IdReturn } from './helpers';
 export const startBrewing = async (
   recipeId: number
 ): Promise<IdReturn | null> => {
-  return apiClient('PUT /api/brew/0/start', { recipeId });
+  return apiClient('PUT /api/brew/0/start', {}, { recipeId });
 };
 
 export const pauseBrewing = async (
