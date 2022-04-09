@@ -5,20 +5,27 @@ import { DARK_YELLOW } from '../../colors';
 interface Props {
   link: string;
   title: string;
-
   selected: string;
+  matchPathnameExact: boolean;
 }
 
-const MenuItem: React.FC<Props> = ({ link, title, selected }) => {
+const MenuItem: React.FC<Props> = ({
+  link,
+  title,
+  selected,
+  matchPathnameExact,
+}) => {
   const [isSelected, setIsSeleted] = React.useState(false);
 
   React.useEffect(() => {
     if (link === '/') {
       setIsSeleted(link === selected);
     } else {
-      setIsSeleted(selected.startsWith(link));
+      setIsSeleted(
+        matchPathnameExact ? selected === link : selected.startsWith(link)
+      );
     }
-  }, [selected, link]);
+  }, [selected, link, matchPathnameExact]);
 
   return (
     <Link
