@@ -2,12 +2,14 @@ import InstructionTemplate from '../types/FunctionData/InstructionTemplate';
 import RecipeType, { RecipeSimple } from '../types/RecipeData/RecipeType';
 import { SystemData } from '../types/SystemData';
 import { IdReturn } from './helpers';
+import { BrewingApi } from '../types/BrewingType';
 
 export type Endpoints = {
   'GET /api/data': SystemData;
   'GET /api/function': InstructionTemplate[];
   'GET /api/recipe': RecipeSimple[];
   'GET /api/recipe/:id': RecipeType;
+  'GET /api/brew/:id': BrewingApi;
   'POST /api/brew/:brewId/instruction/:instructionId/done': IdReturn;
   'POST /api/brew/:id/abort': IdReturn;
   'POST /api/brew/:id/pause': IdReturn;
