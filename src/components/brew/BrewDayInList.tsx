@@ -1,6 +1,5 @@
 import React from 'react';
-import { BrewSimple } from '../../types/RecipeData/BrewType';
-import { RecipeSimple } from '../../types/RecipeData/RecipeType';
+import { BrewSimple } from '../../types/BrewType';
 import BrewListItem from './BrewListItem';
 
 interface BrewDayInListTypeProps {
@@ -8,7 +7,6 @@ interface BrewDayInListTypeProps {
   callback: (arg: number) => void;
   current: number;
   dayName: string;
-  recipes: RecipeSimple[];
 }
 
 const BrewDayInList: React.FC<BrewDayInListTypeProps> = ({
@@ -16,7 +14,6 @@ const BrewDayInList: React.FC<BrewDayInListTypeProps> = ({
   callback,
   current,
   dayName,
-  recipes,
 }) => {
   return (
     <ul className="flex flex-col">
@@ -25,7 +22,6 @@ const BrewDayInList: React.FC<BrewDayInListTypeProps> = ({
         <BrewListItem
           key={brew.id}
           brew={brew}
-          name={recipes.find((e) => e.id === brew.recipeId)?.name}
           onClick={callback}
           current={current}
         />

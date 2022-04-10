@@ -1,4 +1,4 @@
-import { BrewSimple } from '../types/RecipeData/BrewType';
+import { BrewSimple } from '../types/BrewType';
 import { RecipeApiUpload } from '../types/RecipeData/Recipe';
 import RecipeType, { RecipeSimple } from '../types/RecipeData/RecipeType';
 import { apiClient } from './client';

@@ -1,7 +1,5 @@
 import React from 'react';
-import { getRecipes } from '../../api/recipe';
-import { BrewSimple } from '../../types/RecipeData/BrewType';
-import { RecipeSimple } from '../../types/RecipeData/RecipeType';
+import { BrewSimple } from '../../types/BrewType';
 import BrewDayInList from './BrewDayInList';
 
 interface BrewListTypeProps {
@@ -10,26 +8,16 @@ interface BrewListTypeProps {
   current: number;
 }
 
-// recipes={brews} callback={setBrewId} current={brewId} /
 const BrewList: React.FC<BrewListTypeProps> = ({
   brews,
   callback,
   current,
 }) => {
-  const [recipes, setRecipes] = React.useState<RecipeSimple[]>([]);
-
-  React.useEffect(() => {
-    const f = async (): Promise<void> => {
-      setRecipes(await getRecipes());
-    };
-    f();
-  }, []);
-
   //   take days as the keys
   const daysOfBrewing = brews.reduce((r, a) => {
-    r[new Date(a.createdAt).toLocaleDateString()] =
-      r[new Date(a.createdAt).toLocaleDateString()] || [];
-    r[new Date(a.createdAt).toLocaleDateString()].push(a);
+    r[new Date(a.startedAt).toLocaleDateString()] =
+      r[new Date(a.startedAt).toLocaleDateString()] || [];
+    r[new Date(a.startedAt).toLocaleDateString()].push(a);
     return r;
   }, Object.create(null));
 
@@ -46,7 +34,6 @@ const BrewList: React.FC<BrewListTypeProps> = ({
             callback={callback}
             current={current}
             dayName={dayOfBrewing}
-            recipes={recipes}
           />
         ));
     }

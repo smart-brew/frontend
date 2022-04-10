@@ -3,7 +3,7 @@ import { getBrews } from '../api/recipe';
 import SplitPage from '../components/shared/SplitPage';
 
 import HistorySidebar from '../components/sidebar/HistorySidebar';
-import { BrewSimple } from '../types/RecipeData/BrewType';
+import { BrewSimple } from '../types/BrewType';
 
 import { HistoryOverview } from './HistoryOverviewPage';
 

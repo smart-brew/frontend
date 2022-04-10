@@ -1,22 +1,20 @@
 import React from 'react';
-import { BrewSimple } from '../../types/RecipeData/BrewType';
+import { BrewSimple } from '../../types/BrewType';
 
 interface BrewTypeProps {
   brew: BrewSimple;
   onClick: (arg: number) => void;
   current: number;
-  name: string | undefined;
 }
 
 const BrewListItem: React.FC<BrewTypeProps> = ({
   brew,
   onClick,
   current,
-  name,
 }: BrewTypeProps) => {
-  const { id, createdAt } = brew;
-  const time = `${new Date(createdAt).getHours()}:${new Date(
-    createdAt
+  const { id, startedAt } = brew;
+  const time = `${new Date(startedAt).getHours()}:${new Date(
+    startedAt
   ).getMinutes()}`;
   return (
     <button
@@ -30,7 +28,7 @@ const BrewListItem: React.FC<BrewTypeProps> = ({
       }`}
     >
       <div className="pl-2 font-bold">
-        {name} - {time}
+        {brew.recipeName} - {time}
       </div>
     </button>
   );

@@ -1,5 +1,5 @@
 import InstructionTemplate from '../types/FunctionData/InstructionTemplate';
-import { BrewSimple } from '../types/RecipeData/BrewType';
+import { BrewSimple } from '../types/BrewType';
 import RecipeType, { RecipeSimple } from '../types/RecipeData/RecipeType';
 import { SystemData } from '../types/SystemData';
 import { IdReturn } from './helpers';

@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrewSimple } from '../../types/RecipeData/BrewType';
+import { BrewSimple } from '../../types/BrewType';
 import BrewList from '../brew/BrewList';
 import { MENU_HEIGHT } from '../menu/MenuContainer';
 
