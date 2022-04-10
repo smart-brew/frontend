@@ -1,12 +1,12 @@
 import React from 'react';
-import { BrewSimple } from '../../types/BrewType';
+import { BaseBrewingApi } from '../../types/BrewingType';
 import BrewList from '../brew/BrewList';
 import { MENU_HEIGHT } from '../menu/MenuContainer';
 
 interface Props {
   setBrewId: (brewId: number) => void;
   brewId: number;
-  brews: BrewSimple[];
+  brews: BaseBrewingApi[];
 }
 
 const HistorySidebar: React.FC<Props> = ({ setBrewId, brewId, brews }) => {

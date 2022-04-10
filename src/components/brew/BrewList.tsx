@@ -1,9 +1,9 @@
 import React from 'react';
-import { BrewSimple } from '../../types/BrewType';
+import { BaseBrewingApi } from '../../types/BrewingType';
 import BrewDayInList from './BrewDayInList';
 
 interface BrewListTypeProps {
-  brews: BrewSimple[];
+  brews: BaseBrewingApi[];
   callback: (arg: number) => void;
   current: number;
 }

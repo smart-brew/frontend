@@ -1,8 +1,8 @@
 import React from 'react';
-import { BrewSimple } from '../../types/BrewType';
+import { BaseBrewingApi } from '../../types/BrewingType';
 
 interface BrewTypeProps {
-  brew: BrewSimple;
+  brew: BaseBrewingApi;
   onClick: (arg: number) => void;
   current: number;
 }

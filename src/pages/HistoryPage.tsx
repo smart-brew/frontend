@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 import { getBrews } from '../api/recipe';
 import SplitPage from '../components/shared/SplitPage';
-
 import HistorySidebar from '../components/sidebar/HistorySidebar';
-import { BrewSimple } from '../types/BrewType';
+import { BaseBrewingApi } from '../types/BrewingType';
 
 import { HistoryOverview } from './HistoryOverviewPage';
 
 const HistoryPage: React.FC = () => {
-  const [brews, setBrews] = React.useState<BrewSimple[]>([]);
+  const [brews, setBrews] = React.useState<BaseBrewingApi[]>([]);
   const [brewId, setBrewId] = useState<number>(0);
 
   React.useEffect(() => {
