@@ -4,6 +4,7 @@ import { getRecipe } from '../api/recipe';
 import Menu, { MENU_HEIGHT } from '../components/menu/MenuContainer';
 import RecipePreview from '../components/recipe/RecipePreview';
 import RecipeType from '../types/RecipeData/RecipeType';
+import { HistoryOverviewStatsPage } from './HistoryOverviewStatsPage';
 
 const menus = [
   { link: '/history', title: 'Recipe' },
@@ -40,7 +41,7 @@ export const HistoryOverview: React.FC<Props> = ({ recipeId }) => {
       </Route>
       <Route path="/history/stats" exact>
         TODO HEADING <br />
-        TODO STATS
+        <HistoryOverviewStatsPage brewStats={null} />
       </Route>
     </div>
   );
