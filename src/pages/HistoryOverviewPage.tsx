@@ -5,6 +5,8 @@ import Menu, { MENU_HEIGHT } from '../components/menu/MenuContainer';
 import RecipePreview from '../components/recipe/RecipePreview';
 import RecipeType from '../types/RecipeData/RecipeType';
 import { HistoryOverviewStatsPage } from './HistoryOverviewStatsPage';
+import { getBrewStats } from '../api/brew';
+import { BrewingApi } from '../types/BrewingType';
 
 const menus = [
   { link: '/history', title: 'Recipe' },
@@ -21,6 +23,8 @@ export const HistoryOverview: React.FC<Props> = ({ recipeId }) => {
     null
   );
 
+  const [brewData, setBrewData] = React.useState<BrewingApi | null>(null);
+
   // if new selected recipe (by ID) -> fetch the entire recipe with details
   React.useEffect(() => {
     const f = async (): Promise<void> => {
@@ -28,6 +32,14 @@ export const HistoryOverview: React.FC<Props> = ({ recipeId }) => {
     };
     f();
   }, [recipeId]);
+
+  React.useEffect(() => {
+    console.log('Get brewings');
+    const f = async (): Promise<void> => {
+      setBrewData(await getBrewStats(2));
+    };
+    f();
+  }, []);
 
   return (
     <div
@@ -41,7 +53,7 @@ export const HistoryOverview: React.FC<Props> = ({ recipeId }) => {
       </Route>
       <Route path="/history/stats" exact>
         TODO HEADING <br />
-        <HistoryOverviewStatsPage brewStats={null} />
+        <HistoryOverviewStatsPage brewStats={brewData?.StatusLogs || null} />
       </Route>
     </div>
   );
