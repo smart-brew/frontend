@@ -13,9 +13,9 @@ const BrewListItem: React.FC<BrewTypeProps> = ({
   current,
 }: BrewTypeProps) => {
   const { id, startedAt } = brew;
-  const time = `${new Date(startedAt).getHours()}:${new Date(
-    startedAt
-  ).getMinutes()}`;
+  const time = `${new Date(startedAt).getHours()}:${String(
+    new Date(startedAt).getMinutes()
+  ).padStart(2, '0')}`;
   return (
     <button
       type="button"
