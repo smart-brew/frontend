@@ -101,23 +101,29 @@ const AllRecipesSidebar: React.FC<Props> = ({
     }
   };
 
-  const openPopup = (type: string): void => {
-    let popupText = 'Do you want to delete the recipe?';
-    let popupDescripion = 'By clicking Confirm, the recipe will be deleted';
+  const openPopup = (type: typeof CANT_EDIT | typeof DELETE): void => {
+    let popupText = 'Are you sure you want to delete this recipe?';
+    let popupDescripion = 'By clicking Delete, the recipe will be deleted';
+    let popupType: 'call-to-action' | 'info' = 'call-to-action';
 
     if (type === CANT_EDIT) {
-      popupText = 'Recipe can not be edited';
+      popupType = 'info';
+      popupText = 'Selected recipe can not be edited at the moment';
       popupDescripion =
-        'This recipe is being prepared right now. Wait till process ends, or abort the brewing to edit this recipe';
-    }
-    if (type === DELETE && recipeInProgressId === recipeId) {
-      popupText = 'Recipe can not be deleted';
+        'This recipe is being prepared right now. Wait until process ends, or abort the brewing to edit this recipe';
+    } else if (type === DELETE && recipeInProgressId === recipeId) {
+      popupType = 'info';
+      popupText = 'Selected recipe can not be deleted at the moment';
       popupDescripion =
-        'This recipe is being prepared right now. Wait till the process ends, or abort the brewing to delete this recipe';
+        'This recipe is being prepared right now. Wait until the process ends, or abort the brewing to delete this recipe';
     }
+
     popup?.open({
       title: popupText,
       description: popupDescripion,
+      buttonText: 'Delete',
+      buttonType: 'danger',
+      popupType,
       onConfirm: () => {
         if (recipeInProgressId !== recipeId) {
           deleteRecipeAPI(recipeId);

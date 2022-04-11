@@ -51,8 +51,10 @@ const CreateInstructionsSidebar: React.FC<Props> = ({
             disabled={checkEmptyBoxes() || checkBlockNameDoublesBoolean()}
             onClick={() =>
               popup?.open({
-                title: 'Do you want to save the recipe?',
-                description: 'By pressing Confirm the recipe will be saved',
+                title: 'Do you want to save this recipe?',
+                description:
+                  'By pressing Save recipe, the recipe will be saved to database',
+                buttonText: 'Save recipe',
                 onConfirm: () => saveRecipe('save'),
               })
             }
@@ -70,9 +72,11 @@ const CreateInstructionsSidebar: React.FC<Props> = ({
               }
               onClick={() =>
                 popup?.open({
-                  title: 'Do you want to rewrite the recipe?',
+                  title: 'Do you want to overwrite the recipe?',
                   description:
-                    'By pressing Confirm the new version of the recipe will be saved instead of the old one',
+                    'This new version of the recipe will overwrite the old one',
+                  buttonText: 'Overwrite recipe',
+                  buttonType: 'warn',
                   onConfirm: () => editRecipe(),
                 })
               }
@@ -84,9 +88,11 @@ const CreateInstructionsSidebar: React.FC<Props> = ({
               disabled={checkEmptyBoxes() || checkBlockNameDoublesBoolean()}
               onClick={() =>
                 popup?.open({
-                  title: 'Do you want to save the new copy of the recipe?',
+                  title:
+                    'Are you sure you want to save this recipe as a new one?',
                   description:
-                    'By pressing Confirm the new version of the recipe will be saved, while the old one will still exist',
+                    'By pressing Save as new, this recipe will be saved, while the old one will still exist',
+                  buttonText: 'Save as new',
                   onConfirm: () => saveRecipe('edit'),
                 })
               }
@@ -107,8 +113,10 @@ const CreateInstructionsSidebar: React.FC<Props> = ({
           title="Cancel"
           onClick={() =>
             popup?.open({
-              title: 'Do you want to stop creating the recipe?',
+              title: 'Are you sure you want to stop creating this recipe?',
               description: 'By leaving this page, all the changes will be lost',
+              buttonType: 'warn',
+              buttonText: 'Leave',
               onConfirm: () => history.push('/recipe'),
             })
           }

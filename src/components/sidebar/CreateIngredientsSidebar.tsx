@@ -33,8 +33,10 @@ const CreateIngredientsSidebar: React.FC<Props> = ({
           title="Cancel"
           onClick={() =>
             popup?.open({
-              title: 'Do you want to stop making new recipe?',
+              title: 'Are you sure you want to stop creating this recipe?',
               description: 'By leaving this page, all the changes will be lost',
+              buttonType: 'warn',
+              buttonText: 'Leave',
               onConfirm: () => history.push('/recipe'),
             })
           }
