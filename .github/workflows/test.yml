@@ -1,0 +1,26 @@
+name: Commit check
+
+on:
+  # listen to manual trigger
+  workflow_dispatch:
+
+  # listen to push
+  push:
+
+jobs:
+  build:
+    name: Format and build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: yarn
+      
+      - name: Check eslint and prettier
+        run: yarn format
+
+      - name: Build app
+        run: yarn build
