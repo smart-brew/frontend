@@ -22,7 +22,7 @@ const BrewListItem: React.FC<BrewTypeProps> = ({
       onClick={() => {
         onClick(id);
       }}
-      key={id + time}
+      key={id}
       className={`chamber p-2 mx-7 my-1 content-center shadow rounded-3xl flex flex-row items-center justify-start ${
         current === id ? 'bg-yellow-200' : ''
       }`}

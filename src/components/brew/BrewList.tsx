@@ -8,21 +8,24 @@ interface BrewListTypeProps {
   current: number;
 }
 
+type ListOfBrewingDatesType = { [key: string]: BaseBrewingApi[] };
+
 const BrewList: React.FC<BrewListTypeProps> = ({
   brews,
   callback,
   current,
 }) => {
   //   take days as the keys
-  const daysOfBrewing = brews.reduce((r, a) => {
-    r[new Date(a.startedAt).toLocaleDateString()] =
-      r[new Date(a.startedAt).toLocaleDateString()] || [];
-    r[new Date(a.startedAt).toLocaleDateString()].push(a);
+  const daysOfBrewing: ListOfBrewingDatesType = brews.reduce((r, a) => {
+    const dayNameString = new Date(a.startedAt).toLocaleDateString();
+    r[dayNameString] = r[dayNameString] || [];
+    r[dayNameString].push(a);
     return r;
   }, Object.create(null));
 
   //   show list for each day
   function renderBrewsForTheDay(): React.ReactNode {
+    console.log({ daysOfBrewing });
     const dayNames = Object.keys(daysOfBrewing);
     if (dayNames.length > 0) {
       return dayNames
@@ -30,6 +33,7 @@ const BrewList: React.FC<BrewListTypeProps> = ({
         .reverse()
         .map((dayOfBrewing) => (
           <BrewDayInList
+            key={dayOfBrewing}
             brewsForTheDay={daysOfBrewing[dayOfBrewing]}
             callback={callback}
             current={current}
