@@ -48,7 +48,7 @@ const RecipeIngredientsPage: React.FC = () => {
   }, [recipeNameForm]);
 
   const validateNameInput = (name: string): void => {
-    const searchTerm = name.toLowerCase();
+    const searchTerm = name.toLowerCase().trim();
     const matches = recipes.filter(
       (recipeItem) => recipeItem.name.toLowerCase() === searchTerm
     );
