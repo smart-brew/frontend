@@ -188,8 +188,17 @@ const RecipeInstructionsPage: React.FC = () => {
     setAddedBlocks(newAddedBlocks);
   };
 
+  // const checkEmptyBoxes = (): boolean => {
+  //   return addedBlocks.find((block) => block.blockName === '') !== undefined; // returns true if there are empty boxes
+  // };
+
   const checkEmptyBoxes = (): boolean => {
-    return addedBlocks.find((block) => block.blockName === '') !== undefined; // returns true if there are empty boxes
+    const emptyInstr: boolean =
+      addedBlocks.find((block) => block.instructions.length === 0) !==
+      undefined;
+    const emptyName: boolean =
+      addedBlocks.find((block) => block.blockName === '') !== undefined;
+    return emptyInstr || emptyName;
   };
 
   const checkBlockNameDoubles = (): number[] => {
