@@ -10,7 +10,7 @@ export type Endpoints = {
   'GET /api/recipe': RecipeSimple[];
   'GET /api/recipe/:id': RecipeType;
   'GET /api/brew': BaseBrewingApi[];
-  'GET /api/brew/:brewid': BrewingApi;
+  'GET /api/brew/:brewId': BrewingApi;
   'POST /api/brew/:brewId/instruction/:instructionId/done': IdReturn;
   'POST /api/brew/:id/abort': IdReturn;
   'POST /api/brew/:id/pause': IdReturn;

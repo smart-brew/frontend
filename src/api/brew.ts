@@ -49,5 +49,5 @@ export const getBrews = (): Promise<BaseBrewingApi[]> => {
 };
 
 export const getBrew = (brewId: number): Promise<BrewingApi | null> => {
-  return apiClient('GET /api/brew/:brewid', { brewId });
+  return apiClient('GET /api/brew/:brewId', { brewId });
 };

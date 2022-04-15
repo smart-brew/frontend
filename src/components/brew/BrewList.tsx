@@ -1,53 +1,65 @@
-import React from 'react';
+import React, { useMemo } from 'react';
+import { getBrews } from '../../api/brew';
 import { BaseBrewingApi } from '../../types/BrewingType';
-import BrewDayInList from './BrewDayInList';
+import BrewListGroup from './BrewListGroup';
 
 interface BrewListTypeProps {
-  brews: BaseBrewingApi[];
-  callback: (arg: number) => void;
-  current: number;
+  onSelectBrewId: (brewId: number) => void;
 }
 
-type ListOfBrewingDatesType = { [key: string]: BaseBrewingApi[] };
+type MergedBrews = {
+  [key: string]: BaseBrewingApi[];
+};
 
-const BrewList: React.FC<BrewListTypeProps> = ({
-  brews,
-  callback,
-  current,
-}) => {
-  //   take days as the keys
-  const daysOfBrewing: ListOfBrewingDatesType = brews.reduce((r, a) => {
-    const dayNameString = new Date(a.startedAt).toLocaleDateString();
-    r[dayNameString] = r[dayNameString] || [];
-    r[dayNameString].push(a);
-    return r;
-  }, Object.create(null));
+const BrewList: React.FC<BrewListTypeProps> = ({ onSelectBrewId }) => {
+  const [selectedBrewId, setSelectedBrewId] = React.useState<number | null>(
+    null
+  );
 
-  //   show list for each day
-  function renderBrewsForTheDay(): React.ReactNode {
-    console.log({ daysOfBrewing });
-    const dayNames = Object.keys(daysOfBrewing);
-    if (dayNames.length > 0) {
-      return dayNames
-        .slice(0)
-        .reverse()
-        .map((dayOfBrewing) => (
-          <BrewDayInList
-            key={dayOfBrewing}
-            brewsForTheDay={daysOfBrewing[dayOfBrewing]}
-            callback={callback}
-            current={current}
-            dayName={dayOfBrewing}
-          />
-        ));
-    }
-    return null;
-  }
+  const [brews, setBrews] = React.useState<BaseBrewingApi[]>([]);
+
+  React.useEffect(() => {
+    const f = async (): Promise<void> => {
+      const brewsApi = await getBrews();
+
+      setBrews(brewsApi);
+      setSelectedBrewId(brewsApi[0].id ?? null);
+      onSelectBrewId(brewsApi[0].id ?? null);
+    };
+    f();
+  }, [onSelectBrewId]);
+
+  // take days as the keys
+  const mergedBrews: MergedBrews = useMemo(
+    () =>
+      brews.reduce((brewsDate, brew) => {
+        const date = new Date(brew.startedAt).toLocaleDateString();
+
+        brewsDate[date] = brewsDate[date] || [];
+        brewsDate[date].push(brew);
+        return brewsDate;
+      }, Object.create(null)),
+    [brews]
+  );
+
+  const handleSelectBrewId = (brewId: number): void => {
+    setSelectedBrewId(brewId);
+    onSelectBrewId(brewId);
+  };
 
   return (
     <ul className="flex flex-col">
-      {renderBrewsForTheDay()}
-      <div />
+      {Object.keys(mergedBrews)
+        .sort((a, b) => new Date(a).getTime() - new Date(b).getTime())
+        .map((date) => (
+          <BrewListGroup
+            key={date}
+            brews={mergedBrews[date]}
+            onSelectBrewId={handleSelectBrewId}
+            currentBrewId={selectedBrewId}
+            date={date}
+          />
+        ))}
     </ul>
   );
 };

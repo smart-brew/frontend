@@ -4,30 +4,29 @@ import { BaseBrewingApi } from '../../types/BrewingType';
 import BrewListItem from './BrewListItem';
 
 interface BrewDayInListTypeProps {
-  brewsForTheDay: BaseBrewingApi[];
-  callback: (arg: number) => void;
-  current: number;
-  dayName: string;
+  brews: BaseBrewingApi[];
+  onSelectBrewId: (brewId: number) => void;
+  currentBrewId: number | null;
+  date: string;
 }
 
 const BrewDayInList: React.FC<BrewDayInListTypeProps> = ({
-  brewsForTheDay,
-  callback,
-  current,
-  dayName,
+  brews,
+  onSelectBrewId,
+  currentBrewId,
+  date,
 }) => {
   return (
     <ul className="flex flex-col">
-      <div className="text-left font-bold text-2xl py-5 pl-3">{dayName}</div>
-      {brewsForTheDay
-        .slice(0)
-        .reverse()
+      <div className="text-left font-bold text-2xl py-5 pl-3">{date}</div>
+      {brews
+        .sort((a, b) => a.startedAt.localeCompare(b.startedAt))
         .map((brew: BaseBrewingApi) => (
           <BrewListItem
             key={brew.id}
             brew={brew}
-            onClick={callback}
-            current={current}
+            onSelectBrewId={onSelectBrewId}
+            isSelected={currentBrewId === brew.id}
           />
         ))}
     </ul>
