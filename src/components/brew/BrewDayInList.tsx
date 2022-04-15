@@ -19,14 +19,17 @@ const BrewDayInList: React.FC<BrewDayInListTypeProps> = ({
   return (
     <ul className="flex flex-col">
       <div className="text-left font-bold text-2xl py-5 pl-3">{dayName}</div>
-      {brewsForTheDay.map((brew: BaseBrewingApi) => (
-        <BrewListItem
-          key={brew.id}
-          brew={brew}
-          onClick={callback}
-          current={current}
-        />
-      ))}
+      {brewsForTheDay
+        .slice(0)
+        .reverse()
+        .map((brew: BaseBrewingApi) => (
+          <BrewListItem
+            key={brew.id}
+            brew={brew}
+            onClick={callback}
+            current={current}
+          />
+        ))}
     </ul>
   );
 };
