@@ -1,9 +1,90 @@
-import {
-  BrewingApi,
-  InstructionLogApi,
-  StatusLogApi,
-} from '../types/BrewingType';
-import RecipeType from '../types/RecipeData/RecipeType';
+import { BrewingApi, StatusLogApi } from '../types/BrewingType';
+
+const getRandomValue = (min: number, max: number): number => {
+  const maxRange = max - min;
+  return Math.floor(Math.random() * maxRange) + min;
+};
+
+const generateDummyStatusLogData = (numOfLogs: number): StatusLogApi[] => {
+  const dummyStatusLogs: StatusLogApi[] = [];
+  const minuteInMillis = 60000;
+  for (let i = 0; i < numOfLogs; i++) {
+    dummyStatusLogs.push({
+      id: -1,
+      brewingId: -1,
+      status: 'DUMMY',
+      params: JSON.stringify({
+        TEMPERATURE: [
+          {
+            TEMP: getRandomValue(20, 120),
+            REGULATION_ENABLED: false,
+            STATE: 'WAITING',
+            DEVICE: 'TEMP_1',
+          },
+          {
+            TEMP: getRandomValue(20, 120),
+            REGULATION_ENABLED: false,
+            STATE: 'WAITING',
+            DEVICE: 'TEMP_2',
+          },
+        ],
+        MOTOR: [
+          {
+            SPEED: 0,
+            RPM: getRandomValue(0, 500),
+            STATE: 'WAITING',
+            DEVICE: 'MOTOR_1',
+          },
+          {
+            SPEED: 0,
+            RPM: getRandomValue(0, 500),
+            STATE: 'WAITING',
+            DEVICE: 'MOTOR_2',
+          },
+        ],
+        UNLOADER: [
+          {
+            UNLOADED: false,
+            STATE: 'WAITING',
+            DEVICE: 'FERMENTABLE',
+          },
+          {
+            UNLOADED: false,
+            STATE: 'WAITING',
+            DEVICE: 'YEAST',
+          },
+          {
+            UNLOADED: false,
+            STATE: 'WAITING',
+            DEVICE: 'HOPS',
+          },
+          {
+            UNLOADED: false,
+            STATE: 'WAITING',
+            DEVICE: 'OTHER',
+          },
+        ],
+        PUMP: [
+          {
+            ENABLED: false,
+            STATE: 'WAITING',
+            DEVICE: 'PUMP_1',
+          },
+        ],
+        SYSTEM: [
+          {
+            REMAINING: 0,
+            STATE: 'WAITING',
+            DEVICE: 'WAIT',
+          },
+        ],
+      }),
+      createdAt: minuteInMillis * i,
+    });
+  }
+
+  return dummyStatusLogs;
+};
 
 const generateDummyBrewingApi = (numOfLogs: number): BrewingApi => {
   return {
@@ -226,92 +307,6 @@ const generateDummyBrewingApi = (numOfLogs: number): BrewingApi => {
     ],
     StatusLogs: generateDummyStatusLogData(numOfLogs),
   };
-};
-
-const generateDummyStatusLogData = (numOfLogs: number): StatusLogApi[] => {
-  const dummyStatusLogs: StatusLogApi[] = [];
-  const minuteInMillis = 60000;
-  for (let i = 0; i < numOfLogs; i++) {
-    dummyStatusLogs.push({
-      id: -1,
-      brewingId: -1,
-      status: 'DUMMY',
-      params: JSON.stringify({
-        TEMPERATURE: [
-          {
-            TEMP: getRandomValue(20, 120),
-            REGULATION_ENABLED: false,
-            STATE: 'WAITING',
-            DEVICE: 'TEMP_1',
-          },
-          {
-            TEMP: getRandomValue(20, 120),
-            REGULATION_ENABLED: false,
-            STATE: 'WAITING',
-            DEVICE: 'TEMP_2',
-          },
-        ],
-        MOTOR: [
-          {
-            SPEED: 0,
-            RPM: getRandomValue(0, 500),
-            STATE: 'WAITING',
-            DEVICE: 'MOTOR_1',
-          },
-          {
-            SPEED: 0,
-            RPM: getRandomValue(0, 500),
-            STATE: 'WAITING',
-            DEVICE: 'MOTOR_2',
-          },
-        ],
-        UNLOADER: [
-          {
-            UNLOADED: false,
-            STATE: 'WAITING',
-            DEVICE: 'FERMENTABLE',
-          },
-          {
-            UNLOADED: false,
-            STATE: 'WAITING',
-            DEVICE: 'YEAST',
-          },
-          {
-            UNLOADED: false,
-            STATE: 'WAITING',
-            DEVICE: 'HOPS',
-          },
-          {
-            UNLOADED: false,
-            STATE: 'WAITING',
-            DEVICE: 'OTHER',
-          },
-        ],
-        PUMP: [
-          {
-            ENABLED: false,
-            STATE: 'WAITING',
-            DEVICE: 'PUMP_1',
-          },
-        ],
-        SYSTEM: [
-          {
-            REMAINING: 0,
-            STATE: 'WAITING',
-            DEVICE: 'WAIT',
-          },
-        ],
-      }),
-      createdAt: minuteInMillis * i,
-    });
-  }
-
-  return dummyStatusLogs;
-};
-
-const getRandomValue = (min: number, max: number): number => {
-  const maxRange = max - min;
-  return Math.floor(Math.random() * maxRange) + min;
 };
 
 export { generateDummyBrewingApi, generateDummyStatusLogData };

@@ -13,13 +13,9 @@ import {
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import 'chartjs-adapter-date-fns';
-import { sk } from 'date-fns/locale';
 import { BrewingApi } from '../types/BrewingType';
 import TimeHelper from '../helpers/TimeHelper';
-import {
-  generateDummyBrewingApi,
-  generateDummyStatusLogData,
-} from '../helpers/BrewingStatusLogGenerator';
+import { generateDummyBrewingApi } from '../helpers/BrewingStatusLogGenerator';
 
 ChartJS.register(
   CategoryScale,
@@ -108,7 +104,7 @@ export const HistoryOverviewStatsPage: React.FC<Props> = ({ selectedBrew }) => {
         ticks: {
           beginAtZero: true,
           maxTicksLimit: 20,
-          callback: function (value, index, ticks) {
+          callback: function (value) {
             if (typeof value === 'string' && value.length > 5) {
               const valueSplit = value.split(':');
               let seconds =
@@ -138,30 +134,17 @@ export const HistoryOverviewStatsPage: React.FC<Props> = ({ selectedBrew }) => {
   const chartMotor1: number[] = [];
   const chartMotor2: number[] = [];
 
-  // const labels = [
-  //   '00:00',
-  //   '01:00',
-  //   '02:00',
-  //   '03:00',
-  //   '04:00',
-  //   '05:00',
-  //   '06:00',
-  //   '07:00',
-  //   '08:00',
-  //   '09:00',
-  //   '10:00',
-  // ];
-
   const labels: number[] = [];
 
   const mapStatusLogApiToChartData = (): void => {
     if (brewStats) {
-      brewStats.map((value, index) => {
+      brewStats.map((value) => {
         const param = JSON.parse(value.params);
         chartTemp1.push(Math.floor(param.TEMPERATURE[0].TEMP));
         chartTemp2.push(Math.floor(param.TEMPERATURE[1].TEMP));
         chartMotor1.push(Math.floor(param.MOTOR[0].RPM));
         chartMotor2.push(Math.floor(param.MOTOR[1].RPM));
+        return null;
       });
     }
   };
@@ -171,6 +154,7 @@ export const HistoryOverviewStatsPage: React.FC<Props> = ({ selectedBrew }) => {
       brewStats.map((value) => {
         // labels.push(TimeHelper.msToMMSS(value.createdAt));
         labels.push(value.createdAt);
+        return null;
       });
     }
   };
