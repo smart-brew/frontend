@@ -36,7 +36,7 @@ export const HistoryOverview: React.FC<Props> = ({ recipeId }) => {
   React.useEffect(() => {
     console.log('Get brewings');
     const f = async (): Promise<void> => {
-      setBrewData(await getBrewStats(2));
+      setBrewData(await getBrewStats(1));
     };
     f();
   }, []);
