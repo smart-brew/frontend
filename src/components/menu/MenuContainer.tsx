@@ -7,14 +7,34 @@ import Off from './Off';
 
 export const MENU_HEIGHT = 70;
 
-const menus = [
-  { link: '/', title: 'Overview' },
-  { link: '/recipe', title: 'Recipes' },
-  { link: '/history', title: 'History' },
-  { link: '/tester', title: 'Tester' },
-];
+type MenuItem = {
+  link: string;
+  title: string;
+};
 
-const Menu: React.FC = () => {
+type Props = {
+  menus: MenuItem[];
+
+  /** @default false */
+  logo?: boolean;
+
+  /** @default false */
+  off?: boolean;
+
+  /**
+   *  If thrue, the menu will be highlighted when pathname is exactly the same as the link.
+   *  If false, the menu will be highlighted when pathname starts with the link.
+   *  @default false
+   */
+  matchPathnameExact?: boolean;
+};
+
+const Menu: React.FC<Props> = ({
+  menus,
+  logo = false,
+  off = false,
+  matchPathnameExact = false,
+}) => {
   const location = useLocation();
 
   return (
@@ -22,7 +42,7 @@ const Menu: React.FC = () => {
       className="container flex flex-row w-screen max-w-full border-b border-gray-300"
       style={{ height: MENU_HEIGHT }}
     >
-      <Logo />
+      {logo && <Logo />}
 
       {menus.map((menu) => (
         <MenuItem
@@ -30,10 +50,11 @@ const Menu: React.FC = () => {
           link={menu.link}
           title={menu.title}
           selected={location.pathname}
+          matchPathnameExact={matchPathnameExact}
         />
       ))}
 
-      <Off />
+      {off && <Off />}
     </div>
   );
 };

@@ -1,6 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
+import SplitPage from '../components/shared/SplitPage';
+import HistorySidebar from '../components/sidebar/HistorySidebar';
+
+import { HistoryOverview } from './HistoryOverviewPage';
 
 const HistoryPage: React.FC = () => {
-  return <div>History page</div>;
+  const [brewId, setBrewId] = useState<number>(0);
+
+  return (
+    <SplitPage>
+      <HistoryOverview brewId={brewId} />
+      <HistorySidebar onSelectBrewId={setBrewId} />
+    </SplitPage>
+  );
 };
+
 export default HistoryPage;
