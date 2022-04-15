@@ -1,5 +1,5 @@
+import { BaseBrewingApi, BrewingApi } from '../types/BrewingType';
 import InstructionTemplate from '../types/FunctionData/InstructionTemplate';
-import { BrewSimple } from '../types/BrewType';
 import RecipeType, { RecipeSimple } from '../types/RecipeData/RecipeType';
 import { SystemData } from '../types/SystemData';
 import { IdReturn } from './helpers';
@@ -9,7 +9,8 @@ export type Endpoints = {
   'GET /api/function': InstructionTemplate[];
   'GET /api/recipe': RecipeSimple[];
   'GET /api/recipe/:id': RecipeType;
-  'GET /api/brew': BrewSimple[];
+  'GET /api/brew': BaseBrewingApi[];
+  'GET /api/brew/:brewid': BrewingApi;
   'POST /api/brew/:brewId/instruction/:instructionId/done': IdReturn;
   'POST /api/brew/:id/abort': IdReturn;
   'POST /api/brew/:id/pause': IdReturn;

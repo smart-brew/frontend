@@ -1,4 +1,3 @@
-import { BrewSimple } from '../types/BrewType';
 import { RecipeApiUpload } from '../types/RecipeData/Recipe';
 import RecipeType, { RecipeSimple } from '../types/RecipeData/RecipeType';
 import { apiClient } from './client';
@@ -19,18 +18,6 @@ export const getRecipes = (): Promise<RecipeSimple[]> => {
       ];
 
       return sortedRecipes;
-    })
-    .catch((error) => {
-      console.log(error);
-      return [];
-    });
-};
-
-export const getBrews = (): Promise<BrewSimple[]> => {
-  return apiClient('GET /api/brew')
-    .then((brews: BrewSimple[] | null) => {
-      if (brews == null) return [];
-      return brews;
     })
     .catch((error) => {
       console.log(error);

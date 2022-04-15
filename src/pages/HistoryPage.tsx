@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { getBrews } from '../api/recipe';
+import { getBrews } from '../api/brew';
 import SplitPage from '../components/shared/SplitPage';
 import HistorySidebar from '../components/sidebar/HistorySidebar';
 import { BaseBrewingApi } from '../types/BrewingType';
