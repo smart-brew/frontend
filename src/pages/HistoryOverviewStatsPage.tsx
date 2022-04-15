@@ -15,6 +15,10 @@ import 'chartjs-adapter-date-fns';
 import { sk } from 'date-fns/locale';
 import { BrewingApi } from '../types/BrewingType';
 import TimeHelper from '../helpers/TimeHelper';
+import {
+  generateDummyBrewingApi,
+  generateDummyStatusLogData,
+} from '../helpers/BrewingStatusLogGenerator';
 
 ChartJS.register(
   CategoryScale,
@@ -32,6 +36,7 @@ interface Props {
 }
 
 export const HistoryOverviewStatsPage: React.FC<Props> = ({ selectedBrew }) => {
+  // selectedBrew = generateDummyBrewingApi(120);
   const brewStats = selectedBrew?.StatusLogs;
 
   const getBrewingDuration = (
@@ -42,10 +47,16 @@ export const HistoryOverviewStatsPage: React.FC<Props> = ({ selectedBrew }) => {
       const startDate = new Date(start);
       const finishDate = new Date(finish);
 
-      return finishDate.getMilliseconds() - startDate.getMilliseconds();
+      return finishDate.getTime() - startDate.getTime();
     }
     return 0;
   };
+
+  const isDurationMoreThanHour = TimeHelper.isTimeMoreThanHour(
+    getBrewingDuration(selectedBrew?.startedAt, selectedBrew?.finishedAt)
+  );
+
+  console.log(isDurationMoreThanHour);
 
   const options = {
     responsive: true,
@@ -56,6 +67,10 @@ export const HistoryOverviewStatsPage: React.FC<Props> = ({ selectedBrew }) => {
       },
     },
     plugins: {
+      decimation: {
+        enabled: isDurationMoreThanHour,
+        algorithm: 'min-max',
+      },
       legend: {
         position: 'top' as const,
         labels: {
@@ -78,24 +93,22 @@ export const HistoryOverviewStatsPage: React.FC<Props> = ({ selectedBrew }) => {
     },
     scales: {
       x: {
+        min: isDurationMoreThanHour ? '00:00:00' : '00:00',
         type: 'time',
         adapters: {
           date: {
             locale: sk,
           },
         },
+        ticks: {
+          beginAtZero: true,
+          maxTicksLimit: 20,
+        },
         distribution: 'series',
         time: {
-          unit: TimeHelper.isTimeMoreThanHour(
-            getBrewingDuration(
-              selectedBrew?.startedAt,
-              selectedBrew?.finishedAt
-            )
-          )
-            ? 'hour'
-            : 'minute',
+          unit: isDurationMoreThanHour ? 'hour' : 'minute',
           displayFormats: {
-            hour: 'hh:mm',
+            hour: 'hh:mm:ss',
             minute: 'mm:ss',
           },
         },
@@ -188,11 +201,11 @@ export const HistoryOverviewStatsPage: React.FC<Props> = ({ selectedBrew }) => {
   };
   return (
     <div className="flex flex-col justify-center content-center items-center">
-      <div className="w-4/5  p-6 space-y-5">
+      <div className="w-5/6 p-6 space-y-5">
         <span className="text-xl font-semibold my-5">Temperature stats</span>
         <Line options={options} data={tempData} />
       </div>
-      <div className="w-4/5  p-6 space-y-5">
+      <div className="w-5/6  p-6 space-y-5">
         <span className="text-xl font-semibold my-5">Motor speed stats</span>
         <Line options={options} data={motorData} />
       </div>
