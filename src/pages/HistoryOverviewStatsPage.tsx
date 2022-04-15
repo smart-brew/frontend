@@ -1,22 +1,25 @@
 import React from 'react';
 import {
-  Chart as ChartJS,
   CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
+  Chart as ChartJS,
   Legend,
+  LinearScale,
+  LineElement,
+  PointElement,
+  Title,
+  TimeScale,
+  Tooltip,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
-import faker from '@faker-js/faker';
-import { BaseBrewingApi, StatusLogApi } from '../types/BrewingType';
+import 'chartjs-adapter-date-fns';
+import { sk } from 'date-fns/locale';
+import { BrewingApi } from '../types/BrewingType';
 import TimeHelper from '../helpers/TimeHelper';
 
 ChartJS.register(
   CategoryScale,
   LinearScale,
+  TimeScale,
   PointElement,
   LineElement,
   Title,
@@ -24,45 +27,82 @@ ChartJS.register(
   Legend
 );
 
-const options = {
-  responsive: true,
-  elements: {
-    point: {
-      pointHoverRadius: 8,
-      pointRadius: 7,
+interface Props {
+  selectedBrew: BrewingApi | null;
+}
+
+export const HistoryOverviewStatsPage: React.FC<Props> = ({ selectedBrew }) => {
+  const brewStats = selectedBrew?.StatusLogs;
+
+  const getBrewingDuration = (
+    start: string | undefined,
+    finish: string | undefined
+  ): number => {
+    if (start !== undefined && finish !== undefined) {
+      const startDate = new Date(start);
+      const finishDate = new Date(finish);
+
+      return finishDate.getMilliseconds() - startDate.getMilliseconds();
+    }
+    return 0;
+  };
+
+  const options = {
+    responsive: true,
+    elements: {
+      point: {
+        pointHoverRadius: 8,
+        pointRadius: 7,
+      },
     },
-  },
-  plugins: {
-    legend: {
-      position: 'top' as const,
-      labels: {
-        font: {
-          size: 16,
+    plugins: {
+      legend: {
+        position: 'top' as const,
+        labels: {
+          font: {
+            size: 16,
+          },
+        },
+      },
+      title: {
+        display: false,
+      },
+      tooltip: {
+        titleFont: {
+          size: 20,
+        },
+        bodyFont: {
+          size: 20,
         },
       },
     },
-    title: {
-      display: false,
-    },
-    tooltip: {
-      titleFont: {
-        size: 20,
+    scales: {
+      x: {
+        type: 'time',
+        adapters: {
+          date: {
+            locale: sk,
+          },
+        },
+        distribution: 'series',
+        time: {
+          unit: TimeHelper.isTimeMoreThanHour(
+            getBrewingDuration(
+              selectedBrew?.startedAt,
+              selectedBrew?.finishedAt
+            )
+          )
+            ? 'hour'
+            : 'minute',
+          displayFormats: {
+            hour: 'hh:mm',
+            minute: 'mm:ss',
+          },
+        },
       },
-      bodyFont: {
-        size: 20,
-      },
     },
-  },
-};
+  };
 
-interface Props {
-  brewStats: StatusLogApi[] | null;
-}
-
-export const HistoryOverviewStatsPage: React.FC<Props> = ({ brewStats }) => {
-  if (brewStats) {
-    console.log(JSON.parse(brewStats[0].params));
-  }
   const chartTemp1: number[] = [];
   const chartTemp2: number[] = [];
   const chartMotor1: number[] = [];
@@ -82,13 +122,12 @@ export const HistoryOverviewStatsPage: React.FC<Props> = ({ brewStats }) => {
   //   '10:00',
   // ];
 
-  const labels: string[] = [];
+  const labels: number[] = [];
 
   const mapStatusLogApiToChartData = (): void => {
     if (brewStats) {
       brewStats.map((value, index) => {
         const param = JSON.parse(value.params);
-        console.log(param);
         chartTemp1.push(Math.floor(param.TEMPERATURE[0].TEMP));
         chartTemp2.push(Math.floor(param.TEMPERATURE[1].TEMP));
         chartMotor1.push(Math.floor(param.MOTOR[0].RPM));
@@ -100,7 +139,8 @@ export const HistoryOverviewStatsPage: React.FC<Props> = ({ brewStats }) => {
   const mapStatusLogApiToLabels = (): void => {
     if (brewStats) {
       brewStats.map((value) => {
-        labels.push(TimeHelper.msToMMSS(value.createdAt));
+        // labels.push(TimeHelper.msToMMSS(value.createdAt));
+        labels.push(value.createdAt);
       });
     }
   };

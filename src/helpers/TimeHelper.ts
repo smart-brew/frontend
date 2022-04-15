@@ -101,4 +101,8 @@ export default class TimeHelper {
       (seconds < 10 ? '0' + seconds : seconds)
     );
   };
+
+  static isTimeMoreThanHour = (millis: number): boolean => {
+    return millis / this.MILLIS_HOURS >= 1.0;
+  };
 }
