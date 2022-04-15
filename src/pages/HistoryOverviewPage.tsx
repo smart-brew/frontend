@@ -1,11 +1,8 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
-import { getRecipe } from '../api/recipe';
+import { getBrew } from '../api/brew';
 import Menu, { MENU_HEIGHT } from '../components/menu/MenuContainer';
 import RecipePreview from '../components/recipe/RecipePreview';
-import RecipeType from '../types/RecipeData/RecipeType';
-import { HistoryOverviewStatsPage } from './HistoryOverviewStatsPage';
-import { getBrewStats } from '../api/brew';
 import { BrewingApi } from '../types/BrewingType';
 
 const menus = [
@@ -14,32 +11,22 @@ const menus = [
 ];
 
 type Props = {
-  recipeId: number | null;
+  brewId: number | null;
 };
 
-export const HistoryOverview: React.FC<Props> = ({ recipeId }) => {
+export const HistoryOverview: React.FC<Props> = ({ brewId }) => {
   // currently selected recipe
-  const [selectedRecipe, setSelectedRecipe] = React.useState<RecipeType | null>(
+  const [selectedBrew, setSelectedBrew] = React.useState<BrewingApi | null>(
     null
   );
 
-  const [brewData, setBrewData] = React.useState<BrewingApi | null>(null);
-
-  // if new selected recipe (by ID) -> fetch the entire recipe with details
+  // if new selected brew (by ID) -> fetch the entire brew with details
   React.useEffect(() => {
     const f = async (): Promise<void> => {
-      if (recipeId) setSelectedRecipe(await getRecipe(recipeId));
+      if (brewId) setSelectedBrew(await getBrew(brewId));
     };
     f();
-  }, [recipeId]);
-
-  React.useEffect(() => {
-    console.log('Get brewings');
-    const f = async (): Promise<void> => {
-      setBrewData(await getBrewStats(1));
-    };
-    f();
-  }, []);
+  }, [brewId]);
 
   return (
     <div
@@ -49,11 +36,11 @@ export const HistoryOverview: React.FC<Props> = ({ recipeId }) => {
       <Menu menus={menus} matchPathnameExact />
       <Route path="/history" exact>
         TODO HEADING <br />
-        <RecipePreview recipe={selectedRecipe} />
+        <RecipePreview recipe={selectedBrew?.recipe ?? null} />
       </Route>
       <Route path="/history/stats" exact>
         TODO HEADING <br />
-        <HistoryOverviewStatsPage brewStats={brewData?.StatusLogs || null} />
+        TODO STATS
       </Route>
     </div>
   );

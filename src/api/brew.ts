@@ -1,3 +1,4 @@
+import { BaseBrewingApi, BrewingApi } from '../types/BrewingType';
 import { apiClient } from './client';
 import { IdReturn } from './helpers';
 import { SystemData } from '../types/SystemData';
@@ -41,4 +42,20 @@ export const confirmManualInstruction = async (
     brewId,
     instructionId,
   });
+};
+
+export const getBrews = (): Promise<BaseBrewingApi[]> => {
+  return apiClient('GET /api/brew')
+    .then((brews: BaseBrewingApi[] | null) => {
+      if (brews == null) return [];
+      return brews;
+    })
+    .catch((error) => {
+      console.log(error);
+      return [];
+    });
+};
+
+export const getBrew = (brewId: number): Promise<BrewingApi | null> => {
+  return apiClient('GET /api/brew/:brewId', { brewId });
 };
