@@ -302,7 +302,7 @@ const generateDummyStatusLogData = (numOfLogs: number): StatusLogApi[] => {
           },
         ],
       }),
-      createdAt: minuteInMillis * (i - 1),
+      createdAt: minuteInMillis * i,
     });
   }
 

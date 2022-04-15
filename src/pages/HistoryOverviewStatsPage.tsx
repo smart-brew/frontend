@@ -9,6 +9,7 @@ import {
   Title,
   TimeScale,
   Tooltip,
+  ChartOptions,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import 'chartjs-adapter-date-fns';
@@ -36,7 +37,7 @@ interface Props {
 }
 
 export const HistoryOverviewStatsPage: React.FC<Props> = ({ selectedBrew }) => {
-  // selectedBrew = generateDummyBrewingApi(120);
+  selectedBrew = generateDummyBrewingApi(120);
   const brewStats = selectedBrew?.StatusLogs;
 
   const getBrewingDuration = (
@@ -56,9 +57,7 @@ export const HistoryOverviewStatsPage: React.FC<Props> = ({ selectedBrew }) => {
     getBrewingDuration(selectedBrew?.startedAt, selectedBrew?.finishedAt)
   );
 
-  console.log(isDurationMoreThanHour);
-
-  const options = {
+  const options: ChartOptions<'line'> = {
     responsive: true,
     elements: {
       point: {
@@ -67,10 +66,6 @@ export const HistoryOverviewStatsPage: React.FC<Props> = ({ selectedBrew }) => {
       },
     },
     plugins: {
-      decimation: {
-        enabled: isDurationMoreThanHour,
-        algorithm: 'min-max',
-      },
       legend: {
         position: 'top' as const,
         labels: {
@@ -89,26 +84,48 @@ export const HistoryOverviewStatsPage: React.FC<Props> = ({ selectedBrew }) => {
         bodyFont: {
           size: 20,
         },
+        callbacks: {
+          title: function (context) {
+            let value = context[0].label;
+            if (value.length > 5) {
+              const valueSplit = value.split(':');
+              let seconds =
+                +valueSplit[0] * 60 * 60 + +valueSplit[1] * 60 + +valueSplit[2];
+              seconds -= 3600;
+              value = TimeHelper.msToHHMMSS(seconds * 1000);
+              return value;
+            }
+            return value;
+          },
+        },
       },
     },
     scales: {
       x: {
         min: isDurationMoreThanHour ? '00:00:00' : '00:00',
         type: 'time',
-        adapters: {
-          date: {
-            locale: sk,
-          },
-        },
+        bounds: 'ticks',
         ticks: {
           beginAtZero: true,
           maxTicksLimit: 20,
+          callback: function (value, index, ticks) {
+            if (typeof value === 'string' && value.length > 5) {
+              const valueSplit = value.split(':');
+              let seconds =
+                +valueSplit[0] * 60 * 60 + +valueSplit[1] * 60 + +valueSplit[2];
+              seconds -= 3600;
+              value = TimeHelper.msToHHMMSS(seconds * 1000);
+              return value;
+            }
+            return value;
+          },
         },
         distribution: 'series',
         time: {
+          tooltipFormat: isDurationMoreThanHour ? 'HH:mm:ss' : 'mm:ss',
           unit: isDurationMoreThanHour ? 'hour' : 'minute',
           displayFormats: {
-            hour: 'hh:mm:ss',
+            hour: 'HH:mm:ss',
             minute: 'mm:ss',
           },
         },
