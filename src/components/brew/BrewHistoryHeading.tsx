@@ -10,13 +10,24 @@ const BrewHistoryHeading: React.FC<BrewTypeProps> = ({
 }: BrewTypeProps) => {
   return brew ? (
     <div>
-      <div className="text-center text-3xl font-bold pt-12">
+      <div
+        className="text-center text-3xl font-bold pt-12"
+        style={{ color: brew.endState === 'Finished' ? 'limegreen' : 'red' }}
+      >
         {brew.endState}
       </div>
       <div className="text-center text-xl font-bold">
-        Start {brew.startedAt}
+        Start{' '}
+        {`${new Date(brew.startedAt).toLocaleDateString()} ${new Date(
+          brew.startedAt
+        ).toLocaleTimeString()}`}
       </div>
-      <div className="text-center text-xl font-bold">End {brew.finishedAt}</div>
+      <div className="text-center text-xl font-bold">
+        End{' '}
+        {`${new Date(brew.finishedAt).toLocaleDateString()} ${new Date(
+          brew.finishedAt
+        ).toLocaleTimeString()}`}
+      </div>
     </div>
   ) : (
     <span />
