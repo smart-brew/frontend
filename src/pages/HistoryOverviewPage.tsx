@@ -5,6 +5,7 @@ import Menu, { MENU_HEIGHT } from '../components/menu/MenuContainer';
 import RecipePreview from '../components/recipe/RecipePreview';
 import { BrewingApi } from '../types/BrewingType';
 import { HistoryOverviewStatsPage } from './HistoryOverviewStatsPage';
+import BrewHistoryHeading from '../components/brew/BrewHistoryHeading';
 
 const menus = [
   { link: '/history', title: 'Recipe' },
@@ -38,11 +39,11 @@ export const HistoryOverview: React.FC<Props> = ({ brewId }) => {
         style={{ maxHeight: `calc(100vh - ${MENU_HEIGHT * 2}px)` }}
       >
         <Route path="/history" exact>
-          TODO HEADING <br />
+          <BrewHistoryHeading brew={selectedBrew} />
           <RecipePreview recipe={selectedBrew?.recipe ?? null} />
         </Route>
         <Route path="/history/stats" exact>
-          TODO HEADING <br />
+          <BrewHistoryHeading brew={selectedBrew} />
           <HistoryOverviewStatsPage selectedBrew={selectedBrew} />
         </Route>
       </div>
