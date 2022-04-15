@@ -20,7 +20,7 @@ const BrewDayInList: React.FC<BrewDayInListTypeProps> = ({
     <ul className="flex flex-col">
       <div className="text-left font-bold text-2xl py-5 pl-3">{date}</div>
       {brews
-        .sort((a, b) => a.startedAt.localeCompare(b.startedAt))
+        .sort((a, b) => b.startedAt.localeCompare(a.startedAt))
         .map((brew: BaseBrewingApi) => (
           <BrewListItem
             key={brew.id}
