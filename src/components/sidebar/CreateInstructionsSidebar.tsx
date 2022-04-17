@@ -10,9 +10,10 @@ import { MENU_HEIGHT } from '../menu/MenuContainer';
 interface Props {
   saveRecipe: (state: string) => void;
   editRecipe: () => void;
-  checkEmptyBoxes: () => boolean;
   checkBlockNameDoublesBoolean: () => boolean;
+  checkEmptyBoxes: () => boolean;
   toIngredients: () => void;
+  checkRecipeMakingConditions: () => boolean;
   ingredients: IngredientType[];
   recipeName: string;
   recipeId: number;
@@ -25,8 +26,9 @@ const CreateInstructionsSidebar: React.FC<Props> = ({
   toIngredients,
   ingredients,
   recipeName,
-  checkEmptyBoxes,
   checkBlockNameDoublesBoolean,
+  checkEmptyBoxes,
+  checkRecipeMakingConditions,
   recipeId,
   recipeLocked,
 }: Props) => {
@@ -48,16 +50,18 @@ const CreateInstructionsSidebar: React.FC<Props> = ({
         {recipeId === -1 && (
           <Button
             title="Save recipe"
-            disabled={checkEmptyBoxes() || checkBlockNameDoublesBoolean()}
-            onClick={() =>
-              popup?.open({
-                title: 'Do you want to save this recipe?',
-                description:
-                  'By pressing Save recipe, the recipe will be saved to database',
-                buttonText: 'Save recipe',
-                onConfirm: () => saveRecipe('save'),
-              })
-            }
+            disabled={checkBlockNameDoublesBoolean() || checkEmptyBoxes()}
+            onClick={() => {
+              if (checkRecipeMakingConditions()) {
+                popup?.open({
+                  title: 'Do you want to save this recipe?',
+                  description:
+                    'By pressing Save recipe, the recipe will be saved to database',
+                  buttonText: 'Save recipe',
+                  onConfirm: () => saveRecipe('save'),
+                });
+              }
+            }}
             className="w-full"
           />
         )}
@@ -66,36 +70,41 @@ const CreateInstructionsSidebar: React.FC<Props> = ({
             <Button
               title="Save"
               disabled={
-                checkEmptyBoxes() ||
                 checkBlockNameDoublesBoolean() ||
+                checkEmptyBoxes() ||
                 recipeLocked
               }
-              onClick={() =>
-                popup?.open({
-                  title: 'Do you want to overwrite the recipe?',
-                  description:
-                    'This new version of the recipe will overwrite the old one',
-                  buttonText: 'Overwrite recipe',
-                  buttonType: 'warn',
-                  onConfirm: () => editRecipe(),
-                })
-              }
+              onClick={() => {
+                if (checkRecipeMakingConditions()) {
+                  popup?.open({
+                    title: 'Do you want to overwrite the recipe?',
+                    description:
+                      'This new version of the recipe will overwrite the old one',
+                    buttonText: 'Overwrite recipe',
+                    buttonType: 'warn',
+                    onConfirm: () => editRecipe(),
+                  });
+                }
+              }}
               className="w-full"
             />
 
             <Button
               title="Save as new"
-              disabled={checkEmptyBoxes() || checkBlockNameDoublesBoolean()}
-              onClick={() =>
-                popup?.open({
-                  title:
-                    'Are you sure you want to save this recipe as a new one?',
-                  description:
-                    'By pressing Save as new, this recipe will be saved, while the old one will still exist',
-                  buttonText: 'Save as new',
-                  onConfirm: () => saveRecipe('edit'),
-                })
-              }
+              // disabled={checkRecipeState()checkEmptyBoxes() || checkBlockNameDoublesBoolean()}
+              disabled={checkBlockNameDoublesBoolean() || checkEmptyBoxes()}
+              onClick={() => {
+                if (checkRecipeMakingConditions()) {
+                  popup?.open({
+                    title:
+                      'Are you sure you want to save this recipe as a new one?',
+                    description:
+                      'By pressing Save as new, this recipe will be saved, while the old one will still exist',
+                    buttonText: 'Save as new',
+                    onConfirm: () => saveRecipe('edit'),
+                  });
+                }
+              }}
               className="w-full"
             />
           </>
