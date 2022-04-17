@@ -1,18 +1,25 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 import React from 'react';
 import Popup, { PopupProps } from '../components/popup/Popup';
 import { closePopup, openPopup } from '../components/popup/PopupFunctions';
 
-const PopupContext = React.createContext<State | null>(null);
+const PopupContext = React.createContext<State>({
+  close: () => {},
+  open: () => {},
+});
 
 interface State {
-  open: ({ title, description, onConfirm }: PopupProps) => void;
+  open: (props: PopupProps) => void;
   close: () => void;
 }
 
 const PopupContextProvider: React.FC = ({ children }) => {
   const reference = React.useRef<HTMLDivElement>(null);
 
-  const [value, setValue] = React.useState<State | null>(null);
+  const [value, setValue] = React.useState<State>({
+    close: () => {},
+    open: () => {},
+  });
 
   const [popup, setPopup] = React.useState<JSX.Element | null>(null);
 
@@ -22,7 +29,14 @@ const PopupContextProvider: React.FC = ({ children }) => {
       closePopup(reference);
     };
 
-    const open = ({ title, description, onConfirm }: PopupProps): void => {
+    const open = ({
+      title,
+      description,
+      onConfirm,
+      buttonText,
+      buttonType,
+      popupType,
+    }: PopupProps): void => {
       setPopup(
         <Popup
           title={title}
@@ -31,6 +45,9 @@ const PopupContextProvider: React.FC = ({ children }) => {
             onConfirm();
             close();
           }}
+          buttonText={buttonText}
+          buttonType={buttonType}
+          popupType={popupType}
           ref={reference}
         />
       );
@@ -52,6 +69,6 @@ const PopupContextProvider: React.FC = ({ children }) => {
   );
 };
 
-export const usePopup = (): State | null => React.useContext(PopupContext);
+export const usePopup = (): State => React.useContext(PopupContext);
 
 export default PopupContextProvider;

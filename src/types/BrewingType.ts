@@ -22,11 +22,11 @@ export interface BaseBrewingApi {
   evaluation: number | null;
   endState: string;
   recipeName: string;
-  startedAt: Date;
-  finishedAt: Date;
+  startedAt: string;
+  finishedAt: string;
 }
 
-// single brewing sent by GET api/brew/:brewid
+// single brewing sent by GET api/brew/:brewId
 export interface BrewingApi extends BaseBrewingApi {
   recipe: RecipeType;
   InstructionLogs: InstructionLogApi[];

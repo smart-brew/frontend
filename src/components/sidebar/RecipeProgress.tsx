@@ -118,9 +118,10 @@ const RecipeProgress: React.FC<Props> = ({ recipeId }: Props) => {
 
   const showAbortConfirmation = useCallback((): void => {
     popup?.open({
-      title: 'The process was aborted',
+      title: 'This brewing process has been succesfully aborted!',
       description:
-        'Check the brewing statistics of choose recipe and start brewing',
+        'You can now check the brewing statistics of this recipe or start brewing a new batch',
+      popupType: 'info',
       onConfirm: () => {
         console.log('abort was performed');
       },
@@ -129,9 +130,11 @@ const RecipeProgress: React.FC<Props> = ({ recipeId }: Props) => {
 
   const onPauseClick = useCallback((): void => {
     popup?.open({
-      title: 'Do you want to pause the brewing process?',
+      title: 'Are you sure you want to pause the brewing process?',
       description:
-        'By clicking Confirm, the brewery will keep its initial state till resume',
+        'By clicking Pause, the brewery will keep its current state until you resume brewing',
+      buttonType: 'warn',
+      buttonText: 'Pause',
       onConfirm: () => {
         pauseBrewingAPI(0);
         setBrewingState(BrewingStateConstants.BREW_STATE_PAUSE);
@@ -141,9 +144,9 @@ const RecipeProgress: React.FC<Props> = ({ recipeId }: Props) => {
 
   const onResumeClick = useCallback((): void => {
     popup?.open({
-      title: 'Do you want to resume the brewing process?',
+      title: 'Are you sure you want to resume the brewing process?',
       description:
-        'By clicking Confirm, the brewery will continue brewing process',
+        'By clicking Resume, the brewery will continue current brewing process',
       onConfirm: () => {
         setBrewingState(BrewingStateConstants.BREW_STATE_IN_PROGRESS);
         resumeBrewingAPI(0);
@@ -153,9 +156,11 @@ const RecipeProgress: React.FC<Props> = ({ recipeId }: Props) => {
 
   const handleOnAbort = useCallback((): void => {
     popup?.open({
-      title: 'Do you want to abort the brewing process?',
+      title: 'Are you sure you want to abort the brewing process?',
       description:
-        'By clicking Confirm, the brewing process will be aborted without the chance to resume',
+        'By clicking Abort, the brewing process will be immediately aborted without the chance to resume',
+      buttonType: 'danger',
+      buttonText: 'Abort',
       onConfirm: () => {
         abortBrewingAPI(0);
         setBrewingState(BrewingStateConstants.BREW_STATE_INACTIVE);

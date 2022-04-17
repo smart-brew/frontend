@@ -19,6 +19,8 @@ const Off: React.FC = () => {
             title: 'Do you want to turm off the whole system?',
             description:
               'By confirming this, the whole system will be shut down',
+            buttonText: 'Shut down',
+            buttonType: 'danger',
             onConfirm: postShutDown,
           });
         }}
