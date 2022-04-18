@@ -4,6 +4,7 @@ import { getBrew } from '../api/brew';
 import Menu, { MENU_HEIGHT } from '../components/menu/MenuContainer';
 import RecipePreview from '../components/recipe/RecipePreview';
 import { BrewingApi } from '../types/BrewingType';
+import { HistoryOverviewStatsPage } from './HistoryOverviewStatsPage';
 
 const menus = [
   { link: '/history', title: 'Recipe' },
@@ -29,19 +30,22 @@ export const HistoryOverview: React.FC<Props> = ({ brewId }) => {
   }, [brewId]);
 
   return (
-    <div
-      className="h-full overflow-auto pb-2"
-      style={{ maxHeight: `calc(100vh - ${MENU_HEIGHT * 2}px)` }}
-    >
+    <div className="h-full">
       <Menu menus={menus} matchPathnameExact />
-      <Route path="/history" exact>
-        TODO HEADING <br />
-        <RecipePreview recipe={selectedBrew?.recipe ?? null} />
-      </Route>
-      <Route path="/history/stats" exact>
-        TODO HEADING <br />
-        TODO STATS
-      </Route>
+
+      <div
+        className="h-full overflow-auto pb-2"
+        style={{ maxHeight: `calc(100vh - ${MENU_HEIGHT * 2}px)` }}
+      >
+        <Route path="/history" exact>
+          TODO HEADING <br />
+          <RecipePreview recipe={selectedBrew?.recipe ?? null} />
+        </Route>
+        <Route path="/history/stats" exact>
+          TODO HEADING <br />
+          <HistoryOverviewStatsPage selectedBrew={selectedBrew} />
+        </Route>
+      </div>
     </div>
   );
 };

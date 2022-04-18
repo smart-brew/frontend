@@ -24,10 +24,10 @@ const MotorEditableInstr: React.FC<Props> = ({
   const readParams = (): ParamType | null => {
     const inputNode = inputRef.current;
     const selectNode = selectRef.current;
-    if (inputNode != null && selectNode != null) {
+    if (inputNode !== null && selectNode !== null) {
       const parameter: ParamType = {
         optionCodeName: `MOTOR_${selectNode.value}`,
-        value: parseInt(inputNode?.value, 10),
+        value: parseInt(inputNode?.value || '0', 10),
       };
       return parameter;
     }
@@ -40,6 +40,8 @@ const MotorEditableInstr: React.FC<Props> = ({
       onChange(params);
     }
   };
+
+  const defaultVal = instruction.param || 0;
 
   return (
     <div className="flex flex-row justify-evenly text-lg align-middle space-x-8">
@@ -61,8 +63,8 @@ const MotorEditableInstr: React.FC<Props> = ({
           className="w-1/4 border border-gray-300 p-2 rounded-lg"
           type="number"
           ref={inputRef}
-          defaultValue={instruction.param === null ? 0 : instruction.param}
-          onBlur={sendParams}
+          value={defaultVal}
+          onChange={sendParams}
         />
         <span>RPM</span>
       </div>

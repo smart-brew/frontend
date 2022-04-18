@@ -12,7 +12,7 @@ export interface StatusLogApi {
   id: number;
   brewingId: number;
   status: string;
-  params: JSON; // na BE je toto typu Prisma.JsonValue, ktory nemusi byt json ale z DB by mal prist vzdy validny json
+  params: string; // na BE je toto typu Prisma.JsonValue, ktory nemusi byt json ale z DB by mal prist vzdy validny json
   createdAt: number;
 }
 // array of base brewings sent by GET api/brew

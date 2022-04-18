@@ -2,6 +2,9 @@ const formatNumToDefinedNumOfDecimal = (
   num: string | number,
   decimals: number
 ): string => {
+  if (num === undefined || num === null) {
+    return 'NaN';
+  }
   if (typeof num === 'string') {
     num = parseFloat(num);
   }
