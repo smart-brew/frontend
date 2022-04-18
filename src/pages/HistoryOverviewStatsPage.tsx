@@ -15,7 +15,6 @@ import { Line } from 'react-chartjs-2';
 import 'chartjs-adapter-date-fns';
 import { BrewingApi } from '../types/BrewingType';
 import TimeHelper from '../helpers/TimeHelper';
-import { generateDummyBrewingApi } from '../helpers/BrewingStatusLogGenerator';
 
 ChartJS.register(
   CategoryScale,
@@ -73,9 +72,8 @@ export const HistoryOverviewStatsPage: React.FC<Props> = ({ selectedBrew }) => {
     responsive: true,
     elements: {
       point: {
-        // @ts-ignore
-        pointHoverRadius: 8,
-        pointRadius: 7,
+        hoverRadius: 8,
+        radius: 7,
       },
     },
     plugins: {
@@ -108,7 +106,7 @@ export const HistoryOverviewStatsPage: React.FC<Props> = ({ selectedBrew }) => {
     scales: {
       x: {
         min: isDurationMoreThanHour ? '00:00:00' : '00:00',
-        type: 'timeseries',
+        type: 'time',
         bounds: 'ticks',
         ticks: {
           maxTicksLimit: 20,
@@ -116,8 +114,7 @@ export const HistoryOverviewStatsPage: React.FC<Props> = ({ selectedBrew }) => {
             return subtractHourFromChartLabel(value);
           },
         },
-        // @ts-ignore
-        distribution: 'series',
+        // distribution: 'series',
         time: {
           tooltipFormat: isDurationMoreThanHour ? 'HH:mm:ss' : 'mm:ss',
           unit: isDurationMoreThanHour ? 'hour' : 'minute',
