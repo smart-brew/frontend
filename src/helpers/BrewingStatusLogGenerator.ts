@@ -8,7 +8,7 @@ const getRandomValue = (min: number, max: number): number => {
 const generateDummyStatusLogData = (numOfLogs: number): StatusLogApi[] => {
   const dummyStatusLogs: StatusLogApi[] = [];
   const minuteInMillis = 60000;
-  for (let i = 0; i < numOfLogs; i++) {
+  for (let i = 0; i < numOfLogs; i += 1) {
     dummyStatusLogs.push({
       id: -1,
       brewingId: -1,

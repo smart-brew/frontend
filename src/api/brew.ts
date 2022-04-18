@@ -26,12 +26,6 @@ export const resumeBrewing = async (
   return apiClient('POST /api/brew/:id/resume', { id: brewId });
 };
 
-export const getBrewStats = async (
-  brewId: number
-): Promise<BrewingApi | null> => {
-  return apiClient('GET /api/brew/:id', { id: brewId });
-};
-
 export const confirmManualInstruction = async (
   brewId: number,
   instructionId: number

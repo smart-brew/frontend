@@ -2,7 +2,7 @@ const formatNumToDefinedNumOfDecimal = (
   num: string | number,
   decimals: number
 ): string => {
-  if (!num) {
+  if (num === undefined || num === null) {
     return 'NaN';
   }
   if (typeof num === 'string') {

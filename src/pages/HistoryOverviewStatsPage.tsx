@@ -33,8 +33,24 @@ interface Props {
 }
 
 export const HistoryOverviewStatsPage: React.FC<Props> = ({ selectedBrew }) => {
-  selectedBrew = generateDummyBrewingApi(120);
+  // selectedBrew = generateDummyBrewingApi(120);
   const brewStats = selectedBrew?.StatusLogs;
+
+  const subtractHourFromChartLabel = (value: number | string): string => {
+    if (typeof value === 'number') {
+      value = value.toString(10);
+      return value;
+    }
+    if (value.length > 5) {
+      const valueSplit = value.split(':');
+      let seconds =
+        +valueSplit[0] * 60 * 60 + +valueSplit[1] * 60 + +valueSplit[2];
+      seconds -= 3600;
+      value = TimeHelper.msToHHMMSS(seconds * 1000);
+      return value;
+    }
+    return value;
+  };
 
   const getBrewingDuration = (
     start: string | undefined,
@@ -83,15 +99,7 @@ export const HistoryOverviewStatsPage: React.FC<Props> = ({ selectedBrew }) => {
         callbacks: {
           title: function (context) {
             let value = context[0].label;
-            if (value.length > 5) {
-              const valueSplit = value.split(':');
-              let seconds =
-                +valueSplit[0] * 60 * 60 + +valueSplit[1] * 60 + +valueSplit[2];
-              seconds -= 3600;
-              value = TimeHelper.msToHHMMSS(seconds * 1000);
-              return value;
-            }
-            return value;
+            return subtractHourFromChartLabel(value);
           },
         },
       },
@@ -105,15 +113,7 @@ export const HistoryOverviewStatsPage: React.FC<Props> = ({ selectedBrew }) => {
           beginAtZero: true,
           maxTicksLimit: 20,
           callback: function (value) {
-            if (typeof value === 'string' && value.length > 5) {
-              const valueSplit = value.split(':');
-              let seconds =
-                +valueSplit[0] * 60 * 60 + +valueSplit[1] * 60 + +valueSplit[2];
-              seconds -= 3600;
-              value = TimeHelper.msToHHMMSS(seconds * 1000);
-              return value;
-            }
-            return value;
+            return subtractHourFromChartLabel(value);
           },
         },
         distribution: 'series',
