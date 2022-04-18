@@ -73,6 +73,7 @@ export const HistoryOverviewStatsPage: React.FC<Props> = ({ selectedBrew }) => {
     responsive: true,
     elements: {
       point: {
+        // @ts-ignore
         pointHoverRadius: 8,
         pointRadius: 7,
       },
@@ -107,15 +108,15 @@ export const HistoryOverviewStatsPage: React.FC<Props> = ({ selectedBrew }) => {
     scales: {
       x: {
         min: isDurationMoreThanHour ? '00:00:00' : '00:00',
-        type: 'time',
+        type: 'timeseries',
         bounds: 'ticks',
         ticks: {
-          beginAtZero: true,
           maxTicksLimit: 20,
           callback: function (value) {
             return subtractHourFromChartLabel(value);
           },
         },
+        // @ts-ignore
         distribution: 'series',
         time: {
           tooltipFormat: isDurationMoreThanHour ? 'HH:mm:ss' : 'mm:ss',
