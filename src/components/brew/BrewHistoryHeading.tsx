@@ -17,13 +17,13 @@ const BrewHistoryHeading: React.FC<BrewTypeProps> = ({
         {brew.endState}
       </div>
       <div className="text-center text-xl font-bold">
-        Start{' '}
+        Start:{' '}
         {`${new Date(brew.startedAt).toLocaleDateString()} ${new Date(
           brew.startedAt
         ).toLocaleTimeString()}`}
       </div>
       <div className="text-center text-xl font-bold">
-        End{' '}
+        End:{' '}
         {`${new Date(brew.finishedAt).toLocaleDateString()} ${new Date(
           brew.finishedAt
         ).toLocaleTimeString()}`}

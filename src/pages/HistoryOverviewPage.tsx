@@ -6,6 +6,7 @@ import RecipePreview from '../components/recipe/RecipePreview';
 import { BrewingApi } from '../types/BrewingType';
 import { HistoryOverviewStatsPage } from './HistoryOverviewStatsPage';
 import BrewHistoryHeading from '../components/brew/BrewHistoryHeading';
+import BrewHistoryInstructionList from '../components/brew/BrewInstructionHistoryList';
 
 const menus = [
   { link: '/history', title: 'Recipe' },
@@ -44,6 +45,11 @@ export const HistoryOverview: React.FC<Props> = ({ brewId }) => {
         </Route>
         <Route path="/history/stats" exact>
           <BrewHistoryHeading brew={selectedBrew} />
+          <BrewHistoryInstructionList
+            brew={selectedBrew}
+            instructionsLog={selectedBrew?.InstructionLogs ?? null}
+            instructionsRecipe={selectedBrew?.recipe.Instructions ?? null}
+          />
           <HistoryOverviewStatsPage selectedBrew={selectedBrew} />
         </Route>
       </div>
