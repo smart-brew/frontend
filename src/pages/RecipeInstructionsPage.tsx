@@ -244,8 +244,8 @@ const RecipeInstructionsPage: React.FC = () => {
     }
     if (checkIngredientPresence()) {
       popup?.open({
-        title: 'No ingredience block added',
-        description: 'Recipe has to consist of at least one ingredience',
+        title: 'No ingrediet block added',
+        description: 'Recipe has to consist of at least one ingredient',
         buttonText: 'Close',
         popupType: 'info',
         onConfirm: () => console.log('notification'),
