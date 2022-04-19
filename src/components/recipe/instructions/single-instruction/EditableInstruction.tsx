@@ -38,6 +38,9 @@ const EditableInstruction: React.FC<EditableInstructionProps> = ({
     instr: EditableInstructionTemplateType
   ): JSX.Element | null => {
     if (instr.codeName === InstructionConstants.TEMPERATURE) {
+      if (instr.param === null) {
+        instr.param = 0;
+      }
       return (
         <TemperatureEditableInstr
           instruction={instr}
@@ -46,6 +49,9 @@ const EditableInstruction: React.FC<EditableInstructionProps> = ({
       );
     }
     if (instr.codeName === InstructionConstants.MOTOR) {
+      if (instr.param === null) {
+        instr.param = 0;
+      }
       return (
         <MotorEditableInstr instruction={instr} onChange={registerChange} />
       );

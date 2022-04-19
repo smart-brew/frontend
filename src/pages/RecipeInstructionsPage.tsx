@@ -16,6 +16,7 @@ import InstructionTemplate from '../types/FunctionData/InstructionTemplate';
 import IngredientType from '../types/RecipeData/IngredientType';
 import CreateInstructionsSidebar from '../components/sidebar/CreateInstructionsSidebar';
 import IngredientForBackendType from '../types/RecipeData/IngredientForBackendType';
+import { usePopup } from '../contexts/popupContext';
 
 export interface RecipeDataProps {
   sendIngredients: IngredientType[];
@@ -41,6 +42,7 @@ const RecipeInstructionsPage: React.FC = () => {
   const [addedBlocks, setAddedBlocks] = useState(addBlocks);
 
   const popupRef = React.useRef<HTMLDivElement>(null);
+  const popup = usePopup();
 
   const toIngredients = (): void => {
     const data: RecipeDataProps = {
@@ -189,7 +191,12 @@ const RecipeInstructionsPage: React.FC = () => {
   };
 
   const checkEmptyBoxes = (): boolean => {
-    return addedBlocks.find((block) => block.blockName === '') !== undefined; // returns true if there are empty boxes
+    const emptyInstr: boolean =
+      addedBlocks.find((block) => block.instructions.length === 0) !==
+      undefined;
+    const emptyName: boolean =
+      addedBlocks.find((block) => block.blockName === '') !== undefined;
+    return emptyInstr || emptyName;
   };
 
   const checkBlockNameDoubles = (): number[] => {
@@ -205,6 +212,48 @@ const RecipeInstructionsPage: React.FC = () => {
 
   const checkBlockNameDoublesBoolean = (): boolean => {
     return checkBlockNameDoubles().length !== addedBlocks.length; // returns true if there are doubles
+  };
+
+  const checkBlockPresence = (): boolean => {
+    // returns true if no blocks defined
+    if (addedBlocks.length === 0) {
+      return true;
+    }
+    return false;
+  };
+
+  const checkIngredientPresence = (): boolean => {
+    // returns true if no ingredients defined
+    if (ingredients.length === 0) {
+      return true;
+    }
+    return false;
+  };
+
+  const checkRecipeMakingConditions = (): boolean => {
+    if (checkBlockPresence()) {
+      popup?.open({
+        title: 'No recipe stage added',
+        description:
+          'Recipe has to consist of at least one stage of instructions',
+        buttonText: 'Close',
+        popupType: 'info',
+        onConfirm: () => console.log('notification'),
+      });
+      return false;
+    }
+    if (checkIngredientPresence()) {
+      popup?.open({
+        title: 'No ingrediet block added',
+        description: 'Recipe has to consist of at least one ingredient',
+        buttonText: 'Close',
+        popupType: 'info',
+        onConfirm: () => console.log('notification'),
+      });
+      return false;
+    }
+
+    return true;
   };
 
   const handleBlockDelete = (blockId: number): void => {
@@ -338,8 +387,9 @@ const RecipeInstructionsPage: React.FC = () => {
         editRecipe={editTheRecipe}
         recipeId={sendRecipeId}
         recipeLocked={sendLockedState}
-        checkEmptyBoxes={checkEmptyBoxes}
         checkBlockNameDoublesBoolean={checkBlockNameDoublesBoolean}
+        checkEmptyBoxes={checkEmptyBoxes}
+        checkRecipeMakingConditions={checkRecipeMakingConditions}
         toIngredients={toIngredients}
         ingredients={ingredients}
         recipeName={recipeName}
