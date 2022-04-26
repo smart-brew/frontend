@@ -5,32 +5,34 @@ interface BrewTypeProps {
   brew: BrewingApi | null;
 }
 
+const getDateTime = (date: string): string => {
+  return `${new Date(date).toLocaleDateString()} ${new Date(
+    date
+  ).toLocaleTimeString()}`;
+};
+
 const BrewHistoryHeading: React.FC<BrewTypeProps> = ({
   brew,
 }: BrewTypeProps) => {
-  return brew ? (
+  if (!brew) {
+    return null;
+  }
+
+  return (
     <div>
-      <div
+      <h1
         className="text-center text-3xl font-bold pt-12"
         style={{ color: brew.endState === 'Finished' ? 'limegreen' : 'red' }}
       >
         {brew.endState}
-      </div>
-      <div className="text-center text-xl font-bold">
-        Start:{' '}
-        {`${new Date(brew.startedAt).toLocaleDateString()} ${new Date(
-          brew.startedAt
-        ).toLocaleTimeString()}`}
-      </div>
-      <div className="text-center text-xl font-bold">
-        End:{' '}
-        {`${new Date(brew.finishedAt).toLocaleDateString()} ${new Date(
-          brew.finishedAt
-        ).toLocaleTimeString()}`}
-      </div>
+      </h1>
+      <p className="text-center text-l font-bold">
+        Start: {getDateTime(brew.startedAt)}
+      </p>
+      <p className="text-center text-l font-bold">
+        End: {getDateTime(brew.finishedAt)}
+      </p>
     </div>
-  ) : (
-    <span />
   );
 };
 

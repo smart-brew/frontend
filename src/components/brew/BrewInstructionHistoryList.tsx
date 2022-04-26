@@ -1,73 +1,52 @@
 import React from 'react';
+import TimeHelper from '../../helpers/TimeHelper';
 import { BrewingApi, InstructionLogApi } from '../../types/BrewingType';
 
 import BrewHistoryInstructionListItem from './BrewInstructionHistoryItem';
-import InstructionType from '../../types/RecipeData/InstructionType';
 
 interface Props {
-  brew: BrewingApi | null;
-  instructionsRecipe: InstructionType[] | null;
-  instructionsLog: InstructionLogApi[] | null;
+  brew: BrewingApi;
 }
 
 const BrewHistoryInstructionList: React.FC<Props> = ({
-  brew,
-  instructionsLog,
-  instructionsRecipe,
+  brew: { startedAt, finishedAt, endState, InstructionLogs, recipe },
 }: Props) => {
-  const { startedAt, finishedAt, endState } = brew!;
-  const timeDif = parseInt(
-    `${new Date(finishedAt).valueOf() - new Date(startedAt).valueOf()}`,
-    10
-  );
-  const timeElapsed = `${new Date(timeDif).getMinutes()}:${String(
-    new Date(timeDif).getSeconds()
-  ).padStart(2, '0')}`;
+  const instructionsRecipe = recipe.Instructions;
+
+  // time between brew start and finish
+  const timeDiff =
+    new Date(finishedAt).getTime() - new Date(startedAt).getTime();
+
+  // time elapsed since brew start
+  const timeElapsed = TimeHelper.msToMMSS(timeDiff);
+
   return (
-    <div
-      className="text-xl font-bold pb-3 allign-left"
-      style={{ textAlign: 'left' }}
-    >
-      Overall
-      <div className="flex flex-row" style={{ overflowX: 'auto' }}>
-        <div
-          className="border rounded-xl space-y-2 py-5 px-10 bg-green-50"
-          style={{
-            borderTopRightRadius: 90,
-            borderBottomRightRadius: 90,
-            fontSize: '14px',
-            padding: 60,
-            margin: 10,
-          }}
-        >
-          {' '}
-          START <br />
-          0:00{' '}
+    <div className="mt-8 px-4">
+      <span className="text-2xl font-bold">Instruction progress</span>
+
+      <div className="flex flex-row mt-8 overflow-x-auto gap-1">
+        <div className="border rounded-xl bg-green-50 px-6 flex flex-col justify-center py-8">
+          <p className="font-bold">START</p>
+          <p className="italic">00:00</p>
         </div>
-        {instructionsLog
-          ?.sort((a, b) => (b.startedAt < a.startedAt ? 1 : -1))
-          .map((instruction: InstructionLogApi) => (
+
+        {InstructionLogs.sort((a, b) => a.startedAt - b.startedAt).map(
+          (instruction: InstructionLogApi) => (
             <BrewHistoryInstructionListItem
-              key={instruction.instructionId}
-              instructionsLog={instruction}
-              instructionsRecipe={instructionsRecipe}
+              key={instruction.startedAt}
+              logItem={instruction}
+              recipeInstructions={instructionsRecipe}
             />
-          ))}
+          )
+        )}
+
         <div
-          className={`border rounded-xl space-y-2 py-5 px-10 ${
+          className={`border rounded-xl px-6 flex flex-col justify-center ${
             endState === 'Finished' ? 'bg-green-50' : 'bg-red-100'
           }`}
-          style={{
-            borderTopLeftRadius: 90,
-            borderBottomLeftRadius: 90,
-            fontSize: '14px',
-            padding: 60,
-            margin: 10,
-          }}
         >
-          {' '}
-          FINISH <br />
-          {timeElapsed}
+          <p className="font-bold">FINISH</p>
+          <p className="italic">{timeElapsed}</p>
         </div>
       </div>
     </div>

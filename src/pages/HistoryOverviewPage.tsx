@@ -45,11 +45,7 @@ export const HistoryOverview: React.FC<Props> = ({ brewId }) => {
         </Route>
         <Route path="/history/stats" exact>
           <BrewHistoryHeading brew={selectedBrew} />
-          <BrewHistoryInstructionList
-            brew={selectedBrew}
-            instructionsLog={selectedBrew?.InstructionLogs ?? null}
-            instructionsRecipe={selectedBrew?.recipe.Instructions ?? null}
-          />
+          {selectedBrew && <BrewHistoryInstructionList brew={selectedBrew} />}
           <HistoryOverviewStatsPage selectedBrew={selectedBrew} />
         </Route>
       </div>
