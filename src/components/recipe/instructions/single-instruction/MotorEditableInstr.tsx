@@ -63,7 +63,7 @@ const MotorEditableInstr: React.FC<Props> = ({
           className="w-1/4 border border-gray-300 p-2 rounded-lg"
           type="number"
           ref={inputRef}
-          value={defaultVal}
+          defaultValue={defaultVal}
           onChange={sendParams}
         />
         <span>RPM</span>
