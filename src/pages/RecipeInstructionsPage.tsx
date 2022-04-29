@@ -290,7 +290,7 @@ const RecipeInstructionsPage: React.FC = () => {
     const instructionPopupNode = popupRef?.current;
     instructionPopupNode?.setAttribute(
       'data-original',
-      `${index.toString()}\$${blockId.toString()}\$${blockName}`
+      `${index.toString()}$${blockId.toString()}$${blockName}`
     );
     instructionPopupNode?.classList.add('modal-bg-active');
   };
