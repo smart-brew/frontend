@@ -35,7 +35,6 @@ const RecipeProgress: React.FC<Props> = ({ recipeId }: Props) => {
     BrewingStateConstants.BREW_STATE_INACTIVE
   );
   const [brewingId, setBrewingId] = useState(-1);
-  const [brewJustStarted, setBrewJustStarted] = useState(false);
 
   const [currentRecipeId, setCurrentRecipeId] = useState(recipeId);
 
@@ -64,6 +63,29 @@ const RecipeProgress: React.FC<Props> = ({ recipeId }: Props) => {
 
     return brewingId;
   }, [brewingId]);
+
+  const showFinishConfirmation = (): void => {
+    popup?.open({
+      title: 'The brewing process has been succesfully finished!',
+      description:
+        'You can now check the brewing statistics of this recipe or start brewing a new batch.',
+      popupType: 'info',
+      onConfirm: () => {
+        console.log('brewing finished');
+      },
+    });
+  };
+
+  const showErrorMessage = (message: string | undefined): void => {
+    popup?.open({
+      title: 'An error has occurred while brewing!',
+      description: message || 'An unknown error has occurred.',
+      popupType: 'info',
+      onConfirm: () => {
+        console.log('brewing error');
+      },
+    });
+  };
 
   // if new selected recipe (by ID) -> fetch the entire recipe with details
   React.useEffect(() => {
@@ -97,7 +119,7 @@ const RecipeProgress: React.FC<Props> = ({ recipeId }: Props) => {
 
     setCurrentRecipeId(getRecipeFromLocalStorage());
     setBrewingId(getBrewIdFromLocalStorage());
-  }, [getRecipeFromLocalStorage]);
+  }, [getRecipeFromLocalStorage, getBrewIdFromLocalStorage]);
 
   // on change save values to local storage
   useEffect(() => {
@@ -148,7 +170,6 @@ const RecipeProgress: React.FC<Props> = ({ recipeId }: Props) => {
     if (!currentRecipeId) {
       return;
     }
-    setBrewJustStarted(true);
 
     setShowStartConfirmation(false);
     setBrewingState(BrewingStateConstants.BREW_STATE_IN_PROGRESS);
@@ -156,14 +177,16 @@ const RecipeProgress: React.FC<Props> = ({ recipeId }: Props) => {
     const res = await startBrewingAPI(currentRecipeId);
 
     console.log(res);
-    if (res?.hasOwnProperty('id')) {
-      console.log(res.id);
-      setBrewingId(res?.id || -1);
-      console.log(
-        `spustenim funkcie startBrewing sa potvrdilo zacanie varenia ktore je v sidebaroverviewpage ulozene pod Id ${res.id}`
-      );
-    } else if (res?.hasOwnProperty('error')) {
-      showErrorMessage(res?.error);
+    if (res) {
+      if (Object.prototype.hasOwnProperty.call(res, 'id')) {
+        console.log(res.id);
+        setBrewingId(res.id || -1);
+        console.log(
+          `spustenim funkcie startBrewing sa potvrdilo zacanie varenia ktore je v sidebaroverviewpage ulozene pod Id ${res.id}`
+        );
+      } else if (Object.prototype.hasOwnProperty.call(res, 'error')) {
+        showErrorMessage(res?.error);
+      }
     }
   }
 
@@ -178,29 +201,6 @@ const RecipeProgress: React.FC<Props> = ({ recipeId }: Props) => {
       },
     });
   }, [popup]);
-
-  const showFinishConfirmation = (): void => {
-    popup?.open({
-      title: 'The brewing process has been succesfully finished!',
-      description:
-        'You can now check the brewing statistics of this recipe or start brewing a new batch.',
-      popupType: 'info',
-      onConfirm: () => {
-        console.log('brewing finished');
-      },
-    });
-  };
-
-  const showErrorMessage = (message: string | undefined): void => {
-    popup?.open({
-      title: 'An error has occurred while brewing!',
-      description: message || 'An unknown error has occurred.',
-      popupType: 'info',
-      onConfirm: () => {
-        console.log('brewing error');
-      },
-    });
-  };
 
   const onPauseClick = useCallback((): void => {
     popup?.open({
