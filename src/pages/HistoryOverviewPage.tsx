@@ -9,6 +9,7 @@ import { BrewingApi } from '../types/BrewingType';
 import { HistoryOverviewStatsPage } from './HistoryOverviewStatsPage';
 import BrewHistoryHeading from '../components/brew/BrewHistoryHeading';
 import BrewHistoryInstructionList from '../components/brew/BrewInstructionHistoryList';
+import Button from '../components/shared/Button';
 
 const menus = [
   { link: '/history', title: 'Recipe' },
@@ -40,7 +41,7 @@ export const HistoryOverview: React.FC<Props> = ({ brewId }) => {
     const canvas = await html2canvas(element!);
     const data = canvas.toDataURL('image/png');
 
-    /* eslint new-cap: ["error", { "newIsCap": false }] */
+    /* eslint new-cap: ["error", { "newIsCapExceptions": ["jsPDF"] }] */
     const pdf = new jsPDF();
     const imgProperties = pdf.getImageProperties(data);
     const pdfWidth = pdf.internal.pageSize.getWidth();
@@ -68,16 +69,11 @@ export const HistoryOverview: React.FC<Props> = ({ brewId }) => {
             {selectedBrew && <BrewHistoryInstructionList brew={selectedBrew} />}
             <HistoryOverviewStatsPage selectedBrew={selectedBrew} />
           </div>
-          <button
-            type="button"
-            onClick={handleDownloadPdf}
-            className="chamber p-2 mx-7 my-1 content-center shadow rounded-3xl items-center justify-start"
-            style={{
-              background: 'rgba(254, 208, 8, 0.1)',
-            }}
-          >
-            <div className="pl-2 font-bold">Download as PDF</div>
-          </button>
+          <Button
+            title="Download as PDF"
+            neutral
+            onClick={() => handleDownloadPdf()}
+          />
         </Route>
       </div>
     </div>
