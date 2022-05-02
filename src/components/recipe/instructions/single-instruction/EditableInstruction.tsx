@@ -16,7 +16,8 @@ interface EditableInstructionProps {
   onDelete: (index: number, blockId: number) => void;
   onInstructionEdit: (
     instr: EditableInstructionTemplateType,
-    index: number
+    index: number,
+    error: boolean
   ) => void;
 }
 
@@ -27,11 +28,11 @@ const EditableInstruction: React.FC<EditableInstructionProps> = ({
   onDelete,
   onInstructionEdit,
 }: EditableInstructionProps) => {
-  const registerChange = (params: ParamType): void => {
+  const registerChange = (params: ParamType, error: boolean): void => {
     const newInstruction = instruction;
     newInstruction.param = params.value;
     newInstruction.optionCodeName = params.optionCodeName;
-    onInstructionEdit(newInstruction, index);
+    onInstructionEdit(newInstruction, index, error);
   };
 
   const formatInstruction = (

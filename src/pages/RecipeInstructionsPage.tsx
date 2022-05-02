@@ -40,6 +40,7 @@ const RecipeInstructionsPage: React.FC = () => {
   } = location.state as IngredientsFormProps;
 
   const [addedBlocks, setAddedBlocks] = useState(addBlocks);
+  const [instructionError, setInstructionError] = useState(false);
 
   const popupRef = React.useRef<HTMLDivElement>(null);
   const popup = usePopup();
@@ -116,8 +117,14 @@ const RecipeInstructionsPage: React.FC = () => {
   const handleEditInstruction = (
     instr: EditableInstructionTemplateType,
     index: number,
-    blockId: number
+    blockId: number,
+    error: boolean
   ): void => {
+    if (error) {
+      setInstructionError(true);
+    } else {
+      setInstructionError(false);
+    }
     const newBlocks: Array<RecipeBlockType> = [...addedBlocks];
     newBlocks
       .find((block) => block.blockId === blockId)
@@ -231,6 +238,17 @@ const RecipeInstructionsPage: React.FC = () => {
   };
 
   const checkRecipeMakingConditions = (): boolean => {
+    if (instructionError) {
+      popup?.open({
+        title: 'Values in instruction not correct',
+        description:
+          'Instruction values are not in the right form. Please check the warnings of the page.',
+        buttonText: 'Close',
+        popupType: 'info',
+        onConfirm: () => console.log('notification'),
+      });
+      return false;
+    }
     if (checkBlockPresence()) {
       popup?.open({
         title: 'No recipe stage added',
@@ -244,7 +262,7 @@ const RecipeInstructionsPage: React.FC = () => {
     }
     if (checkIngredientPresence()) {
       popup?.open({
-        title: 'No ingrediet block added',
+        title: 'No ingrediet added',
         description: 'Recipe has to consist of at least one ingredient',
         buttonText: 'Close',
         popupType: 'info',

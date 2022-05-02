@@ -6,7 +6,7 @@ import { getSelectedOption } from './helper';
 
 interface Props {
   instruction: EditableInstructionTemplateType;
-  onChange: (params: ParamType) => void;
+  onChange: (params: ParamType, error: boolean) => void;
 }
 
 const OPTIONS = [{ value: 1, label: 'Pump 1', optionCodeName: 'PUMP_1' }];
@@ -33,7 +33,7 @@ const TransferEditableInstr: React.FC<Props> = ({
   const sendParams = (): void => {
     const params = readParams();
     if (params !== null) {
-      onChange(params);
+      onChange(params, true);
     }
   };
 

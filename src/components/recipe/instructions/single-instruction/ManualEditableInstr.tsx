@@ -5,7 +5,7 @@ import EditableInstructionTemplateType from './EditableInstructionTemplateType';
 
 interface Props {
   instruction: EditableInstructionTemplateType;
-  onChange: (params: ParamType) => void;
+  onChange: (params: ParamType, error: boolean) => void;
 }
 
 const ManualEditableInstr: React.FC<Props> = ({
@@ -25,7 +25,7 @@ const ManualEditableInstr: React.FC<Props> = ({
   const sendParams = (): void => {
     const params = readParams();
     if (params !== null) {
-      onChange(params);
+      onChange(params, true);
     }
   };
 

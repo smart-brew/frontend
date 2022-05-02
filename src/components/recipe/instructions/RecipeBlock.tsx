@@ -17,7 +17,8 @@ interface Props {
   onInstructionEdit: (
     instr: EditableInstructionTemplateType,
     index: number,
-    blockId: number
+    blockId: number,
+    error: boolean
   ) => void;
   onBlockDelete: (blockId: number) => void;
   onInstructionDelete: (index: number, blockId: number) => void;
@@ -54,9 +55,10 @@ const RecipeBlock: React.FC<Props> = ({
 
   const instructionEditCallback = (
     instr: EditableInstructionTemplateType,
-    index: number
+    index: number,
+    error: boolean
   ): void => {
-    onInstructionEdit(instr, index, blockId);
+    onInstructionEdit(instr, index, blockId, error);
   };
 
   return (
