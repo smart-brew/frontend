@@ -50,7 +50,7 @@ const BrewList: React.FC<BrewListTypeProps> = ({ onSelectBrewId }) => {
   return (
     <ul className="flex flex-col">
       {Object.keys(mergedBrews)
-        .sort((a, b) => new Date(a).getTime() - new Date(b).getTime())
+        .sort((a, b) => new Date(b).getTime() - new Date(a).getTime())
         .map((date) => (
           <BrewListGroup
             key={date}
