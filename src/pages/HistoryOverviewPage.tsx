@@ -38,17 +38,19 @@ export const HistoryOverview: React.FC<Props> = ({ brewId }) => {
 
   const handleDownloadPdf = async (): Promise<void> => {
     const element = printRef.current;
-    const canvas = await html2canvas(element!);
+    if (!element) return;
+
+    const canvas = await html2canvas(element);
     const data = canvas.toDataURL('image/png');
 
-    /* eslint new-cap: ["error", { "newIsCapExceptions": ["jsPDF"] }] */
+    // eslint-disable-next-line new-cap
     const pdf = new jsPDF();
     const imgProperties = pdf.getImageProperties(data);
     const pdfWidth = pdf.internal.pageSize.getWidth();
     const pdfHeight = (imgProperties.height * pdfWidth) / imgProperties.width;
 
     pdf.addImage(data, 'PNG', 0, 0, pdfWidth, pdfHeight);
-    pdf.save('recipe_history.pdf');
+    pdf.save(`${selectedBrew?.recipe.name || 'Brewing history'}.pdf`);
   };
 
   return (
