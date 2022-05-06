@@ -22,7 +22,7 @@ const BrewHistoryInstructionList: React.FC<Props> = ({
 
   return (
     <div className="mt-8 px-4">
-      <span className="text-2xl font-bold">Instruction progress</span>
+      <span className="text-2xl font-bold">{recipe.name}</span>
 
       <div className="flex flex-row mt-8 overflow-x-auto gap-1">
         <div className="border rounded-xl bg-green-50 px-6 flex flex-col justify-center py-8">

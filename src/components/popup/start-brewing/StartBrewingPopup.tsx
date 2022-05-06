@@ -37,10 +37,10 @@ export const StartBrewingPopup: React.FC<Props> = ({
             Ingredients to prepare:
           </div>
         </div>
-        <div className="bg-gray-50 px-8 py-6 justify-center text-center">
+        <div className="bg-white px-8 py-6 justify-center text-center">
           <div className="">{infoGroup}</div>
 
-          <div className="flex w-full space-x-6 mt-8 items-center">
+          <div className="flex flex-row gap-4 mt-8 w-full justify-center">
             <Button
               title="Confirm"
               onClick={() => onConfirm()}
