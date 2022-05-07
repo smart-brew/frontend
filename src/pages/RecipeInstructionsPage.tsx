@@ -87,7 +87,7 @@ const RecipeInstructionsPage: React.FC = () => {
     const popupNode = popupRef?.current;
     const dataOriginal = popupNode?.getAttribute('data-original');
     if (dataOriginal) {
-      const [index, blockId, blockName] = dataOriginal.split('_');
+      const [index, blockId, blockName] = dataOriginal.split('$');
 
       const newInstruction: EditableInstructionTemplateType = {
         ...instr,
@@ -308,7 +308,7 @@ const RecipeInstructionsPage: React.FC = () => {
     const instructionPopupNode = popupRef?.current;
     instructionPopupNode?.setAttribute(
       'data-original',
-      `${index.toString()}_${blockId.toString()}_${blockName}`
+      `${index.toString()}$${blockId.toString()}$${blockName}`
     );
     instructionPopupNode?.classList.add('modal-bg-active');
   };

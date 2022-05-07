@@ -15,12 +15,15 @@ export interface StatusLogApi {
   params: string; // na BE je toto typu Prisma.JsonValue, ktory nemusi byt json ale z DB by mal prist vzdy validny json
   createdAt: number;
 }
+
+export type BrewState = 'Aborted' | 'Finished';
+
 // array of base brewings sent by GET api/brew
 export interface BaseBrewingApi {
   id: number;
   notes: string | null;
   evaluation: number | null;
-  endState: string;
+  endState: BrewState;
   recipeName: string;
   startedAt: string;
   finishedAt: string;

@@ -11,14 +11,16 @@ import Button from '../shared/Button';
 import { IngredientsT } from '../../types/RecipeData/IngredientType';
 import {
   abortBrewing as abortBrewingAPI,
-  startBrewing as startBrewingAPI,
   pauseBrewing as pauseBrewingAPI,
   resumeBrewing as resumeBrewingAPI,
+  startBrewing as startBrewingAPI,
 } from '../../api/brew';
 import { MENU_HEIGHT } from '../menu/MenuContainer';
+import { useDataContext } from '../../contexts/dataContext';
 
 const IS_BREW_IN_PROGRESS = 'isBrewInProgress';
 const SELECTED_RECIPE_FOR_BREW = 'selectedRecipeForBrew';
+const CURRENT_BREW_ID = 'currentBrewId';
 
 interface Props {
   recipeId: number | null;
@@ -26,11 +28,13 @@ interface Props {
 
 const RecipeProgress: React.FC<Props> = ({ recipeId }: Props) => {
   const popup = usePopup();
+  const { brewStatus } = useDataContext();
 
   const [showStartConfirmation, setShowStartConfirmation] = useState(false); // pupup to start a new brewing process
   const [brewingState, setBrewingState] = useState(
     BrewingStateConstants.BREW_STATE_INACTIVE
   );
+  const [brewingId, setBrewingId] = useState(-1);
 
   const [currentRecipeId, setCurrentRecipeId] = useState(recipeId);
 
@@ -49,6 +53,39 @@ const RecipeProgress: React.FC<Props> = ({ recipeId }: Props) => {
 
     return recipeId;
   }, [recipeId]);
+
+  const getBrewIdFromLocalStorage = useCallback((): number => {
+    const selectedBrewId = window.localStorage.getItem(CURRENT_BREW_ID);
+
+    if (typeof selectedBrewId === 'string') {
+      return parseInt(selectedBrewId, 10);
+    }
+
+    return brewingId;
+  }, [brewingId]);
+
+  const showFinishConfirmation = (): void => {
+    popup?.open({
+      title: 'The brewing process has been succesfully finished!',
+      description:
+        'You can now check the brewing statistics of this recipe or start brewing a new batch.',
+      popupType: 'info',
+      onConfirm: () => {
+        console.log('brewing finished');
+      },
+    });
+  };
+
+  const showErrorMessage = (message: string | undefined): void => {
+    popup?.open({
+      title: 'An error has occurred while brewing!',
+      description: message || 'An unknown error has occurred.',
+      popupType: 'info',
+      onConfirm: () => {
+        console.log('brewing error');
+      },
+    });
+  };
 
   // if new selected recipe (by ID) -> fetch the entire recipe with details
   React.useEffect(() => {
@@ -81,12 +118,19 @@ const RecipeProgress: React.FC<Props> = ({ recipeId }: Props) => {
     }
 
     setCurrentRecipeId(getRecipeFromLocalStorage());
-  }, [getRecipeFromLocalStorage]);
+    setBrewingId(getBrewIdFromLocalStorage());
+  }, [getRecipeFromLocalStorage, getBrewIdFromLocalStorage]);
 
   // on change save values to local storage
   useEffect(() => {
     window.localStorage.setItem(IS_BREW_IN_PROGRESS, String(brewingState));
   }, [brewingState]);
+
+  useEffect(() => {
+    if (brewingId !== -1) {
+      window.localStorage.setItem(CURRENT_BREW_ID, brewingId.toString());
+    }
+  }, [brewingId]);
 
   useEffect(() => {
     if (currentRecipeId) {
@@ -99,28 +143,58 @@ const RecipeProgress: React.FC<Props> = ({ recipeId }: Props) => {
     }
   }, [currentRecipeId]);
 
+  useEffect(() => {
+    console.log(brewStatus);
+  }, [brewStatus]);
+
+  useEffect(() => {
+    if (
+      brewStatus === 'FINISHED' &&
+      brewingState === BrewingStateConstants.BREW_STATE_IN_PROGRESS
+    ) {
+      console.log('Finish');
+      setBrewingState(BrewingStateConstants.BREW_STATE_INACTIVE);
+      showFinishConfirmation();
+      window.localStorage.removeItem(CURRENT_BREW_ID);
+    } else if (
+      brewStatus === 'ERROR' &&
+      brewingState === BrewingStateConstants.BREW_STATE_IN_PROGRESS
+    ) {
+      setBrewingState(BrewingStateConstants.BREW_STATE_INACTIVE);
+      showErrorMessage(undefined);
+      window.localStorage.removeItem(CURRENT_BREW_ID);
+    }
+  }, [brewStatus, brewingState]);
+
   async function startBrewing(): Promise<void> {
     if (!currentRecipeId) {
       return;
     }
 
-    console.log(
-      `spustenim funkcie startBrewing sa potvrdilo zacanie varenia ktore je v sidebaroverviewpage ulozene pod Id ${recipeId}`
-    );
     setShowStartConfirmation(false);
     setBrewingState(BrewingStateConstants.BREW_STATE_IN_PROGRESS);
 
     const res = await startBrewingAPI(currentRecipeId);
 
-    // TODO handlovanie odpovede
     console.log(res);
+    if (res) {
+      if (Object.prototype.hasOwnProperty.call(res, 'id')) {
+        console.log(res.id);
+        setBrewingId(res.id || -1);
+        console.log(
+          `spustenim funkcie startBrewing sa potvrdilo zacanie varenia ktore je v sidebaroverviewpage ulozene pod Id ${res.id}`
+        );
+      } else if (Object.prototype.hasOwnProperty.call(res, 'error')) {
+        showErrorMessage(res?.error);
+      }
+    }
   }
 
   const showAbortConfirmation = useCallback((): void => {
     popup?.open({
       title: 'This brewing process has been succesfully aborted!',
       description:
-        'You can now check the brewing statistics of this recipe or start brewing a new batch',
+        'You can now check the brewing statistics of this recipe or start brewing a new batch.',
       popupType: 'info',
       onConfirm: () => {
         console.log('abort was performed');
@@ -164,6 +238,7 @@ const RecipeProgress: React.FC<Props> = ({ recipeId }: Props) => {
       onConfirm: () => {
         abortBrewingAPI(0);
         setBrewingState(BrewingStateConstants.BREW_STATE_INACTIVE);
+        window.localStorage.removeItem(CURRENT_BREW_ID);
         showAbortConfirmation();
       },
     });

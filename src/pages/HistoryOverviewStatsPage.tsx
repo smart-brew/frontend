@@ -96,8 +96,9 @@ export const HistoryOverviewStatsPage: React.FC<Props> = ({ selectedBrew }) => {
           size: 20,
         },
         callbacks: {
-          title: function (context) {
-            let value = context[0].label;
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          title(context: { label: any }[]) {
+            const value = context[0].label;
             return subtractHourFromChartLabel(value);
           },
         },
@@ -110,7 +111,7 @@ export const HistoryOverviewStatsPage: React.FC<Props> = ({ selectedBrew }) => {
         bounds: 'ticks',
         ticks: {
           maxTicksLimit: 20,
-          callback: function (value) {
+          callback(value: string | number) {
             return subtractHourFromChartLabel(value);
           },
         },
@@ -165,14 +166,12 @@ export const HistoryOverviewStatsPage: React.FC<Props> = ({ selectedBrew }) => {
     datasets: [
       {
         label: 'Temp 1',
-        // data: labels.map(() => faker.datatype.number({ min: 0, max: 150 })),
         data: chartTemp1,
         borderColor: 'rgb(53, 162, 235)',
         backgroundColor: 'rgba(53, 162, 235, 0.5)',
       },
       {
         label: 'Temp 2',
-        // data: labels.map(() => faker.datatype.number({ min: 0, max: 150 })),
         data: chartTemp2,
         borderColor: 'rgb(255, 99, 132)',
         backgroundColor: 'rgba(255, 99, 132, 0.5)',
@@ -184,14 +183,12 @@ export const HistoryOverviewStatsPage: React.FC<Props> = ({ selectedBrew }) => {
     datasets: [
       {
         label: 'Motor 1',
-        // data: labels.map(() => faker.datatype.number({ min: 0, max: 2000 })),
         data: chartMotor1,
         borderColor: 'rgb(53, 162, 235)',
         backgroundColor: 'rgba(53, 162, 235, 0.5)',
       },
       {
         label: 'Motor 2',
-        // data: labels.map(() => faker.datatype.number({ min: 0, max: 2000 })),
         data: chartMotor2,
         borderColor: 'rgb(255, 99, 132)',
         backgroundColor: 'rgba(255, 99, 132, 0.5)',
