@@ -25,6 +25,7 @@ export type Temperature = BasicData & {
 export type Motor = BasicData & {
   SPEED: number;
   RPM: number;
+  enabled?: boolean;
 };
 
 // eslint-disable-next-line @typescript-eslint/ban-types

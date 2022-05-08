@@ -30,12 +30,15 @@ const BoxChamber: React.FC<OneChamberData> = ({
             device={TEMPERATURE.DEVICE}
           />
         )}
-        {MOTOR && (
+        {MOTOR && typeof MOTOR.RPM !== 'undefined' && (
           <Item
             itemValue={formatNumToDefinedNumOfDecimal(MOTOR.RPM, 1)}
             name="MOTOR"
             device={MOTOR.DEVICE}
           />
+        )}
+        {MOTOR && typeof MOTOR.enabled !== 'undefined' && (
+          <Item itemValue={MOTOR.enabled ? 'ON' : 'OFF'} name="MOTOR" />
         )}
       </div>
     </div>
