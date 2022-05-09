@@ -9,7 +9,7 @@ export type BrewingStatus =
   | 'IN_PROGRESS'
   | 'ERROR'
   | 'PAUSED'
-  | 'ABORTED'
+  | 'ABORT'
   | 'FINISHED';
 
 export interface BasicData {

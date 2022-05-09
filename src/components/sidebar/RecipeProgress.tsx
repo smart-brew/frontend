@@ -54,16 +54,6 @@ const RecipeProgress: React.FC<Props> = ({ recipeId }: Props) => {
     return recipeId;
   }, [recipeId]);
 
-  const getBrewIdFromLocalStorage = useCallback((): number => {
-    const selectedBrewId = window.localStorage.getItem(CURRENT_BREW_ID);
-
-    if (typeof selectedBrewId === 'string') {
-      return parseInt(selectedBrewId, 10);
-    }
-
-    return brewingId;
-  }, [brewingId]);
-
   const showFinishConfirmation = (): void => {
     popup?.open({
       title: 'The brewing process has been succesfully finished!',
@@ -71,7 +61,7 @@ const RecipeProgress: React.FC<Props> = ({ recipeId }: Props) => {
         'You can now check the brewing statistics of this recipe or start brewing a new batch.',
       popupType: 'info',
       onConfirm: () => {
-        console.log('brewing finished');
+        // console.log('brewing finished');
       },
     });
   };
@@ -82,46 +72,11 @@ const RecipeProgress: React.FC<Props> = ({ recipeId }: Props) => {
       description: message || 'An unknown error has occurred.',
       popupType: 'info',
       onConfirm: () => {
-        console.log('brewing error');
+        // console.log('brewing error');
       },
     });
   };
 
-  // if new selected recipe (by ID) -> fetch the entire recipe with details
-  React.useEffect(() => {
-    const f = async (): Promise<void> => {
-      if (currentRecipeId === null && getRecipeFromLocalStorage() === null) {
-        const recipes = await getRecipes();
-
-        if (recipes.length > 0) {
-          setCurrentRecipeId(recipes[0].id);
-          setSelectedRecipe(await getRecipe(recipes[0].id));
-        }
-      } else if (currentRecipeId !== null) {
-        const recipe = await getRecipe(currentRecipeId);
-
-        if (!recipe) {
-          setCurrentRecipeId(null);
-        }
-        setSelectedRecipe(recipe);
-      }
-    };
-    f();
-  }, [currentRecipeId, getRecipeFromLocalStorage]);
-
-  // on load -> get values from local storage
-  useEffect(() => {
-    const isInProgress = window.localStorage.getItem(IS_BREW_IN_PROGRESS);
-
-    if (typeof isInProgress === 'string') {
-      setBrewingState(isInProgress as BrewingStateConstants);
-    }
-
-    setCurrentRecipeId(getRecipeFromLocalStorage());
-    setBrewingId(getBrewIdFromLocalStorage());
-  }, [getRecipeFromLocalStorage, getBrewIdFromLocalStorage]);
-
-  // on change save values to local storage
   useEffect(() => {
     window.localStorage.setItem(IS_BREW_IN_PROGRESS, String(brewingState));
   }, [brewingState]);
@@ -143,16 +98,32 @@ const RecipeProgress: React.FC<Props> = ({ recipeId }: Props) => {
     }
   }, [currentRecipeId]);
 
-  useEffect(() => {
-    console.log(brewStatus);
-  }, [brewStatus]);
+  React.useEffect(() => {
+    const f = async (): Promise<void> => {
+      if (currentRecipeId === null && getRecipeFromLocalStorage() === null) {
+        const recipes = await getRecipes();
+
+        if (recipes.length > 0) {
+          setCurrentRecipeId(recipes[0].id);
+          setSelectedRecipe(await getRecipe(recipes[0].id));
+        }
+      } else if (currentRecipeId !== null) {
+        const recipe = await getRecipe(currentRecipeId);
+
+        if (!recipe) {
+          setCurrentRecipeId(null);
+        }
+        setSelectedRecipe(recipe);
+      }
+    };
+    f();
+  }, [currentRecipeId, getRecipeFromLocalStorage]);
 
   useEffect(() => {
     if (
       brewStatus === 'FINISHED' &&
       brewingState === BrewingStateConstants.BREW_STATE_IN_PROGRESS
     ) {
-      console.log('Finish');
       setBrewingState(BrewingStateConstants.BREW_STATE_INACTIVE);
       showFinishConfirmation();
       window.localStorage.removeItem(CURRENT_BREW_ID);
@@ -163,6 +134,22 @@ const RecipeProgress: React.FC<Props> = ({ recipeId }: Props) => {
       setBrewingState(BrewingStateConstants.BREW_STATE_INACTIVE);
       showErrorMessage(undefined);
       window.localStorage.removeItem(CURRENT_BREW_ID);
+    } else if (
+      brewStatus === 'ABORT' &&
+      brewingState === BrewingStateConstants.BREW_STATE_ABORT
+    ) {
+      setBrewingState(BrewingStateConstants.BREW_STATE_INACTIVE);
+      window.localStorage.removeItem(CURRENT_BREW_ID);
+    } else if (
+      brewStatus === 'IN_PROGRESS' &&
+      brewingState === BrewingStateConstants.BREW_STATE_INACTIVE
+    ) {
+      setBrewingState(BrewingStateConstants.BREW_STATE_IN_PROGRESS);
+    } else if (
+      brewStatus === 'PAUSED' &&
+      brewingState === BrewingStateConstants.BREW_STATE_INACTIVE
+    ) {
+      setBrewingState(BrewingStateConstants.BREW_STATE_PAUSE);
     }
   }, [brewStatus, brewingState]);
 
@@ -197,7 +184,7 @@ const RecipeProgress: React.FC<Props> = ({ recipeId }: Props) => {
         'You can now check the brewing statistics of this recipe or start brewing a new batch.',
       popupType: 'info',
       onConfirm: () => {
-        console.log('abort was performed');
+        // console.log('abort was performed');
       },
     });
   }, [popup]);
@@ -237,7 +224,7 @@ const RecipeProgress: React.FC<Props> = ({ recipeId }: Props) => {
       buttonText: 'Abort',
       onConfirm: () => {
         abortBrewingAPI(0);
-        setBrewingState(BrewingStateConstants.BREW_STATE_INACTIVE);
+        setBrewingState(BrewingStateConstants.BREW_STATE_ABORT);
         window.localStorage.removeItem(CURRENT_BREW_ID);
         showAbortConfirmation();
       },
