@@ -1,3 +1,5 @@
+import { setRecoil } from 'recoil-nexus';
+import { popupState } from '../store/store';
 import { Endpoints } from './endpoints';
 import { urlWithParams } from './helpers';
 
@@ -9,15 +11,13 @@ export function get<Endpoint extends keyof Endpoints>(
 ): Promise<Endpoints[Endpoint] | null> {
   const api = url.split(' ');
 
-  return fetch(urlWithParams(api[1], params))
-    .then((response) => {
-      if (response.ok) {
-        return response.json();
-      }
+  return fetch(urlWithParams(api[1], params)).then((response) => {
+    if (response.ok) {
+      return response.json();
+    }
 
-      return null;
-    })
-    .catch((error) => console.log(error));
+    return null;
+  });
 }
 
 export const put = <Endpoint extends keyof Endpoints>(
@@ -33,15 +33,13 @@ export const put = <Endpoint extends keyof Endpoints>(
     body: JSON.stringify(body || {}),
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
-  })
-    .then((response) => {
-      if (response.ok) {
-        return response.json();
-      }
+  }).then((response) => {
+    if (response.ok) {
+      return response.json();
+    }
 
-      return null;
-    })
-    .catch((error) => console.log(error));
+    return null;
+  });
 };
 
 export const post = <Endpoint extends keyof Endpoints>(
@@ -57,16 +55,32 @@ export const post = <Endpoint extends keyof Endpoints>(
     body: JSON.stringify(body || {}),
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-  })
-    .then((response) => {
-      if (response.ok) {
-        return response.json();
-      }
+  }).then((response) => {
+    if (response.ok) {
+      return response.json();
+    }
 
-      return null;
-    })
-    .catch((error) => console.log(error));
+    return null;
+  });
 };
+
+function errorHandler({ message }: Error): null {
+  if (message === 'Failed to fetch') {
+    setRecoil(popupState, {
+      title: 'Connection error',
+      description:
+        "Couldn't connect to the server. Please wait a few seconds and then try again.",
+      buttonType: 'secondary',
+      buttonText: 'Retry',
+      onConfirm: () => {
+        // eslint-disable-next-line no-restricted-globals
+        location.reload();
+      },
+    });
+  }
+
+  return null;
+}
 
 export function apiClient<Endpoint extends keyof Endpoints>(
   url: Endpoint,
@@ -78,13 +92,13 @@ export function apiClient<Endpoint extends keyof Endpoints>(
   const [method] = url.split(' ');
 
   if (method === 'GET') {
-    return get(url, params);
+    return get(url, params).catch(errorHandler);
   }
   if (method === 'PUT') {
-    return put(url, body, params);
+    return put(url, body, params).catch(errorHandler);
   }
   if (method === 'POST') {
-    return post(url, params, body);
+    return post(url, params, body).catch(errorHandler);
   }
 
   return Promise.resolve(null);
