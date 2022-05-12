@@ -87,7 +87,12 @@ const RecipeIngredientsPage: React.FC = () => {
   };
 
   return (
-    <SplitPage>
+    <SplitPage
+      back={{
+        text: 'Recipes',
+        to: '/recipe',
+      }}
+    >
       <div className="py-4">
         <IngredietsForm
           inputFields={inputFields}
