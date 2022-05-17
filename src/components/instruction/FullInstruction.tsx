@@ -48,7 +48,6 @@ const FullInstruction: React.FC<Props> = ({
       instruction.codeName === InstructionConstants.MOTOR ||
       instruction.codeName === InstructionConstants.TEMPERATURE
     ) {
-      console.log(status.currentValue);
       return (
         <div className="flex flex-col items-center content-center justify-center">
           <span className="font-semibold">
