@@ -6,7 +6,7 @@ import TimeHelper from '../../../../helpers/TimeHelper';
 
 interface Props {
   instruction: EditableInstructionTemplateType;
-  onChange: (params: ParamType) => void;
+  onChange: (params: ParamType, error: boolean) => void;
 }
 
 const WaitEditableInstr: React.FC<Props> = ({
@@ -50,7 +50,7 @@ const WaitEditableInstr: React.FC<Props> = ({
   const sendParams = (): void => {
     const params = readParams();
     if (params !== null) {
-      onChange(params);
+      onChange(params, true);
     }
   };
 

@@ -25,9 +25,10 @@ const IngredientSection: React.FC<FormSectionProps> = ({
   handleRemove,
 }) => {
   const options = [
-    { value: 'kg', label: 'KG' },
+    { value: 'kg', label: 'Kg' },
     { value: 'litre', label: 'l' },
     { value: 'oz', label: 'oz' },
+    { value: 'g', label: 'g' },
   ];
 
   if (!inputFields) {
