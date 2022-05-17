@@ -22,4 +22,5 @@ export type Endpoints = {
   'PUT /api/recipe': IdReturn;
   'PUT /api/recipe/:id/edit': IdReturn;
   'POST /api/instruction': IdReturn;
+  'POST /api/brew/0/reset': void;
 };

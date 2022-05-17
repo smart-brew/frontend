@@ -53,6 +53,7 @@ export interface SystemData {
   data: ModuleData;
   instruction: InstructionStatus;
   brewStatus: BrewingStatus;
+  errorMessage?: string;
 }
 
 export interface Instruction {
