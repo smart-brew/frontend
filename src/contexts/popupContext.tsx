@@ -1,7 +1,9 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import React from 'react';
+import { useRecoilState } from 'recoil';
 import Popup, { PopupProps } from '../components/popup/Popup';
 import { closePopup, openPopup } from '../components/popup/PopupFunctions';
+import { popupState as popupStateAtom } from '../store/store';
 
 const PopupContext = React.createContext<State>({
   close: () => {},
@@ -22,6 +24,9 @@ const PopupContextProvider: React.FC = ({ children }) => {
   });
 
   const [popup, setPopup] = React.useState<JSX.Element | null>(null);
+
+  // value from recoil so we can use popup outside of react context
+  const [popupState, setPopupState] = useRecoilState(popupStateAtom);
 
   // first render - define open and close
   React.useEffect(() => {
@@ -60,6 +65,14 @@ const PopupContextProvider: React.FC = ({ children }) => {
   React.useEffect(() => {
     openPopup(reference);
   }, [popup]);
+
+  // when recoil value changes open popup
+  React.useEffect(() => {
+    if (popupState) {
+      value.open(popupState);
+      setPopupState(null);
+    }
+  }, [popupState, setPopupState, value]);
 
   return (
     <PopupContext.Provider value={value}>
