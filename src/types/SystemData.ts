@@ -19,13 +19,18 @@ export interface BasicData {
 }
 
 export type Temperature = BasicData & {
-  TEMP: number;
+  temp0?: number;
+  temp1?: number;
 };
 
 export type Motor = BasicData & {
   SPEED: number;
   RPM: number;
   enabled?: boolean;
+};
+
+export type Relay = BasicData & {
+  enabled: number;
 };
 
 // eslint-disable-next-line @typescript-eslint/ban-types
@@ -41,6 +46,7 @@ export interface ModuleData {
   MOTOR: Array<Motor>;
   UNLOADER: Array<Unloader>;
   PUMP: Array<Pump>;
+  RELAY: Array<Relay>;
 }
 
 export interface InstructionStatus {

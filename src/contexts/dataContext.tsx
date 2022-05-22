@@ -13,6 +13,7 @@ const emptyState: SystemData = {
     PUMP: [],
     TEMPERATURE: [],
     UNLOADER: [],
+    RELAY: [],
   },
   instruction: {
     currentInstruction: -1,

@@ -1,11 +1,11 @@
 import React from 'react';
-import UnitsMap from '../../helpers/UnitsMap';
-import ItemInfo from '../../types/ItemInfo';
+import UnitsMap from '../../../helpers/UnitsMap';
+import ItemInfo from '../../../types/ItemInfo';
 
 // bolo by treba namapovat ale pravdepodobne sa bude prerabat tak zatial len takto
 const Item: React.FC<ItemInfo> = ({
   name,
-  itemValue,
+  value,
   device = '',
   itemLayout,
 }: ItemInfo) => {
@@ -18,7 +18,7 @@ const Item: React.FC<ItemInfo> = ({
     >
       <p>{name}</p>
       <p className="font-bold">
-        {itemValue} {unit}
+        {value} {unit}
       </p>
     </div>
   );

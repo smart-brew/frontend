@@ -5,6 +5,7 @@ enum InstructionConstants {
   UNLOADER = 'UNLOAD',
   WAIT = 'WAIT',
   MANUAL = 'MANUAL',
+  RELAY = 'ENABLE_RELAY',
 }
 
 export default InstructionConstants;

@@ -8,7 +8,7 @@ const menus = [
   { link: '/', title: 'Overview' },
   { link: '/recipe', title: 'Recipes' },
   { link: '/history', title: 'History' },
-  { link: '/tester', title: 'Tester' },
+  { link: '/tester', title: 'Manual' },
 ];
 
 const SmartBrew: React.FC = () => {

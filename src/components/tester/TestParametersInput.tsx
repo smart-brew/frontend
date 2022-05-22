@@ -15,6 +15,8 @@ const TestParametersInput: React.FC<Props> = ({
   onSelectOption,
   onParamChange,
 }) => {
+  const motorInputRef = useRef<HTMLInputElement>(null);
+
   const daysRef = useRef<HTMLInputElement>(null);
   const hoursRef = useRef<HTMLInputElement>(null);
   const minutesRef = useRef<HTMLInputElement>(null);
@@ -41,9 +43,9 @@ const TestParametersInput: React.FC<Props> = ({
         selectedInstruction.codeName === InstructionConstants.MOTOR
       ) {
         return (
-          <div className="w-1/2 rounded-2xl p-5 space-y-3 text-left flex flex-col">
+          <div className="w-2/3 rounded-2xl p-5 space-y-3 text-left flex flex-col">
             <span className="text-xl font-bold px-8">Device:</span>
-            <div className="flex flex-row flex-wrap justify-evenly radio-toolbar">
+            <div className="flex flex-row flex-wrap justify-start gap-2 px-6 radio-toolbar">
               {selectedInstruction.options.map((option) => {
                 return (
                   <div key={option.codeName} className="text-lg my-3">
@@ -60,16 +62,17 @@ const TestParametersInput: React.FC<Props> = ({
                       className="border border-gray-300 rounded-xl px-6 py-3 w-full"
                       htmlFor={`opt_${option.id.toString()}`}
                     >
-                      <span>{option.codeName}</span>
+                      <span>{option.name}</span>
                     </label>
                   </div>
                 );
               })}
             </div>
             <span className="text-xl font-bold px-8">Value:</span>
-            <div className="flex flex-row flex-wrap justify-evenly items-center px-6 ">
+            <div className="flex flex-row flex-wrap justify-start items-center px-6 gap-2 radio-toolbar">
               <input
-                className="text-lg p-2 border border-gray-300 rounded-xl w-3/5"
+                ref={motorInputRef}
+                className="text-lg p-2 border border-gray-300 rounded-xl w-20"
                 type="number"
                 min={0}
                 onChange={(e) => {
@@ -81,12 +84,87 @@ const TestParametersInput: React.FC<Props> = ({
                   }
                 }}
               />
-              <span className="text-lg w-1/5">
+              <span className="text-lg w-4/5">
                 {selectedInstruction.codeName ===
                 InstructionConstants.TEMPERATURE
                   ? '°C'
                   : 'RPM'}
               </span>
+
+              {selectedInstruction.codeName === InstructionConstants.MOTOR &&
+                ['OFF', 'MAX SPEED'].map((option, value) => {
+                  return (
+                    <div key={option} className="text-lg my-3">
+                      <input
+                        className="border border-gray-300 bg-transparent rounded-xl px-6 py-3 w-full"
+                        type="button"
+                        value={option}
+                        onClick={() => {
+                          if (motorInputRef.current) {
+                            const newValue = (value * 500).toString();
+
+                            motorInputRef.current.value = newValue;
+                            onParamChange(newValue);
+                          }
+                        }}
+                      />
+                    </div>
+                  );
+                })}
+            </div>
+          </div>
+        );
+      }
+      if (selectedInstruction.codeName === InstructionConstants.RELAY) {
+        return (
+          <div className="w-2/3 rounded-2xl p-5 space-y-3 text-left flex flex-col">
+            <span className="text-xl font-bold px-8">Device:</span>
+            <div className="flex flex-row flex-wrap justify-start px-6 radio-toolbar gap-2">
+              {selectedInstruction.options.map((option) => {
+                return (
+                  <div key={option.codeName} className="text-lg my-3">
+                    <input
+                      className=""
+                      type="radio"
+                      name="options"
+                      id={`opt_${option.id.toString()}`}
+                      onClick={() => {
+                        onSelectOption(option);
+                      }}
+                    />
+                    <label
+                      className="border border-gray-300 rounded-xl px-6 py-3 w-full"
+                      htmlFor={`opt_${option.id.toString()}`}
+                    >
+                      <span>{option.name}</span>
+                    </label>
+                  </div>
+                );
+              })}
+            </div>
+            <span className="text-xl font-bold px-8">Value:</span>
+            <div className="flex flex-row flex-wrap justify-start items-center px-6 gap-2 radio-toolbar">
+              {['OFF', 'ON'].map((option, value) => {
+                return (
+                  <div key={option} className="text-lg my-3">
+                    <input
+                      className=""
+                      type="radio"
+                      name="parameters"
+                      id={`opt_relay_${option}`}
+                      onClick={() => {
+                        onParamChange(value);
+                      }}
+                    />
+                    <label
+                      className="border border-gray-300 rounded-xl px-6 py-3 w-full"
+                      htmlFor={`opt_relay_${option}`}
+                    >
+                      <span>{option}</span>
+                    </label>
+                  </div>
+                );
+              })}
             </div>
           </div>
         );
@@ -216,8 +294,8 @@ const TestParametersInput: React.FC<Props> = ({
   };
 
   return (
-    <div className="w-full border border-gray-300 shadow-md rounded-2xl p-5 space-y-4 justify-center">
-      <span className="text-2xl font-bold m-8">Set parameters:</span>
+    <div className="w-full border border-gray-300 shadow rounded-2xl p-5 space-y-4 justify-center">
+      <span className="text-2xl font-bold m-8">Parameters</span>
       <div className="justify-center">{getInstructionParametersInput()}</div>
     </div>
   );

@@ -2,7 +2,7 @@ import { Status } from './SystemData';
 
 type ItemInfo = {
   name?: string;
-  itemValue: string | number | Status;
+  value: string | number | Status | undefined;
   device?: string;
   itemLayout?: string;
 };

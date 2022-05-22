@@ -1,5 +1,5 @@
 const formatNumToDefinedNumOfDecimal = (
-  num: string | number,
+  num: string | number | undefined,
   decimals: number
 ): string => {
   if (num === undefined || num === null) {

@@ -47,6 +47,7 @@ const Tester: React.FC = () => {
 
     if (
       (selectedInstruction.codeName === InstructionConstants.MOTOR ||
+        selectedInstruction.codeName === InstructionConstants.RELAY ||
         selectedInstruction.codeName === InstructionConstants.TEMPERATURE) &&
       (param === null || selectedOption === null)
     ) {
@@ -59,7 +60,7 @@ const Tester: React.FC = () => {
   return (
     <div className="flex justify-center w-full">
       <div
-        className="flex flex-col items-center justify-center space-y-3 w-1/2"
+        className="flex flex-col items-center justify-center space-y-3 w-1/2 mt-4"
         style={{ minWidth: 'fit-content' }}
       >
         <TestInstructionSelector onInstrSelected={setSelectedInstruction} />
@@ -69,7 +70,7 @@ const Tester: React.FC = () => {
           onParamChange={setParam}
         />
         <Button
-          title="Submit"
+          title="Execute"
           disabled={!verifyInputs()}
           onClick={() => {
             sendInstructionTester({

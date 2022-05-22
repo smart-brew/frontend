@@ -1,5 +1,5 @@
 import React from 'react';
-import { Unloaders } from './Brewery';
+import { Unloaders } from '../Brewery';
 import UnloaderItem from './UnloaderItem';
 
 // bolo by treba namapovat ale pravdepodobne sa bude prerabat tak zatial len takto
@@ -13,7 +13,7 @@ const BoxUnloader: React.FC<Unloaders> = ({
       {unloadDevices.map((unl) => (
         <UnloaderItem
           key={unl.DEVICE}
-          itemValue={unl.STATE}
+          value={unl.STATE}
           name={unl.DEVICE}
           itemLayout="flex-row"
         />

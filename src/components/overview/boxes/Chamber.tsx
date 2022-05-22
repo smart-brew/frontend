@@ -1,18 +1,18 @@
 import React from 'react';
 import Item from './Item';
-import { formatNumToDefinedNumOfDecimal } from '../../helpers/DataFormatter';
-import { Motor, Temperature } from '../../types/SystemData';
+import { formatNumToDefinedNumOfDecimal } from '../../../helpers/DataFormatter';
+import { Motor } from '../../../types/SystemData';
 
 interface OneChamberData {
   NAME: string;
-  TEMPERATURE: Temperature | undefined;
+  temperature: number | undefined;
   MOTOR: Motor | undefined;
   cssPositionClass?: string;
 }
 
 // bolo by treba namapovat ale pravdepodobne sa bude prerabat tak zatial len takto
 const BoxChamber: React.FC<OneChamberData> = ({
-  TEMPERATURE,
+  temperature,
   MOTOR,
   NAME,
   cssPositionClass = '',
@@ -23,22 +23,21 @@ const BoxChamber: React.FC<OneChamberData> = ({
     >
       <div className="space-y-5">
         <div className="font-bold text-lg">{NAME}</div>
-        {TEMPERATURE && (
+        {temperature && (
           <Item
-            itemValue={formatNumToDefinedNumOfDecimal(TEMPERATURE.TEMP, 1)}
+            value={formatNumToDefinedNumOfDecimal(temperature, 1)}
             name="TEMPERATURE"
-            device={TEMPERATURE.DEVICE}
           />
         )}
         {MOTOR && typeof MOTOR.RPM !== 'undefined' && (
           <Item
-            itemValue={formatNumToDefinedNumOfDecimal(MOTOR.RPM, 1)}
+            value={formatNumToDefinedNumOfDecimal(MOTOR.RPM, 1)}
             name="MOTOR"
             device={MOTOR.DEVICE}
           />
         )}
         {MOTOR && typeof MOTOR.enabled !== 'undefined' && (
-          <Item itemValue={MOTOR.enabled ? 'ON' : 'OFF'} name="MOTOR" />
+          <Item value={MOTOR.enabled ? 'ON' : 'OFF'} name="MOTOR" />
         )}
       </div>
     </div>

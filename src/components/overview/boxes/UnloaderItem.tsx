@@ -1,10 +1,10 @@
 import React from 'react';
-import ItemInfo from '../../types/ItemInfo';
+import ItemInfo from '../../../types/ItemInfo';
 
 // bolo by treba namapovat ale pravdepodobne sa bude prerabat tak zatial len takto
 const UnloaderItem: React.FC<ItemInfo> = ({
   name,
-  itemValue,
+  value: itemValue,
   itemLayout,
 }: ItemInfo) => {
   const itemLayoutStyle = itemLayout || 'flex-col';
