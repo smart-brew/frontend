@@ -3,15 +3,15 @@ import { ModuleData } from '../types/SystemData';
 export const moduleData: ModuleData = {
   TEMPERATURE: [
     {
-      TEMP: 50,
+      temp1: 50,
       STATE: 'IN_PROGRESS',
       DEVICE: 'TEMP_1',
       CATEGORY: 'TEMPERATURE',
     },
     {
-      TEMP: 21.5,
+      temp1: 21.5,
       STATE: 'WAITING',
-      DEVICE: 'TEMP_2',
+      DEVICE: 'TEMP_1',
       CATEGORY: 'TEMPERATURE',
     },
   ],
@@ -59,6 +59,14 @@ export const moduleData: ModuleData = {
       DEVICE: 'PUMP_1',
       CATEGORY: 'PUMP',
       ENABLED: 'false',
+    },
+  ],
+  RELAY: [
+    {
+      STATE: 'WAITING',
+      DEVICE: 'RELAY_1',
+      CATEGORY: 'RELAY',
+      enabled: 0,
     },
   ],
 };
