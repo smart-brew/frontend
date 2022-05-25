@@ -13,8 +13,7 @@ export const getBrewStatus = (): Promise<SystemData | null> => {
         buttonText: 'Retry',
         onConfirm: () => {
           apiClient('POST /api/brew/0/reset').then(() => {
-            // eslint-disable-next-line no-restricted-globals
-            location.reload();
+            window.location.href = '/';
           });
         },
       });
