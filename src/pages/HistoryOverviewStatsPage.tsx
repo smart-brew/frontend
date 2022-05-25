@@ -139,8 +139,8 @@ export const HistoryOverviewStatsPage: React.FC<Props> = ({ selectedBrew }) => {
     if (brewStats) {
       brewStats.map((value) => {
         const param = JSON.parse(value.params);
-        chartTemp1.push(Math.floor(param.TEMPERATURE[0].TEMP));
-        chartTemp2.push(Math.floor(param.TEMPERATURE[1].TEMP));
+        chartTemp1.push(Math.floor(param.TEMPERATURE[0].temp0));
+        chartTemp2.push(Math.floor(param.TEMPERATURE[0].temp1));
         chartMotor1.push(Math.floor(param.MOTOR[0].RPM));
         chartMotor2.push(Math.floor(param.MOTOR[1].RPM));
         return null;

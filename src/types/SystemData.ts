@@ -21,6 +21,8 @@ export interface BasicData {
 export type Temperature = BasicData & {
   temp0?: number;
   temp1?: number;
+  temp2?: number;
+  temp3?: number;
 };
 
 export type Motor = BasicData & {
