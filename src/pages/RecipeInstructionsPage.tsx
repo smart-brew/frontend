@@ -367,57 +367,60 @@ const RecipeInstructionsPage: React.FC = () => {
   };
 
   return (
-    <SplitPage
-      back={{
-        text: 'Recipes',
-        to: '/recipe',
-      }}
-    >
-      <div className="flex flex-col space-y-5 justify-center py-4 pt-16">
-        {addedBlocks.map((block, index) => (
-          <div
-            // eslint-disable-next-line react/no-array-index-key
-            key={block.blockName + index}
-            className="flex justify-center items-center"
-          >
-            <RecipeBlock
-              blockName={block.blockName}
-              blockId={index}
-              instructions={block.instructions}
-              checkBlockNameDoubles={checkBlockNameDoubles}
-              handleAddButtonClick={handleAddInstructionButtonClicked}
-              onNameChange={handleChangeBlockName}
-              onInstructionEdit={handleEditInstruction}
-              onBlockDelete={handleBlockDelete}
-              onInstructionDelete={handleInstructionDelete}
-            />
-          </div>
-        ))}
-        <AddBlockButton
-          buttonIndex={addedBlocks.length}
-          onBlockAdd={handleAddBlock}
-        />
-        <div className="modal-bg" ref={popupRef} style={{ margin: 0 }}>
-          <InstructionPopup
-            callback={handleInstrSelection}
-            hideCallback={handleInstrPopupCancel}
+    <>
+      <SplitPage
+        back={{
+          text: 'Recipes',
+          to: '/recipe',
+        }}
+      >
+        <div className="flex flex-col space-y-5 justify-center py-4 pt-16">
+          {addedBlocks.map((block, index) => (
+            <div
+              // eslint-disable-next-line react/no-array-index-key
+              key={block.blockName + index}
+              className="flex justify-center items-center"
+            >
+              <RecipeBlock
+                blockName={block.blockName}
+                blockId={index}
+                instructions={block.instructions}
+                checkBlockNameDoubles={checkBlockNameDoubles}
+                handleAddButtonClick={handleAddInstructionButtonClicked}
+                onNameChange={handleChangeBlockName}
+                onInstructionEdit={handleEditInstruction}
+                onBlockDelete={handleBlockDelete}
+                onInstructionDelete={handleInstructionDelete}
+              />
+            </div>
+          ))}
+          <AddBlockButton
+            buttonIndex={addedBlocks.length}
+            onBlockAdd={handleAddBlock}
           />
         </div>
-      </div>
 
-      <CreateInstructionsSidebar
-        saveRecipe={saveRecipe}
-        editRecipe={editTheRecipe}
-        recipeId={sendRecipeId}
-        recipeLocked={sendLockedState}
-        checkBlockNameDoublesBoolean={checkBlockNameDoublesBoolean}
-        checkEmptyBoxes={checkEmptyBoxes}
-        checkRecipeMakingConditions={checkRecipeMakingConditions}
-        toIngredients={toIngredients}
-        ingredients={ingredients}
-        recipeName={recipeName}
-      />
-    </SplitPage>
+        <CreateInstructionsSidebar
+          saveRecipe={saveRecipe}
+          editRecipe={editTheRecipe}
+          recipeId={sendRecipeId}
+          recipeLocked={sendLockedState}
+          checkBlockNameDoublesBoolean={checkBlockNameDoublesBoolean}
+          checkEmptyBoxes={checkEmptyBoxes}
+          checkRecipeMakingConditions={checkRecipeMakingConditions}
+          toIngredients={toIngredients}
+          ingredients={ingredients}
+          recipeName={recipeName}
+        />
+      </SplitPage>
+
+      <div className="modal-bg" ref={popupRef} style={{ margin: 0 }}>
+        <InstructionPopup
+          callback={handleInstrSelection}
+          hideCallback={handleInstrPopupCancel}
+        />
+      </div>
+    </>
   );
 };
 
