@@ -28,13 +28,13 @@ const BoxChamber: React.FC<OneChamberData> = ({
         {temperature0 && (
           <Item
             value={formatNumToDefinedNumOfDecimal(temperature0, 1)}
-            name="TEMPERATURE 1"
+            name="TEMPERATURE&nbsp;1"
           />
         )}
         {temperature1 && (
           <Item
             value={formatNumToDefinedNumOfDecimal(temperature1, 1)}
-            name="TEMPERATURE 2"
+            name="TEMPERATURE&nbsp;2"
           />
         )}
         {MOTOR && typeof MOTOR.RPM !== 'undefined' && (

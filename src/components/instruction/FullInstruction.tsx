@@ -161,7 +161,7 @@ const FullInstruction: React.FC<Props> = ({
         <img
           src={arrow}
           alt="arrow"
-          className="w-12 h-auto absolute -left-16 top-8 z-2"
+          className="w-12 h-auto absolute -left-16 top-8 z-2 point-arrow"
         />
       </div>
       <h3 className="text-xl">

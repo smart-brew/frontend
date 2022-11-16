@@ -25,14 +25,14 @@ const Brewery: React.FC = () => {
       <img src={imgPlaceholder} className="h-full" alt="placeholder" />
       {/* There is no other way to connect the right temperature and motor values together  */}
       <BoxChamber
-        NAME="Chamber 1"
+        NAME="Chamber&nbsp;1"
         temperature0={data.TEMPERATURE[0]?.temp0}
         temperature1={data.TEMPERATURE[0]?.temp2}
         MOTOR={data.MOTOR[0]}
         cssPositionClass="left-box"
       />
       <BoxChamber
-        NAME="Chamber 2"
+        NAME="Chamber&nbsp;2"
         temperature0={data.TEMPERATURE[0]?.temp1}
         temperature1={data.TEMPERATURE[0]?.temp3}
         MOTOR={data.MOTOR[1]}

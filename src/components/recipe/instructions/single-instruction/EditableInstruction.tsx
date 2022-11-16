@@ -87,7 +87,7 @@ const EditableInstruction: React.FC<EditableInstructionProps> = ({
           <h2 className="font-bold text-xl">{instruction.name}</h2>
           <button
             type="button"
-            className="text-2xl font-extrabold text-red-900 text-right"
+            className="text-2xl font-extrabold text-red-900 text-right "
             onClick={() => {
               onDelete(index, blockId);
             }}

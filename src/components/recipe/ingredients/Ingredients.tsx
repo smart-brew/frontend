@@ -17,7 +17,7 @@ const Ingredients: React.FC<Props> = ({ ingredients }) => {
     }, Object.create(null)) || {};
 
   return (
-    <div className="flex text-lg flex-col overflow-auto shadow rounded-3xl px-12 py-5 m-8 mx-16 divide-y">
+    <div className="flex text-lg flex-col overflow-auto shadow rounded-3xl px-12 py-5 m-8 mx-16 divide-y section">
       {ingredients ? (
         Object.keys(ingredientsParsed)?.map((category) => (
           <IngredientSection

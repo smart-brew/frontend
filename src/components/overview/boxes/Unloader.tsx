@@ -9,7 +9,7 @@ const BoxUnloader: React.FC<Unloaders> = ({
 }: Unloaders) => {
   return (
     <div className="chamber w-64 content-center shadow rounded-3xl absolute -top-3 left-5 bg-gray-200 border-2 border-black">
-      <div className="font-bold text-lg">{name}</div>
+      <div className="unloader-box-name font-bold text-lg">{name}</div>
       {unloadDevices.map((unl) => (
         <UnloaderItem
           key={unl.DEVICE}

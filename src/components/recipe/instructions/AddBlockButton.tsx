@@ -15,7 +15,7 @@ const AddBlockButton: React.FC<Props> = ({
     <div className="flex flex-row items-center mx-3">
       <button
         type="button"
-        className="justify-center items-center flex text-blue-600"
+        className="justify-center items-center flex text-blue-600 "
         onClick={() => onBlockAdd(buttonIndex)}
       >
         <FontAwesomeIcon icon={faPlusCircle} size="3x" />

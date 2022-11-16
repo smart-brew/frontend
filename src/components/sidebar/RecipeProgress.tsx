@@ -265,7 +265,7 @@ const RecipeProgress: React.FC<Props> = ({ recipeId }: Props) => {
         <Button
           title="Start brewing"
           onClick={() => setShowStartConfirmation(true)}
-          className="w-full max-w-xs"
+          className="w-full max-w-xs start-brewing"
         />
       );
     }

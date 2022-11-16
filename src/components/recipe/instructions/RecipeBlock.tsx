@@ -86,7 +86,7 @@ const RecipeBlock: React.FC<Props> = ({
         </div>
         <button
           type="button"
-          className="text-4xl font-extrabold text-red-900 text-right"
+          className="text-4xl font-extrabold text-red-900 text-right delete-block-button"
           onClick={() => onBlockDelete(blockId)}
         >
           X

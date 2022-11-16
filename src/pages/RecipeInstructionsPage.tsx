@@ -379,7 +379,7 @@ const RecipeInstructionsPage: React.FC = () => {
             <div
               // eslint-disable-next-line react/no-array-index-key
               key={block.blockName + index}
-              className="flex justify-center items-center"
+              className="flex justify-center items-center block-item "
             >
               <RecipeBlock
                 blockName={block.blockName}

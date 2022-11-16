@@ -33,13 +33,13 @@ const IngredientSection: React.FC<FormSectionProps> = ({
 
   if (!inputFields) {
     return (
-      <div className="my-5 text-left space-y-5">
+      <div className="my-5 text-left space-y-5 section-part">
         <div className="text-left font-bold text-2xl space-y-5">
           {sectionName}
         </div>
         <button
           type="button"
-          className="px-4 text-xl text-base font-medium text-gray-500 text-left underline"
+          className="px-4 text-xl text-base font-medium text-gray-500 text-left underline add-ingredient"
           onClick={() => handleAdd(sectionName)}
         >
           <div className="space-x-3">
@@ -52,7 +52,7 @@ const IngredientSection: React.FC<FormSectionProps> = ({
   }
 
   return (
-    <div className="my-5 text-left">
+    <div className="my-5 text-left section-part">
       <div className="text-left font-bold text-2xl py-5">{sectionName}</div>
       {inputFields.map((inputField) => (
         <div className="flex flex-col text-left" key={inputField.id}>
@@ -108,7 +108,7 @@ const IngredientSection: React.FC<FormSectionProps> = ({
       ))}
       <button
         type="button"
-        className="px-4 text-xl text-base font-medium text-gray-500 text-left underline"
+        className="px-4 text-xl text-base font-medium text-gray-500 text-left underline add-ingredient"
         onClick={() => handleAdd(sectionName)}
       >
         <div className="space-x-3">
